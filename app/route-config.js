@@ -1,6 +1,5 @@
 var state = '';
 
-//route-config.js
 function load($ocLazyLoad, $q)
 {
     var deferred = $q.defer();
@@ -21,7 +20,6 @@ function load($ocLazyLoad, $q)
 
 function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
 {
-
     var res = 
     {
         loadDependencies: ['$ocLazyLoad', '$q', load],
@@ -30,8 +28,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             state = $state$.name;
         }
     };
-    
-    
+       
     $urlRouterProvider
         .when('action', 'action')
         .when('issue', 'issue')
@@ -39,8 +36,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         .when('opportunity', 'opporutnity')
         .when('risk', 'risk')
         .otherwise('main');
-
-
+        
     $ocLazyLoadProvider.config(
     {
         modules: [
@@ -54,11 +50,9 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         }]
     });
 
-
     $stateProvider
        .state('action',
         {
-            name: 'action',
             url: "/actionitems",
             resolve: res,
             templateUrl: '/app/tool/action/ActionItems.html'
@@ -67,7 +61,6 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         $stateProvider
             .state('risk',
         {
-            name: 'risk',
             url: "/risks",
             resolve: res,
             templateUrl: '/app/tool/risk/Risks.html'
