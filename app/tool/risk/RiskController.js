@@ -8,7 +8,7 @@ angular.module('Risk').controller('RiskController', ['$resource', '$scope', '$st
         $scope.init = function(){
             var vm = this;
             GetRisks().then(function(results){            
-                $scope.actionitems = results;
+                $scope.risks = results;
                 vm.dtOptions = DTOptionsBuilder.newOptions()
                 .withPaginationType('full_numbers')
                 .withDisplayLength(10)

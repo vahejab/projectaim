@@ -1,7 +1,8 @@
+angular.module('Home', []);
 angular.module('Action', ['datatables', 'datatables.scroller', 'ngResource']);          
 angular.module('Risk',   ['datatables', 'datatables.scroller', 'ngResource']);          
 
-var app = angular.module('Main', ['ui.router', 'oc.lazyLoad', 'datatables', 'ngResource', 'Action', 'Risk']);
+var app = angular.module('Main', ['ui.router', 'oc.lazyLoad', 'datatables', 'ngResource', 'Home', 'Action', 'Risk']);
 
 app.controller('MainController', ['DTOptionsBuilder']);
 

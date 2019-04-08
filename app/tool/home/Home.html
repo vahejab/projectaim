@@ -1,6 +1,6 @@
-<div ng-init="init()" ng-controller="RiskController">
-   risks
-    <table id="risks" class="row-border hover action" datatable="ng" dt-options="dtOptions">
+<div ng-init="init()" ng-controller="ActionController">
+   ActionItems
+    <table id="actionitems" class="row-border hover action" datatable="" dt-options="dtOptions">
          <thead>
             <tr>
                 <th>
@@ -54,23 +54,23 @@
             </tr>
          </thead> 
          <tbody>
-            <tr ng-repeat="risk in risks">
-               <td>{{risk.id}}</td> 
-               <td>{{risk.title}}</td> 
-               <td>{{risk.criticality}}</td>
-               <td>{{risk.assignor}}</td> 
-               <td>{{risk.owner}}</td>
-               <td>{{risk.altowner}}</td> 
-               <td>{{risk.approver}}</td> 
-               <td>{{risk.assigneddate}}</td> 
-               <td>{{risk.duedate}}</td> 
-               <td>{{risk.ecd}}</td> 
-               <td>{{risk.completiondate}}</td> 
-               <td>{{risk.closeddate}}</td> 
-               <td>{{risk.team}}</td> 
-               <td>{{risk.meeting}}</td> 
-               <td>{{risk.phase}}</td> 
-               <td>{{risk.source}}</td> 
+            <tr ng-repeat="actionitem in actionitems">
+               <td>{{actionitem.id}}</td> 
+               <td>{{actionitem.title}}</td> 
+               <td>{{actionitem.criticality}}</td>
+               <td>{{actionitem.assignor}}</td> 
+               <td>{{actionitem.owner}}</td>
+               <td>{{actionitem.altowner}}</td> 
+               <td>{{actionitem.approver}}</td> 
+               <td>{{actionitem.assigneddate}}</td> 
+               <td>{{actionitem.duedate}}</td> 
+               <td>{{actionitem.ecd}}</td> 
+               <td>{{actionitem.completiondate}}</td> 
+               <td>{{actionitem.closeddate}}</td> 
+               <td>{{actionitem.team}}</td> 
+               <td>{{actionitem.meeting}}</td> 
+               <td>{{actionitem.phase}}</td> 
+               <td>{{actionitem.source}}</td> 
             </tr>
          </tbody>     
     </table>

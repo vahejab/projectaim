@@ -35,31 +35,38 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         .when('lesson', 'lesson')
         .when('opportunity', 'opporutnity')
         .when('risk', 'risk')
+        .when('home', 'home')
         .otherwise('main');
         
     $ocLazyLoadProvider.config(
     {
         modules: [
         {
+            name: 'home',
+            files: ['/app/tool/home/HomeController.js']
+        },
+        {
             name: 'action',
-            files: ['app/tool/action/ActionController.js']
+            files: ['/app/tool/action/ActionController.js']
         },
         {
             name: 'risk',
-            files: ['app/tool/risk/RiskController.js']
+            files: ['/app/tool/risk/RiskController.js']
         }]
     });
 
     $stateProvider
-       .state('action',
+        .state('home',
+        {
+            url: "/home",
+            resolve: res,
+            templateUrl: '/app/tool/home/Home.html'
+        }).state('action',
         {
             url: "/actionitems",
             resolve: res,
             templateUrl: '/app/tool/action/ActionItems.html'
-        });
-        
-        $stateProvider
-            .state('risk',
+        }).state('risk',
         {
             url: "/risks",
             resolve: res,
