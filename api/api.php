@@ -1,2 +1,2 @@
 <?php
- var_dump($_GET);
+ echo $_SERVER['REQUEST_METHOD'];

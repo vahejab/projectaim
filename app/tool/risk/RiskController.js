@@ -1,13 +1,13 @@
-angular.module('Action').controller('ActionController', ['$resource', '$scope', '$state', 'DTOptionsBuilder', function($resource, $scope, DTOptionsBuilder){
-              
-        function GetActionItems()
+angular.module('Risk').controller('RiskController', ['$resource', '$scope', '$state', 'DTOptionsBuilder', function($resource, $scope, $state, DTOptionsBuilder){
+  
+        function GetRisks()
         {
-            return $resource('actionitems.json').query().$promise;
+            return $resource('risks.json').query().$promise;
         }
        
         $scope.init = function(){
             var vm = this;
-            GetActionItems().then(function(results){            
+            GetRisks().then(function(results){            
                 
                 $scope. actionitems = results;
                 vm.dtOptions = DTOptionsBuilder.newOptions()
