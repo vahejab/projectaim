@@ -3,27 +3,31 @@
     RewriteEngine On
     DirectoryIndex api.php
     FallbackResource index.php
-    
-    #RewriteCond %{REQUEST_URI} ^/#!
-    #RewriteRule ^#!/(.*) index.php#!/$1 [L]
-    
+
+    #Redirects all existing files to the containing directory which
+    #then get handled by the 403 error document in .htaccess in /api folder
+    #but two token params get still rewritten as /?token1=token2
+    RewriteCond %{REQUEST_URI} ^/api
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule  (.*/)([^/]+).php$ /$1 [R=302,L]
+     
+    #Non exisitng resoruce then rewrite all items with one token to {'controller': 'value'}
     RewriteCond %{REQUEST_URI} ^/api
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{QUERY_STRING} ^$
     RewriteRule ^api/([^/]+) api/controller/$1
 
-
-    
+    #Rewrite non exisitng request to append query string to construct the query param form starting with question mark
     RewriteCond %{REQUEST_URI} ^/api
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{QUERY_STRING} ^(.*)$
     RewriteRule ^(.*/)([^/]+)/([^/]+) $1?$2=$3&%1 [QSA,L]
  
-    
+    #Append query string to end of question mark and write /api as api/api.php?token....
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{QUERY_STRING} ^(.*)$
-    RewriteRule ^([^/]+)/ $1/$1.php?%1 [L]  
+    RewriteRule ^([^/]+)/ $1/$1.php?%1 [L]    
 </IfModule>

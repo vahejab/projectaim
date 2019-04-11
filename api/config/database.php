@@ -45,3 +45,5 @@
             return $this->dbh;
         }
     }
+    
+    echo "test";
