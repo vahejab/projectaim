@@ -1,11 +1,12 @@
 <?php
+    require_once 'vendor/autoloader.php';
     $requestURI = $_GET;
     
     $method = strtolower($_SERVER['REQUEST_METHOD']);
+    header('Content-Type: application/json');
     switch ($method){
         case 'get':
-             //var_dump($_GET);
-             echo json_encode($requestURI);
+            echo json_encode($requestURI, JSON_PRETTY_PRINT);
             break;
         case 'post':
             echo json_encode($requestURI);
