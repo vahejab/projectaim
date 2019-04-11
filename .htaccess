@@ -2,7 +2,11 @@
     Options +FollowSymlinks
     RewriteEngine On
     DirectoryIndex api.php
-
+    FallbackResource index.php
+    
+    #RewriteCond %{REQUEST_URI} ^/#!
+    #RewriteRule ^#!/(.*) index.php#!/$1 [L]
+    
     RewriteCond %{REQUEST_URI} ^/api
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f

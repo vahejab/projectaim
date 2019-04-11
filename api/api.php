@@ -1,5 +1,5 @@
 <?php
-    require_once 'vendor/autoloader.php';
+    #require_once 'vendor/autoloader.php';
     $requestURI = $_GET;
     
     $method = strtolower($_SERVER['REQUEST_METHOD']);
