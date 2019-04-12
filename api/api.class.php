@@ -2,35 +2,43 @@
     abstract class api
     {
         protected $method = '';
-        protected $endpoint = '';
+        protected $endpoint = array();
         protected $verb = '';
         protected $args = array();
         protected $file = null;
+        protected $id = null;
         
         public function __construct($request){
             header("Access-Control-Allow-Origin: *");
             header("Access-Control-Allow-Methods: *");
             header("Content-Type: application/json");
-            
-        
+           
             $this->args = $request;
-            
-            if (array_key_exists('endpoint', $this->args))
-            {
-                  $this->endpoint = $this->args['endpoint'];
-                  unset($this->args['endpoint']);
-            } 
-            else
-            {  
-                $this->endpoint = array_shift($this->args);
-            }
-        
             $keys = array_keys($this->args);
-            if (count($this->args) > 1 && array_key_exists($keys[0], $this->args) && !is_numeric($this->args[$keys[0]])) {
-                    $this->verb = array_shift($this->args);
-            }           
+            if (array_key_exists('endpoint', $this->args)){
+                  $this->endpoint[] = $this->args['endpoint'];
+                  unset($this->args['endpoint']);
+                  $validKey = array_key_exists($keys[0], $this->args);
+                  $isNumeric =  $validKey && is_numeric($this->args[$keys[0]]);
+                  switch(count($this->args)){
+                     case 1:
+                        if ($isNumeric)
+                            $this->id = $this->args[$first];
+                        break; 
+                     case 2: 
+                        if ($isNumeric){
+                            $this->id = $this->args[$first];   
+                            array_shift($this->args);
+                            $keys = array_keys($this->args);
+                        }
+                        if (array_key_exists('endpoint2', $this->args))
+                            $this->endpoint[] = $this->args['endpoint2'];
+                        break;
+                  }
+            }  
             
-            
+        
+          
             $this->method = $_SERVER['REQUEST_METHOD'];
             
             if ($this->method == 'POST' && array_key_exists('HTTP_X_HTTP_METHOD', $_SERVER)) {
@@ -60,13 +68,16 @@
                     $this->_response('Invalid Method', 405);
                     break;
             }
+            
+            return $this->request;
         }  
         
-        public function processAPI() {
-            if (method_exists($this, $this->endpoint)) {
+        public function processRequest() {
+             
+            if (method_exists($this, $this->endpoint[0])) {
                 return $this->_response($this->{$this->endpoint}($this->args));
             }
-            return $this->_response("No Endpoint: $this->endpoint", 404);
+            return $this->_response("No Endpoint: {$this->endpoint[0]}", 404);
         }
 
         private function _response($data, $status = 200) {

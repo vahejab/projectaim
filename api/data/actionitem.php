@@ -1,5 +1,4 @@
 <?php
-
     class actionitem
     {
         private $res;
@@ -604,9 +603,26 @@
             ];    
         }
         
-        public function getResults()
+        public function getResults($id = null)
         {
-            return $this->res;
+            return array_filter($this->res, function($elem) use($id){
+                return ($elem[0] == $id || $id == null);
+            });       
+        }
+        
+        public function orderby($col, $dir = 'asc')
+        {
+            return usort($this->res, function($a, $b) use ($col, $dir){
+                if ($a[$col] == $b[$col]){
+                    return 0;
+                }
+                switch ($dir){
+                    case 'asc':
+                        return $a[$col] < $b[$col] ? -1:1;
+                    case 'desc':
+                        return $a[$col] < $b[$col] ? 1:-1;                               
+                }
+            });
         }
     }
         
