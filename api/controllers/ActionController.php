@@ -1,4 +1,5 @@
 <?php
+    
    class ActionController
    {
         private $_params;
@@ -10,8 +11,8 @@
         
         public function get($id = null)
         {
-            if ($id)
-                $return
+            //if ($id)
+            //     $return
         }
    }
    

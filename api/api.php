@@ -1,23 +1,25 @@
 <?php
-    #require_once 'vendor/autoloader.php';
-    $requestURI = $_GET;
-    
-    $method = strtolower($_SERVER['REQUEST_METHOD']);
-    header('Content-Type: application/json');
-    switch ($method){
-        case 'get':
-            echo json_encode($requestURI, JSON_PRETTY_PRINT);
-            break;
-        case 'post':
-            echo json_encode($requestURI);
-            break;
-        case 'put':
-            echo json_encode($requestURI);
-            break;
-        case 'delete':
-            echo json_encode($requestURI);
-            break;
-        default:
-            // unimplemented method
-            http_response_code(405);
+    require_once 'api.class.php';
+    require_once 'vendor/autoloader.php';
+            
+    class MyAPI extends api
+    { 
+        public function  __construct($request){
+            parent::__construct($request);
+        }
+      
+        public function getactionitems() {
+            
+            
+            if ($this->method == 'GET') {
+                echo "\n";
+                echo json_encode((new actionitem())->getResults(), JSON_PRETTY_PRINT);
+            } else {
+                return "Only accepts GET requests";
+            }
+        }
     }
+
+    $api = new MyAPI($_REQUEST);
+    $api->processAPI();
+    $api->getactionitems();

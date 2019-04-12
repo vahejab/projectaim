@@ -9,7 +9,7 @@
         private static $dbname = 'projectaim';
         private static $dbhost = 'localhost';  
         private static $username = 'root';
-        private static $password = 'password';   
+        private static $password = '';   
      
         function __construct()
         {      
@@ -45,5 +45,3 @@
             return $this->dbh;
         }
     }
-    
-    echo "test";

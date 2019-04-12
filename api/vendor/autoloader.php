@@ -12,7 +12,7 @@
         {
             $fileName = strtolower($className).'.php';
             
-            $file = $this->$directoryName.'/'.$fileName;
+            $file = $this->directoryName.'/'.$fileName;
 
             if (file_exists($file) == false)
             {
