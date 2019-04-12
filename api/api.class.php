@@ -1,7 +1,6 @@
 <?php
     abstract class api
     {
-        protected $method = '';
         protected $endpoint = array();
         protected $verb = '';
         protected $args = array();
@@ -13,29 +12,35 @@
             header("Access-Control-Allow-Methods: *");
             header("Content-Type: application/json");
            
-            $this->args = $request;
-            $keys = array_keys($this->args);
-            if (array_key_exists('endpoint', $this->args)){
+           $this->args = $request;
+           if (array_key_exists('endpoint', $this->args)){
                   $this->endpoint[] = $this->args['endpoint'];
                   unset($this->args['endpoint']);
-                  $validKey = array_key_exists($keys[0], $this->args);
-                  $isNumeric =  $validKey && is_numeric($this->args[$keys[0]]);
-                  switch(count($this->args)){
-                     case 1:
+            }
+            $keys = array_keys($this->args); 
+            if (count($this->args) > 0)
+            {
+                $first = $keys[0];
+                $validKey = array_key_exists($first, $this->args);
+                $isNumeric =  $validKey && is_numeric($this->args[$first]);
+                switch(count($this->args)){
+                    case 1:
                         if ($isNumeric)
                             $this->id = $this->args[$first];
                         break; 
-                     case 2: 
+                    case 2: 
                         if ($isNumeric){
                             $this->id = $this->args[$first];   
                             array_shift($this->args);
-                            $keys = array_keys($this->args);
                         }
+
                         if (array_key_exists('endpoint2', $this->args))
                             $this->endpoint[] = $this->args['endpoint2'];
                         break;
-                  }
-            }  
+                } 
+            }
+           
+             
             
         
           
@@ -50,7 +55,7 @@
                     throw new Exception("Unexpected Header");
                 }
             }
-                        
+      
             switch($this->method) {
                 case 'DELETE':
                 case 'POST':
@@ -58,7 +63,7 @@
                     break;
                 case 'GET':
                     $this->request = $this->_cleanInputs($_GET);
-                    echo json_encode($this->request, JSON_PRETTY_PRINT);
+                    //echo json_encode($this->request, JSON_PRETTY_PRINT);
                     break;
                 case 'PUT':
                     $this->request = $this->_cleanInputs($_GET);
@@ -73,11 +78,15 @@
         }  
         
         public function processRequest() {
-             
-            if (method_exists($this, $this->endpoint[0])) {
-                return $this->_response($this->{$this->endpoint}($this->args));
+            if(count($this->endpoint) > 0){
+                $class = $this->endpoint[0];
+                if (class_exists($this->endpoint[0], true)) {
+                        $method = strtolower($this->method);
+                        if (method_exists($class, $method))
+                            return $this->_response((new $class())->{$method}($this->id));
+                }
+                return $this->_response("No Endpoint: {$this->endpoint[0]}", 404);
             }
-            return $this->_response("No Endpoint: {$this->endpoint[0]}", 404);
         }
 
         private function _response($data, $status = 200) {
