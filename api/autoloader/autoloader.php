@@ -1,4 +1,5 @@
 <?php
+    namespace autoloader;
     class autoloader
     {
         private $directoryName;
@@ -8,17 +9,12 @@
             $this->directoryName = $directoryName;
         }  
         
-        public function autoload($className)
+        public function autoload()
         {
-            $fileName = strtolower($className).'.php';
-            
-            $file = $this->directoryName.'/'.$fileName;
-
-            if (file_exists($file) == false)
+            foreach (glob("{$this->directoryName}/*.php") as $filename)
             {
-                return false;
+                include_once $filename;
             }
-            include ($file);
         }    
     }
     
@@ -29,10 +25,11 @@
     $classes = [
                     new autoloader('config'),
                     new autoloader('controllers'), 
-                    new autoloader('models'), 
+                    new autoloader('models'),
                     new autoloader('data')
+     
     ];
 
     # register the loader functions
     foreach ($classes as $class)
-        spl_autoload_register(array($class, 'autoload'));   
+        spl_autoload_register(array($class, 'autoload'));

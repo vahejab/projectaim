@@ -1,5 +1,5 @@
 <?php
-    require_once 'vendor/autoloader.php';
+    require_once 'autoloader/autoloader.php';
     require_once 'api.class.php';
 
     class MyAPI extends api

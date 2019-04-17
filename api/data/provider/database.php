@@ -1,5 +1,7 @@
 <?php
-    class Database
+    namespace data\provider;
+    
+    class database
     {
         protected $dbh;
 
@@ -11,13 +13,16 @@
                 $username = 'root';
                 $password = '';   
      
-                $this->dbh = new PDO("mysql:host=localhost;dbname=$dbname", $username, $password);
+                $this->dbh = new \PDO("mysql:host=localhost;dbname=$dbname", $username, $password);
             }
             catch (PDOException $e)
             {
                 die("Error in establishing connection to database!: " . $e->message);
             }
-            
-            return $this->dbh;
+        }
+        
+        public function getHandle()
+        {
+            return $this->dbh;    
         }
     }

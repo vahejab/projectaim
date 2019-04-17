@@ -1,5 +1,6 @@
 <?php
-
+   namespace controllers;
+   
    class ActionItemsController
    {
         private $_params;
@@ -11,7 +12,9 @@
         
         public function get($id = null)
         {
-            $actionitems = new actionitems();
-            return $actionitems->get($id);
+            $service = new \service\actionitemservice();
+            if ($id == null)
+                return $service->findAll();
+            return $service->findOne($id);
         }
    }

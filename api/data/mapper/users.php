@@ -1,44 +1,43 @@
 <?php
+    namespace data\mapper;
     class users {
         
         private $db = null;
         
-        public function __construct(PDO $db){
+        public function __construct(PDO $db)
+        {
             $this->db = $db;
         }
         
-        protected function _populateFromCollection($results){
+        protected function _populateFromCollection($results)
+        {
             $return = array();
             
-            foreach($results as $result){
-                $return = $this->mapFromArray($result);
+            foreach($results as $result)
+            {
+                $return[] = $this->mapFromArray($result);
             }
             
             return $return;
         }
         
-        public function mapFromArray($array, \data\model\user $user = null){
-            if (is_null($user)) $user = new data\model\user();
-            if (is_null($array['assignor.lastname'])) $actionitem->assignorlastname = $array['assignor.lastname'];
-            if (is_null($array['assignor.firstname'])) $actionitem->assignorfirstname = $array['assignor.firstname'];
-            if (is_null($array['owner.lastname'])) $actionitem->ownerlastname = $array['owner.lastname'];
-            if (is_null($array['owner.firstname'])) $actionitem->ownerfirstname = $array['owner.firstname'];
-            if (is_null($array['altowner.lastname'])) $actionitem->altownerlastname = $array['altowner.lastname'];
-            if (is_null($array['altowner.firstname'])) $actionitem->altownerfirstname = $array['altowner.firstname'];
-            if (is_null($array['approver.lastname'])) $actionitem->altownerlastname = $array['approver.lastname'];
-            if (is_null($array['approver.firstname'])) $actionitem->approverfirstname = $array['approver.firstname'];
-            if (is_null($array['actionitemtitle'])) $actionitem->actionitemtitle = $array['actionitemtitle'];
-            if (is_null($array['criticality'])) $actionitem->criticality = $array['crtitcality'];
-            if (is_null($array['actionitemstatement'])) $actionitem->actionitemstatement = $array['actionitemstatement'];
-            if (is_null($array['closurecriteria'])) $actionitem->closurecriteria = $array['closurecriteria'];
-            if (is_null($array['closurestatement'])) $actionitem->closurestatement = $array['closurestatement'];
-            if (is_null($array['rejectionjustification'])) $actionitem->rejectionjustification = $array['rejectionjustification'];
-            if (is_null($array['ownernotes'])) $actionitem->ownernotes = $array['ownernotes'];
-            if (is_null($array['approvercomments'])) $actionitem->aprovercomments = $array['aprovercomments'];
-            if (is_null($array['notes'])) $actionitem->notes = $array['notes'];                
+        public function mapFromArray($array, \data\model\user $user = null)
+        {
+            if (is_null($user)) $user = new \data\model\user();
+            if (is_null($array['id'])) $user->id = $array['id'];
+            if (is_null($array['userid'])) $user->userid = $array['userid'];
+            if (is_null($array['lastname'])) $user->lastname = $array['lastname'];
+            if (is_null($array['firstname'])) $user->firstname = $array['firstname'];         
+            if (is_null($array['title'])) $user->title = $array['title'];
+            if (is_null($array['email'])) $user->email = $array['email'];
+            if (is_null($array['phone'])) $user->phone = $array['phone'];
+            if (is_null($array['extension'])) $user->extension = $array['extension'];
+            if (is_null($array['department'])) $user->department = $array['department'];  
+            return $user;
         }
         
-        public function get($id){
+        public function get($id)
+        {
         
         }
         
@@ -50,56 +49,45 @@
                 
                 $searchCols = 
                    [
-                    'assignor.lastname',
-                    'assignor.firstname',
-                    'owner.lastname',
-                    'owner.firstname',
-                    'altowner.lastname',
-                    'altowner.firstname',
-                    'approver.lastname',
-                    'approver.firstname',
-                    'actionitemtitle',
-                    'criticality',
-                    'actionitemstatement',
-                    'closurecriteria',
-                    'closurestatement',
-                    'rejectionjustification',
-                    'ownernotes',
-                    'approvercomments',
-                    'notes'
+                    'id',
+                    'userid',
+                    'lastname',
+                    'firstname',
+                    'title',
+                    'email',
+                    'phone',
+                    'extension',
+                    'department'
                     ];
-
                 
-                foreach ($searchCols as $col){
-                    $whereStrings[] = "$col like ?";
-                    $whereParams[] = $params['Keyword'];
+                if (isset($params['userid']))
+                {
+                    $whereStrings[] = 'id = ?';
+                    $whereParams[] = $params['id'];   
+                }
+                
+                if (isset($params['lastname']))
+                {
+                    $whereStrings[] = 'lastname = ?';
+                    $whereParams[] = $params['lastname'];   
+                }
+                
+                if (isset($params['firstname']))
+                {
+                    $whereStrings[] = 'firstname = ?';
+                    $whereParams[] = $params['firstname'];   
                 }
             }    
  
-            $sql = "select
-                        assignor.lastname  AS assignorlastname,
-                        assignor.firstname AS assignorfirstname,
-                        owner.lastname  AS ownerlastname,
-                        owner.firstname AS ownerfirstname,
-                        altowner.lastname  AS altownerlastname,
-                        altowner.firstname AS altownerfirstname,
-                        approver.lastname  AS approverlastname,
-                        approver.firstname AS approverfistname,
-                        a.*
-                    from actionitems a
-                    inner join users assignor
-                        ON a.assignorid = assignor.userid
-                    inner join users owner
-                        ON a.approverid = owner.userid
-                    inner join users altowner
-                        ON a.altownerid = altowner.userid
-                    inner join users approver
-                        ON a.approverid = approver.userid";
+            $sql = "select *
+                    from users";
                     
-            if (!empty($whereStrings)){
+            if (!empty($whereStrings))
+            {
                 $sql .= " where " . implode(' AND ' . $whereStrings);
             }
-            if (isset($params['limit'])){
+            if (isset($params['limit']))
+            {
                 $sql .= " limit " . intval($params['limit']);
             }
             

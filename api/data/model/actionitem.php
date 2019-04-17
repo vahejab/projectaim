@@ -1,12 +1,14 @@
 <?php
     namespace data\model;
     
-    class actionitem{
+    class actionitem
+    {
+        public $id;
         public $actionitemid;
-        public $ownerid;
-        public $assignorid;
-        public $altownerid;
-        public $approverid;
+        public $ownerId;
+        public $assignorId;
+        public $altownerId;
+        public $approverId;
         public $actionitemtitle;
         public $criticality;
         public $actionitemstatement;
@@ -16,29 +18,33 @@
         public $ownernotes;
         public $approvercomments;
         public $notes;
-        public $users = [];
         
-        public function getAssignorLastFirstName() : \data\model\user {
-            /** @var \data\model\user $user */
-            $user = $this->users[$this->assignorid];
-            return $user->getUserLastFirst();
+        public $ownerlastname;
+        public $ownerfirstname;
+        public $assignorlastname;
+        public $assignorfirstname;
+        public $altownerlastname;
+        public $altownerfirstname;
+        public $approverlastname;
+        public $approverfirstname;
+        
+        public function getOwnwerFullName()
+        {
+             return trim($this->ownerlastname, ', ', $this->ownerfirst);
+        }
+
+        public function getAssignorFullName()
+        {
+             return trim($this->assignorlastname, ', ', $this->assignorfirstname);
         }
         
-        public function getOwnwerLastFirstName() : \data\model\user {
-            /** @var \data\model\user $user */
-            $user = $this->users[$this->ownerid];
-            return $user->getUserLastFirst();
+        public function getAltOwnerLastName()
+        {
+             return trim($this->altownerlastname, ', ', $this->altownerlastname);
         }
         
-        public function getAltOwnwerLastFirstName() : \data\model\user {
-            /** @var \data\model\user $user */
-            $user = $this->users[$this->altownerid];
-            return $user->getUserLastFirst();
-        }
-        
-        public function getApproverLastFirstName() : \data\model\user {
-            /** @var \data\model\user $user */
-            $user = $this->users[$this->approverid];
-            return $user->getUserLastFirst();
+        public function getApproverFirstName()
+        {
+             return trim($this->approverlastname, ', ', $this->approverfirstname);
         }
     }
