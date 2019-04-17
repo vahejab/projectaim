@@ -28,9 +28,9 @@
     # instantiate the autoloader object
     $classes = [
                     new autoloader('config'),
-                    new autoloader('data'), 
+                    new autoloader('controllers'), 
                     new autoloader('models'), 
-                    new autoloader('controllers')
+                    new autoloader('data')
     ];
 
     # register the loader functions

@@ -567,13 +567,13 @@
     "Meeting": "Conc Dev",
     "Phase": "Legal"
   }
-}';
+}' ;
 
         }
         
         public function get($id = null)
         {
-            $arr = json_decode($this->res, true);
+           // $arr = json_decode($this->res, true);
             return array_filter($arr, function($elem) use($id){
                 return ($elem['ActionItemID'] == $id || $id == null);
             });       

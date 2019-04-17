@@ -1,6 +1,6 @@
 <?php
     
-   class ActionController
+   class LoginController
    {
         private $_params;
         

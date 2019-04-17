@@ -33,17 +33,12 @@
                             $this->id = $this->args[$first];   
                             array_shift($this->args);
                         }
-
                         if (array_key_exists('endpoint2', $this->args))
                             $this->endpoint[] = $this->args['endpoint2'];
                         break;
                 } 
             }
            
-             
-            
-        
-          
             $this->method = $_SERVER['REQUEST_METHOD'];
             
             if ($this->method == 'POST' && array_key_exists('HTTP_X_HTTP_METHOD', $_SERVER)) {
@@ -79,11 +74,14 @@
         
         public function processRequest() {
             if(count($this->endpoint) > 0){
-                $class = $this->endpoint[0];
-                if (class_exists($this->endpoint[0], true)) {
+                $class = "{$this->endpoint[0]}Controller";
+                if (class_exists($class, true)){
                         $method = strtolower($this->method);
                         if (method_exists($class, $method))
-                            return $this->_response((new $class())->{$method}($this->id));
+                            $args = $this->args;
+                            $id = $this->id;
+                            $endpoint2 =  $this->endpoint[1] ?? null;
+                            return $this->_response((new $class($args,$endpoint2))->{$method}($id));
                 }
                 return $this->_response("No Endpoint: {$this->endpoint[0]}", 404);
             }
