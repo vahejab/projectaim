@@ -10,19 +10,50 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
             var defer = $q.defer();
             $http.get('api/actionitems')
                  .then(function(response){
-                    defer.resolve(response);
+                     defer.resolve(response);
                  });
             return defer.promise;
         }   
+        
+        var getRes = function(res){
+            $.each(res, function(key, actionitem){
+                res[key] =  [ 
+                                actionitem.actionitemid, 
+                                actionitem.actionitemtitle,
+                                actionitem.criticality,
+                                actionitem.assignor,
+                                actionitem.owner,
+                                actionitem.altowner,
+                                actionitem.approver,
+                                actionitem.assigneddate,
+                                actionitem.duedate,
+                                actionitem.ecd,
+                                actionitem.completiondate,
+                                actionitem.closeddate
+                            ];
+                console.log(actionitem)
+                console.log(JSON.stringify(res[key]));            
+                
+            })
+            $scope.actionitems = res;
+        }
+        
+        function apply(scope, fn, res) {
+            (scope.$$phase || scope.$root.$$phase) ? 
+                        fn(res) : 
+                        scope.$apply(fn(res));
+        }
        
         $scope.init = function(){
             var vm = this;
             vm.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
                 var defer = $q.defer();
-                GetActionItems().then(function(result) {
-                    $scope.actionitems = result;
-                    defer.resolve(result);
+
+                GetActionItems().then(function(result){
+                    apply($scope, getRes, result.data);
+                    defer.resolve(result.data);
                 });
+                
                 return defer.promise;
             })
             .withPaginationType('full_numbers')

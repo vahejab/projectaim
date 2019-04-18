@@ -33,6 +33,12 @@
         public $altowner = '';
         public $assignor = '';
         
+        public $assigneddate;
+        public $duedate;
+        public $ecd;
+        public $completiondate;
+        public $closeddate;
+        
         public function getOwnerFullName()
         {
              return trim(join(', ', [$this->ownerlastname, $this->ownerfirstname]), ', ');

@@ -54,7 +54,12 @@
             if (!is_null($array['RejectionJustification'])) $actionitem->rejectionjustification = $array['RejectionJustification'];
             if (!is_null($array['OwnerNotes'])) $actionitem->ownernotes = $array['OwnerNotes'];
             if (!is_null($array['ApproverComments'])) $actionitem->approvercomments = $array['ApproverComments'];
-            if (!is_null($array['Notes'])) $actionitem->notes = $array['Notes']; 
+            if (!is_null($array['AssignedDate'])) $actionitem->assigneddate = $array['AssignedDate'];
+            if (!is_null($array['DueDate'])) $actionitem->duedate = $array['DueDate']; 
+            if (!is_null($array['ECD'])) $actionitem->ecd = $array['ECD']; 
+            if (!is_null($array['CompletionDate'])) $actionitem->completiondate = $array['CompletionDate']; 
+            if (!is_null($array['ClosedDate'])) $actionitem->closeddate = $array['ClosedDate']; 
+
             return $actionitem;               
         }
         
@@ -100,7 +105,12 @@
                     'rejectionjustification',
                     'ownernotes',
                     'approvercomments',
-                    'notes'
+                    'notes',
+                    'assigneddate',    
+                    'ecd',
+                    'duedate',
+                    'completiondate',
+                    'closeddate'
                     ];
 
                 

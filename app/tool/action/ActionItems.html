@@ -4,7 +4,7 @@
          <thead>
             <tr>
                 <th>
-                    Action Item ID
+                    ID
                 </th>
                 <th>
                     Action Item Title
@@ -39,7 +39,7 @@
                 <th>
                     Closed Date
                 </th>
-                <th>
+                <!--th>
                     Team
                 </th>
                   <th>
@@ -50,11 +50,23 @@
                 </th>
                   <th>
                     Source
-                </th>
+                </th-->
             </tr>
          </thead> 
          <tbody>
             <tr ng-repeat="actionitem in actionitems">
+               <td>{{actionitem.ActionItemID}}</td> 
+               <td>{{actionitem.Title}}</td> 
+               <td>{{actionitem.Criticality}}</td>
+               <td>{{actionitem.Assignor}}</td> 
+               <td>{{actionitem.Owner}}</td>
+               <td>{{actionitem.AltOwner}}</td> 
+               <td>{{actionitem.Approver}}</td> 
+               <td>{{actionitem.AssignedDate}}</td> 
+               <td>{{actionitem.DueDate}}</td> 
+               <td>{{actionitem.ECD}}</td> 
+               <td>{{actionitem.CompletionDate}}</td> 
+               <td>{{actionitem.ClosedDate}}</td> 
             </tr>
          </tbody>     
     </table>
