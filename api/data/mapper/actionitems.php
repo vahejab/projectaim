@@ -82,7 +82,8 @@
         
         public function findAll($params = [])
         {
-            $whereStrings = $whereParams = array();
+            $whereStrings = [];
+            $whereParams = [];
             
             if (isset($params['Keyword']))
             {
@@ -118,15 +119,13 @@
                 {
                     $whereStrings[] = "$col like ?";
                     $whereParams[] = $params['keyword'];
-                }
-
-                if (isset($params['actionitemid']))
-                {
-                    $whereStrings[] = 'actionitemid = ?';
-                    $whereParams[] = $params['actionitemid'];   
-                }
-                
+                }            
             }    
+            if (isset($params['actionitemid']))
+            {
+                $whereStrings[] = 'actionitemid = ?';
+                $whereParams[] = $params['actionitemid'];   
+            }
  
             $sql = "select
                         assignor.lastname as 'assignor.lastname',
@@ -147,16 +146,18 @@
                         ON a.altownerid = altowner.userid
                     left join users approver
                         ON a.approverid = approver.userid";
-                    
+                
             if (!empty($whereStrings))
             {
-                $sql .= " where " . implode(' AND ' . $whereStrings);
+                $sql .= " where " . implode(' AND ' , $whereStrings);
             }
+            
             if (isset($params['limit']))
             {
                 $sql .= " limit " . intval($params['limit']);
             }
             
+
             $statement  = $this->db->prepare($sql);
             $statement->execute($whereParams);
             $results = $statement->fetchAll();
