@@ -1,10 +1,19 @@
-angular.module('Action').controller('ActionController', ['$resource', '$scope', '$state', '$timeout', '$q', 'DTOptionsBuilder', function($resource, $scope, $state, $timeout, $q, DTOptionsBuilder){
+angular.module('Action').controller('ActionController', ['$http', '$resource', '$scope', '$state', '$timeout', '$q', 'DTOptionsBuilder', function($http, $resource, $scope, $state, $timeout, $q, DTOptionsBuilder){
         $scope.actionitems = {};    
     
-        function GetActionItems()
+        function GetActionItems2()
         {
            return $resource('actionitems.json').query().$promise;
         }
+     
+        function GetActionItems() {           
+            var defer = $q.defer();
+            $http.get('api/actionitems')
+                 .then(function(response){
+                    defer.resolve(response);
+                 });
+            return defer.promise;
+        }   
        
         $scope.init = function(){
             var vm = this;
@@ -24,5 +33,5 @@ angular.module('Action').controller('ActionController', ['$resource', '$scope', 
             .withOption('scrollX', '100%')
             .withDOM('lftrpi')
             .withScroller();
-        }
+        }           
 }]);

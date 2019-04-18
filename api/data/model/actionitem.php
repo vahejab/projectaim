@@ -9,42 +9,47 @@
         public $assignorId;
         public $altownerId;
         public $approverId;
-        public $actionitemtitle;
-        public $criticality;
-        public $actionitemstatement;
-        public $closurecriteria;
-        public $closurestatement;
-        public $rejectionjustification;
-        public $ownernotes;
-        public $approvercomments;
-        public $notes;
+        public $actionitemtitle = '';
+        public $criticality = '';
+        public $actionitemstatement = '';
+        public $closurecriteria = '';
+        public $closurestatement = '';
+        public $rejectionjustification = '';
+        public $ownernotes = '';
+        public $approvercomments = '';
+        public $notes = '';
         
-        public $ownerlastname;
-        public $ownerfirstname;
-        public $assignorlastname;
-        public $assignorfirstname;
-        public $altownerlastname;
-        public $altownerfirstname;
-        public $approverlastname;
-        public $approverfirstname;
+        public $ownerlastname = '';
+        public $ownerfirstname = '';
+        public $assignorlastname = '';
+        public $assignorfirstname = '';
+        public $altownerlastname = '';
+        public $altownerfirstname = '';
+        public $approverlastname = '';
+        public $approverfirstname = '';
         
-        public function getOwnwerFullName()
+        public $owner = '';
+        public $approver = '';
+        public $altowner = '';
+        public $assignor = '';
+        
+        public function getOwnerFullName()
         {
-             return trim($this->ownerlastname, ', ', $this->ownerfirst);
+             return trim(join(', ', [$this->ownerlastname, $this->ownerfirstname]), ', ');
         }
 
         public function getAssignorFullName()
         {
-             return trim($this->assignorlastname, ', ', $this->assignorfirstname);
+             return trim(join(', ', [$this->assignorlastname, $this->assignorfirstname]), ', ');
         }
         
-        public function getAltOwnerLastName()
+        public function getAltOwnerFullName()
         {
-             return trim($this->altownerlastname, ', ', $this->altownerlastname);
+             return trim(join(', ', [$this->altownerlastname, $this->altownerfirstname]), ', ');
         }
         
-        public function getApproverFirstName()
+        public function getApproverFullName()
         {
-             return trim($this->approverlastname, ', ', $this->approverfirstname);
+             return trim(join(', ', [$this->approverlastname, $this->approverfirstname]), ', ');
         }
     }

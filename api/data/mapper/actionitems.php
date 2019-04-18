@@ -24,6 +24,7 @@
         public function mapFromArray($array, \data\model\actionitem $actionitem = null)
         {
             if (is_null($actionitem)) $actionitem = new \data\model\actionitem();
+
             if (!is_null($array['ID'])) $actionitem->id = $array['ID'];
             if (!is_null($array['ActionItemID'])) $actionitem->actionitemid = $array['ActionItemID'];
             if (!is_null($array['assignor.lastname'])) $actionitem->assignorlastname = $array['assignor.lastname'];
@@ -32,8 +33,19 @@
             if (!is_null($array['owner.firstname'])) $actionitem->ownerfirstname = $array['owner.firstname'];
             if (!is_null($array['altowner.lastname'])) $actionitem->altownerlastname = $array['altowner.lastname'];
             if (!is_null($array['altowner.firstname'])) $actionitem->altownerfirstname = $array['altowner.firstname'];
-            if (!is_null($array['approver.lastname'])) $actionitem->altownerlastname = $array['approver.lastname'];
+            if (!is_null($array['approver.lastname'])) $actionitem->approverlastname = $array['approver.lastname'];
             if (!is_null($array['approver.firstname'])) $actionitem->approverfirstname = $array['approver.firstname'];
+            
+            if (!is_null($array['assignor.lastname']) 
+            ||  !is_null($array['assignor.lastname'])) $actionitem->assignor = $actionitem->getAssignorFullName();
+            if (!is_null($array['approver.lastname']) 
+            ||  !is_null($array['approver.lastname'])) $actionitem->approver = $actionitem->getApproverFullName();
+            if (!is_null($array['altowner.lastname']) 
+            ||  !is_null($array['altowner.lastname'])) $actionitem->altowner = $actionitem->getAltOwnerFullName();
+            if (!is_null($array['owner.lastname']) 
+            ||  !is_null($array['owner.lastname'])) $actionitem->owner = $actionitem->getOwnerFullName();
+            
+            
             if (!is_null($array['ActionItemTitle'])) $actionitem->actionitemtitle = $array['ActionItemTitle'];
             if (!is_null($array['Criticality'])) $actionitem->criticality = $array['Criticality'];
             if (!is_null($array['ActionItemStatement'])) $actionitem->actionitemstatement = $array['ActionItemStatement'];
@@ -41,9 +53,8 @@
             if (!is_null($array['ClosureStatement'])) $actionitem->closurestatement = $array['ClosureStatement'];
             if (!is_null($array['RejectionJustification'])) $actionitem->rejectionjustification = $array['RejectionJustification'];
             if (!is_null($array['OwnerNotes'])) $actionitem->ownernotes = $array['OwnerNotes'];
-            if (!is_null($array['ApproverComments'])) $actionitem->aprovercomments = $array['ApproverComments'];
+            if (!is_null($array['ApproverComments'])) $actionitem->approvercomments = $array['ApproverComments'];
             if (!is_null($array['Notes'])) $actionitem->notes = $array['Notes']; 
-        
             return $actionitem;               
         }
         
@@ -118,13 +129,13 @@
                         approver.firstname as 'approver.firstname',
                         a.*
                     from actionitems a
-                    inner join users assignor
+                    left join users assignor
                         ON a.assignorid = assignor.userid
-                    inner join users owner
+                    left join users owner
                         ON a.approverid = owner.userid
-                    inner join users altowner
+                    left join users altowner
                         ON a.altownerid = altowner.userid
-                    inner join users approver
+                    left join users approver
                         ON a.approverid = approver.userid";
                     
             if (!empty($whereStrings))
