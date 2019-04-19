@@ -30,7 +30,8 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
     };
        
     $urlRouterProvider
-        .when('action', 'action')
+        .when('action@summary', 'action/summary')
+        .when('action@create', 'action/create')
         .when('issue', 'issue')
         .when('lesson', 'lesson')
         .when('opportunity', 'opporutnity')
@@ -46,8 +47,12 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             files: ['/app/tool/home/HomeController.js']
         },
         {
-            name: 'action',
+            name: 'action@summary',
             files: ['/app/tool/action/ActionController.js']
+        },
+        {
+            name: 'action@createaction',
+            files: ['/app/tool/action/CreateActionController.js']
         },
         {
             name: 'risk',
@@ -61,11 +66,17 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             url: "/home",
             resolve: res,
             templateUrl: '/app/tool/home/Home.html'
-        }).state('action',
+        }).state('action@summary',
         {
-            url: "/actionitems",
+            url: "/action/summary",
             resolve: res,
             templateUrl: '/app/tool/action/ActionItems.html'
+        })
+        .state('action@createaction',
+        {
+            url: "/action/create",
+            resolve: res,
+            templateUrl: '/app/tool/action/CreateActionItem.html'
         }).state('risk',
         {
             url: "/risks",
