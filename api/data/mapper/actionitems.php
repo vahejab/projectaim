@@ -1,26 +1,7 @@
 <?php
     namespace data\mapper;
-    class actionitems
-    {    
-        private $db = null;
-        
-        public function __construct(\PDO $db)
-        {
-            $this->db = $db;
-        }
-        
-        protected function _populateFromCollection($results)
-        {
-            $return = array();
-           
-            foreach($results as $result)
-            {
-                $return[] = $this->mapFromArray($result);
-            }
-            
-            return $return;
-        }
-        
+    class actionitems extends mapper
+    { 
         public function mapFromArray($array, \data\model\actionitem $actionitem = null)
         {
             if (is_null($actionitem)) $actionitem = new \data\model\actionitem();
@@ -47,7 +28,7 @@
             
             
             if (!is_null($array['ActionItemTitle'])) $actionitem->actionitemtitle = $array['ActionItemTitle'];
-            if (!is_null($array['Criticality'])) $actionitem->criticality = $array['Criticality'];
+            if (!is_null($array['Criticality']))  $actionitem->criticality = $array['Criticality'];
             if (!is_null($array['ActionItemStatement'])) $actionitem->actionitemstatement = $array['ActionItemStatement'];
             if (!is_null($array['ClosureCriteria'])) $actionitem->closurecriteria = $array['ClosureCriteria'];
             if (!is_null($array['ClosureStatement'])) $actionitem->closurestatement = $array['ClosureStatement'];
@@ -61,23 +42,6 @@
             if (!is_null($array['ClosedDate'])) $actionitem->closeddate = $array['ClosedDate']; 
 
             return $actionitem;               
-        }
-        
-        public function findOne($params = [])
-        {
-            $collection = $this->findAll($params);
-            
-            if (count($collection) > 1)
-            {
-                throw new Exception("More than one result found");
-            }
-            
-            $returnOne = null;
-            if (!empty($collection))
-            {
-                $returnOne = array_shift($collection);
-            }
-            return $returnOne;
         }
         
         public function findAll($params = [])
@@ -156,7 +120,6 @@
             {
                 $sql .= " limit " . intval($params['limit']);
             }
-            
 
             $statement  = $this->db->prepare($sql);
             $statement->execute($whereParams);

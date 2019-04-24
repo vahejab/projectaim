@@ -4,17 +4,18 @@
     class user {
         public $id;
         public $userid;
-        public $title;
-        public $phone;
-        public $extension;
-        public $firstname;
-        public $lastname; 
-        public $email;
-        public $department;
+        public $title = '';
+        public $phone = '';
+        public $extension = '';
+        public $firstname = '';
+        public $lastname = ''; 
+        public $email = '';
+        public $department = '';
+        public $name = '';
         
         //Property Function 2
         public function getUserLastFirst()
         {
-             return trim($this->firstname, ', ', $this->lastname);
+             return trim(join([$this->lastname, ', ', $this->firstname]), ', ');
         }
     }

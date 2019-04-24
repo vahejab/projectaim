@@ -12,7 +12,7 @@
         
         public function get($id = null)
         {
-            $service = new \service\actionitemservice();
+            $service = new \data\service\actionitemservice();
             if ($id == null)
                 return $service->findAll();
             return $service->findOne($id);

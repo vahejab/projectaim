@@ -76,7 +76,9 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         {
             url: "/action/create",
             resolve: res,
-            templateUrl: '/app/tool/action/CreateActionItem.html'
+            //cache: false,
+            templateUrl: '/app/tool/action/CreateActionItem.html',
+            controller: 'CreateActionController'
         }).state('risk',
         {
             url: "/risks",

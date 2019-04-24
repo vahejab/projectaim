@@ -1,4 +1,4 @@
-angular.module('Action').controller('ActionController', ['$http', '$resource', '$scope', '$state', '$timeout', '$q', 'DTOptionsBuilder', function($http, $resource, $scope, $state, $timeout, $q, DTOptionsBuilder){
+angular.module('Action').controller('ActionController', ['$http', '$resource', '$scope', '$state', '$timeout', 'DTOptionsBuilder', function($http, $resource, $scope, $state, $timeout, DTOptionsBuilder){
         $scope.actionitems = {};    
     
         function GetActionItems2()
