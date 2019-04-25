@@ -1,4 +1,12 @@
-table
+._md-datepicker-floating-label > 
+  label
 {
-     display: none; 
+    width: calc(100% - 19px) !important;
+}
+
+
+._md-datepicker-floating-label > 
+  md-datepicker .md-datepicker-input-container
+{
+    width: 132px !important;
 }

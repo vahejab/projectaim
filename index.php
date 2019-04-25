@@ -30,7 +30,7 @@
        <!--script src="/app/js/kendoui-2019.1.220/js/kendo.datepicker.min.js"></script>
        <script src="/app/js/kendoui-2019.1.220/js/kendo.ui.core.min.js"></script-->
        <script src="/app/js/jquery-slim-3.2.1/jquery-3.2.1.slim.min.js"></script>
-       <script src="/app/js/angularjs-1.6.6/angular.min.js"></script>
+       <script src="/app/js/angularjs-1.6.6/angular.js"></script>
        <script src="/app/js/angularjs-1.6.6/angular-resource.js"></script>
        <script src="/app/js/angularjs-1.6.6/angular-aria.js"></script>
        <script src="/app/js/angularjs-1.6.6/angular-animate.js"></script>

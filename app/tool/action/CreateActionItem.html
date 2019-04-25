@@ -1,16 +1,45 @@
-<md-content ng-controller="CreateActionController" ng-init="init()" layout-padding="" ng-cloak="">
+<md-content ng-controller="CreateActionController" ng-init="init" layout-padding="" ng-cloak="">
+    <init-data />
     <div flex-gt-xs>
         <md-input-container>
           <label>Assignor</label>
-          <md-select ng-model="user" style="min-width: 200px;">
-            <md-option ng-repeat="user in users track by user.userid" ng-value="user.name"  ng-selected="$first">
-              {{user.name}}
-            </md-option>
+          <md-select placeholder="Assignor" ng-model="user.name" style="min-width: 200px;">
+             <md-option ng-value="$index" ng-model="user" ng-repeat="user in users" ng-model-options="{trackBy: 'user.userid'}">{{user.name}}</md-option>
           </md-select>
         </md-input-container>
     </div>
     <div flex-gt-xs>
-      <h6>Opening the calendar when the input is focused</h6>
-      <md-datepicker ng-model="myDate" md-min-date="minDate" md-placeholder="Enter date" md-open-on-focus></md-datepicker>
+       <md-input-container>
+        <label>Original Due Date</label>
+      <md-datepicker ng-model="dueDate" md-min-date="today" md-placeholder="Enter date" md-open-on-focus></md-datepicker>
+    </md-input-container>
+       <md-input-container>
+            <label>ECD</label>
+            <md-datepicker ng-model="ecd" md-min-date="today" md-placeholder="Enter date" md-open-on-focus></md-datepicker>
+      </md-input-container>
+    </div>
+    <md-input-container>
+      <label>Criticality</label>
+      <md-select ng-model="criticality" style="min-width: 200px">
+        <md-option ng-repeat="criticality in criticalitylevels" ng-model-options="{trackBy: 'criticality.level'}" ng-value="criticality">
+          {{criticality.level}}
+        </md-option>
+      </md-select>
+    </md-input-container>
+    <div flex-gt-xs>
+         <md-input-container>
+          <label>Owner</label>
+          <md-select placeholder="Owner" ng-model="user.name" style="min-width: 200px;">
+             <md-option ng-value="$index" ng-model="user" ng-repeat="user in users" ng-model-options="{trackBy: 'user.userid'}">{{user.name}}</md-option>
+          </md-select>
+        </md-input-container>
+    </div>
+    <div flex-gt-xs>
+         <md-input-container>
+          <label>Alt Owner</label>
+          <md-select placeholder="Alt Owner" ng-model="user.name" style="min-width: 200px;">
+             <md-option ng-value="$index" ng-model="user" ng-repeat="user in users" ng-model-options="{trackBy: 'user.userid'}">{{user.name}}</md-option>
+          </md-select>
+        </md-input-container>
     </div>
 </md-content>

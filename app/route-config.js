@@ -52,7 +52,10 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         },
         {
             name: 'action@createaction',
-            files: ['/app/tool/action/CreateActionController.js']
+            files: [
+                    '/app/tool/action/style.css',
+                    '/app/tool/action/CreateActionController.js'
+                   ]
         },
         {
             name: 'risk',
