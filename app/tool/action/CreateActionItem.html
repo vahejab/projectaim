@@ -3,8 +3,8 @@
     <div flex-gt-xs>
         <md-input-container>
           <label>Assignor</label>
-          <md-select placeholder="Assignor" ng-model="user.name" style="min-width: 200px;">
-             <md-option ng-value="$index" ng-model="user" ng-repeat="user in users" ng-model-options="{trackBy: 'user.userid'}">{{user.name}}</md-option>
+          <md-select placeholder="Assignor" ng-model="assignor" style="min-width: 200px;">
+             <md-option ng-value="$index" ng-model="assignor" ng-repeat="user in users" ng-model-options="{trackBy: 'user.userid'}">{{user.name}}</md-option>
           </md-select>
         </md-input-container>
     </div>
@@ -14,10 +14,11 @@
       <md-datepicker ng-model="dueDate" md-min-date="today" md-placeholder="Enter date" md-open-on-focus></md-datepicker>
     </md-input-container>
        <md-input-container>
-            <label>ECD</label>
-            <md-datepicker ng-model="ecd" md-min-date="today" md-placeholder="Enter date" md-open-on-focus></md-datepicker>
+        <label>ECD</label>
+        <md-datepicker ng-model="ecd" md-min-date="today" md-placeholder="Enter date" md-open-on-focus></md-datepicker>
       </md-input-container>
     </div>
+    <div flex-gt-xs>
     <md-input-container>
       <label>Criticality</label>
       <md-select ng-model="criticality" style="min-width: 200px">
@@ -26,20 +27,47 @@
         </md-option>
       </md-select>
     </md-input-container>
+    </div>
     <div flex-gt-xs>
          <md-input-container>
           <label>Owner</label>
-          <md-select placeholder="Owner" ng-model="user.name" style="min-width: 200px;">
-             <md-option ng-value="$index" ng-model="user" ng-repeat="user in users" ng-model-options="{trackBy: 'user.userid'}">{{user.name}}</md-option>
+          <md-select placeholder="Owner" ng-model="owner" style="min-width: 200px;">
+             <md-option ng-value="$index" ng-model="owner" ng-repeat="user in users" ng-model-options="{trackBy: 'user.userid'}">{{user.name}}</md-option>
           </md-select>
         </md-input-container>
     </div>
     <div flex-gt-xs>
          <md-input-container>
           <label>Alt Owner</label>
-          <md-select placeholder="Alt Owner" ng-model="user.name" style="min-width: 200px;">
-             <md-option ng-value="$index" ng-model="user" ng-repeat="user in users" ng-model-options="{trackBy: 'user.userid'}">{{user.name}}</md-option>
+          <md-select placeholder="Alt Owner" ng-model="altowner" style="min-width: 200px;">
+             <md-option ng-value="$index" ng-model="altowner" ng-repeat="user in users" ng-model-options="{trackBy: 'user.userid'}">{{user.name}}</md-option>
           </md-select>
         </md-input-container>
     </div>
+     <md-input-container class="text-input" flex="100">
+          <label>Action Item Title</label>
+          <input required name="title" ng-model="actionitem.title">
+          <div ng-messages="actionitem.title.$error">
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+    </div>
+    <div flex-gt-xs>    
+        <md-input-container class="textarea-input" flex="100">
+          <label>Action Item Statement</label> 
+          <textarea ng-model="actionitem.statement" md-maxlength="255" rows="5" md-select-on-focus=""></textarea>
+          <div ng-messages="actionitem.statement.$error">
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+        </div>
+    <div flex-gt-xs>
+        <md-input-container class="textarea-input" flex="100">
+          <label>Closure Criteria</label>
+          <textarea ng-model="actionitem.closurecriteria" md-maxlength="255" rows="5" md-select-on-focus=""></textarea>
+          <div ng-messages="actionitem.closurecriteria.$error">
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+        </div>
 </md-content>

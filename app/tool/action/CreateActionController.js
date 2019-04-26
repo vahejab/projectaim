@@ -6,7 +6,9 @@ angular.module('Action').config([
   }]).controller('CreateActionController', ['$http', '$resource', '$scope', '$window', '$state', '$timeout', function($http, $resource, $scope, $window, $state, $timeout){
         
         $scope.users = {};
-        $scope.user = {};
+        $scope.assignor = {};
+        $scope.owner = {};
+        $scope.altowner = {};
         $scope.usr = {};
         $scope.minDate = null;
         
