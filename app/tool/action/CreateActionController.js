@@ -3,18 +3,30 @@ angular.module('Action').config([
   '$urlRouterProvider', 
   function($stateProvider, $urlRouterProvider) {
   
-  }]).controller('CreateActionController', ['$http', '$resource', '$scope', '$window', '$state', '$timeout', function($http, $resource, $scope, $window, $state, $timeout){
+  }]).decorator('CreateActionDecorator', function(){
+    
+
+  }).controller('CreateActionController', ['$http', '$resource', '$scope', '$window', '$state', '$timeout', function($http, $resource, $scope, $window, $state, $timeout){
         
+        
+        $scope.actionitem = {
+            assignor: '', 
+            dueDate: '',
+            ecd: '',
+            criticality: '',
+            owner: '',
+            altOwner: '',
+            title: '',
+            statement: '',
+            closurecriteria: ''
+        };
+
         $scope.users = {};
-        $scope.assignor = {};
-        $scope.owner = {};
-        $scope.altowner = {};
         $scope.usr = {};
         $scope.minDate = null;
         
         $scope.criticalitylevels = [];   
-        $scope.criticality = {};
-           
+          
         $scope.getUsers = function(){
             return $scope.users;  
         };
@@ -33,6 +45,24 @@ angular.module('Action').config([
                 return response.data;
             }); 
         } 
+
+        $scope.valid = function(){
+        
+            alert( $scope.actionitem.assignor != '' &&
+                   $scope.actionitem.dueDate != '' &&
+                   $scope.actionitem.ecd != '' &&
+                   $scope.actionitem.criticality != '' &&
+                   $scope.owner != '' &&
+                   $scope.altOwner != '' &&
+                   $scope.title.trim() != '' &&
+                   $scope.statement.trim() != '' &&
+                   $scope.closureCriteria.trim() != '');
+        };
+
+        $scope.submit = function(){
+            alert(JSON.stringify($scope.actionitem));
+            //$http.post('api/actionitem', )
+        }
        
         $scope.today = new Date()
        

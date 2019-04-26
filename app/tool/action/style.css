@@ -3,7 +3,6 @@ md-input-container.dropdown{
     left: 8px !important;
 }
 
-.text-input label.md-required,
 .text-input {
     padding-left: 8px !important;
 }
@@ -27,21 +26,39 @@ md-input-container{
     padding: 0px !important;
 }
 
-.text-input input,
-.text-input label{
+label, textarea, input{
     padding-left: 0px !important;
-    margin-left: 0px !important;
+}
+.text-input label{
+    margin-left: 8px !important;
+}
+.text-input input{
+    margin-left: initial !important;
 }  
 .textarea-input textarea,
 .textarea-input label{
-    padding-left: 0px !important;
     margin-left: 8px !important;
 }
 
-.textarea-input div[ng-message=required]{
+div[ng-message=required]{
+    font-size: 10pt !important;
+}
+
+.textarea-input div[ng-message=required],
+._md-datepicker-floating-label  div[ng-message=required]
+{
     margin-left: 8px !important;
 }
 
 .text-input div[ng-message=required]{   
     margin-left: 0px !important;
+}
+
+.textarea-input textarea{
+    min-height: 200px !important;
+    max-height: 200px !important;
+}
+
+.md-resize-handle{
+    cursor: default !important;
 }
