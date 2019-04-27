@@ -9,6 +9,9 @@
             <md-option ng-value="$index" ng-model="actionitem.assignor" ng-repeat="user in users"
               ng-model-options="{trackBy: 'user.userid'}">{{user.name}}</md-option>
           </md-select>
+          <div ng-if="!actionitem.assignor" for="CreateActionItem.assignor.$error" ng-messages="CreateAction.$submitted">
+              <div ng-message="required">This is required.</div>
+            </div>
         </md-input-container>
       </div>
       <div flex-gt-xs>
@@ -16,9 +19,9 @@
           <label>Original Due Date</label>
           <md-datepicker required name="dueDate" ng-model="actionitem.dueDate" md-min-date="today" md-placeholder="Enter date">
           </md-datepicker>
-          <div ng-if="!actionitem.dueDate.trim().length" for="CreateAction.dueDate.$error" ng-messages="CreateAction.$submitted">
-              <div ng-message="required">This is required.</div>
-            </div>
+          <div ng-if="!actionitem.dueDate" for="CreateActionItem.dueDate.$error" ng-messages="CreateAction.$submitted">
+            <div ng-message="required">This is required.</div>
+          </div>
         </md-input-container>
       </div>
       <div flex-gt-xs>
@@ -26,9 +29,9 @@
           <label>ECD</label>
           <md-datepicker required name="ecd" ng-model="actionitem.ecd" md-min-date="today" md-placeholder="Enter date">
           </md-datepicker>
-          <div ng-if="!actionitem.ecd.trim().length" for="CreateAction.ecd.$error" ng-messages="CreateAction.$submitted">
-              <div ng-message="required">This is required.</div>
-            </div>
+          <div ng-if="!actionitem.ecd" for="CreateActionItem.ecd.$error" ng-messages="CreateAction.$submitted">
+            <div ng-message="required">This is required.</div>
+          </div>
         </md-input-container>
       </div>
       <div flex-gt-xs>
@@ -40,6 +43,9 @@
               {{criticality.level}}
             </md-option>
           </md-select>
+          <div ng-if="!actionitem.criticality" for="CreateActionItem.criticality.$error" ng-messages="CreateAction.$submitted">
+            <div ng-message="required">This is required.</div>
+          </div>
         </md-input-container>
       </div>
       <div flex-gt-xs>
@@ -49,6 +55,9 @@
             <md-option ng-value="$index" ng-model="owner" ng-repeat="user in users"
               ng-model-options="{trackBy: 'user.userid'}">{{user.name}}</md-option>
           </md-select>
+          <div ng-if="!actionitem.owner" for="CreateActionItem.owner.$error" ng-messages="CreateAction.$submitted">
+            <div ng-message="required">This is required.</div>
+          </div>
         </md-input-container>
       </div>
       <div flex-gt-xs>
@@ -58,13 +67,16 @@
             <md-option ng-value="$index" ng-model="actionitem.altowner" ng-repeat="user in users"
               ng-model-options="{trackBy: 'user.userid'}">{{user.name}}</md-option>
           </md-select>
+          <div ng-if="!actionitem.owner" for="CreateActionItem.owner.$error" ng-messages="CreateAction.$submitted">
+              <div ng-message="required">This is required.</div>
+          </div>
         </md-input-container>
       </div>
       <div flex-gt-xs>
         <md-input-container class="text-input" flex="100">
           <label>Action Item Title</label>
           <input required name="title" ng-model="actionitem.title">
-          <div ng-if="!actionitem.title.trim().length" for="CreateAction.title.$error" ng-messages="CreateAction.$submitted">
+          <div ng-if="!actionitem.title.trim().length" for="CreateActionItem.title.$error" ng-messages="CreateAction.$submitted">
             <div ng-message="required">This is required.</div>
           </div>
         </md-input-container>
@@ -74,7 +86,7 @@
           <label>Action Item Statement</label>
           <textarea required name="statement" ng-model="actionitem.statement" md-maxlength="255" rows="5"
             ></textarea>
-          <div ng-if="!actionitem.statement.trim().length" for="CreateAction.statement.$error" ng-messages="CreateAction.$submitted">
+          <div ng-if="!actionitem.statement.trim().length" for="CreateActionItem.statement.$error" ng-messages="CreateAction.$submitted">
             <div ng-message="required">This is required.</div>
           </div>
         </md-input-container>
@@ -84,7 +96,7 @@
           <label>Closure Criteria</label>
           <textarea required name="closurecriteria" ng-model="actionitem.closurecriteria" md-maxlength="255" rows="5"
             ></textarea>
-          <div ng-if="!actionitem.closurecriteria.trim().length" for="CreateAction.closurecriteria.$error" ng-messages="CreateAction.$submitted">
+          <div ng-if="!actionitem.closurecriteria.trim().length" for="CreateActionItem.closurecriteria.$error" ng-messages="CreateAction.$submitted">
             <div ng-message="required">This is required.</div>
           </div>
         </md-input-container>

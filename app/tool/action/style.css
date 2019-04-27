@@ -1,3 +1,4 @@
+
 md-md-select-value,
 md-input-container.dropdown{
     left: 8px !important;
@@ -47,7 +48,7 @@ div[ng-message=required]{
 .textarea-input div[ng-message=required],
 ._md-datepicker-floating-label  div[ng-message=required]
 {
-    margin-left: 8px !important;
+    margin-left: 10px !important;
 }
 
 .text-input div[ng-message=required]{   

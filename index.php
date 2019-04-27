@@ -10,6 +10,20 @@
  <link rel="stylesheet" href="/app/css/datatables-scroller/scroller.dataTables.min.css">
  <link rel="stylesheet" href="/app/css/angular-material/angular-material.min.css">
  <link rel="stylesheet" href="/app/assets/styles/style.css">
+ <style>
+    md-content{
+        background-color: rgb(250, 253, 252) !important;
+    }
+
+    label, span{
+        color: black !important;
+    }
+    
+    .md-input-focused label, 
+    .md-input-focused span{
+        color: blue !important;
+    }
+ </style>
  
  <!--link rel="stylesheet" href="/app/js/kendoui-2019.1.220/styles/kendo.common.min.css"  />
  <link rel="stylesheet" href="/app/js/kendoui-2019.1.220/styles/kendo.material.min.css"  />
@@ -24,7 +38,6 @@
                 
             </div>
        </div>
-       
        
        <!--script src="/app/js/kendoui-2019.1.220/js/jquery.min.js"></script-->  
        <!--script src="/app/js/kendoui-2019.1.220/js/kendo.datepicker.min.js"></script>

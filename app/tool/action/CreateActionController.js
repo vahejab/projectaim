@@ -1,14 +1,5 @@
-angular.module('Action').config([
-  '$stateProvider', 
-  '$urlRouterProvider', 
-  function($stateProvider, $urlRouterProvider) {
-  
-  }]).decorator('CreateActionDecorator', function(){
-    
-
-  }).controller('CreateActionController', ['$http', '$resource', '$scope', '$window', '$state', '$timeout', function($http, $resource, $scope, $window, $state, $timeout){
-        
-        
+angular.module('Action').config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
+  }]).controller('CreateActionController', ['$http', '$resource', '$scope', '$window', '$state', '$timeout', function($http, $resource, $scope, $window, $state, $timeout){
         $scope.actionitem = {
             assignor: '', 
             dueDate: '',

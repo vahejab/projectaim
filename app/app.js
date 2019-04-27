@@ -6,6 +6,13 @@ var app = angular.module('Main', ['ui.router', 'oc.lazyLoad', 'datatables', 'ngR
 
 app.controller('MainController', ['DTOptionsBuilder']);
 
-app.config(['$ocLazyLoadProvider', '$stateProvider', '$urlRouterProvider', function($ocLazyLoadProvider, $stateProvider, $urlRouterProvider){
+app.config(['$ocLazyLoadProvider', '$stateProvider', '$urlRouterProvider', '$mdThemingProvider', function($ocLazyLoadProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider) {
+   /* $mdThemingProvider.theme('custom')
+                      .primaryPalette('blue')
+                      .accentPalette('blue-grey');
+    $mdThemingProvider.setDefaultTheme('custom')
+    $mdThemingProvider.alwaysWatchTheme(true);
+    */
     configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider);
+    
 }]);
