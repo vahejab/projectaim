@@ -5,7 +5,7 @@
    {
         private $_params;
         
-        public function __construct($params = [], $endpoint2 = null)
+        public function __construct($params = [], $endpoint2 = null, $payload = [])
         {
             $this->params = $params;
         }   

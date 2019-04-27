@@ -6,11 +6,10 @@
         {
             if (is_null($actionitem)) $actionitem = new \data\model\actionitem();
 
-            if (!is_null($array['ID'])) $actionitem->id = $array['ID'];
-            if (!is_null($array['ActionItemID'])) $actionitem->actionitemid = $array['ActionItemID'];
+            if (!is_null($array['ID'])) $actionitem->id = $array['ID'];                         
             if (!is_null($array['AssignorID'])) $actionitem->assignorId = $array['AssignorID'];
-            if (!is_null($array['ApproverID'])) $actionitem->approverid = $array['ApproverID'];
-            if (!is_null($array['OwnerID'])) $actionitem->ownwerId = $array['OwnerID'];
+            if (!is_null($array['ApproverID'])) $actionitem->approverId = $array['ApproverID'];
+            if (!is_null($array['OwnerID'])) $actionitem->ownerId = $array['OwnerID'];
             if (!is_null($array['AltOwnerID'])) $actionitem->altownerId = $array['AltOwnerID'];
                    
 
@@ -25,13 +24,13 @@
             if (!is_null($array['approver.firstname'])) $actionitem->approverfirstname = $array['approver.firstname'];
             
             if (!is_null($array['assignor.lastname']) 
-            ||  !is_null($array['assignor.lastname'])) $actionitem->assignor = $actionitem->getAssignorFullName();
+            ||  !is_null($array['assignor.firstname'])) $actionitem->assignor = $actionitem->getAssignorFullName();
             if (!is_null($array['approver.lastname']) 
-            ||  !is_null($array['approver.lastname'])) $actionitem->approver = $actionitem->getApproverFullName();
+            ||  !is_null($array['approver.firstname'])) $actionitem->approver = $actionitem->getApproverFullName();
             if (!is_null($array['altowner.lastname']) 
-            ||  !is_null($array['altowner.lastname'])) $actionitem->altowner = $actionitem->getAltOwnerFullName();
+            ||  !is_null($array['altowner.firstname'])) $actionitem->altowner = $actionitem->getAltOwnerFullName();
             if (!is_null($array['owner.lastname']) 
-            ||  !is_null($array['owner.lastname'])) $actionitem->owner = $actionitem->getOwnerFullName();
+            ||  !is_null($array['owner.firstname'])) $actionitem->owner = $actionitem->getOwnerFullName();
             
             
             if (!is_null($array['ActionItemTitle'])) $actionitem->actionitemtitle = $array['ActionItemTitle'];
@@ -92,10 +91,10 @@
                     $whereParams[] = $params['keyword'];
                 }            
             }    
-            if (isset($params['actionitemid']))
+            if (isset($params['id']))
             {
-                $whereStrings[] = 'actionitemid = ?';
-                $whereParams[] = $params['actionitemid'];   
+                $whereStrings[] = 'id = ?';
+                $whereParams[] = $params['id'];   
             }
  
             $sql = "select
@@ -112,7 +111,7 @@
                     left join users assignor
                         ON a.assignorid = assignor.userid
                     left join users owner
-                        ON a.approverid = owner.userid
+                        ON a.ownerid = owner.userid
                     left join users altowner
                         ON a.altownerid = altowner.userid
                     left join users approver
@@ -138,7 +137,6 @@
         {    
             $sql = "insert
                     into actionitems(
-                            actionitemid,
                             assignorid,
                             ownerid,
                             altownerid,
@@ -150,7 +148,6 @@
                             closurecriteria
                     )
                     values(
-                            (max(actionitemid)+1),
                             :assignorid,
                             :ownerid,
                             :altownerid,
@@ -162,20 +159,19 @@
                             :closurecriteria
                     )";
             try
-            {
-            
+            {      
                   $statement  = $this->db->prepare($sql);
                   $this->db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION); 
                   $statement->execute([
                         ':assignorid' => $params['assignor'],
-                        ':ownerid' => $params['owner'],
+                        ':ownerid' =>  $params['owner'],
                         ':altownerid' => $params['altowner'],
                         ':duedate' => $params['duedate'],
-                        ':ecd' => $params['ecd'],
+                        ':ecd' => $params['ecd'],      
                         ':criticality' => $params['criticality'],
                         ':actionitemtitle' => $params['actionitemtitle'],
                         ':actionitemstatement' => $params['actionitemstatement'],
-                        ':closurecriteria' => $params['closurecriteria']
+                        ':closurecriteria' => $params['closurecriteria'],
                   ]); 
                   return json_encode(['Result' => 'Success'], JSON_PRETTY_PRINT);
             }

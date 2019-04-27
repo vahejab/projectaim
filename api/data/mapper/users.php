@@ -5,8 +5,8 @@
         public function mapFromArray($array, \data\model\user $user = null)
         {
             if ( is_null($user)) $user = new \data\model\user();
-            //if (!is_null($array['user.id'])) $user->id = $array['user.id'];
-            if (!is_null($array['user.userid'])) $user->userid = $array['user.userid'];
+            if (!is_null($array['user.id'])) $user->id = $array['user.id'];
+            //if (!is_null($array['user.userid'])) $user->userid = $array['user.userid'];
             if (!is_null($array['user.lastname'])) $user->lastname = $array['user.lastname'];
             if (!is_null($array['user.firstname'])) $user->firstname = $array['user.firstname'];         
             if (!is_null($array['user.title'])) $user->title = $array['user.title'];
@@ -28,8 +28,8 @@
                 
                 $searchCols = 
                    [
-                    //'id',
-                    'userid',
+                    'id',
+                    //'userid',
                     'lastname',
                     'firstname',
                     'title',
@@ -39,7 +39,7 @@
                     'department'
                     ];
                 
-                if (isset($params['userid']))
+                if (isset($params['id']))
                 {
                     $whereStrings[] = 'id = ?';
                     $whereParams[] = $params['id'];   
@@ -59,15 +59,14 @@
             }    
  
  
-            if (isset($params['userid']))
+            if (isset($params['id']))
             {
-                $whereStrings[] = 'userid = ?';
-                $whereParams[] = $params['userid'];   
+                $whereStrings[] = 'id = ?';
+                $whereParams[] = $params['id'];   
             }
             
             $sql = "select 
                     id as 'user.id',
-                    userid as 'user.userid',
                     lastname as 'user.lastname',
                     firstname as 'user.firstname',
                     title as 'user.title',

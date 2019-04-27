@@ -17,7 +17,7 @@
         public function findOne($id)
         {
             $mapper = $this->_getMapper();
-            $params = array('actionitemid' => $id);
+            $params = array('id' => $id);
             return $mapper->findOne($params);   
         }
         public function findAll($params = [])

@@ -2,6 +2,7 @@
     abstract class api
     {
         protected $endpoint = array();
+        protected $method = '';
         protected $verb = '';
         protected $args = array();
         protected $payload = null;
@@ -76,10 +77,10 @@
         
         public function processRequest() {
             if(count($this->endpoint) > 0){
-                $class = "\\controllers\\{$this->endpoint[0]}Controller";
+                $class = "\\controllers\\{$this->endpoint[0]}Controller";  
                 if (class_exists($class, true))
                 {
-                        $method = strtolower($this->method);
+                        $method = strtolower($this->method);  
                         if (method_exists($class, $method)){
                             $args = $this->args;
                             $id = $this->id;
@@ -89,7 +90,6 @@
                         }
                            
                 }
-                echo $class;
                 return $this->_response("No Endpoint: {$this->endpoint[0]}", 404);
             }
         }

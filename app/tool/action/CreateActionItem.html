@@ -6,8 +6,8 @@
         <md-input-container>
           <label>Assignor</label>
           <md-select required name="assignor" placeholder="Assignor" ng-model="actionitem.assignor" style="min-width: 200px;">
-            <md-option ng-value="$index" ng-model="actionitem.assignor" ng-repeat="user in users"
-              ng-model-options="{trackBy: 'user.userid'}">{{user.name}}</md-option>
+            <md-option ng-value="assignor.id" ng-model="actionitem.assignor" ng-repeat="assignor in users"
+              ng-model-options="{trackBy: 'assignor.id'}">{{assignor.name}}</md-option>
           </md-select>
           <div ng-if="!actionitem.assignor" for="CreateActionItem.assignor.$error" ng-messages="CreateAction.$submitted">
               <div ng-message="required">This is required.</div>
@@ -17,9 +17,9 @@
       <div flex-gt-xs>
         <md-input-container>
           <label>Original Due Date</label>
-          <md-datepicker required name="dueDate" ng-model="actionitem.dueDate" md-min-date="today" md-placeholder="Enter date">
+          <md-datepicker required name="duedate" ng-model="actionitem.duedate" md-min-date="today" md-placeholder="Enter date">
           </md-datepicker>
-          <div ng-if="!actionitem.dueDate" for="CreateActionItem.duedate.$error" ng-messages="CreateAction.$submitted">
+          <div ng-if="!actionitem.duedate" for="CreateActionItem.duedate.$error" ng-messages="CreateAction.$submitted">
             <div ng-message="required">This is required.</div>
           </div>
         </md-input-container>
@@ -52,8 +52,8 @@
         <md-input-container class="dropdown">
           <label>Owner</label>
           <md-select required name="owner" placeholder="Owner" ng-model="actionitem.owner" style="min-width: 200px;">
-            <md-option ng-value="$index" ng-model="owner" ng-repeat="user in users"
-              ng-model-options="{trackBy: 'user.userid'}">{{user.name}}</md-option>
+            <md-option ng-value="owner.id" ng-model="owner" ng-repeat="owner in users"
+              ng-model-options="{trackBy: 'owner.id'}">{{owner.name}}</md-option>
           </md-select>
           <div ng-if="!actionitem.owner" for="CreateActionItem.owner.$error" ng-messages="CreateAction.$submitted">
             <div ng-message="required">This is required.</div>
@@ -63,11 +63,11 @@
       <div flex-gt-xs>
         <md-input-container class="dropdown">
           <label>Alt Owner</label>
-          <md-select required name="altOwner" placeholder="Alt Owner" ng-model="actionitem.altowner" style="min-width: 200px;">
-            <md-option ng-value="$index" ng-model="actionitem.altowner" ng-repeat="user in users"
-              ng-model-options="{trackBy: 'user.userid'}">{{user.name}}</md-option>
+          <md-select required name="altoowner" placeholder="Alt Owner" ng-model="actionitem.altowner" style="min-width: 200px;">
+            <md-option ng-value="altowner.id" ng-model="actionitem.altowner" ng-repeat="altowner in users"
+              ng-model-options="{trackBy: 'altowner.id'}">{{altowner.name}}</md-option>
           </md-select>
-          <div ng-if="!actionitem.owner" for="CreateActionItem.owner.$error" ng-messages="CreateAction.$submitted">
+          <div ng-if="!actionitem.altowner" for="CreateActionItem.altowner.$error" ng-messages="CreateAction.$submitted">
               <div ng-message="required">This is required.</div>
           </div>
         </md-input-container>

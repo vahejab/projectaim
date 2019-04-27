@@ -27,7 +27,6 @@
         public function findOne($params = [])
         {
             $collection = $this->findAll($params);
-
             if (count($collection) > 1)
             {
                 throw new \Exception("More than one result found");

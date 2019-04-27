@@ -13,8 +13,10 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
             closurecriteria: ''
         };
 
-        $scope.users = {};
-        $scope.usr = {};
+        $scope.users = [];
+        $scope.owner = {};
+        $scope.altowner = {};
+        $scope.assignor = {};
         $scope.minDate = null;
         
         $scope.criticalitylevels = [];   
@@ -44,8 +46,8 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                    $scope.actionitem.duedate != '' &&
                    $scope.actionitem.ecd != '' &&
                    $scope.actionitem.criticality != '' &&
-                   $scope.owner != '' &&
-                   $scope.altowner != '' &&
+                   $scope.actionitem.owner != '' &&
+                   $scope.actionitem.altowner != '' &&
                    $scope.actionitemtitle.trim() != '' &&
                    $scope.actionitemstatement.trim() != '' &&
                    $scope.closurecriteria.trim() != '');
@@ -58,24 +60,20 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
 
         $scope.submit = function(){
             $scope.actionitem = JSON.parse(JSON.stringify($scope.actionitem));
-            $scope.actionitem.dueDate = $scope.split($scope.actionitem.dueDate,'T')[0];
+            $scope.actionitem.duedate = $scope.split($scope.actionitem.duedate,'T')[0];
             $scope.actionitem.ecd = $scope.split($scope.actionitem.ecd, 'T')[0];
             $scope.actionitem.criticality = $scope.actionitem.critlevel.value;
             $http.post('/api/actionitems', JSON.stringify($scope.actionitem)).then(function (response){
                 if (response.data)
-                    alert(JSON.stringify(response.data));
                     $scope.msg = "Post Data Submitted Successfully!";
                 }, function (response) {
-                        $scope.msg = "Service does not exist."; 
-                        $scope.statusval = response.status;
-                        $scope.statustext = response.statusText;
-                        $scope.headers = response.headers();                
+                        $scope.msg = "Service does not exist.";                 
                 });
         }
        
         $scope.today = new Date()
        
-        this.dueDate = new Date();
+        this.duedate = new Date();
         this.ecd = new Date();
         this.isOpen = false;
         

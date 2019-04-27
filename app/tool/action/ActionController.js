@@ -1,6 +1,19 @@
 angular.module('Action').controller('ActionController', ['$http', '$resource', '$scope', '$state', '$timeout', 'DTOptionsBuilder', function($http, $resource, $scope, $state, $timeout, DTOptionsBuilder){
-        $scope.actionitems = {};    
-    
+        $scope.actionitems = [];    
+        $scope.actionitem = {
+                id: '',
+                actinitemtitle: '',
+                criticality: '',
+                assignor: '',
+                owner: '',
+                altowner: '',
+                approver: '',
+                assigneddate: '',
+                duedate: '',
+                ecd: '',
+                completiondate: '',
+                closeddate: ''
+        };
         function GetActionItems2()
         {
            return $resource('actionitems.json').query().$promise;
@@ -14,7 +27,7 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
                     $.each(result.data, function(key, actionitem){
                         result.data[key] =  
                         [ 
-                                    actionitem.actionitemid, 
+                                    actionitem.id, 
                                     actionitem.actionitemtitle,
                                     actionitem.criticality,
                                     actionitem.assignor,
