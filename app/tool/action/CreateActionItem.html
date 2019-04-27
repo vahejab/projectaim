@@ -1,5 +1,5 @@
 <div layout-align="center center">
-  <md-content ng-controller="CreateActionController" ng-init="init" layout-padding="" ng-cloak="">
+    <md-content ng-controller="CreateActionController" ng-init="init" layout-padding="" ng-cloak="">
     <init-data />
     <form name="CreateActionItem" role="form" ng-submit="CreateActionItem.$valid && submit()" novalidate>
       <div flex-gt-xs>
@@ -19,7 +19,7 @@
           <label>Original Due Date</label>
           <md-datepicker required name="dueDate" ng-model="actionitem.dueDate" md-min-date="today" md-placeholder="Enter date">
           </md-datepicker>
-          <div ng-if="!actionitem.dueDate" for="CreateActionItem.dueDate.$error" ng-messages="CreateAction.$submitted">
+          <div ng-if="!actionitem.dueDate" for="CreateActionItem.duedate.$error" ng-messages="CreateAction.$submitted">
             <div ng-message="required">This is required.</div>
           </div>
         </md-input-container>
@@ -37,13 +37,13 @@
       <div flex-gt-xs>
         <md-input-container class="dropdown">
           <label>Criticality</label>
-          <md-select required name="criticality" ng-model="actionitem.criticality" style="min-width: 200px">
+          <md-select required name="criticality" ng-model="actionitem.critlevel" style="min-width: 200px">
             <md-option ng-repeat="criticality in criticalitylevels" ng-model-options="{trackBy: 'criticality.level'}"
               ng-value="criticality">
               {{criticality.level}}
             </md-option>
           </md-select>
-          <div ng-if="!actionitem.criticality" for="CreateActionItem.criticality.$error" ng-messages="CreateAction.$submitted">
+          <div ng-if="!actionitem.critlevel" for="CreateActionItem.criticality.$error" ng-messages="CreateAction.$submitted">
             <div ng-message="required">This is required.</div>
           </div>
         </md-input-container>
@@ -75,8 +75,8 @@
       <div flex-gt-xs>
         <md-input-container class="text-input" flex="100">
           <label>Action Item Title</label>
-          <input required name="title" ng-model="actionitem.title">
-          <div ng-if="!actionitem.title.trim().length" for="CreateActionItem.title.$error" ng-messages="CreateAction.$submitted">
+          <input required name="title" ng-model="actionitem.actionitemtitle">
+          <div ng-if="!actionitem.actionitemtitle.trim().length" for="CreateActionItem.actionitemtitle.$error" ng-messages="CreateAction.$submitted">
             <div ng-message="required">This is required.</div>
           </div>
         </md-input-container>
@@ -84,9 +84,9 @@
       <div flex-gt-xs>
         <md-input-container class="textarea-input" flex="100">
           <label>Action Item Statement</label>
-          <textarea required name="statement" ng-model="actionitem.statement" md-maxlength="255" rows="5"
+          <textarea required name="statement" ng-model="actionitem.actionitemstatement" md-maxlength="255" rows="5"
             ></textarea>
-          <div ng-if="!actionitem.statement.trim().length" for="CreateActionItem.statement.$error" ng-messages="CreateAction.$submitted">
+          <div ng-if="!actionitem.actionitemstatement.trim().length" for="CreateActionItem.statement.$error" ng-messages="CreateAction.$submitted">
             <div ng-message="required">This is required.</div>
           </div>
         </md-input-container>
@@ -109,6 +109,11 @@
               <md-button class="md-raised md-warn">Warn</md-button>
               <div class="label">Raised</div-->
       </section>
+      <div flex-gt-xs>
+          <md-message-conainer>
+            {{msg}}
+          </md-message-conainer>
+        </div>
     </form>
   </md-content>
 </div>

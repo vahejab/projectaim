@@ -2,13 +2,14 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
   }]).controller('CreateActionController', ['$http', '$resource', '$scope', '$window', '$state', '$timeout', function($http, $resource, $scope, $window, $state, $timeout){
         $scope.actionitem = {
             assignor: '', 
-            dueDate: '',
+            duedate: '',
             ecd: '',
+            critlevel: '',
             criticality: '',
             owner: '',
-            altOwner: '',
-            title: '',
-            statement: '',
+            altowner: '',
+            actionitemtitle: '',
+            actionitemstatement: '',       
             closurecriteria: ''
         };
 
@@ -40,19 +41,36 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
         $scope.valid = function(){
         
             alert( $scope.actionitem.assignor != '' &&
-                   $scope.actionitem.dueDate != '' &&
+                   $scope.actionitem.duedate != '' &&
                    $scope.actionitem.ecd != '' &&
                    $scope.actionitem.criticality != '' &&
                    $scope.owner != '' &&
-                   $scope.altOwner != '' &&
-                   $scope.title.trim() != '' &&
-                   $scope.statement.trim() != '' &&
-                   $scope.closureCriteria.trim() != '');
+                   $scope.altowner != '' &&
+                   $scope.actionitemtitle.trim() != '' &&
+                   $scope.actionitemstatement.trim() != '' &&
+                   $scope.closurecriteria.trim() != '');
         };
 
+        $scope.split = function(str, delimit) {
+            var array = str.split(delimit);
+            return array;
+        }
+
         $scope.submit = function(){
-            alert(JSON.stringify($scope.actionitem));
-            //$http.post('api/actionitem', )
+            $scope.actionitem = JSON.parse(JSON.stringify($scope.actionitem));
+            $scope.actionitem.dueDate = $scope.split($scope.actionitem.dueDate,'T')[0];
+            $scope.actionitem.ecd = $scope.split($scope.actionitem.ecd, 'T')[0];
+            $scope.actionitem.criticality = $scope.actionitem.critlevel.value;
+            $http.post('/api/actionitems', JSON.stringify($scope.actionitem)).then(function (response){
+                if (response.data)
+                    alert(JSON.stringify(response.data));
+                    $scope.msg = "Post Data Submitted Successfully!";
+                }, function (response) {
+                        $scope.msg = "Service does not exist."; 
+                        $scope.statusval = response.status;
+                        $scope.statustext = response.statusText;
+                        $scope.headers = response.headers();                
+                });
         }
        
         $scope.today = new Date()

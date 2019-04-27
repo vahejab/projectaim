@@ -19,8 +19,8 @@
         color: black !important;
     }
     
-    .md-input-focused label, 
-    .md-input-focused span{
+    :not(div[ng-switch=calendarCtrl.currentView]) .md-input-focused label, 
+    :not(div[ng-switch=calendarCtrl.currentView]) .md-input-focused span{
         color: blue !important;
     }
  </style>

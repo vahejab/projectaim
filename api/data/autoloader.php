@@ -1,7 +1,6 @@
 <?php
     $cls = []; 
-    # instantiate the autoloader object
-       # instantiate the autoloader object
+    # instantiate the autoloader object   
     $cls = [
                     new \autoloader\autoloader('data\service'),
                     new \autoloader\autoloader('data\mapper'),

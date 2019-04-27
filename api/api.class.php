@@ -4,7 +4,7 @@
         protected $endpoint = array();
         protected $verb = '';
         protected $args = array();
-        protected $file = null;
+        protected $payload = null;
         protected $id = null;
         
         public function __construct($request){
@@ -55,6 +55,8 @@
                 case 'DELETE':
                 case 'POST':
                     $this->request = $this->_cleanInputs($_POST);
+                    $this->payload = $this->_cleanInputs(file_get_contents('php://input'));
+                    $this->payload = json_decode($this->payload, true);
                     break;
                 case 'GET':
                     $this->request = $this->_cleanInputs($_GET);
@@ -75,19 +77,19 @@
         public function processRequest() {
             if(count($this->endpoint) > 0){
                 $class = "\\controllers\\{$this->endpoint[0]}Controller";
-            
                 if (class_exists($class, true))
                 {
-                       
                         $method = strtolower($this->method);
                         if (method_exists($class, $method)){
                             $args = $this->args;
                             $id = $this->id;
                             $endpoint2 =  $this->endpoint[1] ?? null;
-                            return $this->_response((new $class($args,$endpoint2))->{$method}($id));   
+                            $payload = $this->payload;
+                            return $this->_response((new $class($args,$endpoint2,$payload))->{$method}($id));   
                         }
                            
                 }
+                echo $class;
                 return $this->_response("No Endpoint: {$this->endpoint[0]}", 404);
             }
         }

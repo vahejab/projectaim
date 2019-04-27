@@ -3,6 +3,17 @@
     
     class actionitemservice extends service 
     {    
+        public function db()
+        {
+            return new \data\provider\database();
+        }
+
+        protected function _getMapper()
+        {
+            $db = $this->db()->getHandle();
+            return new \data\mapper\actionitems($db);
+        } 
+
         public function findOne($id)
         {
             $mapper = $this->_getMapper();
@@ -15,14 +26,9 @@
             return $mapper->findAll($params);  
         }
 
-        public function db()
+        public function createOne($params = [])
         {
-            return new \data\provider\database();
+            $mapper = $this->_getMapper();
+            return $mapper->createOne($params);
         }
-
-        protected function _getMapper()
-        {
-            $db = $this->db()->getHandle();
-            return new \data\mapper\actionitems($db);
-        } 
     }

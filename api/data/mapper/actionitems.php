@@ -8,6 +8,13 @@
 
             if (!is_null($array['ID'])) $actionitem->id = $array['ID'];
             if (!is_null($array['ActionItemID'])) $actionitem->actionitemid = $array['ActionItemID'];
+            if (!is_null($array['AssignorID'])) $actionitem->assignorId = $array['AssignorID'];
+            if (!is_null($array['ApproverID'])) $actionitem->approverid = $array['ApproverID'];
+            if (!is_null($array['OwnerID'])) $actionitem->ownwerId = $array['OwnerID'];
+            if (!is_null($array['AltOwnerID'])) $actionitem->altownerId = $array['AltOwnerID'];
+                   
+
+
             if (!is_null($array['assignor.lastname'])) $actionitem->assignorlastname = $array['assignor.lastname'];
             if (!is_null($array['assignor.firstname'])) $actionitem->assignorfirstname = $array['assignor.firstname'];
             if (!is_null($array['owner.lastname'])) $actionitem->ownerlastname = $array['owner.lastname'];
@@ -125,5 +132,57 @@
             $statement->execute($whereParams);
             $results = $statement->fetchAll();
             return $this->_populateFromCollection($results);
+        }
+
+        public function createOne($params = [])
+        {    
+            $sql = "insert
+                    into actionitems(
+                            actionitemid,
+                            assignorid,
+                            ownerid,
+                            altownerid,
+                            duedate,
+                            ecd,
+                            criticality,
+                            actionitemtitle,
+                            actionitemstatement,
+                            closurecriteria
+                    )
+                    values(
+                            (max(actionitemid)+1),
+                            :assignorid,
+                            :ownerid,
+                            :altownerid,
+                            :duedate,
+                            :ecd,
+                            :criticality,
+                            :actionitemtitle,
+                            :actionitemstatement,
+                            :closurecriteria
+                    )";
+            try
+            {
+            
+                  $statement  = $this->db->prepare($sql);
+                  $this->db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION); 
+                  $statement->execute([
+                        ':assignorid' => $params['assignor'],
+                        ':ownerid' => $params['owner'],
+                        ':altownerid' => $params['altowner'],
+                        ':duedate' => $params['duedate'],
+                        ':ecd' => $params['ecd'],
+                        ':criticality' => $params['criticality'],
+                        ':actionitemtitle' => $params['actionitemtitle'],
+                        ':actionitemstatement' => $params['actionitemstatement'],
+                        ':closurecriteria' => $params['closurecriteria']
+                  ]); 
+                  return json_encode(['Result' => 'Success'], JSON_PRETTY_PRINT);
+            }
+            catch (PDOExcetption $e)
+            {
+                 return json_encode(['Result' => 'Action Item Was Not Created ' . $e->getMessage(0)]);
+            }
+     
         }
     }
