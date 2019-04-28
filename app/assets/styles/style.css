@@ -4,3 +4,7 @@ img#logo{
 .msg-container{
     height: 30px !important;
 }
+html{
+    overflow-y: overlay;
+    overflow-x: overlay;
+}
