@@ -23,26 +23,32 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
             var vm = this;
             vm.dtOptions = DTOptionsBuilder
             .fromFnPromise(function(){
-                return $http.get('api/actionitems').then(function(result){
-                    $.each(result.data, function(key, actionitem){
-                        result.data[key] =  
-                        [ 
-                                    actionitem.actionitemid, 
-                                    actionitem.actionitemtitle,
-                                    actionitem.criticality,
-                                    actionitem.assignor,
-                                    actionitem.owner,
-                                    actionitem.altowner,
-                                    actionitem.approver,
-                                    actionitem.assigneddate,
-                                    actionitem.duedate,
-                                    actionitem.ecd,
-                                    actionitem.completiondate,
-                                    actionitem.closeddate
-                        ];    
-                    });
-                    $scope.actionitems = result.data;
-                    return result.data;
+                return $http.get('api/actionitems').then(function(response){
+                   if (response.data.Succeeded){
+                        $.each(response.data.Result, function(key, actionitem){
+                            response.data.Result[key] =  
+                            [ 
+                                actionitem.actionitemid, 
+                                actionitem.actionitemtitle,
+                                actionitem.criticality,
+                                actionitem.assignor,
+                                actionitem.owner,
+                                actionitem.altowner,
+                                actionitem.approver,
+                                actionitem.assigneddate,
+                                actionitem.duedate,
+                                actionitem.ecd,
+                                actionitem.completiondate,
+                                actionitem.closeddate
+                            ];    
+                        });
+                        $scope.actionitems = response.data.Result;
+                        return response.data.Result;
+                   }
+                   else{
+                    return [];
+                   }
+                 
                 });
             })
             .withPaginationType('full_numbers')

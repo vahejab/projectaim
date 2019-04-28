@@ -115,7 +115,8 @@
                     left join users altowner
                         ON a.altownerid = altowner.userid
                     left join users approver
-                        ON a.approverid = approver.userid";
+                        ON a.approverid = approver.userid  
+                    ";
                 
             if (!empty($whereStrings))
             {
@@ -126,16 +127,19 @@
             {
                 $sql .= " limit " . intval($params['limit']);
             }
+            
+            $sql .= " order by a.actionitemid desc";
+            
             try
             {
                 $statement  = $this->db->prepare($sql);
                 $statement->execute($whereParams);
                 $results = $statement->fetchAll();
-                return ["Result" => $this->_populateFromCollection($results)];
+                return ["Succeeded" => true, "Result" => $this->_populateFromCollection($results)];
             }
             catch(PDOException $e)
             {
-                return ["Result" => $e->getMessage(0)];    
+                return ["Succeeded" => false, "Result" => $e->getMessage(0)];    
             }
             
         }
@@ -154,7 +158,7 @@
                             actionitemstatement,
                             closurecriteria
                     )
-                    values
+                    values(
                             :assignorid,
                             :ownerid,
                             :altownerid,
@@ -167,23 +171,22 @@
                     )";
             try
             {      
-                  $statement = $this->db->prepare($sql);
-                  $statement->execute([
-                        ':assignorid' => $params['assignor'],
-                        ':ownerid' =>  $params['owner'],
-                        ':altownerid' => $params['altowner'],
-                        ':duedate' => $params['duedate'],
-                        ':ecd' => $params['ecd'],      
-                        ':criticality' => $params['criticality'],
-                        ':actionitemtitle' => $params['actionitemtitle'],
-                        ':actionitemstatement' => $params['actionitemstatement'],
-                        ':closurecriteria' => $params['closurecriteria'],
-                  ]);                         
-                  return ["Result" => "Action Item Created!"];
+                $statement = $this->db->prepare($sql);
+                $statement->bindValue(':assignorid', $params['assignor']);
+                $statement->bindValue(':ownerid' , $params['owner']);
+                $statement->bindValue(':altownerid' , $params['altowner']);
+                $statement->bindValue(':duedate' , $params['duedate']);
+                $statement->bindValue(':ecd' , $params['ecd']);      
+                $statement->bindValue(':criticality' , $params['criticality']);
+                $statement->bindValue(':actionitemtitle' , $params['actionitemtitle']);
+                $statement->bindValue(':actionitemstatement' , $params['actionitemstatement']);
+                $statement->bindValue(':closurecriteria', $params['closurecriteria']);                        
+                $statement->execute();
+                return ["Succeeded" => true, "Result" => "Action Item Created!"];
             }
-            catch (PDOExcetption $e)
+            catch (\PDOException $e)
             {
-                 return ["Result" => $e->getMessage(0)];
+                return ["Succeeded" => false, "Result" => $e->getMessage()];
             }
         }
     }

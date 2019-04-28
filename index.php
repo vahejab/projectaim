@@ -7,10 +7,15 @@
 <title>ProjectAIM Suite</title>
  <link rel="stylesheet" href="/app/css/bootstrap/bootstrap.min.css "/>
  <link rel="stylesheet" href="/app/css/jquery-datatables/jquery.dataTables.min.css" /> 
- <link rel="stylesheet" href="/app/css/datatables-scroller/scroller.dataTables.min.css">
- <link rel="stylesheet" href="/app/css/angular-material/angular-material.min.css">
+ <link rel="stylesheet" href="/app/css/datatables-scroller/scroller.dataTables.min.css"/>
+ <link rel="stylesheet" href="/app/css/angular-material/angular-material.min.css"/>
  <link rel="stylesheet" href="/app/assets/styles/style.css">
  <style>
+    html{
+        overflow-y: overlay !important;
+        margin-right: calc(-1 * (100vw - 100%));
+    }
+    
     md-content{
         /*background-color: rgb(250, 253, 252) !important;*/   
     }
@@ -77,6 +82,7 @@
        <script src="/app/js/angular-material-1.1.12/angular-material.min.js"></script>
        <script src="/app/js/jquery-datatables-1.10.19/jquery.dataTables.min.js" ></script>
        <script src="/app/js/angular-datatables-0.6.2/angular-datatables.js"></script>
+       <!--script src="/app/js/datatables-material/dataTables.material.min.js"></script-->
        <script src="/app/js/datatables-fixedheader-3.1.5/dataTables.fixedHeader.min.js"></script>
        <script src="/app/js/angular-datatables-0.6.2/plugins/fixedheader/angular-datatables.fixedheader.min.js"></script>
        <script src="/app/js/angular-datatables-0.6.2/plugins/scroller/angular-datatables.scroller.min.js"></script>

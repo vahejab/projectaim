@@ -4,10 +4,9 @@ img#logo{
 .msg-container{
     height: 30px !important;
 }
-html{
-    overflow-y: overlay;
-    overflow-x: overlay;
-}
 .nav-link{
     background-color: #0038a8 !important;
+}
+.site-wrapper: not(.nav-link){
+    padding-right: 30px !important;
 }

@@ -11,11 +11,9 @@
         public function __construct($request){
             header("Access-Control-Allow-Origin: *");
             header("Access-Control-Allow-Methods: *");
-            header("Content-Type: text/plain");
-            //header("Content-Type: application/json");
            
-           $this->args = $request;
-           if (array_key_exists('endpoint', $this->args)){
+            $this->args = $request;
+            if (array_key_exists('endpoint', $this->args)){
                   $this->endpoint[] = $this->args['endpoint'];
                   unset($this->args['endpoint']);
             }
@@ -40,9 +38,9 @@
                         break;
                 } 
             }
-           
+
             $this->method = $_SERVER['REQUEST_METHOD'];
-            
+
             if ($this->method == 'POST' && array_key_exists('HTTP_X_HTTP_METHOD', $_SERVER)) {
                 if ($_SERVER['HTTP_X_HTTP_METHOD'] == 'DELETE') {
                     $this->method = 'DELETE';
@@ -52,7 +50,7 @@
                     throw new Exception("Unexpected Header");
                 }
             }
-      
+
             switch($this->method) {
                 case 'DELETE':
                 case 'POST':
@@ -72,8 +70,8 @@
                     $this->_response('Invalid Method', 405);
                     break;
             }
-            
-            return $this->request;
+
+return $this->request;
         }  
         
         public function processRequest() {
@@ -88,7 +86,16 @@
                             $endpoint2 =  $this->endpoint[1] ?? null;
                             $payload = $this->payload;
                             $response = (new $class($args,$endpoint2,$payload))->{$method}($id);
-                            return $this->_response($response['Result']);   
+                            if ($response['Succeeded']==true){    
+                                header("Content-Type: application/json");
+                                return $this->_response($response);
+                            }
+                            else{
+                                header("Content-Type: application/html");
+                                return $response['Result'];
+                            }
+                               
+   
                         }
                            
                 }
@@ -98,7 +105,6 @@
 
         private function _response($data, $status = 200) {
             header("HTTP/1.1 " . $status . " " . $this->_requestStatus($status));
-            //http_response_code($status);
             return json_encode($data, JSON_PRETTY_PRINT);
         }
   

@@ -35,8 +35,13 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
        
         $scope.initUsers = function(){    
             return $http.get('api/users').then(function(response){
-                $scope.users = response.data;
-                return response.data;
+                if (response.data.Succeeded){
+                    $scope.users = response.data.Result;
+                    return response.data.Result;
+                }
+                if (!response.data.Succeeded){
+                    $scope.msg = $sce.trustAsHtml(response.data.Result);
+                }
             }); 
         } 
 
@@ -63,10 +68,12 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
             $scope.actionitem.duedate = $scope.split($scope.actionitem.duedate,'T')[0];
             $scope.actionitem.ecd = $scope.split($scope.actionitem.ecd, 'T')[0];
             $scope.actionitem.criticality = $scope.actionitem.critlevel.value;
-            
             $http.post('/api/actionitems', JSON.stringify($scope.actionitem)).then(function (response){
-                if (response.data){
-                    $scope.msg = $sce.trustAsHtml(response.data);
+                if (response.data.Succeeded){
+                    $scope.msg = response.data.Result;
+                }
+                else if (!response.data.Succeeded){
+                    $scope.msg = $sce.trustAsHtml(response.data.Result);
                 }
             });
         }

@@ -5,8 +5,8 @@
         public function mapFromArray($array, \data\model\user $user = null)
         {
             if ( is_null($user)) $user = new \data\model\user();
-            //if (!is_null($array['user.id'])) $user->id = $array['user.id'];
-            if (!is_null($array['user.userid'])) $user->userid = $array['user.userid'];
+            if (!is_null($array['user.id'])) $user->id = $array['user.id'];
+            //if (!is_null($array['user.userid'])) $user->userid = $array['user.userid'];
             if (!is_null($array['user.lastname'])) $user->lastname = $array['user.lastname'];
             if (!is_null($array['user.firstname'])) $user->firstname = $array['user.firstname'];         
             if (!is_null($array['user.title'])) $user->title = $array['user.title'];
@@ -28,7 +28,7 @@
                 
                 $searchCols = 
                    [
-                    'userid',
+                    'id',
                     'lastname',
                     'firstname',
                     'title',
@@ -65,7 +65,7 @@
             }
             
             $sql = "select 
-                    userid as 'user.userid',
+                    id as 'user.id',
                     lastname as 'user.lastname',
                     firstname as 'user.firstname',
                     title as 'user.title',
@@ -89,11 +89,11 @@
                 $statement  = $this->db->prepare($sql);
                 $statement->execute($whereParams);
                 $results = $statement->fetchAll();
-                return ["Result" => $this->_populateFromCollection($results), "StatusCode" => 200];
+                return ["Succeeded" => true, "Result" => $this->_populateFromCollection($results)];
             }
-            catch (PDOExcetption $e)
+            catch (\PDOException $e)
             {
-                return ["Result" => $e->getMessage(0)];
+                return ["Succeeded" => false, "Result" => $e->getMessage(0)];
             }
         }
     }
