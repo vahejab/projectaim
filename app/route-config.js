@@ -51,7 +51,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             files: ['/app/tool/action/ActionController.js']
         },
         {
-            name: 'action@createaction',
+            name: 'action@create',
             files: [
                     '/app/tool/action/style.css',
                     '/app/tool/action/CreateActionController.js'
@@ -75,7 +75,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             resolve: res,
             templateUrl: '/app/tool/action/ActionItems.html'
         })
-        .state('action@createaction',
+        .state('action@create',
         {
             url: "/action/create",
             resolve: res,

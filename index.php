@@ -12,7 +12,7 @@
  <link rel="stylesheet" href="/app/assets/styles/style.css">
  <style>
     md-content{
-        background-color: rgb(250, 253, 252) !important;
+        /*background-color: rgb(250, 253, 252) !important;*/   
     }
 
     label, span{
@@ -37,6 +37,28 @@
             <a class="nav-link" ui-sref="main" ui-sref-active="active">
                 <img id="logo" src="/app/assets/images/ProjectAIM.png" />
             </a>
+            <md-content class="md-padding">
+                <md-nav-bar
+                md-no-ink-bar="disableInkBar"
+                md-selected-nav-item="currentNavItem"
+                nav-bar-aria-label="navigation links">
+                <md-nav-item md-nav-href="/#!/action/create" name="create">
+                    Create Action Item
+                </md-nav-item>
+                <md-nav-item md-nav-href="/#!/action/summary" name="summary">
+                    Action Item Summary
+                </md-nav-item>
+                <!-- these require actual routing with ui-router or ng-route, so they
+                won't work in the demo
+                <md-nav-item md-nav-href="#page4" name="page5">Page Four</md-nav-item>
+                <md-nav-item md-nav-sref="app.page5" name="page4">Page Five</md-nav-item>
+                You can also add options for the <code>ui-sref-opts</code> attribute.
+                <md-nav-item md-nav-sref="page6" sref-opts="{reload:true, notify:true}">
+                    Page Six
+                </md-nav-item>
+                -->
+                </md-nav-bar>
+            </md-content>
             <div class="ui-view">
                 
             </div>

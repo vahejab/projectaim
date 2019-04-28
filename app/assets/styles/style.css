@@ -8,3 +8,6 @@ html{
     overflow-y: overlay;
     overflow-x: overlay;
 }
+.nav-link{
+    background-color: #0038a8 !important;
+}

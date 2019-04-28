@@ -64,7 +64,6 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
             $scope.actionitem.ecd = $scope.split($scope.actionitem.ecd, 'T')[0];
             $scope.actionitem.criticality = $scope.actionitem.critlevel.value;
             
-
             $http.post('/api/actionitems', JSON.stringify($scope.actionitem)).then(function (response){
                 if (response.data){
                     $scope.msg = $sce.trustAsHtml(response.data);
