@@ -48,6 +48,7 @@
        <script src="/app/js/angularjs-1.6.6/angular-aria.js"></script>
        <script src="/app/js/angularjs-1.6.6/angular-animate.js"></script>
        <script src="/app/js/angularjs-1.6.6/angular-messages.js"></script>
+       <script src="/app/js/angularjs-1.6.6/angular-sanitize.js"></script>
        <script src="/app/js/angular-material-1.1.12/angular-material.min.js"></script>
        <script src="/app/js/jquery-datatables-1.10.19/jquery.dataTables.min.js" ></script>
        <script src="/app/js/angular-datatables-0.6.2/angular-datatables.js"></script>

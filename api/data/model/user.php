@@ -2,8 +2,8 @@
     namespace data\model;
     
     class user {
-        public $id;
-        //public $userid;
+        //public $id;
+        public $userid;
         public $title = '';
         public $phone = '';
         public $extension = '';

@@ -3,7 +3,7 @@
     
     class actionitem
     {
-        public $id;          
+        public $actionitemid;          
         public $ownerId;
         public $assignorId;
         public $altownerId;

@@ -1,8 +1,8 @@
 angular.module('Action').controller('ActionController', ['$http', '$resource', '$scope', '$state', '$timeout', 'DTOptionsBuilder', function($http, $resource, $scope, $state, $timeout, DTOptionsBuilder){
         $scope.actionitems = [];    
         $scope.actionitem = {
-                id: '',
-                actinitemtitle: '',
+                actionitemid: '',
+                actionitemtitle: '',
                 criticality: '',
                 assignor: '',
                 owner: '',
@@ -27,7 +27,7 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
                     $.each(result.data, function(key, actionitem){
                         result.data[key] =  
                         [ 
-                                    actionitem.id, 
+                                    actionitem.actionitemid, 
                                     actionitem.actionitemtitle,
                                     actionitem.criticality,
                                     actionitem.assignor,

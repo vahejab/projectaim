@@ -1,5 +1,5 @@
 angular.module('Action').config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
-  }]).controller('CreateActionController', ['$http', '$resource', '$scope', '$window', '$state', '$timeout', function($http, $resource, $scope, $window, $state, $timeout){
+  }]).controller('CreateActionController', ['$http', '$resource', '$scope', '$window', '$state', '$timeout', '$sce', function($http, $resource, $scope, $window, $state, $timeout, $sce){
         $scope.actionitem = {
             assignor: '', 
             duedate: '',
@@ -63,11 +63,13 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
             $scope.actionitem.duedate = $scope.split($scope.actionitem.duedate,'T')[0];
             $scope.actionitem.ecd = $scope.split($scope.actionitem.ecd, 'T')[0];
             $scope.actionitem.criticality = $scope.actionitem.critlevel.value;
+            
+
             $http.post('/api/actionitems', JSON.stringify($scope.actionitem)).then(function (response){
-                if (response.data)
-                    $scope.msg = "Post Data Submitted Successfully!";
+                if (response)
+                    $scope.msg = response.data;
                 }, function (response) {
-                        $scope.msg = "Service does not exist.";                 
+                        $scope.msg = $sce.trustAsHtml(JSON.stringify(response.data));              
                 });
         }
        

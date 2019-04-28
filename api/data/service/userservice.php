@@ -6,7 +6,7 @@
         public function findOne($id)
         {
             $mapper = $this->_getMapper();
-            $params = array('id' => $id);
+            $params = array('userid' => $id);
             return $mapper->findOne($params);   
         }
        

@@ -1,7 +1,6 @@
 img#logo{
     width: 200px !important;
 }
-
-md-content.md-default-theme, md-content{
-    background-color: black !important;
+.msg-container{
+    height: 30px !important;
 }

@@ -6,7 +6,7 @@
         {
             if (is_null($actionitem)) $actionitem = new \data\model\actionitem();
 
-            if (!is_null($array['ID'])) $actionitem->id = $array['ID'];                         
+            if (!is_null($array['ActionItemID'])) $actionitem->actionitemid = $array['ActionItemID'];     
             if (!is_null($array['AssignorID'])) $actionitem->assignorId = $array['AssignorID'];
             if (!is_null($array['ApproverID'])) $actionitem->approverId = $array['ApproverID'];
             if (!is_null($array['OwnerID'])) $actionitem->ownerId = $array['OwnerID'];
@@ -93,7 +93,7 @@
             }    
             if (isset($params['id']))
             {
-                $whereStrings[] = 'id = ?';
+                $whereStrings[] = 'actionitemid = ?';
                 $whereParams[] = $params['id'];   
             }
  
@@ -136,7 +136,7 @@
         public function createOne($params = [])
         {    
             $sql = "insert
-                    into actionitems(
+                    into actionitems(    
                             assignorid,
                             ownerid,
                             altownerid,
@@ -147,7 +147,7 @@
                             actionitemstatement,
                             closurecriteria
                     )
-                    values(
+                    values
                             :assignorid,
                             :ownerid,
                             :altownerid,
@@ -160,8 +160,7 @@
                     )";
             try
             {      
-                  $statement  = $this->db->prepare($sql);
-                  $this->db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION); 
+                  $statement = $this->db->prepare();
                   $statement->execute([
                         ':assignorid' => $params['assignor'],
                         ':ownerid' =>  $params['owner'],
@@ -171,14 +170,13 @@
                         ':criticality' => $params['criticality'],
                         ':actionitemtitle' => $params['actionitemtitle'],
                         ':actionitemstatement' => $params['actionitemstatement'],
-                        ':closurecriteria' => $params['closurecriteria'],
+                       // ':closurecriteria' => $params['closurecriteria'],
                   ]); 
-                  return json_encode(['Result' => 'Success'], JSON_PRETTY_PRINT);
+                  return json_encode(["Result" => "Success"]);
             }
             catch (PDOExcetption $e)
             {
-                 return json_encode(['Result' => 'Action Item Was Not Created ' . $e->getMessage(0)]);
+                 return json_encode(["Result" => $e->getMessage(0)]);
             }
-     
         }
     }

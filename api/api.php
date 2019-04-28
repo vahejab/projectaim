@@ -9,5 +9,6 @@
         }
     }
 
-    $api = new MyAPI($_REQUEST);
+    $api = new MyAPI($_REQUEST); 
+    header("Content-Type: text/html");
     echo $api->processRequest();
