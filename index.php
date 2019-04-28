@@ -23,8 +23,11 @@
     :not(div[ng-switch=calendarCtrl.currentView]) .md-input-focused span{
         color: blue !important;
     }
+
+    table.xdebug-error *{
+        font-size: 12pt !important;
+    }
  </style>
- 
  <!--link rel="stylesheet" href="/app/js/kendoui-2019.1.220/styles/kendo.common.min.css"  />
  <link rel="stylesheet" href="/app/js/kendoui-2019.1.220/styles/kendo.material.min.css"  />
  <link rel="stylesheet" href="/app/css/kendo-ui/kendo/custom.css" /-->  

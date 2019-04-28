@@ -83,10 +83,17 @@
             {
                 $sql .= " limit " . intval($params['limit']);
             }
-    
-            $statement  = $this->db->prepare($sql);
-            $statement->execute($whereParams);
-            $results = $statement->fetchAll();
-            return $this->_populateFromCollection($results);
+            
+            try
+            {
+                $statement  = $this->db->prepare($sql);
+                $statement->execute($whereParams);
+                $results = $statement->fetchAll();
+                return ["Result" => $this->_populateFromCollection($results), "StatusCode" => 200];
+            }
+            catch (PDOExcetption $e)
+            {
+                return ["Result" => $e->getMessage(0)];
+            }
         }
     }

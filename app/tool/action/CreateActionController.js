@@ -66,13 +66,12 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
             
 
             $http.post('/api/actionitems', JSON.stringify($scope.actionitem)).then(function (response){
-                if (response)
-                    $scope.msg = response.data;
-                }, function (response) {
-                        $scope.msg = $sce.trustAsHtml(JSON.stringify(response.data));              
-                });
+                if (response.data){
+                    $scope.msg = $sce.trustAsHtml(response.data);
+                }
+            });
         }
-       
+
         $scope.today = new Date()
        
         this.duedate = new Date();

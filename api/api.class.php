@@ -11,7 +11,8 @@
         public function __construct($request){
             header("Access-Control-Allow-Origin: *");
             header("Access-Control-Allow-Methods: *");
-            header("Content-Type: application/json");
+            header("Content-Type: text/plain");
+            //header("Content-Type: application/json");
            
            $this->args = $request;
            if (array_key_exists('endpoint', $this->args)){
@@ -86,16 +87,18 @@
                             $id = $this->id;
                             $endpoint2 =  $this->endpoint[1] ?? null;
                             $payload = $this->payload;
-                            return $this->_response((new $class($args,$endpoint2,$payload))->{$method}($id));   
+                            $response = (new $class($args,$endpoint2,$payload))->{$method}($id);
+                            return $this->_response($response['Result']);   
                         }
                            
                 }
-                return $this->_response("No Endpoint: {$this->endpoint[0]}", 404);
+                return $this->_response("No Endpoint: {$this->endpoint[0]}");
             }
         }
 
         private function _response($data, $status = 200) {
             header("HTTP/1.1 " . $status . " " . $this->_requestStatus($status));
+            //http_response_code($status);
             return json_encode($data, JSON_PRETTY_PRINT);
         }
   
@@ -115,6 +118,7 @@
         private function _requestStatus($code){
             $status = array (
                 200 => 'OK',
+                400 => 'Bad Request',
                 404 => 'Not Found',
                 405 => 'Method Not Allowed',
                 500 => 'Internal Server Error'

@@ -126,11 +126,18 @@
             {
                 $sql .= " limit " . intval($params['limit']);
             }
-
-            $statement  = $this->db->prepare($sql);
-            $statement->execute($whereParams);
-            $results = $statement->fetchAll();
-            return $this->_populateFromCollection($results);
+            try
+            {
+                $statement  = $this->db->prepare($sql);
+                $statement->execute($whereParams);
+                $results = $statement->fetchAll();
+                return ["Result" => $this->_populateFromCollection($results)];
+            }
+            catch(PDOException $e)
+            {
+                return ["Result" => $e->getMessage(0)];    
+            }
+            
         }
 
         public function createOne($params = [])
@@ -160,7 +167,7 @@
                     )";
             try
             {      
-                  $statement = $this->db->prepare();
+                  $statement = $this->db->prepare($sql);
                   $statement->execute([
                         ':assignorid' => $params['assignor'],
                         ':ownerid' =>  $params['owner'],
@@ -170,13 +177,13 @@
                         ':criticality' => $params['criticality'],
                         ':actionitemtitle' => $params['actionitemtitle'],
                         ':actionitemstatement' => $params['actionitemstatement'],
-                       // ':closurecriteria' => $params['closurecriteria'],
-                  ]); 
-                  return json_encode(["Result" => "Success"]);
+                        ':closurecriteria' => $params['closurecriteria'],
+                  ]);                         
+                  return ["Result" => "Action Item Created!"];
             }
             catch (PDOExcetption $e)
             {
-                 return json_encode(["Result" => $e->getMessage(0)]);
+                 return ["Result" => $e->getMessage(0)];
             }
         }
     }
