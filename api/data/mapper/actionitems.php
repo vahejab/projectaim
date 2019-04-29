@@ -35,6 +35,7 @@
             
             if (!is_null($array['ActionItemTitle'])) $actionitem->actionitemtitle = $array['ActionItemTitle'];
             if (!is_null($array['Criticality']))  $actionitem->criticality = $array['Criticality'];
+            if (!is_null($array['CritLevel']))  $actionitem->critlevel = $array['CritLevel'];
             if (!is_null($array['ActionItemStatement'])) $actionitem->actionitemstatement = $array['ActionItemStatement'];
             if (!is_null($array['ClosureCriteria'])) $actionitem->closurecriteria = $array['ClosureCriteria'];
             if (!is_null($array['ClosureStatement'])) $actionitem->closurestatement = $array['ClosureStatement'];
@@ -69,7 +70,7 @@
                     'approver.lastname',
                     'approver.firstname',
                     'actionitemtitle',
-                    'criticality',
+                    'criticality', 
                     'actionitemstatement',
                     'closurecriteria',
                     'closurestatement',
@@ -106,7 +107,7 @@
                         altowner.firstname as 'altowner.firstname',
                         approver.lastname as 'approver.lastname',
                         approver.firstname as 'approver.firstname',
-                        a.*
+                        a.*, coalesce(convert(a.Criticality, unsigned), 4) as 'CritLevel' 
                     from actionitems a
                     left join users assignor
                         ON a.assignorid = assignor.userid

@@ -10,6 +10,7 @@
         public $approverId;
         public $actionitemtitle = '';
         public $criticality = '';
+        public $critlevel = '';
         public $actionitemstatement = '';
         public $closurecriteria = '';
         public $closurestatement = '';

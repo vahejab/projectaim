@@ -3,7 +3,9 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
         $scope.actionitem = {
                 actionitemid: '',
                 title: '',
+                status: (this.completiondate) ? 'Open' : 'Completed',
                 criticality: '',
+                critlevel: '',
                 assignor: '',
                 owner: '',
                 altowner: '',
@@ -35,7 +37,14 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
         $scope.assignHeaderWidths = function(){
             CommonService.assignHeaderWidths();
         }
-             
+        
+        $scope.formatCriticality = function(value){ 
+            return CommonService.formatCriticality(value);
+        }
+        
+        $scope.getStatus = function(date1, date2){
+           return CommonService.getStatus(date1, date2); 
+        }
          
         $scope.init = function(){
             //var vm = this;
@@ -52,6 +61,7 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
                             actionitemid: actionitem.actionitemid, 
                             title: actionitem.actionitemtitle,
                             criticality: actionitem.criticality,
+                            critlevel: actionitem.critlevel,
                             assignor: actionitem.assignor,
                             owner: actionitem.owner,
                             altowner: actionitem.altowner,
@@ -82,7 +92,7 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
 }]).directive('initTable', function(){
     return {
         restrict: 'A',
-        transclude: true,
+        //transclude: true,
         templateUrl: '/app/tool/action/ActionItemTable.html',
         controller: function($scope, $timeout) {
             //console.log($scope, $timeout);

@@ -47,6 +47,21 @@ common.service("CommonService", function() {
             $(headers[idx]).attr('style', 'width: ' + cellwidth + "px !important");
         }
     }
+    
+    commonFunctions.formatCriticality = function(value){ 
+        switch(Number(value)){
+            case 1:
+                return 'red';
+            case 2:
+                return 'yellow';
+            case 3:
+                return 'green'; 
+        }
+    }
+    
+    commonFunctions.getStatus = function(date1, date2){
+       return (date1 > date2)? 'Late': 'Timely';    
+    }
 
     return commonFunctions;
 });

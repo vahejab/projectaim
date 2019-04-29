@@ -38,45 +38,47 @@ table tbody tr td:nth-child(3){
 
 }
 
+
+
 table thead tr th:nth-child(4),
 table tbody tr td:nth-child(4){
-    min-width: 185px !important;
-  
+    min-width: 100px !important;
+
 }
 
 table thead tr th:nth-child(5),
 table tbody tr td:nth-child(5){
     min-width: 185px !important;
-
+  
 }
 
 table thead tr th:nth-child(6),
 table tbody tr td:nth-child(6){
     min-width: 185px !important;
-  
+
 }
 
 table thead tr th:nth-child(7),
 table tbody tr td:nth-child(7){
     min-width: 185px !important;
-
+  
 }
 
 table thead tr th:nth-child(8),
 table tbody tr td:nth-child(8){
+    min-width: 185px !important;
+
+}
+
+table thead tr th:nth-child(9),
+table tbody tr td:nth-child(9){
     min-width: 130px !important;
   
 }
                              
-table thead tr th:nth-child(9),
-table tbody tr td:nth-child(9){
-    min-width: 130px !important;
-}
-
 table thead tr th:nth-child(10),
 table tbody tr td:nth-child(10){
     min-width: 130px !important;
-
 }
 
 table thead tr th:nth-child(11),
@@ -87,6 +89,12 @@ table tbody tr td:nth-child(11){
 
 table thead tr th:nth-child(12),
 table tbody tr td:nth-child(12){
+    min-width: 130px !important;
+
+}
+
+table thead tr th:nth-child(13),
+table tbody tr td:nth-child(13){
     min-width: 130px !important;
 }
 
@@ -101,4 +109,20 @@ div.tablebody{
     overflow-x: scroll;
     max-height: 450px !important;
     /* margin-right: 17px !important; */
+}
+
+td.red{
+    background-color: red;
+}
+
+td.yellow{
+    background-color: yellow;
+}
+
+td.green{
+    background-color: green;
+}
+
+td.Late{
+    color: red;
 }
