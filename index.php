@@ -43,7 +43,7 @@
         <a class="nav-link" ui-sref="main" ui-sref-active="active">
             <img id="logo" src="/app/assets/images/ProjectAIM.png" />
         </a>
-        <md-content class="md-padding" class="container">
+        <md-content class="md-padding">
             <md-nav-bar
             md-no-ink-bar="disableInkBar"
             md-selected-nav-item="currentNavItem"
