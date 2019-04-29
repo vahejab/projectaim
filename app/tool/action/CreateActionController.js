@@ -33,7 +33,8 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
             return $scope.criricalitylevels;
         }                       
        
-        $scope.initUsers = function(){    
+        $scope.init = function(){    
+            CommonService.initTableScrolling(); 
             return $http.get('api/users').then(function(response){
                 if (response.data.Succeeded){
                     $scope.users = response.data.Result;
@@ -89,7 +90,7 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                 restrict: 'E',
                 link: function (scope, element, attrs) {
                       
-                      scope.initUsers();
+                      scope.init();
                       
                       scope.criticalitylevels = 
                       [

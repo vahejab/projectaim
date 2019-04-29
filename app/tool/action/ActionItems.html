@@ -1,73 +1,54 @@
-<div ng-init="init()" ng-controller="ActionController" ng-app="Action">
-   ActionItems
-    <table id="actionitems" class="row-border hover action" datatable="" dt-options="dtOptions">
+<div ng-controller="ActionController" ng-app="Action">
+    <init-data/>
+    ActionItems
+    <div class="tableheader">
+    <table id="actionitems" class="table-striped table-condensed table-bordered sortable action"> <!--datatable="" dt-options="dtOptions"-->
          <thead>
             <tr>
-                <th>
-                    Action Item ID
+                <th ng-click="sort('actionitemid')" ng-class="{reverse: reverse}">
+                    ID                       
                 </th>
-                <th>
-                    Action Item Title
-                </th>
-                <th>
+                <th ng-click="sort('actionitemtitle')" ng-class="{reverse: reverse}">
+                    Action Item Title 
+                </th>                         
+                <th ng-click="sort('criticality')" ng-class="{reverse: reverse}">
                     Criticality
                 </th>
-                <th>
+                <th ng-click="sort('assignor')" ng-class="{reverse: reverse}">
                     Assignor
                 </th>
-                <th>
+                <th ng-click="sort('owner')" ng-class="{reverse: reverse}">
                     Owner
                 </th>
-                <th>
+                <th ng-click="sort('altowner')" ng-class="{reverse: reverse}">
                     Alt Owner
                 </th>
-                <th>
+                <th ng-click="sort('approver')" ng-class="{reverse: reverse}">
                     Approver
                 </th>
-                <th>
+                <th ng-click="sort('assigneddate')" ng-class="{reverse: reverse}">
                     Assigned Date
                 </th>
-                <th>
-                    DueDate
+                <th ng-click="sort('duedate')" ng-class="{reverse: reverse}">
+                    Due Date
                 </th>
-                <th>
+                <th ng-click="sort('ecd')" ng-class="{reverse: reverse}">
                     ECD
                 </th>
-                <th>
-                    Completion Date
+                <th ng-click="sort('completiondate')" ng-class="{reverse: reverse}">
+                    Complete Date
                 </th>
-                <th>
+                <th ng-click="sort('closedate')" ng-class="{reverse: reverse}">
                     Closed Date
                 </th>
-                <!--th>
-                    Team
-                </th>
-                  <th>
-                    Meeting
-                </th>
-                  <th>
-                    Phase
-                </th>
-                  <th>
-                    Source
-                </th-->
             </tr>
          </thead> 
-         <tbody>
-            <tr ng-repeat="actionitem in actionitems">
-               <td>{{actionitem.actionitemid}}</td> 
-               <td>{{actionitem.title}}</td> 
-               <td>{{actionitem.criticality}}</td>
-               <td>{{actionitem.assignor}}</td> 
-               <td>{{actionitem.owner}}</td>
-               <td>{{actionitem.altowner}}</td> 
-               <td>{{actionitem.approver}}</td> 
-               <td>{{actionitem.assigneddate}}</td> 
-               <td>{{actionitem.duedate}}</td> 
-               <td>{{actionitem.ecd}}</td> 
-               <td>{{actionitem.completiondate}}</td> 
-               <td>{{actionitem.closeddate}}</td> 
-            </tr>
-         </tbody>     
     </table>
+    </div>
+    <div class="tablebody">
+        <table class="table-striped table-condensed table-bordered">
+            <tbody init-table>
+            </tbody>
+        </table>
+    </div>
 </div>

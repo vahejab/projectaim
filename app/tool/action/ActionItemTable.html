@@ -1,0 +1,14 @@
+<tr ng-repeat="actionitem in actionitems | orderBy:propertyName:reverse">
+   <td>{{actionitem.actionitemid}}</td> 
+   <td>{{actionitem.title}}</td> 
+   <td>{{actionitem.criticality}}</td>
+   <td>{{actionitem.assignor}}</td> 
+   <td>{{actionitem.owner}}</td>
+   <td>{{actionitem.altowner}}</td> 
+   <td>{{actionitem.approver}}</td> 
+   <td>{{actionitem.assigneddate}}</td> 
+   <td>{{actionitem.duedate}}</td> 
+   <td>{{actionitem.ecd}}</td> 
+   <td>{{actionitem.completiondate}}</td> 
+   <td>{{actionitem.closeddate}}</td> 
+</tr>
