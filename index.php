@@ -10,7 +10,7 @@
  <link rel="stylesheet" href="/app/css/jquery-datatables/jquery.dataTables.min.css" /> 
  <link rel="stylesheet" href="/app/css/datatables-scroller/scroller.dataTables.min.css"/>
  <link rel="stylesheet" href="/app/css/angular-material/angular-material.min.css"/>
- <link rel="stylesheet" href="/app/assets/styles/style.css">
+ <link rel="stylesheet" href="/app/assets/styles/style.css"> 
  <style>
     html{
         overflow-y: overlay !important;
@@ -97,6 +97,6 @@
     <script src="/app/js/angularjs-1.6.6/statehelper.js"></script>
     <script src="/app/js/ocLazyLoad/ocLazyLoad.js"></script>
     <script src="/app/route-config.js"></script> 
-<script src="/app/app.js"></script>
+    <script src="/app/app.js"></script>
 </body>
 </html>

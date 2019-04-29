@@ -1,4 +1,4 @@
-<tr ng-repeat="actionitem in actionitems | orderBy:propertyName:reverse">
+<tr ng-repeat="actionitem in actionitems | orderBy:propertyName:reverse" ng-repeat-done>
    <td>{{actionitem.actionitemid}}</td> 
    <td>{{actionitem.title}}</td> 
    <td>{{actionitem.criticality}}</td>

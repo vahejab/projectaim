@@ -7,7 +7,7 @@ img#logo{
 .nav-link{
     background-color: #0038a8 !important;
 }
-.site-wrapper: not(.nav-link){
+.site-wrapper:not(.nav-link){
     padding-right: 30px !important;
 }
 
@@ -16,14 +16,13 @@ img#logo{
     width: 100% 
 }
 
-.container{
-    min-width: auto !important;
+table{
+    width: 100% !important;
 }
-  
+
 table thead tr th:nth-child(1),
 table tbody tr td:nth-child(1){
-    min-width: 34px !important;
-   
+    min-width: 51px !important;
 }
 
 table thead tr th:nth-child(2),
@@ -72,7 +71,6 @@ table tbody tr td:nth-child(8){
 table thead tr th:nth-child(9),
 table tbody tr td:nth-child(9){
     min-width: 130px !important;
-    max-width: 130px !important;
 }
 
 table thead tr th:nth-child(10),

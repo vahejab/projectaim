@@ -38,6 +38,16 @@ common.service("CommonService", function() {
          commonFunctions.getScrollBarWidth();
          $(elem).attr("style", "margin-right: " + factor*commonFunctions.scrollBarWidth + "px !important");
     }
+
+    commonFunctions.assignHeaderWidths = function(){
+        var headers = $('div.tableheader table thead th');
+        var cells = $('div.tablebody table tbody tr:nth-child(1) td');
+        for (var idx in headers){
+            var cellwidth = $(cells[idx]).width();
+            $(headers[idx]).attr('style', 'width: ' + cellwidth + "px !important");
+        }
+    }
+
     return commonFunctions;
 });
 
@@ -51,26 +61,33 @@ app.controller('MainController',  ['CommonService', '$scope', function(CommonSer
     $scope.setMargin = function(elem, factor){
          CommonService.setMargin(elem, factor);
     }
+
+    $scope.assignHeaderWidths = function(){
+        CommonService.assignHeaderWidths();
+    }
     
     var devicePixelRatio = window.devicePixelRatio;
-    setInterval(function(){                               
-        if(window.devicePixelRatio != devicePixelRatio){
-            devicePixelRatio = window.devicePixelRatio;
-            //there was a resize and so twe set margin in this case
+    var flag = 1;
+    setInterval(function(){
+                                     
+        if (flag && window.devicePixelRatio == .25){
             $scope.setMargin($('html'), 0);
             $scope.setMargin($('div.tableheader'), 2);
             $scope.setMargin($('div.tablebody'), 1);
+            $scope.assignHeaderWidths();
+            flag = 0
+        }  
+        if(window.devicePixelRatio != devicePixelRatio){
+            flag = 1;
+            devicePixelRatio = window.devicePixelRatio;
+            //there was a resize and so then we set margin in this case
+            $scope.setMargin($('html'), 0);
+            $scope.setMargin($('div.tableheader'), 2);
+            $scope.setMargin($('div.tablebody'), 1);
+            //Set header width to ensure they will match on any zoom
+            $scope.assignHeaderWidths();
         }
-    }, 0);   
-}]).directive('setMarginDirective', ['$window', function ($window) {
-     return {
-        link: link,
-        restrict: 'E'           
-     };
-
-     function link(scope, element, attrs){
-       
-     }    
+    }, 1);   
 }]);
 
 app.config(['$ocLazyLoadProvider', '$stateProvider', '$urlRouterProvider', /*'$mdThemingProvider', */function($ocLazyLoadProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider) {

@@ -29,7 +29,11 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
         
         
         $scope.setMargin = function(elem, times){
-              CommonService.setMargin(elem, times);
+            CommonService.setMargin(elem, times);
+        }
+
+        $scope.assignHeaderWidths = function(){
+            CommonService.assignHeaderWidths();
         }
              
          
@@ -83,8 +87,8 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
         controller: function($scope, $timeout) {
             //console.log($scope, $timeout);
             $timeout( function() {
-                $scope.setMargin($('html'),1);
-                $scope.setMargin($('div.tableheader'), 1);
+                $scope.setMargin($('html'), 0);
+                $scope.setMargin($('div.tableheader'), 2);
                 $scope.setMargin($('div.tablebody'), 1);
             });
         },
@@ -92,6 +96,17 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
             scope.init().then(function(){
                 $.bootstrapSortable(true); 
             });
+        }
+    }
+}).directive('ngRepeatDone', function(){
+    return {
+        restrict: 'A',
+        controller: function($scope, $timeout){
+             if ($scope.$last){
+                 $timeout(function(){
+                    $scope.assignHeaderWidths();
+                 });
+             }
         }
     }
 });
