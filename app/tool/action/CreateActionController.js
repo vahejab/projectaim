@@ -1,18 +1,27 @@
 angular.module('Action').config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
-  }]).controller('CreateActionController', ['$http', '$resource', '$scope', '$window', '$state', '$timeout', '$sce', function($http, $resource, $scope, $window, $state, $timeout, $sce){
-        $scope.actionitem = {
-            assignor: '', 
-            duedate: '',
-            ecd: '',
-            critlevel: '',
-            criticality: '',
-            owner: '',
-            altowner: '',
-            actionitemtitle: '',
-            actionitemstatement: '',       
-            closurecriteria: ''
-        };
-
+  }]).controller('CreateActionController', ['$http', '$resource', '$scope', '$window', '$state', '$timeout', '$sce', 'CommonService', function($http, $resource, $scope, $window, $state, $timeout, $sce, CommonService){
+         $scope.actionitem = {
+                actionitemid: '',
+                title: '',
+                status: (this.completiondate) ? 'Open' : 'Completed',
+                criticality: '',
+                critlevel: '',
+                assignor: '',
+                owner: '',
+                altowner: '',
+                approver: '',
+                assigneddate: '',
+                duedate: '',
+                ecd: '',
+                completiondate: '',
+                closeddate: '',
+                actionitemstatement: '',
+                closurecriteria: '',
+                ownernotes: '',
+                approvercomments: '',
+                activitylog: ''
+        }
+        
         $scope.users = [];
         $scope.owner = {};
         $scope.altowner = {};

@@ -32,6 +32,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
     $urlRouterProvider
         .when('action@summary', 'action/summary')
         .when('action@create', 'action/create')
+        .when('action@view', 'action/view')
         .when('issue', 'issue')
         .when('lesson', 'lesson')
         .when('opportunity', 'opporutnity')
@@ -44,22 +45,34 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         modules: [
         {
             name: 'home',
-            files: ['/app/tool/home/HomeController.js']
+            files: ['/app/tool/home/HomeController.js'],
+            serie: true
         },
         {
             name: 'action@summary',
-            files: ['/app/tool/action/ActionController.js']
+            files: ['/app/tool/action/ActionController.js'],
+            serie: true
         },
         {
             name: 'action@create',
             files: [
                     '/app/tool/action/style.css',
                     '/app/tool/action/CreateActionController.js'
-                   ]
+            ],
+            serie: true
+        },
+        {
+            name: 'action@view',
+            files: [
+                    '/app/tool/action/ViewActionItem.css',
+                    '/app/tool/action/ViewActionController.js'
+            ],
+            serie: true
         },
         {
             name: 'risk',
-            files: ['/app/tool/risk/RiskController.js']
+            files: ['/app/tool/risk/RiskController.js'],
+            serie: true
         }]
     });
 
@@ -69,7 +82,8 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             url: "/home",
             resolve: res,
             templateUrl: '/app/tool/home/Home.html'
-        }).state('action@summary',
+        })
+        .state('action@summary',
         {
             url: "/action/summary",
             resolve: res,
@@ -82,7 +96,21 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             //cache: false,
             templateUrl: '/app/tool/action/CreateActionItem.html',
             controller: 'CreateActionController'
-        }).state('risk',
+        })
+        .state('action@view',
+        {
+            url: "/action/view/:id",
+            params: {
+                id: {
+                    array: false
+             }
+            },
+            resolve: res,
+            //cache: false,
+            templateUrl: '/app/tool/action/ViewActionItem.html',
+            controller: 'ViewActionController'
+        })
+        .state('risk',
         {
             url: "/risks",
             resolve: res,

@@ -1,0 +1,157 @@
+/*View Action Item Styles*/
+
+table
+{
+    table-layout: auto !important;
+    margin: 0 auto;  
+}
+
+table#summary{
+    width: 75% !important;
+}
+
+table#details{
+    width: 80% !important;
+}
+
+table#summary td:nth-child(1),
+table#summary td:nth-child(3){
+    width: 135px;
+    width: 135px;
+}
+
+                              
+table#summary td:nth-child(2),
+table#summary td:nth-child(4){
+    width: 165px;
+    width: 165px;
+}
+
+
+table#details td:nth-child(1){
+    width: 150px;
+}
+
+
+
+.table td, .table th {
+    padding: .75rem;
+    vertical-align: top;
+    border-top: 1px solid black; 
+}
+textarea
+{
+    margin: 0px !important;
+    padding: 0px !important;
+    width: 100% !important;
+    max-width: auto !important;
+    height: 92px !important;
+    overflow-y:scroll !important;
+    resize: none !important;
+    font-family: inherit !important;
+    border: 0px !important;
+}
+
+td > div:not(.filterinput):not(.cell)
+{
+    height: 92px !important;
+    max-height: 92px !important;
+    overflow-y:scroll !important;
+    overflow-x:hidden !important;
+}
+
+table#details tr:not(:first-child) td.label
+{
+    padding: 1px;
+    height: 93px;
+    width: 200px;
+}
+
+
+
+td.sort
+{
+    background-color: lightgray !important;
+}
+
+div.xscroll
+{
+    overflow-x: scroll;
+}
+
+
+div.xhidden
+{
+    overflow-y: hidden !important;
+}
+
+
+
+div.yhidden
+{
+    overflow-y: hidden !important;
+}
+
+
+tr.row_even
+{
+    background-color:#dae1e9 !important;
+}
+
+table#summary tr td {
+    height: 23px !important;
+}
+
+table#information tr td
+{
+    height:  23px !important;
+}
+table#categories tr td
+{
+    height: 23px !important;
+}
+table#details tr:first-child td
+{
+    height:  23px !important;
+}
+                  
+td.locked
+{
+    vertical-align: middle !important;
+    color: black;
+}
+
+
+td.label {
+    background-color: #0038a8 !important;
+    font-weight: bold !important;
+    font-style: italic !important;
+    color: white !important;
+    text-align: left !important;
+}   
+
+
+
+
+@media only screen and (max-width: 800px) {
+    
+    /* Force table to not be like tables anymore */    
+    table:not(.grid),
+    table:not(.grid) thead,
+    table:not(.grid) tbody,
+    table:not(.grid) tr,
+    table:not(.grid) th,
+    table:not(.grid) td
+    {
+        display: block;
+        width: 100% !important;
+    }
+    
+    
+    table#details tr:not(:first-child) td.label
+    {
+        height: 23px !important;
+    }
+}
+
+

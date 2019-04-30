@@ -26,17 +26,19 @@
       
         public function findOne($params = [])
         {
+        
             $collection = $this->findAll($params);
-            if (count($collection) > 1)
+
+            if (count($collection['Result']) > 1)
             {
                 throw new \Exception("More than one result found");
             }
 
             $returnOne = null;
-            if (!empty($collection))
+            if (!empty($collection['Result']))
             {
-                $returnOne = array_shift($collection);
+                $returnOne = array_shift($collection['Result']);
             }
-            return $returnOne;
+            return ['Succeeded'=>true, 'Results' => $returnOne];
         }
   }

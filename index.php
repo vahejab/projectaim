@@ -29,6 +29,13 @@
     :not(div[ng-switch=calendarCtrl.currentView]) .md-input-focused span{
         color: blue !important;
     }
+    table.table-condensed thead th {
+        background-color: #0038a8 !important;
+        font-weight: bold !important;
+        font-style: italic !important;
+        color: white !important;
+        text-align: left !important;
+    }
 
     table.xdebug-error *{
         font-size: 12pt !important;

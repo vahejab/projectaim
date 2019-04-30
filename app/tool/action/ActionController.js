@@ -1,7 +1,7 @@
 angular.module('Action').controller('ActionController', ['$http', '$resource', '$scope', '$state', '$timeout', 'CommonService', /*'DTOptionsBuilder',*/ function($http, $resource, $scope, $state, $timeout, CommonService/*, DTOptionsBuilder*/){
-        $scope.actionitems = [];    
+        $scope.actionitems = [];                          
         $scope.actionitem = {
-                actionitemid: '',
+                actionitemid: 0,
                 title: '',
                 status: (this.completiondate) ? 'Open' : 'Completed',
                 criticality: '',
@@ -14,15 +14,20 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
                 duedate: '',
                 ecd: '',
                 completiondate: '',
-                closeddate: ''
-        };
+                closeddate: '',
+                actionitemstatement: '',
+                closurecriteria: '',
+                ownernotes: '',
+                approvercomments: '',
+                activitylog: ''
+        }
         function GetActionItems2()
         {
            return $resource('actionitems.json').query().$promise;
         }   
         
         $scope.propertyName = 'actionitemid';
-        $scope.reverse = true;
+        $scope.reverse = false;
                 
         $scope.sort = function(propertyName) {
             $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
@@ -58,7 +63,7 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
                     $.each(response.data.Result, function(key, actionitem){
                         response.data.Result[key] =  
                         { 
-                            actionitemid: actionitem.actionitemid, 
+                            actionitemid: parseInt(actionitem.actionitemid), 
                             title: actionitem.actionitemtitle,
                             criticality: actionitem.criticality,
                             critlevel: actionitem.critlevel,

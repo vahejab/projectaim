@@ -1,0 +1,140 @@
+<div class="container" ng-init="init()">
+        <table id="summary" class="data" border="1">
+            <tr>
+                <td class="label">Action Item #</td>
+                <td class="locked">{{actionitem.actionitemid}}</td>
+                <td class="label">Criticality</td>
+                <td class="locked">
+                    {{actionitem.criticality}}
+                </td>
+            </tr>
+            <tr>
+                <td class="label">
+                    Owner
+                </td>
+                <td class="locked">
+                   {{actionitem.owner}}
+                </td>
+                <td class="label">
+                    Alternate Owner
+                </td>
+                <td class="locked">
+                   {{actionitem.altowner}} 
+                </td>
+            </tr>
+            <tr>
+                <td class="label">
+                    Assignor
+                </td>
+                <td class="locked">
+                    {{acitonitem.assignor}}
+                </td>
+                <td class="label">
+                    Approver
+                </td>
+                <td class="locked">
+                  {{actionitem.approver}}  
+                </td>
+            </tr>
+        </table>
+        <br />
+        <table id="summary" class="data" border="1">
+            <tr>
+                <td class="label">
+                    Assigned Date
+                </td>
+                <td class="locked">
+                    {{actionitem.assigneddate}}
+                </td>
+                
+                <td class="label">
+                    Completion Date
+                </td>
+                <td class="locked">
+                  {{actionitem.completiondate}}        
+                </td>
+            </tr>
+            <tr>
+                <td class="label">
+                    Original Due Date
+                </td>
+                <td class="locked">
+                   {{actionitem.duedate}}
+                </td>
+                <td class="label">
+                    Closed Date
+                </td>
+                <td class="locked">
+                    {{actionitem.closeddate}}
+                </td>
+            </tr>
+            <tr>
+                <td class="label">
+                    ECD
+                </td>
+                <td class="locked">
+                 <span class="">
+                     {{actionitem.ecd}}
+                 </span>
+                </td>
+                <td class="label">
+                    Status
+                </td>
+                <td class="locked">
+                    {{actionitem.status}}
+                </td>
+            </tr>
+        </table>
+
+        <h2>Action Item Information</h2>
+        <table id="details" class="data" border="1">
+            <tr>
+                <td class="label" style="vertical-align: top">
+                    Title
+                </td>
+                <td class="locked">
+                    {{actionitem.title}}
+                </td>
+            </tr>
+            <tr>
+                <td class="label" style="vertical-align: top">
+                    Action Item Statement
+                </td>
+                <td  class="locked" style="vertical-align: top">
+                    <div>{{actionitem.actionitemstatement}}</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="label" style="vertical-align: top">
+                    Closure Criteria
+                </td>
+                <td  class="locked"style=" vertical-align: top">
+                    <div>{{actionitem.closurecriteria}}</div>
+                </td>
+            </tr>
+                <tr>
+                <td class="label" style="vertical-align: top">
+                    Owner Notes
+                </td>
+                <td  class="locked" style=" vertical-align: top">
+                    <div>{{actionitem.ownernotes}}</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="label" style="vertical-align: top">
+                    Approver Comments
+                </td>
+                <td  class="locked" style=" vertical-align: top">
+                    <div>{{actionitem.approvercomments}}</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="label" style="vertical-align: top">
+                    Activity Log
+                </td>
+                <td  class="locked" style=" vertical-align: top">
+                    <div></div>
+                </td>
+            </tr>
+        </table>
+</div>

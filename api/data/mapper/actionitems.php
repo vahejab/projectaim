@@ -92,10 +92,10 @@
                     $whereParams[] = $params['keyword'];
                 }            
             }    
-            if (isset($params['id']))
+            if (isset($params['actionitemid']))
             {
                 $whereStrings[] = 'actionitemid = ?';
-                $whereParams[] = $params['id'];   
+                $whereParams[] = $params['actionitemid'];   
             }
  
             $sql = "select
@@ -118,7 +118,7 @@
                     left join users approver
                         ON a.approverid = approver.userid  
                     ";
-                
+ 
             if (!empty($whereStrings))
             {
                 $sql .= " where " . implode(' AND ' , $whereStrings);
@@ -136,7 +136,7 @@
                 $statement  = $this->db->prepare($sql);
                 $statement->execute($whereParams);
                 $results = $statement->fetchAll();
-                return ["Succeeded" => true, "Result" => $this->_populateFromCollection($results)];
+                return(["Succeeded" => true, "Result" => $this->_populateFromCollection($results)]);
             }
             catch(PDOException $e)
             {
