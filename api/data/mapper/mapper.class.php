@@ -26,7 +26,6 @@
       
         public function findOne($params = [])
         {
-        
             $collection = $this->findAll($params);
 
             if (count($collection['Result']) > 1)

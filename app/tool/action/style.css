@@ -71,3 +71,6 @@ table.table-condensed thead th {
     text-align: left !important;
 }   
 
+.webix_list_item:hover{
+    background-color: rgb(244, 245, 249);
+}

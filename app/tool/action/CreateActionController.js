@@ -1,5 +1,5 @@
 angular.module('Action').config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
-  }]).controller('CreateActionController', ['$http', '$resource', '$scope', '$window', '$state', '$timeout', '$sce', 'CommonService', function($http, $resource, $scope, $window, $state, $timeout, $sce, CommonService){
+  }]).controller('CreateActionController', ['$http', '$resource', '$scope', '$window', '$state', '$interval', '$timeout', '$sce', 'CommonService', function($http, $resource, $scope, $window, $state, $inerval, $timeout, $sce, CommonService){
          $scope.actionitem = {
                 actionitemid: '',
                 title: '',
@@ -20,6 +20,21 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                 ownernotes: '',
                 approvercomments: '',
                 activitylog: ''
+        }  
+        
+        $scope.assignor = {
+            id: '',
+            value: ''
+        }
+        
+        $scope.criticality = {
+            id: '',
+            value: ''
+        }
+        
+        $scope.config = {
+            view: 'layout',
+            responsive: true
         }
         
         $scope.users = [];
@@ -28,7 +43,13 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
         $scope.assignor = {};
         $scope.minDate = null;
         
-        $scope.criticalitylevels = [];   
+        $scope.critlevels = 
+        [
+          {id: 1, value: 'High'},
+          {id: 2, value: 'Med'},
+          {id: 3, value: 'Low'},
+          {id: 4, value: 'None'} 
+        ];   
           
         $scope.getUsers = function(){
             return $scope.users;  
@@ -41,12 +62,16 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
         $scope.getCrticalities = function(){
             return $scope.criricalitylevels;
         }                       
-       
-        $scope.init = function(){    
-            CommonService.initTableScrolling(); 
+             
+        $scope.init = function(){
+            CommonService.initTableScrolling();
             return $http.get('api/users').then(function(response){
                 if (response.data.Succeeded){
-                    $scope.users = response.data.Result;
+                    
+                    $.each(response.data.Result, function(key, user){
+                        $scope.users.push({id: user.id, value: user.name});
+                    }); 
+                     
                     return response.data.Result;
                 }
                 if (!response.data.Succeeded){
@@ -87,27 +112,46 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                 }
             });
         }
-
+           
+           
+        $scope.userConfig = {
+            view:"richselect",
+            label:"Choose", 
+            value:1, 
+            options:$scope.users
+        }
+        
+        $scope.critConfig = {
+            view:"richselect",
+            label:"Choose", 
+            value:1, 
+            options:$scope.critlevels
+        }
+        
+        $scope.dateConfig = {
+            view: "datepicker", 
+            value: new Date(), 
+            label: "Select Date", 
+            timepicker: false,
+            multiselect: true,
+            suggest:{
+                type:"calendar", 
+                body:{
+                    minDate:new Date
+                }
+            }
+        }
+                       
         $scope.today = new Date()
-       
+
         this.duedate = new Date();
         this.ecd = new Date();
         this.isOpen = false;
-        
   }]).directive('initData', function(){
-          return {
-                restrict: 'E',
-                link: function (scope, element, attrs) {
-                      
-                      scope.init();
-                      
-                      scope.criticalitylevels = 
-                      [
-                          {'value': 1, 'level': 'High'},
-                          {'value': 2, 'level': 'Med'},
-                          {'value': 3, 'level': 'Low'},
-                          {'value': 4, 'level': 'None'} 
-                      ];
-                }
-          }
-});
+                  return {
+                        restrict: 'E',
+                        link: function (scope, element, attrs) {
+                              scope.init();
+                        }
+                  }
+        });
