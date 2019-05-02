@@ -17,9 +17,8 @@ body{
     width: 100% 
 }
 
-table{
-    width: 100% !important;
-}
+table.grid{
+    width: 100%;
 }
 
 
@@ -139,3 +138,38 @@ td.Late{
     color: red;
 }
 
+.grid th{
+    white-space: nowrap !important;
+}
+
+.grid td{
+    white-space: nowrap !important;
+}
+
+
+
+      
+@media only screen and (max-width: 700px) {
+    
+    /* Force table to not be like tables anymore */    
+    table:not(.grid),
+    table:not(.grid) thead,
+    table:not(.grid) tbody,
+    table:not(.grid) tr,
+    table:not(.grid) th,
+    table:not(.grid) td,
+    table:not(.grid) td *:not(.webix_input_icon)
+    {
+        display: block !important;
+        width: 100% !important; 
+    }       
+    
+    table#details tr:not(:first-child) td.label
+    {
+        height: 23px !important;
+    }  
+}
+
+td.label{
+    white-space: nowrap !important;
+} 

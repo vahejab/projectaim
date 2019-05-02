@@ -1,0 +1,152 @@
+md-md-select-value,
+md-input-container.dropdown{
+    left: 8px !important;
+}
+
+.text-input {
+    padding-left: 8px !important;
+}
+
+._md-datepicker-floating-label > 
+  label{
+    width: calc(100% - 32px) !important;
+}
+
+._md-datepicker-floating-label > 
+  md-datepicker .md-datepicker-input-container{
+    width: 132px !important;
+}
+
+.text-input,
+textarea{
+    width: 500px !important;
+}
+
+md-input-container{
+    padding: 0px !important;
+}
+
+label, textarea, input{
+    padding-left: 0px !important;
+}
+.text-input label{
+    margin-left: 8px !important;
+}
+.text-input input{
+    margin-left: initial !important;
+}  
+.textarea-input textarea,
+.textarea-input label{
+    margin-left: 8px !important;
+}
+
+div[ng-message=required]{
+    font-size: 10pt !important;
+}
+
+.textarea-input div[ng-message=required],
+._md-datepicker-floating-label  div[ng-message=required]
+{
+    margin-left: 10px !important;
+}
+
+.text-input div[ng-message=required]{   
+    margin-left: 0px !important;
+}
+
+.textarea-input textarea{
+    min-height: 100px !important;
+    max-height: 100px !important;
+}
+
+.md-resize-handle{
+    cursor: default !important;
+}
+
+table.table-condensed thead th {
+    background-color: #0038a8 !important;
+    font-weight: bold !important;
+    font-style: italic !important;
+    color: white !important;
+    text-align: left !important;
+}   
+
+.webix_list_item:hover{
+    background-color: rgb(244, 245, 249);
+}
+  
+
+
+table#details td:nth-child(1){
+    width: 150px;
+}
+
+
+
+.table td, .table th {
+    padding: .75rem;
+    vertical-align: top;
+    border-top: 1px solid black; 
+}
+textarea
+{
+    margin: 0px !important;
+    padding: 0px !important;
+    width: 100% !important;
+    max-width: auto !important;
+    height: 92px !important;
+    overflow-y:scroll !important;
+    resize: none !important;
+    font-family: inherit !important;
+    border: 0px !important;
+}
+
+td > div:not(.filterinput):not(.cell)
+{
+    /* height: 92px !important; */
+    /* max-height: 92px !important; */
+    /* overflow-y:scroll !important; */
+    /* overflow-x:hidden !important; */
+}
+
+table#details tr:not(:first-child) td.label
+{
+    padding: 1px;
+    height: 93px;
+    width: 200px;
+}
+
+
+table#summary tr td {
+    /* height: 23px !important; */
+}
+
+table#information tr td
+{
+    height:  23px !important;
+}
+table#categories tr td
+{
+    height: 23px !important;
+}
+table#details tr:first-child td
+{
+    height:  23px !important;
+}
+                  
+table#summary td.locked
+{
+    vertical-align: middle !important;
+    color: black;
+    width: 200px;
+}
+
+
+table#summary td.label {
+    background-color: #0038a8 !important;
+    font-weight: bold !important;
+    font-style: italic !important;
+    color: white !important;
+    text-align: left !important;
+    width: 150px;
+}  

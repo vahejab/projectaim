@@ -130,28 +130,3 @@ td.label {
     text-align: left !important;
 }   
 
-
-
-
-@media only screen and (max-width: 800px) {
-    
-    /* Force table to not be like tables anymore */    
-    table:not(.grid),
-    table:not(.grid) thead,
-    table:not(.grid) tbody,
-    table:not(.grid) tr,
-    table:not(.grid) th,
-    table:not(.grid) td
-    {
-        display: block;
-        width: 100% !important;
-    }
-    
-    
-    table#details tr:not(:first-child) td.label
-    {
-        height: 23px !important;
-    }
-}
-
-

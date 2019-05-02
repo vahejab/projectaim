@@ -1,4 +1,4 @@
-angular.module('Action').controller('ActionController', ['$http', '$resource', '$scope', '$state', '$timeout', '$interval', 'CommonService', /*'DTOptionsBuilder',*/ function($http, $resource, $scope, $state, $timeout, $interval, CommonService/*, DTOptionsBuilder*/){
+angular.module('Action').controller('ActionController', ['$http', '$resource', '$scope', '$state', '$window', '$timeout', '$interval', 'CommonService', /*'DTOptionsBuilder',*/ function($http, $resource, $scope, $state, $window, $timeout, $interval, CommonService/*, DTOptionsBuilder*/){
         $scope.actionitems = [];                          
         $scope.actionitem = {
                 actionitemid: 0,
@@ -39,39 +39,65 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
             scrollBarWidth = CommonService.getScrollBarWidth();
             $(elem).attr("style", "margin-right: " + factor*scrollBarWidth + "px !important");
         }
-
-        $scope.assignHeaderWidths = function(){
+        $scope.setHeaderWidths = function(){
             var headers = $('div.tableheader table thead th');
             var cells = $('div.tablebody table tbody tr:nth-child(1) td');
-            for (var idx in headers){
+            for (var idx = 0; idx < headers.length; idx++){
                 var cellwidth = $(cells[idx]).width();
                 $(headers[idx]).attr('style', 'width: ' + cellwidth + "px !important");
-            } 
+            }
+        }
+       
+        
+        $scope.assignHeaderWidths = function(){ 
+            //call the above two again in a refresh loop
+            $scope.setZoomMargins();
         }
 
+        $scope.setMargins = function(){
+                //there was a resize and so then we set margin in this case
+                $scope.setMargin($('html'), 0);
+                $scope.setMargin($('div.tableheader'), 2);
+                $scope.setMargin($('div.tablebody'), 1);
+        }
         
         $scope.devicePixelRatio = window.devicePixelRatio;
-        $scope.zoomFlag = 1;
-   
-       $scope.setZoomWidth = $interval(function(){              
-                if ($scope.flag && window.devicePixelRatio == .25){
-                    $scope.$scope($('html'), 0);
-                    $scope.setMargin($('div.tableheader'), 2);
-                    $scope.setMargin($('div.tablebody'), 1);
-                    $scope.assignHeaderWidths();
-                }  
-                                        
-                else if(window.devicePixelRatio != $scope.devicePixelRatio){
-                    $scope.zoomFlag = 1;
+        $scope.flag = 0;
+        /*$scope.setZoomMargins = function(){
+            $scope.zoomInterval = $interval(function(){
+                    if ($scope.flag == 0 || window.devicePixelRatio != $scope.devicePixelRatio){
+                        $scope.flag = 1;
+                        $scope.devicePixelRatio = window.devicePixelRatio;
+                        $scope.setHeaderWidths();
+                        $scope.setMargins();
+                    }
+            },0);
+        } */
+        
+        
+        var refreshingPromise; 
+        $scope.isRefreshing = false;
+        $scope.flag = 0;
+        $scope.setZoomMargins = function(){ 
+           if($scope.isRefreshing) 
+                return;    
+           (function refreshEvery(){
+                 //Do refresh
+                 if ($scope.flag == 0 || window.devicePixelRatio != $scope.devicePixelRatio)
+                 {
+                    $scope.flag = 1;
                     $scope.devicePixelRatio = window.devicePixelRatio;
-                    //there was a resize and so then we set margin in this case
-                    $scope.setMargin($('html'), 0);
-                    $scope.setMargin($('div.tableheader'), 2);
-                    $scope.setMargin($('div.tablebody'), 1);
-                    //Set header width to ensure they will match on any zoom
-                    $scope.assignHeaderWidths();    
-                }
-        },0)
+                    $scope.setHeaderWidths();
+                    $scope.setMargins();
+                 }
+                 refreshingPromise = $timeout(refreshEvery,1)
+            }());
+        } 
+        
+        $scope.$on("destroy", function(){
+             $scope.isRefreshing = false;  //stop refreshing
+        });
+
         
         $scope.formatCriticality = function(value){ 
             return CommonService.formatCriticality(value);
@@ -87,7 +113,7 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
             //.fromFnPromise(function(){
             
             CommonService.initTableScrolling();
-
+ 
             return $http.get('api/actionitems').then(function(response){
                if (response.data.Succeeded){
                     $.each(response.data.Result, function(key, actionitem){
@@ -116,12 +142,8 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
                }
             });                                   
        }
-   
-        $scope.$on('$destroy',function(){
-            if($scope.setZoomWidth)
-                $interval.cancel($scope.setZoomWidth);   
-        });
-        
+         
+       
           
                
             //.withPaginationType('full_numbers')
@@ -138,11 +160,11 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
         templateUrl: '/app/tool/action/ActionItemTable.html',
         controller: function($scope, $timeout) {
             //console.log($scope, $timeout);
-            $timeout( function() {
+            /*$timeout( function() {
                 $scope.setMargin($('html'), 0);
                 $scope.setMargin($('div.tableheader'), 2);
                 $scope.setMargin($('div.tablebody'), 1);
-            });
+            });*/
         },
         link: function (scope, element, attrs) {
             scope.init().then(function(){
@@ -154,12 +176,15 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
     return {
         restrict: 'A',
         controller: function($scope, $timeout){
-             if ($scope.$last){ 
-                 $timeout(function(){ 
-                    $scope.assignHeaderWidths(); 
-                    //$scope.setZoomWidth();
-                 });
+             if ($scope.$last){
+                 $timeout(
+                    function(){
+                        $scope.setHeaderWidths();
+                        $scope.setMargins();
+                        $scope.assignHeaderWidths(); 
+                    },0);  
              }
+        
         }
     }
 });

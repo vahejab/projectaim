@@ -1,5 +1,5 @@
 angular.module('Action').config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
-  }]).controller('CreateActionController', ['$http', '$resource', '$scope', '$window', '$state', '$interval', '$timeout', '$sce', 'CommonService', function($http, $resource, $scope, $window, $state, $inerval, $timeout, $sce, CommonService){
+  }]).controller('CreateActionController', ['$http', '$resource', '$scope', '$window', '$state', '$interval', '$timeout', '$sce', 'CommonService', function($http, $resource, $scope, $window, $state, $interval, $timeout, $sce, CommonService){
          $scope.actionitem = {
                 actionitemid: '',
                 title: '',
@@ -112,18 +112,11 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                 }
             });
         }
-           
-           
-        $scope.userConfig = {
-            view:"richselect",
-            label:"Choose", 
-            value:1, 
-            options:$scope.users
-        }
+
         
         $scope.critConfig = {
             view:"richselect",
-            label:"Choose", 
+            //label:"Choose", 
             value:1, 
             options:$scope.critlevels
         }
@@ -131,9 +124,9 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
         $scope.dateConfig = {
             view: "datepicker", 
             value: new Date(), 
-            label: "Select Date", 
+            //label: "Select Date", 
             timepicker: false,
-            multiselect: true,
+            //multiselect: true,
             suggest:{
                 type:"calendar", 
                 body:{
@@ -147,11 +140,26 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
         this.duedate = new Date();
         this.ecd = new Date();
         this.isOpen = false;
-  }]).directive('initData', function(){
+  }]).directive('initData', function(){                     
                   return {
                         restrict: 'E',
                         link: function (scope, element, attrs) {
-                              scope.init();
+                              scope.init().then(function(){
+                              
+                                scope.userConfig = {
+                                    view:"richselect",
+                                    //label:"Choose", 
+                                    value:1, 
+                                    options:scope.users
+                                }
+                                
+                                webix.ready(function(){
+                                    webix.ui({
+                                      container:"formcontainer"
+                                    })
+                                });
+                              });     
+                              
                         }
                   }
         });

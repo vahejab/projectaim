@@ -56,7 +56,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         {
             name: 'action@create',
             files: [
-                    '/app/tool/action/style.css',
+                    '/app/tool/action/CreateActionItem.css',
                     '/app/tool/action/CreateActionController.js'
             ],
             serie: true

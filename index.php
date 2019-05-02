@@ -40,6 +40,14 @@
     table.xdebug-error *{
         font-size: 12pt !important;
     }
+    div.ui-view *{
+        text-align: center;
+        margin: 0 auto;
+    }
+    table *{
+        text-align: left !important;
+    }
+    
  </style>
  <script src="/app/js/webix-ui/codebase/webix.js" type="text/javascript"></script>
  <link rel="stylesheet" href="/app/js/webix-ui/codebase/webix.css" type="text/css" /> 
