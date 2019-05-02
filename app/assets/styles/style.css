@@ -38,8 +38,7 @@ table.grid tbody tr td:nth-child(1){
 
 table.grid thead tr th:nth-child(2),
 table.grid tbody tr td:nth-child(2){
-    min-width: 574px !important;
-    
+    min-width: 596px !important;
 }
 
 
@@ -145,8 +144,6 @@ td.Late{
 .grid td{
     white-space: nowrap !important;
 }
-
-
 
       
 @media only screen and (max-width: 700px) {

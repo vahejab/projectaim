@@ -146,7 +146,7 @@
         }
 
         public function createOne($params = [])
-        {    
+        {   
             $sql = "insert
                     into actionitems(    
                             assignorid,
@@ -178,7 +178,7 @@
                 $statement->bindValue(':altownerid' , $params['altowner']);
                 $statement->bindValue(':duedate' , $params['duedate']);
                 $statement->bindValue(':ecd' , $params['ecd']);      
-                $statement->bindValue(':criticality' , $params['criticality']);
+                $statement->bindValue(':criticality' , $params['critlevel']);
                 $statement->bindValue(':actionitemtitle' , $params['actionitemtitle']);
                 $statement->bindValue(':actionitemstatement' , $params['actionitemstatement']);
                 $statement->bindValue(':closurecriteria', $params['closurecriteria']);                        

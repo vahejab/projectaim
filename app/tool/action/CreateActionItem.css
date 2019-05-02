@@ -76,6 +76,9 @@ table.table-condensed thead th {
 }
   
 
+table#summary td{
+    width: 150px;
+}
 
 table#details td:nth-child(1){
     width: 150px;
@@ -101,12 +104,9 @@ textarea
     border: 0px !important;
 }
 
-td > div:not(.filterinput):not(.cell)
+table#details tr:not(:first-child) td > div:not(.filterinput):not(.cell)
 {
-    /* height: 92px !important; */
-    /* max-height: 92px !important; */
-    /* overflow-y:scroll !important; */
-    /* overflow-x:hidden !important; */
+    height: 94px !important;
 }
 
 table#details tr:not(:first-child) td.label
@@ -141,12 +141,35 @@ table#summary td.locked
     width: 200px;
 }
 
+table#details td.locked{
+    width: 500px;
+}
 
-table#summary td.label {
+
+table#summary td.label,
+table#details td.label {
     background-color: #0038a8 !important;
     font-weight: bold !important;
     font-style: italic !important;
     color: white !important;
     text-align: left !important;
     width: 150px;
-}  
+}
+
+table#details tr:not(:first-child) .webix_el_textarea{
+    height: 92px !important;
+}
+
+table#details tr:not(:first-child) td.locked{
+    height: 94px !important;
+}
+                                                     
+table#details{
+    width: 650px;
+    max-width: 750px;
+}
+
+table#summary{
+    width: 650px;
+    max-width: 750px;
+}

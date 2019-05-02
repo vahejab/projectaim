@@ -40,8 +40,8 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
             $(elem).attr("style", "margin-right: " + factor*scrollBarWidth + "px !important");
         }
         $scope.setHeaderWidths = function(){
-            var headers = $('div.tableheader table thead th');
-            var cells = $('div.tablebody table tbody tr:nth-child(1) td');
+            var headers = $('div.tableheader table.grid thead th');
+            var cells = $('div.tablebody table.grid tbody tr:nth-child(1) td');
             for (var idx = 0; idx < headers.length; idx++){
                 var cellwidth = $(cells[idx]).width();
                 $(headers[idx]).attr('style', 'width: ' + cellwidth + "px !important");
@@ -142,17 +142,6 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
                }
             });                                   
        }
-         
-       
-          
-               
-            //.withPaginationType('full_numbers')
-            //.withDisplayLength(10)
-            //.withOption('order', [1, 'desc'])
-            //.withOption('scrollY', 500)
-            //.withOption('scrollX', '100%')
-            //.withDOM('lftrpi')
-            //.withScroller();
 }]).directive('initTable', function(){
     return {
         restrict: 'A',
