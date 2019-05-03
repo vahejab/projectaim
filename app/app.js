@@ -37,7 +37,7 @@ angular.module('Home', []);
 angular.module('Action', [/*'datatables', 'datatables.scroller', *//*'ngMaterial',*/ 'webix', 'ngResource', 'Common']);          
 angular.module('Risk',   [/*'datatables', 'datatables.scroller', */'ngResource', 'Common']);          
 
-var app = angular.module('Main', ['ui.router', 'oc.lazyLoad',/* 'datatables',*/ 'ngResource', 'ngSanitize', /*'ngMaterial'*/, 'webix', 'Common', 'Home', 'Action', 'Risk']);
+var app = angular.module('Main', ['ui.router', 'oc.lazyLoad',/* 'datatables',*/ 'ngResource', 'ngSanitize', /*'ngMaterial'*/ 'webix', 'Common', 'Home', 'Action', 'Risk']);
   
 app.controller('MainController',  ['CommonService', '$scope', '$window', '$state', function(CommonService, $scope, $window, $state){
     

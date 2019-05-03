@@ -78,7 +78,6 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
         }                       
              
         $scope.init = function(){
-            CommonService.initTableScrolling();
             return $http.get('api/users').then(function(response){
                 if (response.data.Succeeded){
                     
