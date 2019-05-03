@@ -10,7 +10,7 @@
         
         public function __construct($request){
             header("Access-Control-Allow-Origin: *");
-            header("Access-Control-Allow-Methods: *");
+            header("Access-Control-Allow-Methods: *"); 
            
             $this->args = $request;
             if (array_key_exists('endpoint', $this->args)){
@@ -92,8 +92,8 @@ return $this->request;
                             }
                             else{
                                 header("Content-Type: application/html");
-                                return $response['Result'];
-                            }
+                                return trim($response['Result'], '"');
+                            } 
                                
    
                         }

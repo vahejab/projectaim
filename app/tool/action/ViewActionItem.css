@@ -17,14 +17,13 @@ table#details{
 table#summary td:nth-child(1),
 table#summary td:nth-child(3){
     width: 135px;
-    width: 135px;
 }
 
                               
 table#summary td:nth-child(2),
-table#summary td:nth-child(4){
-    width: 165px;
-    width: 165px;
+table#summary td:nth-child(4),
+{
+    width: 165px !important;
 }
 
 
@@ -54,8 +53,8 @@ textarea
 
 td > div:not(.filterinput):not(.cell)
 {
-    height: 92px !important;
-    max-height: 92px !important;
+    /* height: 92px !important; */
+    /* max-height: 92px !important; */
     overflow-y:scroll !important;
     overflow-x:hidden !important;
 }

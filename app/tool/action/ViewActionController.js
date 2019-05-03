@@ -32,6 +32,13 @@ angular.module('Action').controller('ViewActionController', ['$http', '$resource
         $scope.getStatus = function(date1, date2){
            return CommonService.getStatus(date1, date2); 
         }
+        
+                     
+        $scope.$on("$destroy", function(){
+
+             $('link[href="/app/tool/action/ViewActionItem.css"]').remove();
+        });
+
          
         $scope.init = function(){
             //var vm = this;
@@ -53,9 +60,9 @@ angular.module('Action').controller('ViewActionController', ['$http', '$resource
                     $scope.actionitem.completiondate = response.data.Results.completiondate;
                     $scope.actionitem.closeddate = response.data.Results.closeddate;
                     $scope.actionitem.actionitemstatement = response.data.Results.actionitemstatement;
-                    $scope.actionitem.closurecriteria = response.data.Resutls.closurecriteria;
+                    $scope.actionitem.closurecriteria = response.data.Results.closurecriteria;
                     $scope.actionitem.ownernotes = response.data.Results.ownernotes;
-                    $scope.actionitem.approvercomments = response.data.Resutls.approvercommens;
+                    $scope.actionitem.approvercomments = response.data.Results.approvercommens;
                     $scope.actionitem.activitylog = response.data.Results.activitylog; 
                     return response.data.Results;
             });                                   

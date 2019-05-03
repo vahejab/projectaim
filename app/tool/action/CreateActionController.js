@@ -5,8 +5,8 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                 actionitemid: '',
                 title: '',
                 status: (this.completiondate) ? 'Open' : 'Completed',
-                criticality: 'None',
-                critlevel: 4,
+                criticality: '',
+                critlevel: '',
                 assignor: 0,
                 owner: 0,
                 altowner: 0,
@@ -90,8 +90,8 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                      
                     return response.data.Result;
                 }
-                if (!response.data.Succeeded){
-                    $scope.msg = $sce.trustAsHtml(response.data.Result);
+                else{
+                     $scope.msg = $sce.trustAsHtml(response.data);
                 }
             }); 
         } 
@@ -110,29 +110,27 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
         };
 
         $scope.split = function(str, delimit) {
-            var array = str.split(delimit);
+            var array = str.split(str, delimit);
             return array;
         }
 
         $scope.submit = function(){
-            $scope.actionitem = JSON.parse(JSON.stringify($scope.actionitem));
-            $scope.actionitem.duedate = $scope.split($scope.actionitem.duedate,'T')[0];
-            $scope.actionitem.ecd = $scope.split($scope.actionitem.ecd, 'T')[0];
-            $scope.actionitem.owner = Number($scope.actionitem.owner);
-            $scope.actionitem.altowner = Number($scope.actionitem.altowner);
-            $scope.actionitem.assignor = Number($scope.actionitem.assignor);
-            //document.write(JSON.stringify($scope.actionitem));
-            console.log(JSON.stringify($scope.actionitem));
+            //$scope.actionitem.duedate = $scope.split($scope.actionitem.duedate,'T')[0];
+            //$scope.actionitem.ecd = $scope.split($scope.actionitem.ecd, 'T')[0];
+            $scope.actionitem.owner = ($scope.actionitem.owner);
+            $scope.actionitem.altowner = ($scope.actionitem.altowner);
+            $scope.actionitem.assignor = ($scope.actionitem.assignor);
             $http.post('/api/actionitems', $scope.actionitem).then(function (response){
                 if (response.data.Succeeded){
                     $scope.msg = response.data.Result;
                 }
                 else{
-                    console.log(response.data);
-                    //$scope.msg = $sce.trustAsHtml(response.data);
+                    $scope.msg = $sce.trustAsHtml(response.data);
                 }
             });
         }
+        
+  
         
         $scope.critConfig = {
             view:"richselect",
@@ -143,7 +141,7 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                 "onChange": function getItemValue(id){
                     var obj = this.$eventSource || this;
                     var value = obj.data.value;
-                    $scope.actionitem.critlevel = obj.data.value;     
+                    $scope.actionitem.critlevel = obj.data.value.toString();     
                 }     
             }
         }
@@ -178,10 +176,13 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
             }
         }
         
+        $scope.date = function(){
+            return CommonService.formatDate(new Date());
+        }
+        
         $scope.duedateConfig = {
             view: "datepicker", 
-            //value: new Date(), 
-            //label: "Select Date", 
+            //value: $scope.date(), 
             timepicker: false,
             //multiselect: true,
             suggest:{
@@ -192,16 +193,24 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
             },      
             on: {
                 "onChange": function getItemValue(id){
-                    var obj = this.$eventSource || this;
-                    $scope.actionitem.duedate = obj.data.value;      
+                    var obj = this.$eventSource || this;       
+                    var year = obj.data.value.getFullYear();
+                    var month = obj.data.value.getMonth();
+                    var day = obj.data.value.getDay();
+                    $scope.actionitem.duedate = year + "-" + ((month < 10)? '0'+month: month) + "-" + ((day < 10)? '0'+day: day);        
                 }     
             }
         }
         
+        $scope.$on("$destroy", function(){
+
+             $('link[href="/app/tool/action/CreateActionItem.css"]').remove();
+        });
+
         
         $scope.ecdConfig = {
             view: "datepicker", 
-            //value: new Date(), 
+            //value: $scope.date(),
             //label: "Select Date", 
             timepicker: false,
             //multiselect: true,
@@ -211,17 +220,16 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                     minDate:new Date()
                 }
             },      
-            on: {
+            on: {                                  
                 "onChange": function getItemValue(id){
                     var obj = this.$eventSource || this;
-                    //var year = obj.data.value.getYear();
-                    //var month = obj.data.value.getMonth();
-                    //var day = obj.data.value.getDay();
-                    $scope.actionitem.ecd  = obj.data.value;      
+                    var year = obj.data.value.getFullYear();
+                    var month = obj.data.value.getMonth()+1;
+                    var day = obj.data.value.getDay();
+                    $scope.actionitem.ecd  = year + "-" + ((month < 10)? '0'+month: month) + "-" + ((day < 10)? '0'+day: day);     
                 }     
             }
         }
-        
                        
         $scope.today = new Date()
 
@@ -234,24 +242,23 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                         restrict: 'E',
                         link: function (scope, element, attrs) {
                               scope.init().then(function(){
-                              
-                              
+                                
                                 function getAssignorValue(id){
                                             var obj = this.$eventSource || this;
                                             var value = obj.data.value;
-                                            scope.actionitem.assignor = obj.data.value;      
+                                            scope.actionitem.assignor = obj.data.value.toString();      
                                 }
                                 
                                 function getOwnerValue(id){
                                             var obj = this.$eventSource || this;
                                             var value = obj.data.value;
-                                            scope.actionitem.owner = obj.data.value;     
+                                            scope.actionitem.owner = obj.data.value.toString();     
                                 }  
                                 
                                 function getAltOwnerValue(id){
                                             var obj = this.$eventSource || this;
                                             var value = obj.data.value;      
-                                            scope.actionitem.altowner = obj.data.value;      
+                                            scope.actionitem.altowner = obj.data.value.toString();      
                                 }      
                               
                                 scope.assignorConfig = {

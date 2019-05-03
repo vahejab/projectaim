@@ -15,15 +15,15 @@
 .webix_view.webix_form {
   background-color: #FFFFFF;
   /*.webix_view{
-		background-color: @backColor;
-	}*/
+        background-color: @backColor;
+    }*/
 }
 body {
   -webkit-tap-highlight-color: transparent !important;
 }
 /*
-	webix_layout_{type}
-	known types are: line, clean, wide, space;
+    webix_layout_{type}
+    known types are: line, clean, wide, space;
 */
 .webix_abslayout {
   position: relative;
@@ -736,25 +736,25 @@ button,
 }
 /*
 .webix_accordionitem.vertical > .webix_accordionitem_header .webix_accordionitem_button{
-	.accIconUp;
+    .accIconUp;
 }
 .webix_accordionitem.vertical.collapsed > .webix_accordionitem_header .webix_accordionitem_button{
-	.accIconDown;
+    .accIconDown;
 }
 
 .webix_accordionitem.horizontal  > .webix_accordionitem_header .webix_accordionitem_button{
-	.accIconLeft;
+    .accIconLeft;
 }
 .webix_accordionitem.horizontal:last-child  > .webix_accordionitem_header .webix_accordionitem_button{
-	.accIconRight;
+    .accIconRight;
 }
 .webix_accordionitem.horizontal.collapsed:last-child  > .webix_accordionitem_header .webix_accordionitem_button{
-	.accIconDown;
+    .accIconDown;
 }
 .webix_accordionitem.horizontal.collapsed  > .webix_accordionitem_header{
-	.webix_accordionitem_button{
-		.accIconUp;
-	}
+    .webix_accordionitem_button{
+        .accIconUp;
+    }
 }*/
 .webix_carousel {
   position: relative;
@@ -3478,7 +3478,7 @@ div.webix_modal_cover {
   font-family: Roboto, sans-serif;
   border-color: #CCD7E6;
   /*.altBackColor;
-	.altBackBorderColor;*/
+    .altBackBorderColor;*/
   -webkit-appearance: none;
   border-radius: 0;
 }
@@ -3490,7 +3490,7 @@ div.webix_modal_cover {
   font-size: 14px;
 }
 /*.webix_toolbar .webix_inp_label{
-	padding-top:(@inputHeight - 11 )/2;
+    padding-top:(@inputHeight - 11 )/2;
 }*/
 .webix_inp_label {
   float: left;
@@ -3558,7 +3558,7 @@ body:not(:-moz-handler-blocked) .webix_el_select select {
   border-radius: 0;
 }
 /*body:not(:-moz-handler-blocked) .webix_inp_counter_value{
-	 position:relative; top:-1px;
+     position:relative; top:-1px;
 }*/
 .webix_inp_counter_prev {
   padding-left: 6px;
@@ -3780,7 +3780,7 @@ body:not(:-moz-handler-blocked) .webix_el_select select {
   font-family: Roboto, sans-serif;
   border-color: #CCD7E6;
   /*.altBackColor;
-	.altBackBorderColor;*/
+    .altBackBorderColor;*/
   -webkit-appearance: none;
 }
 .webix_el_combo .webix_input_icon,
@@ -6881,7 +6881,7 @@ div.webix_inp_static,
   font-family: Roboto, sans-serif;
   border-color: #CCD7E6;
   /*.altBackColor;
-	.altBackBorderColor;*/
+    .altBackBorderColor;*/
 }
 .webix_el_select select {
   font-family: Roboto, sans-serif;
@@ -6896,7 +6896,7 @@ div.webix_inp_static,
   font-family: Roboto, sans-serif;
   border-color: #CCD7E6;
   /*.altBackColor;
-	.altBackBorderColor;*/
+    .altBackBorderColor;*/
 }
 .webix_el_counter .webix_inp_counter_prev,
 .webix_el_counter .webix_inp_counter_next {

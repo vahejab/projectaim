@@ -75,16 +75,7 @@ table.table-condensed thead th {
     background-color: rgb(244, 245, 249);
 }
   
-
-table#summary td{
-    width: 150px;
-}
-
-table#details td:nth-child(1){
-    width: 150px;
-}
-
-
+      
 
 .table td, .table th {
     padding: .75rem;
@@ -102,74 +93,4 @@ textarea
     resize: none !important;
     font-family: inherit !important;
     border: 0px !important;
-}
-
-table#details tr:not(:first-child) td > div:not(.filterinput):not(.cell)
-{
-    height: 94px !important;
-}
-
-table#details tr:not(:first-child) td.label
-{
-    padding: 1px;
-    height: 93px;
-    width: 200px;
-}
-
-
-table#summary tr td {
-    /* height: 23px !important; */
-}
-
-table#information tr td
-{
-    height:  23px !important;
-}
-table#categories tr td
-{
-    height: 23px !important;
-}
-table#details tr:first-child td
-{
-    height:  23px !important;
-}
-                  
-table#summary td.locked
-{
-    vertical-align: middle !important;
-    color: black;
-    width: 200px;
-}
-
-table#details td.locked{
-    width: 500px;
-}
-
-
-table#summary td.label,
-table#details td.label {
-    background-color: #0038a8 !important;
-    font-weight: bold !important;
-    font-style: italic !important;
-    color: white !important;
-    text-align: left !important;
-    width: 150px;
-}
-
-table#details tr:not(:first-child) .webix_el_textarea{
-    height: 92px !important;
-}
-
-table#details tr:not(:first-child) td.locked{
-    height: 94px !important;
-}
-                                                     
-table#details{
-    width: 650px;
-    max-width: 750px;
-}
-
-table#summary{
-    width: 650px;
-    max-width: 750px;
 }

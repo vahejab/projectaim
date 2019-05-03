@@ -93,7 +93,7 @@
             }
             catch (\PDOException $e)
             {
-                return ["Succeeded" => false, "Result" => $e->getMessage(0)];
+                return ["Succeeded" => false, "Result" => $e->getMessage()];
             }
         }
     }
