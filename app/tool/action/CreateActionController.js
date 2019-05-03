@@ -1,5 +1,6 @@
 angular.module('Action').config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
   }]).controller('CreateActionController', ['$http', '$resource', '$scope', '$window', '$state', '$interval', '$timeout', '$sce', 'CommonService', function($http, $resource, $scope, $window, $state, $interval, $timeout, $sce, CommonService){
+         var refresh = false;
          
          $scope.actionitem = {
                 actionitemid: '',
@@ -46,7 +47,7 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
         
         $scope.config = {
             view: 'layout',
-            responsive: true
+            //responsive: true
         }
         
         $scope.assignors = [];
@@ -142,7 +143,10 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                     var value = obj.data.value;
                     $scope.actionitem.critlevel = obj.data.value.toString();     
                 }     
-            }
+            }, 
+            //responsive: true,
+            width: "500px",
+            height: "95px"
         }
         
         $scope.titleConfig = {
@@ -152,7 +156,10 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                     var obj = this.$eventSource || this;
                     $scope.actionitem.actionitemtitle = obj.data.value;      
                 }
-            }     
+            },
+            //responsive: true,
+            width: "500px",
+            height: "95px"
         }
         
         $scope.statementConfig = {
@@ -162,7 +169,10 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                     var obj = this.$eventSource || this; 
                     $scope.actionitem.actionitemstatement = obj.data.value;      
                 }     
-            }
+            },
+            //responsive: true,
+            width: "500px",
+            height: "95px"
         }
         
         $scope.closureCriteriaConfig = {
@@ -172,7 +182,10 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                     var obj = this.$eventSource || this;
                     $scope.actionitem.closurecriteria = obj.data.value;      
                 }     
-            }
+            }, 
+            //responsive: true,
+            width: "500px",
+            height: "200px"
         }
         
         $scope.date = function(){
@@ -198,12 +211,14 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                     var day = obj.data.value.getDay();
                     $scope.actionitem.duedate = year + "-" + ((month < 10)? '0'+month: month) + "-" + ((day < 10)? '0'+day: day);        
                 }     
-            }
+            },   
+            //responsive: true,
+            width: "145px",
+            height: "95px"
         }
         
         $scope.$on("$destroy", function(){
-
-             $('link[href="/app/tool/action/CreateActionItem.css"]').remove();
+             amgular.element(document.querySelector('link[href="/app/tool/action/CreateActionItem.css"]').remove();
         });
 
         
@@ -227,7 +242,10 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                     var day = obj.data.value.getDay();
                     $scope.actionitem.ecd  = year + "-" + ((month < 10)? '0'+month: month) + "-" + ((day < 10)? '0'+day: day);     
                 }     
-            }
+            },
+            //responsive: true,
+            width: "145px",
+            height: "95px"
         }
                        
         $scope.today = new Date()
@@ -268,7 +286,10 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                                     on: {
                                         "onChange": getAssignorValue
                                        // "onInit": getAssignorValue
-                                    }
+                                    },
+                                    //responsive: true,
+                                    width: "145px",
+                                    height: "95px"
                                 }
                                 
                                 scope.ownerConfig = {
@@ -279,7 +300,10 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                                     on: {
                                         "onChange": getOwnerValue
                                        // "onInit": getOwnerValue
-                                    }
+                                    },  
+                                    //responsive: true,
+                                    width: "145px",
+                                    height: "95px"
                                  }
                                 
                                 scope.altownerConfig = {
@@ -290,14 +314,18 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                                     on: {
                                         "onChange": getAltOwnerValue
                                        // "onInit": getAltOwnerValue
-                                    }
+                                    },
+                                    //responsive: true,
+                                    width: "145px",
+                                    height: "95px"
                                 }
-                                
-                                webix.ready(function(){
-                                    webix.ui({
-                                      container:"formcontainer"
-                                    })
-                                });
+                                    
+                                //webix.ready(function(){
+                                   // webix.ui.fullScreen();
+                                  //  webix.ui({
+                                  //    container:"formcontainer"
+                                  //  })                 
+                                //});
                               });     
                               
                         }

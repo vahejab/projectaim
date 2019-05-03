@@ -1,6 +1,6 @@
 angular.module('Action').controller('ActionController', ['$http', '$resource', '$scope', '$state', '$window', '$timeout', '$interval', 'CommonService', /*'DTOptionsBuilder',*/ function($http, $resource, $scope, $state, $window, $timeout, $interval, CommonService/*, DTOptionsBuilder*/){
+        refresh = true;
         $scope.CommonService = CommonService;
-        
         $scope.actionitems = [];                          
         $scope.actionitem = {
                 actionitemid: 0,
@@ -42,8 +42,10 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
         $scope.flag = 0;
  
         
-        $scope.$on("destroy", function(){
+        $scope.$on("$destroy", function(){
+             $timeout.cancel($scope.refreshingPromise);
              $scope.isRefreshing = false;  //stop refreshing
+             $scope.refresh = false;
         });
 
         
@@ -61,7 +63,7 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
                     angular.forEach(response.data.Result, function(key, actionitem){
                         response.data.Result[key] =  
                         { 
-                            actionitemid: parseInt(actionitem.actionitemid), 
+                            actionitemid: actionitem.actionitemid, 
                             title: actionitem.actionitemtitle,
                             criticality: actionitem.criticality,
                             critlevel: actionitem.critlevel,
@@ -104,20 +106,61 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
 
                     // add innerdiv
                     var inner = document.createElement("div");
-                    inner.style.width = "100%";
+                    inner.style.width = "100%";  
                     outer.appendChild(inner);        
 
                     var widthWithScroll = inner.offsetWidth;
 
                     // remove divs
-                    //outer.parentNode.removeChild(outer);
+                    outer.parentNode.removeChild(outer);
 
                     return widthNoScroll - widthWithScroll;
+            }
+            $scope.setMarginsWidths = function(){
+                $scope.flag = 0;
+                refresh = 1;
+                if(refresh){ 
+                    $timeout(refreshEvery,0);
+                }
+
+                function refreshEvery(){
+                    if ($scope.flag == 0 || window.devicePixelRatio != $scope.devicePixelRatio)
+                    {   
+                        $scope.flag = 1;
+                        $scope.devicePixelRatio = window.devicePixelRatio;
+                        var headers = angular.element(document.querySelector('div.tableheader table.grid thead tr')).children();
+                        var cells = angular.element(document.querySelector('div.tablebody table.grid tbody tr:nth-child(1)')).children();
+                        angular.forEach(cells, function(cell, idx){
+                            var cellwidth = cell.getBoundingClientRect().width;
+                            headers[idx].width = cellwidth;
+                        });
+                    }
+                    
+                    if (refresh)
+                        $scope.refreshingPromise = $timeout(refreshEvery,0);
+                    else{
+                         $scope.isRefreshing = false;
+                         $timeout.cancel($scope.refreshingPromise);
+                    }
+                    
+                    angular.element(document.querySelector('html')).attr("style", "margin-right: " + 0*$scope.scrollBarWidth() + "px !important");
+                    angular.element(document.querySelector('div.tableheader')).attr("style", "margin-right: " + $scope.scrollBarWidth() + "px !important");
+                    angular.element(document.querySelector('div.tablebody')).attr("style", "margin-right " + $scope.scrollBarWidth() + "px !important");    
+                }
+
+              
             }
         },
         link: function (scope, element, attrs) {
             scope.init().then(function(){
-                
+                scope.devicePixelRatio = window.devicePixelRatio;
+                scope.setMarginsWidths();
+                var tablebody = document.querySelector('div.tablebody');
+                var tableheader = document.querySelector('div.tableheader');
+                angular.element(tablebody).on("scroll", function(elem, attrs){  //activate when #center scrolls  
+                    left = $scope.CommonService.offset(angular.element(document.querySelector("div.tablebody table.grid"))[0]).left; //save #center position to var left
+                    (angular.element(tableheader)[0]).scrollLeft = -1*left + $scope.scrollBarWidth();
+                }); 
             });
         }
     }
@@ -125,47 +168,7 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
     return {
         restrict: 'A',
         controller: function($scope, $timeout){
-             if ($scope.$last){
-                 $timeout(  
-                    function(){ //set up margins and header widths
-                        var refreshingPromise; 
-                        $scope.isRefreshing = false;
-                        $scope.flag = 0;
-                        $scope.devicePixelRatio = window.devicePixelRatio;
-                        //$scope.setZoomMargins = function(){ 
-                           if($scope.isRefreshing) 
-                                return;    
-                           (function refreshEvery(){
-                                 //Do refresh
-
-                                 if ($scope.flag == 0 || window.devicePixelRatio != $scope.devicePixelRatio)
-                                 {   
-                                    $scope.flag = 1;
-                                    $scope.devicePixelRatio = window.devicePixelRatio;
-                                    var headers = angular.element(document.querySelector('div.tableheader table.grid thead th'));
-                                    var cells = angular.element(document.querySelector('div.tablebody table.grid tbody tr:nth-child(1) td'));
-                                    for (var idx = 0; idx < headers.length; idx++){
-                                        var cellwidth = angular.element(cells[idx]).width;
-                                        angular.element(headers[idx]).attr('style', 'width: ' + cellwidth + "px !important");
-                                    } 
-                                    
-                                    angular.element(document.querySelector('html')).attr("style", "margin-right: " + 0*$scope.scrollBarWidth() + "px !important");
-                                    angular.element(document.querySelector('div.tableheader')).attr("style", "margin-right: " + $scope.scrollBarWidth() + "px !important");
-                                    angular.element(document.querySelector('div.tablebody')).attr("style", "margin-right " + $scope.scrollBarWidth() + "px !important"); 
-                                 }
-                                 refreshingPromise = $timeout(refreshEvery,1);
-                            }());
-                        //}
-                                                
-                        var tablebody = document.querySelector('div.tablebody');
-                        var tableheader = document.querySelector('div.tableheader');
-                        angular.element(tablebody).on("scroll", function(elem, attrs){  //activate when #center scrolls  
-                            left = $scope.CommonService.offset(angular.element(document.querySelector("div.tablebody table"))[0]).left; //save #center position to var left
-                            (angular.element(tableheader)[0]).scrollLeft = -1*left + $scope.scrollBarWidth();
-                        }); 
-                },0);  
-             }
-        
+            
         }
     }
 });

@@ -1,5 +1,5 @@
 var common = angular.module('Common', []);
-
+var refresh = false;
 common.service("CommonService", function() {
     var commonFunctions = {};
     

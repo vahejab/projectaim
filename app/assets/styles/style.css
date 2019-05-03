@@ -32,18 +32,21 @@ table.grid.table-condensed thead th {
 
 table.grid thead tr th:nth-child(1),
 table.grid tbody tr td:nth-child(1){
-    /* min-width: 51px !important; */
+    /* max-width: 51px !important; */
+    max-width:  51px !important;
     min-width:  51px !important;
 }
 
 table.grid thead tr th:nth-child(2),
 table.grid tbody tr td:nth-child(2){
-    min-width: 596px !important;
+    max-width: 596px !important;
+    min-width:  596px !important;
 }
 
 
 table.grid thead tr th:nth-child(3),
 table.grid tbody tr td:nth-child(3){
+    max-width: 100px !important;
     min-width: 100px !important;
 
 }
@@ -52,59 +55,67 @@ table.grid tbody tr td:nth-child(3){
 
 table.grid thead tr th:nth-child(4),
 table.grid tbody tr td:nth-child(4){
+    max-width: 100px !important;
     min-width: 100px !important;
-
 }
 
 table.grid thead tr th:nth-child(5),
 table.grid tbody tr td:nth-child(5){
+    max-width: 185px !important;
     min-width: 185px !important;
   
 }
 
 table.grid thead tr th:nth-child(6),
 table.grid tbody tr td:nth-child(6){
+    max-width: 185px !important;
     min-width: 185px !important;
 
 }
 
 table.grid thead tr th:nth-child(7),
 table.grid tbody tr td:nth-child(7){
+    max-width: 185px !important;
     min-width: 185px !important;
-  
 }
 
 table.grid thead tr th:nth-child(8),
 table.grid tbody tr td:nth-child(8){
+    max-width: 185px !important;
     min-width: 185px !important;
 
 }
 
 table.grid thead tr th:nth-child(9),
 table.grid tbody tr td:nth-child(9){
+    max-width: 130px !important;
     min-width: 130px !important;
   
 }
                              
 table.grid thead tr th:nth-child(10),
 table.grid tbody tr td:nth-child(10){
+    max-width: 130px !important;
     min-width: 130px !important;
 }
 
 table.grid thead tr th:nth-child(11),
 table.grid tbody tr td:nth-child(11){
+    max-width: 130px !important;
     min-width: 130px !important;
 
 }
 
 table.grid thead tr th:nth-child(12),
 table.grid tbody tr td:nth-child(12){
+    max-width: 130px !important;
     min-width: 130px !important;
 
 }
 
 table.grid thead tr th:nth-child(13),
 table.grid tbody tr td:nth-child(13){
+    max-width: 130px !important;
     min-width: 130px !important;
 }
 
@@ -148,3 +159,122 @@ td.Late{
 td.label{
     white-space: nowrap !important;
 } 
+
+
+
+
+
+       
+   
+@media only screen and (max-width: 700px) {
+    /* Force table to not be like tables anymore */    
+    table:not(.grid),
+    table:not(.grid) thead,
+    table:not(.grid) tbody,
+    table:not(.grid) tr,
+    table:not(.grid) th,
+    table:not(.grid) td,
+    table:not(.grid) td .webix_view,
+    table:not(.grid) td .webix_el_box,
+    table:not(.grid) td .webix_inp_static{
+        display: block !important;
+        width: 100% !important;
+    }
+    
+    div.ui-view form{
+        width: 95% !important;
+    }                           
+     
+    table#details tr:not(:first-child) td.label{
+        height: 23px !important;
+    }   
+    
+    table#summary td.label,
+    table#details td.label {
+        background-color: #0038a8 !important;
+        font-weight: bold !important;
+        font-style: italic !important;
+        color: white !important;
+        text-align: left !important;
+    }
+} 
+@media only screen and (min-width: 701px){
+
+    table:not(.grid)#details tr:not(:first-child) td > div:not(.filterinput):not(.cell)
+    {
+        height: 94px !important;
+    }
+
+    table:not(.grid)#details tr:not(:first-child) td.label
+    {
+        padding: 1px;
+        height: 93px;
+        width: 200px;
+    }
+
+
+    table:not(.grid)#details td:nth-child(1){
+        width: 150px;
+    }
+
+    table:not(.grid)#information tr td
+    {
+        height:  23px !important;
+    }
+    table:not(.grid)#categories tr td
+    {
+        height: 23px !important;
+    }
+                      
+    table:not(.grid)#summary td.locked
+    {
+        vertical-align: middle !important;
+        color: black;
+        width: 140px !important;
+    }
+
+    table:not(.grid)#summary td.locked .webix_view,
+    table:not(.grid)#summary td.locked .webix_el_box,
+    table:not(.grid)#summary td.locked .webix_inp_static,
+    {
+        width: 130px !important;
+        height: 95px !important;
+        
+    }
+    
+    table:not(.grid)#details td.locked .webix_view,
+    table:not(.grid)#details td.locked .webix_el_box,
+    table:not(.grid)#details td.locked .webix_inp_static,
+    {
+        width: 500px !important;
+        height: 95px !important;
+    }
+
+    table:not(.grid)#summary td.label,
+    table:not(.grid)#details td.label {
+        background-color: #0038a8 !important;
+        font-weight: bold !important;
+        font-style: italic !important;
+        color: white !important;
+        text-align: left !important;
+        width: 150px;
+    }
+
+    table:not(.grid)#details tr:not(:first-child) .webix_el_textarea{
+        height: 100px !important;
+    }
+
+    table:not(.grid)#details tr:not(:first-child) td.locked{
+        height: 100px !important;
+    }
+                                                         
+    table:not(.grid)#details{
+        width: 650px;
+        max-width: 750px !important;
+    }
+
+    table:not(.grid)#summary{
+        width: 650px;
+        max-width: 750px !important;
+    } 
+}     

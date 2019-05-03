@@ -1,4 +1,6 @@
 angular.module('Action').controller('ViewActionController', ['$http', '$resource', '$stateParams', '$scope', '$state', '$timeout', 'CommonService', /*'DTOptionsBuilder',*/ function($http, $resource, $stateParams, $scope, $state, $timeout, CommonService/*, DTOptionsBuilder*/){
+        refresh = false;
+        
         $scope.actionitem = {
                 actionitemid: 0,
                 title: '',

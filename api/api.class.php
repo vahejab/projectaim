@@ -93,9 +93,7 @@ return $this->request;
                             else{
                                 header("Content-Type: application/html");
                                 return trim($response['Result'], '"');
-                            } 
-                               
-   
+                            }
                         }
                            
                 }
@@ -105,7 +103,7 @@ return $this->request;
 
         private function _response($data, $status = 200) {
             header("HTTP/1.1 " . $status . " " . $this->_requestStatus($status));
-            return json_encode($data, JSON_PRETTY_PRINT);
+            return json_encode($data, JSON_NUMERIC_CHECK);
         }
   
         
