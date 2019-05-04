@@ -176,8 +176,14 @@ td.label{
         width: 100% !important;
     }
     
+    div.ui-view *{
+        text-align: center;
+        margin: 0;
+    }
+    
     div.ui-view form {
-        width: 90vw !important;
+        width: 95vw !important;
+        padding-right: 5vw;
     }
     
     input, textarea{
@@ -197,8 +203,14 @@ td.label{
         text-align: left !important;
     }
 } 
-@media only screen and (min-width: 800px){
+@media only screen and (min-width: 801px){
 
+    div.ui-view,
+    div.ui-view table{
+        text-align: center;
+        margin: 0 auto;
+    }
+    
     table:not(.grid)#details tr:not(:first-child) td > div:not(.filterinput):not(.cell)
     {
         height: 94px !important;
@@ -281,10 +293,7 @@ table.table-condensed thead th {
 table.xdebug-error *{
     font-size: 12pt !important;
 }
-div.ui-view *{
-    text-align: center;
-    margin: 0 auto;
-}
+
 table *{
     text-align: left !important;
 }

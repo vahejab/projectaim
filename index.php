@@ -17,10 +17,12 @@
     .ui-view > div.webix_view{
         width: 100vw !important;
     }
+    body{
+        width: 100vw;
+    }
   </style>
 </head>
 <body ng-app="Main" ng-controller="MainController" ng-init="init()">
-    <div class="site-wrapper">
         <a class="nav-link">
             <img id="logo" src="/app/assets/images/ProjectAIM.png" />
         </a>      
@@ -33,9 +35,7 @@
             </a>
         <div class="ui-view">
             
-        </div>
-        <set-margin />
-    </div>
+        </div> 
    <!--script src="/app/js/kendoui-2019.1.220/js/jquery.min.js"></script-->  
     <!--script src="/app/js/kendoui-2019.1.220/js/kendo.datepicker.min.js"></script>
     <script src="/app/js/kendoui-2019.1.220/js/kendo.ui.core.min.js"></script-->
