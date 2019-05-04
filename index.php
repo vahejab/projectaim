@@ -9,46 +9,15 @@
  <!--link rel="stylesheet" href="/app/js/bootstrap-sortable/Contents/bootstrap-sortable.css" /-->
  <script src="/app/js/webix-ui/codebase/webix.js" type="text/javascript"></script>
  <link rel="stylesheet" href="/app/js/webix-ui/codebase/webix.css" type="text/css" /> 
- <style>
-    /*html{
-        overflow-y: overlay !important;
-    }*/
-   
-    body{
-        background-color: rgb(250, 253, 252) !important;  
-    }
-
-    label, span{
-        color: black !important;
-    }
-
-    table.table-condensed thead th {
-        background-color: #0038a8 !important;
-        font-weight: bold !important;
-        font-style: italic !important;
-        color: white !important;
-        text-align: left !important;
-    }
-
-    table.xdebug-error *{
-        font-size: 12pt !important;
-    }
-    div.ui-view *{
-        text-align: center;
-        margin: 0 auto;
-    }
-    table *{
-        text-align: left !important;
-    }
-    
-    th:hover{
-        cursor: pointer !important;
-    }
- </style>
  <!--link rel="stylesheet" href="/app/js/kendoui-2019.1.220/styles/kendo.common.min.css"  />
  <link rel="stylesheet" href="/app/js/kendoui-2019.1.220/styles/kendo.material.min.css"  />
  <link rel="stylesheet" href="/app/css/kendo-ui/kendo/custom.css" /-->  
-  <link rel="stylesheet" href="/app/assets/styles/style.css" /> 
+  <link rel="stylesheet" href="/app/assets/styles/style.css" />
+  <style>
+    .ui-view > div.webix_view{
+        width: 100vw !important;
+    }
+  </style>
 </head>
 <body ng-app="Main" ng-controller="MainController" ng-init="init()">
     <div class="site-wrapper">
@@ -79,7 +48,7 @@
     <script src="/app/js/angularjs-1.7.8/angular-sanitize.js"></script> 
     <script src="/app/js/angular-webix/angular-webix.js"></script>
     <script src="/app/js/popper-1.12.9/popper.min.js"></script>
-    <script src="/app/js/bootstrap-4.0.0/bootstrap.min.js"></script>
+    <!--script src="/app/js/bootstrap-4.0.0/bootstrap.js"></script-->
     <script src="/app/js/bootstrap-sortable/Scripts/moment.min.js"></script>
     <script src="/app/js/angularjs-1.7.8/angular-route.min.js"></script>
     <script src="/app/js/angularjs-1.7.8/angular-ui-router.js"></script>

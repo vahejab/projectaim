@@ -153,14 +153,7 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
         },
         link: function (scope, element, attrs) {
             scope.init().then(function(){
-                scope.devicePixelRatio = window.devicePixelRatio;
-                scope.setMarginsWidths();
-                var tablebody = document.querySelector('div.tablebody');
-                var tableheader = document.querySelector('div.tableheader');
-                angular.element(tablebody).on("scroll", function(elem, attrs){  //activate when #center scrolls  
-                    left = $scope.CommonService.offset(angular.element(document.querySelector("div.tablebody table.grid"))[0]).left; //save #center position to var left
-                    (angular.element(tableheader)[0]).scrollLeft = -1*left + $scope.scrollBarWidth();
-                }); 
+                
             });
         }
     }
@@ -168,7 +161,14 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
     return {
         restrict: 'A',
         controller: function($scope, $timeout){
-            
+            $scope.devicePixelRatio = window.devicePixelRatio;
+            $scope.setMarginsWidths();
+            var tablebody = document.querySelector('div.tablebody');
+            var tableheader = document.querySelector('div.tableheader');
+            angular.element(tablebody).on("scroll", function(elem, attrs){  //activate when #center scrolls  
+                left = $scope.CommonService.offset(angular.element(document.querySelector("div.tablebody table.grid"))[0]).left; //save #center position to var left
+                (angular.element(tableheader)[0]).scrollLeft = -1*left + $scope.scrollBarWidth();
+            }); 
         }
     }
 });

@@ -1,5 +1,3 @@
-// Code goes here
-
 if (window.angular)
 
 (function(){

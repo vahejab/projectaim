@@ -160,13 +160,8 @@ td.label{
     white-space: nowrap !important;
 } 
 
-
-
-
-
-       
-   
-@media only screen and (max-width: 700px) {
+ 
+@media only screen and (max-width: 800px) {
     /* Force table to not be like tables anymore */    
     table:not(.grid),
     table:not(.grid) thead,
@@ -181,8 +176,12 @@ td.label{
         width: 100% !important;
     }
     
-    div.ui-view form{
-        width: 95% !important;
+    div.ui-view form {
+        width: 90vw !important;
+    }
+    
+    input, textarea{
+        width: 100% !important;
     }                           
      
     table#details tr:not(:first-child) td.label{
@@ -198,7 +197,7 @@ td.label{
         text-align: left !important;
     }
 } 
-@media only screen and (min-width: 701px){
+@media only screen and (min-width: 800px){
 
     table:not(.grid)#details tr:not(:first-child) td > div:not(.filterinput):not(.cell)
     {
@@ -233,23 +232,6 @@ td.label{
         width: 140px !important;
     }
 
-    table:not(.grid)#summary td.locked .webix_view,
-    table:not(.grid)#summary td.locked .webix_el_box,
-    table:not(.grid)#summary td.locked .webix_inp_static,
-    {
-        width: 130px !important;
-        height: 95px !important;
-        
-    }
-    
-    table:not(.grid)#details td.locked .webix_view,
-    table:not(.grid)#details td.locked .webix_el_box,
-    table:not(.grid)#details td.locked .webix_inp_static,
-    {
-        width: 500px !important;
-        height: 95px !important;
-    }
-
     table:not(.grid)#summary td.label,
     table:not(.grid)#details td.label {
         background-color: #0038a8 !important;
@@ -278,3 +260,35 @@ td.label{
         max-width: 750px !important;
     } 
 }     
+
+
+body{
+    background-color: rgb(250, 253, 252) !important;  
+}
+
+label, span{
+    color: black !important;
+}
+
+table.table-condensed thead th {
+    background-color: #0038a8 !important;
+    font-weight: bold !important;
+    font-style: italic !important;
+    color: white !important;
+    text-align: left !important;
+}
+
+table.xdebug-error *{
+    font-size: 12pt !important;
+}
+div.ui-view *{
+    text-align: center;
+    margin: 0 auto;
+}
+table *{
+    text-align: left !important;
+}
+
+th:hover{
+    cursor: pointer !important;
+}

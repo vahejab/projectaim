@@ -1,6 +1,6 @@
 angular.module('Action').config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
   }]).controller('CreateActionController', ['$http', '$resource', '$scope', '$window', '$state', '$interval', '$timeout', '$sce', 'CommonService', function($http, $resource, $scope, $window, $state, $interval, $timeout, $sce, CommonService){
-         var refresh = false;
+         refresh = false;
          
          $scope.actionitem = {
                 actionitemid: '',
@@ -44,11 +44,7 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
             id: '',
             value: ''
         }
-        
-        $scope.config = {
-            view: 'layout',
-            //responsive: true
-        }
+  
         
         $scope.assignors = [];
         $scope.owners = [];
@@ -81,14 +77,15 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
         $scope.init = function(){
             return $http.get('api/users').then(function(response){
                 if (response.data.Succeeded){
-                    
-                    $.each(response.data.Result, function(key, user){
+                
+                   for (var key =0; key < response.data.Result.length; key++){
+                        user = response.data.Result[key];     
                         $scope.assignors.push({id: user.id, value: user.name});
                         $scope.owners.push({id: user.id, value: user.name});
                         $scope.altowners.push({id: user.id, value: user.name});
-                    }); 
-                     
-                    return response.data.Result;
+                   }
+            
+                   return response.data.Result;
                 }
                 else{
                      $scope.msg = $sce.trustAsHtml(response.data);
@@ -144,9 +141,9 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                     $scope.actionitem.critlevel = obj.data.value.toString();     
                 }     
             }, 
-            //responsive: true,
-            width: "500px",
-            height: "95px"
+            responsive: true,
+            width: "200",
+            height: "30"
         }
         
         $scope.titleConfig = {
@@ -157,9 +154,9 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                     $scope.actionitem.actionitemtitle = obj.data.value;      
                 }
             },
-            //responsive: true,
-            width: "500px",
-            height: "95px"
+            responsive: true,
+            width: "550",
+            height: "30"
         }
         
         $scope.statementConfig = {
@@ -170,9 +167,9 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                     $scope.actionitem.actionitemstatement = obj.data.value;      
                 }     
             },
-            //responsive: true,
-            width: "500px",
-            height: "95px"
+            responsive: true,
+            width: "550",
+            height: "97"
         }
         
         $scope.closureCriteriaConfig = {
@@ -183,9 +180,9 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                     $scope.actionitem.closurecriteria = obj.data.value;      
                 }     
             }, 
-            //responsive: true,
-            width: "500px",
-            height: "200px"
+            responsive: true,
+            width: "550",
+            height: "97"
         }
         
         $scope.date = function(){
@@ -212,13 +209,13 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                     $scope.actionitem.duedate = year + "-" + ((month < 10)? '0'+month: month) + "-" + ((day < 10)? '0'+day: day);        
                 }     
             },   
-            //responsive: true,
-            width: "145px",
-            height: "95px"
+            responsive: true,
+            width: "200",
+            height: "30"
         }
         
         $scope.$on("$destroy", function(){
-             amgular.element(document.querySelector('link[href="/app/tool/action/CreateActionItem.css"]').remove();
+             angular.element(document.querySelector('link[href="/app/tool/action/CreateActionItem.css"]')).remove();
         });
 
         
@@ -243,9 +240,9 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                     $scope.actionitem.ecd  = year + "-" + ((month < 10)? '0'+month: month) + "-" + ((day < 10)? '0'+day: day);     
                 }     
             },
-            //responsive: true,
-            width: "145px",
-            height: "95px"
+            responsive: true,
+            width: "200",
+            height: "30"
         }
                        
         $scope.today = new Date()
@@ -259,7 +256,6 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                         restrict: 'E',
                         link: function (scope, element, attrs) {
                               scope.init().then(function(){
-                                
                                 function getAssignorValue(id){
                                             var obj = this.$eventSource || this;
                                             var value = obj.data.value;
@@ -276,8 +272,12 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                                             var obj = this.$eventSource || this;
                                             var value = obj.data.value;      
                                             scope.actionitem.altowner = obj.data.value.toString();      
-                                }      
-                              
+                                }
+                                
+                                webix.ready(function(){
+                                    webix.ui.fullScreen();
+                                });
+                                
                                 scope.assignorConfig = {
                                     view:"richselect",
                                     //label:"Choose", 
@@ -287,9 +287,9 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                                         "onChange": getAssignorValue
                                        // "onInit": getAssignorValue
                                     },
-                                    //responsive: true,
-                                    width: "145px",
-                                    height: "95px"
+                                    responsive: true,
+                                    width: "200",
+                                    height: "30"
                                 }
                                 
                                 scope.ownerConfig = {
@@ -301,9 +301,9 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                                         "onChange": getOwnerValue
                                        // "onInit": getOwnerValue
                                     },  
-                                    //responsive: true,
-                                    width: "145px",
-                                    height: "95px"
+                                    responsive: true,
+                                    width: "200",
+                                    height: "30"
                                  }
                                 
                                 scope.altownerConfig = {
@@ -315,19 +315,12 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                                         "onChange": getAltOwnerValue
                                        // "onInit": getAltOwnerValue
                                     },
-                                    //responsive: true,
-                                    width: "145px",
-                                    height: "95px"
+                                    responsive: true,
+                                    width: "200",
+                                    height: "30"
                                 }
-                                    
-                                //webix.ready(function(){
-                                   // webix.ui.fullScreen();
-                                  //  webix.ui({
-                                  //    container:"formcontainer"
-                                  //  })                 
-                                //});
-                              });     
+                        });     
                               
-                        }
                   }
-        });
+          }
+});
