@@ -7,8 +7,8 @@
 <title>ProjectAIM Suite</title>
  <link rel="stylesheet" href="/app/css/bootstrap/bootstrap.min.css "/>
  <!--link rel="stylesheet" href="/app/js/bootstrap-sortable/Contents/bootstrap-sortable.css" /-->
- <script src="/app/js/webix-ui/codebase/webix.js" type="text/javascript"></script>
- <link rel="stylesheet" href="/app/js/webix-ui/codebase/webix.css" type="text/css" /> 
+ <script src="/app/js/webix-6.3.2/codebase/webix.js" type="text/javascript"></script>
+ <link rel="stylesheet" href="/app/js/webix-6.3.2/codebase/webix.css" type="text/css" /> 
  <!--link rel="stylesheet" href="/app/js/kendoui-2019.1.220/styles/kendo.common.min.css"  />
  <link rel="stylesheet" href="/app/js/kendoui-2019.1.220/styles/kendo.material.min.css"  />
  <link rel="stylesheet" href="/app/css/kendo-ui/kendo/custom.css" /-->  

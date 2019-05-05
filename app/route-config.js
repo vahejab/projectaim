@@ -103,7 +103,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             params: {
                 id: {
                     array: false
-             }
+                }
             },
             resolve: res,
             //cache: false,

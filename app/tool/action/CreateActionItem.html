@@ -1,14 +1,14 @@
 <div id="formcontainer">
-    <div id="mycreateform" class="container" webix-ui="config" type="space" ng-controller="CreateActionController" layout-padding="" ng-cloak="">   
+    <div id="mycreateform" class="container" type="space" ng-controller="CreateActionController" layout-padding="" ng-cloak="">   
         <init-data />
-        <form name="CreateActionItem" role="form" ng-submit="CreateActionItem.$valid && submit()" novalidate>
+        <form webix-ui="config" id="form" name="CreateActionItem" role="form" ng-submit="CreateActionItem.$valid && submit()" novalidate>
             <table id="summary" class="data" border="1">
                 <tr>
                     <td class="label">
                         Assignor
                     </td>
                     <td class="locked">
-                        <div webix-ui="assignorConfig" id="assignor" name="assignor" />
+                        <div webix-ui="assignorConfig" id="assignor" name="assignor" reqired/>
                             <!--div class="msg-container">
                                 <div ng-if="!actionitem.assignor.trim().length" for="CreateActionItem.assignor.$error" ng-messages="CreateAction.$submitted">
                                 <div ng-message="required">This is required.</div>
@@ -19,7 +19,7 @@
                         Owner
                     </td>
                     <td class="locked">
-                        <div webix-ui="ownerConfig" id="owner" name="owner" />
+                        <div webix-ui="ownerConfig" id="owner" name="owner" reqired/>
                             <!--div class="msg-container">
                                 <div ng-if="!actionitem.owner.trim().length" for="CreateActionItem.owner.$error" ng-messages="CreateAction.$submitted">
                                 <div ng-message="required">This is required.</div>
@@ -83,7 +83,7 @@
                     Title
                 </td>
                 <td class="locked">
-                    <div webix-ui="titleConfig" name="title" />
+                    <div webix-ui="titleConfig" id="actionitemtitle" name="title" />
                         <!--div class="msg-container">
                             <div ng-if="!actionitem.actionitemtitle.trim().length" for="CreateActionItem.actionitemtitle.$error" ng-messages="CreateAction.$submitted">
                             <div ng-message="required">This is required.</div>
@@ -95,7 +95,7 @@
                     Action Item Statement
                 </td>
                 <td  class="locked" style="vertical-align: top">
-                    <div webix-ui="statementConfig" name="statement" />
+                    <div webix-ui="statementConfig" id="actionitemstatement" name="statement" />
                     <!--div class="msg-container">
                       <div ng-if="!actionitem.actionitemstatement.trim().length" for="CreateActionItem.actionitemstatement.$error" ng-messages="CreateAction.$submitted">
                         <div ng-message="required">This is required.</div>
@@ -107,7 +107,7 @@
                     Closure Criteria
                 </td>
                 <td  class="locked" style=" vertical-align: top">
-                    <div webix-ui="closureCriteriaConfig" name="closureriteria"/>
+                    <div webix-ui="closureCriteriaConfig" id="closurecriteria" name="closurecriteria"/>
                     <!--div class="msg-container">
                         <div ng-if="!actionitem.actionitemstatement.trim().length" for="CreateActionItem.actionitemstatement.$error" ng-messages="CreateAction.$submitted">
                         <div ng-message="required">This is required.</div>

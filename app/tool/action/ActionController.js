@@ -143,12 +143,10 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
                          $timeout.cancel($scope.refreshingPromise);
                     }
                     
-                    angular.element(document.querySelector('html')).attr("style", "margin-right: " + 0*$scope.scrollBarWidth() + "px !important");
+                    //angular.element(document.querySelector('html')).attr("style", "margin-right: " + 0*$scope.scrollBarWidth() + "px !important");
                     angular.element(document.querySelector('div.tableheader')).attr("style", "margin-right: " + $scope.scrollBarWidth() + "px !important");
                     angular.element(document.querySelector('div.tablebody')).attr("style", "margin-right " + $scope.scrollBarWidth() + "px !important");    
                 }
-
-              
             }
         },
         link: function (scope, element, attrs) {
