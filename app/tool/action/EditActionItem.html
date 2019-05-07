@@ -1,140 +1,161 @@
-<div class="container" ng-init="init()">
-        <table id="summary" class="data" border="1">
-            <tr>
-                <td class="label">Action Item #</td>
-                <td class="locked">{{actionitem.actionitemid}}</td>
-                <td class="label">Criticality</td>
-                <td class="locked">
-                    {{actionitem.criticality}}
-                </td>
-            </tr>
-            <tr>
-                <td class="label">
-                    Owner
-                </td>
-                <td class="locked">
-                   {{actionitem.owner}}
-                </td>
-                <td class="label">
-                    Alternate Owner
-                </td>
-                <td class="locked">
-                   {{actionitem.altowner}} 
-                </td>
-            </tr>
-            <tr>
-                <td class="label">
-                    Assignor
-                </td>
-                <td class="locked">
-                    {{acitonitem.assignor}}
-                </td>
-                <td class="label">
-                    Approver
-                </td>
-                <td class="locked">
-                  {{actionitem.approver}}  
-                </td>
-            </tr>
-        </table>
-        <br />
-        <table id="summary" class="data" border="1">
-            <tr>
-                <td class="label">
-                    Assigned Date
-                </td>
-                <td class="locked">
-                    {{actionitem.assigneddate}}
-                </td>
-                
-                <td class="label">
-                    Completion Date
-                </td>
-                <td class="locked">
-                  {{actionitem.completiondate}}        
-                </td>
-            </tr>
-            <tr>
-                <td class="label">
-                    Original Due Date
-                </td>
-                <td class="locked">
-                   {{actionitem.duedate}}
-                </td>
-                <td class="label">
-                    Closed Date
-                </td>
-                <td class="locked">
-                    {{actionitem.closeddate}}
-                </td>
-            </tr>
-            <tr>
-                <td class="label">
-                    ECD
-                </td>
-                <td class="locked">
-                 <span class="">
-                     {{actionitem.ecd}}
-                 </span>
-                </td>
-                <td class="label">
-                    Status
-                </td>
-                <td class="locked">
-                    {{actionitem.status}}
-                </td>
-            </tr>
-        </table>
+<div id="formcontainer">
+    <div id="myeditform" class="container" type="space" ng-controller="EditActionController" layout-padding="" ng-cloak="">   
+        <init-data />
+        <form webix-ui="config" id="form" name="EditActionItem" role="form" ng-submit="EditActionItem.$valid && submit()" novalidate>
+            <div class="container" ng-init="init()">
+                    <table id="summary" class="data" border="1">
+                        <tr>
+                            <td class="label">Action Item #</td>
+                            <td class="locked">{{actionitem.actionitemid}}</td>
+                            <td class="label">Criticality</td>
+                            <td class="locked">
+                               <div webix-ui="critConfig" id="criticality" name="criticality" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">
+                                Owner
+                            </td>
+                            <td class="locked">
+                               <div webix-ui="ownerConfig" id="owner" name="owner" />
+                            </td>
+                            <td class="label">
+                                Alternate Owner
+                            </td>
+                            <td class="locked">
+                               <div webix-ui="altownerConfig" id="altowner" name="altowner" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">
+                                Assignor
+                            </td>
+                            <td class="locked">
+                                <div webix-ui="assignorConfig" id="assignor" name="assignor" />
+                            </td>
+                            <td class="label">
+                                Approver
+                            </td>
+                            <td class="locked">
+                              <div webix-ui="approverConfig" id="approver" name="approver" />
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    <table id="summary" class="data" border="1">
+                        <tr>
+                            <td class="label">
+                                Assigned Date
+                            </td>
+                            <td class="locked">
+                                <div webix-ui="assigneddateConfig" id="assigneddate" name="assigneddate" />
+                            </td>
+                            
+                            <td class="label">
+                                Completion Date
+                            </td>
+                            <td class="locked">
+                              <div webix-ui="completiondateConfig" id="completiondate" name="completiondate" />       
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">
+                                Original Due Date
+                            </td>
+                            <td class="locked">
+                               <div webix-ui="duedateConfig" id="duedate" name="duedate" />
+                            </td>
+                            <td class="label">
+                                Closed Date
+                            </td>
+                            <td class="locked">
+                                <div webix-ui="closeddateConfig" id="closeddate" name="closeddate" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">
+                                ECD
+                            </td>
+                            <td class="locked">
+                                <div webix-ui="ecdConfig" id="ecd" name="ecd" />
+                            </td>
+                            <td class="label">
+                                Status
+                            </td>
+                            <td class="locked">
+                                {{actionitem.status}}
+                            </td>
+                        </tr>
+                    </table>
 
-        <h2>Action Item Information</h2>
-        <table id="details" class="data" border="1">
-            <tr>
-                <td class="label" style="vertical-align: top">
-                    Title
-                </td>
-                <td class="locked">
-                    {{actionitem.title}}
-                </td>
-            </tr>
-            <tr>
-                <td class="label" style="vertical-align: top">
-                    Action Item Statement
-                </td>
-                <td  class="locked" style="vertical-align: top">
-                    <div>{{actionitem.actionitemstatement}}</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="label" style="vertical-align: top">
-                    Closure Criteria
-                </td>
-                <td  class="locked"style=" vertical-align: top">
-                    <div>{{actionitem.closurecriteria}}</div>
-                </td>
-            </tr>
-                <tr>
-                <td class="label" style="vertical-align: top">
-                    Owner Notes
-                </td>
-                <td  class="locked" style=" vertical-align: top">
-                    <div>{{actionitem.ownernotes}}</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="label" style="vertical-align: top">
-                    Approver Comments
-                </td>
-                <td  class="locked" style=" vertical-align: top">
-                    <div>{{actionitem.approvercomments}}</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="label" style="vertical-align: top">
-                    Activity Log
-                </td>
-                <td  class="locked" style=" vertical-align: top">
-                    <div></div>
-                </td>
-            </tr>
-        </table>
+                    <h2>Action Item Information</h2>
+                    <table id="details" class="data" border="1">
+                        <tr>
+                            <td class="label" style="vertical-align: top">
+                                Title
+                            </td>
+                            <td class="locked">
+                                <div webix-ui="titleConfig" id="actionitemtitle" name="actionitemtitle" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label" style="vertical-align: top">
+                                Action Item Statement
+                            </td>
+                            <td  class="locked" style="vertical-align: top">
+                                <div webix-ui="statementConfig" id="actionitemstatement" name="actionitemstatement" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label" style="vertical-align: top">
+                                Closure Criteria
+                            </td>
+                            <td  class="locked" style=" vertical-align: top">
+                                <div webix-ui="closurecriteriaConfig" id="closurecriteria" name="closurecriteria" />
+                            </td>
+                        </tr>
+                            <tr>
+                            <td class="label" style="vertical-align: top">
+                                Owner Notes
+                            </td>
+                            <td  class="locked" style=" vertical-align: top">
+                                <div webix-ui="ownernotesConfig" id="ownernotes" name="ownernotes" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label" style="vertical-align: top">
+                                Approver Comments
+                            </td>
+                            <td  class="locked" style=" vertical-align: top">
+                                <div webix-ui="approvercommentsConfig" id="approvercomments" name="approvercomments" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label" style="vertical-align: top">
+                                Activity Log
+                            </td>
+                            <td  class="locked" style=" vertical-align: top">
+                                <div class="read">{{actionitem.activitylog}}</div>
+                            </td>
+                        </tr>
+                    </table>
+            </div>
+        </form>
+         <divider></divider>
+        <div>
+            <div>
+              <!--button class="raised">Button</button-->
+              <button type="submit"  class="raised primary">Edit Action Item</button>
+              <!--button ng-disabled="true" class="raised primary">Disabled</button>
+                    <button class="raised warn">Warn</button>
+                    <div class="label">Raised</div-->
+            </div>
+        </div>
+        <div>
+          <div class="msg" layout-align="center">
+            <span ng-bind-html="msg">{{msg}}</span>
+          </div>
+        </div>
+    </div>
 </div>
+    

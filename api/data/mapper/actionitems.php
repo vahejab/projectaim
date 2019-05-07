@@ -11,9 +11,7 @@
             if (!is_null($array['ApproverID'])) $actionitem->approverId = $array['ApproverID'];
             if (!is_null($array['OwnerID'])) $actionitem->ownerId = $array['OwnerID'];
             if (!is_null($array['AltOwnerID'])) $actionitem->altownerId = $array['AltOwnerID'];
-                   
-
-
+            
             if (!is_null($array['assignor.lastname'])) $actionitem->assignorlastname = $array['assignor.lastname'];
             if (!is_null($array['assignor.firstname'])) $actionitem->assignorfirstname = $array['assignor.firstname'];
             if (!is_null($array['owner.lastname'])) $actionitem->ownerlastname = $array['owner.lastname'];
@@ -61,28 +59,28 @@
                 
                 $searchCols = 
                    [
-                    'assignor.lastname',
-                    'assignor.firstname',
-                    'owner.lastname',
-                    'owner.firstname',
-                    'altowner.lastname',
-                    'altowner.firstname',
-                    'approver.lastname',
-                    'approver.firstname',
-                    'actionitemtitle',
-                    'criticality', 
-                    'actionitemstatement',
-                    'closurecriteria',
-                    'closurestatement',
-                    'rejectionjustification',
-                    'ownernotes',
-                    'approvercomments',
-                    'notes',
-                    'assigneddate',    
-                    'ecd',
-                    'duedate',
-                    'completiondate',
-                    'closeddate'
+                        'assignor.lastname',
+                        'assignor.firstname',
+                        'owner.lastname',
+                        'owner.firstname',
+                        'altowner.lastname',
+                        'altowner.firstname',
+                        'approver.lastname',
+                        'approver.firstname',
+                        'actionitemtitle',
+                        'criticality', 
+                        'actionitemstatement',
+                        'closurecriteria',
+                        'closurestatement',
+                        'rejectionjustification',
+                        'ownernotes',
+                        'approvercomments',
+                        'notes',
+                        'assigneddate',    
+                        'ecd',
+                        'duedate',
+                        'completiondate',
+                        'closeddate'
                     ];
 
                 
@@ -99,6 +97,10 @@
             }
  
             $sql = "select
+                        assignor.userid as 'assignorid',
+                        owner.userid as 'ownerid',
+                        altowner.userid as 'altownerid',
+                        approver.userid as 'approverid',
                         assignor.lastname as 'assignor.lastname',
                         assignor.firstname as 'assignor.firstname',
                         owner.lastname as 'owner.lastname',
@@ -170,6 +172,43 @@
                             :actionitemstatement,
                             :closurecriteria
                     )";
+            try
+            {      
+                $statement = $this->db->prepare($sql);
+                $statement->bindValue(':assignorid', $params['assignor']);
+                $statement->bindValue(':ownerid' , $params['owner']);
+                $statement->bindValue(':altownerid' , $params['altowner']);
+                $statement->bindValue(':duedate' , $params['duedate']);
+                $statement->bindValue(':ecd' , $params['ecd']);      
+                $statement->bindValue(':criticality' , $params['critlevel']);
+                $statement->bindValue(':actionitemtitle' , $params['actionitemtitle']);
+                $statement->bindValue(':actionitemstatement' , $params['actionitemstatement']);
+                $statement->bindValue(':closurecriteria', $params['closurecriteria']);                        
+                $statement->execute();
+                return ["Succeeded" => true, "Result" => "Action Item Created!"];
+            }
+            catch (\PDOException $e)
+            {
+                return ["Succeeded" => false, "Result" => $e->getMessage()];
+            }
+        }
+        
+        public function updateOne($params = [])
+        {   
+            $sql = "update
+                    actionitems
+                    set
+                        assignorid = :assignorid,
+                        ownerid = :ownerid,
+                        altownerid = :altownerid,
+                        duedate = :duedate,
+                        ecd = :ecd,
+                        criticality = :criticality,
+                        actionitemtitle = :actionitemtitle,
+                        actionitemstatement = :actionitemstatement,
+                        closurecriteria = :closurecriteria
+                    where
+                        actionitemid = :actionitemid";
             try
             {      
                 $statement = $this->db->prepare($sql);

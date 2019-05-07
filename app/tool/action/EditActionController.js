@@ -1,4 +1,4 @@
-angular.module('Action').controller('ViewActionController', ['$http', '$resource', '$stateParams', '$scope', '$state', '$timeout', 'CommonService', /*'DTOptionsBuilder',*/ function($http, $resource, $stateParams, $scope, $state, $timeout, CommonService/*, DTOptionsBuilder*/){
+angular.module('Action').controller('EditActionController', ['$http', '$resource', '$stateParams', '$scope', '$state', '$timeout', '$sce', 'CommonService', /*'DTOptionsBuilder',*/ function($http, $resource, $stateParams, $scope, $state, $timeout, $sce, CommonService/*, DTOptionsBuilder*/){
         refresh = false;
         
         $scope.actionitem = {
@@ -7,10 +7,10 @@ angular.module('Action').controller('ViewActionController', ['$http', '$resource
                 status: (this.completiondate) ? 'Open' : 'Completed',
                 criticality: '',
                 critlevel: '',
-                assignor: '',
-                owner: '',
-                altowner: '',
-                approver: '',
+                assignor: 0,
+                owner: 0,
+                altowner: 0,
+                approver: 0,
                 assigneddate: '',
                 duedate: '',
                 ecd: '',
@@ -22,7 +22,10 @@ angular.module('Action').controller('ViewActionController', ['$http', '$resource
                 approvercomments: '',
                 activitylog: ''
         }
-
+        
+        $scope.users = [];
+        
+        /*                       
         $scope.setMargin = function(elem, times){
             CommonService.setMargin(elem, times);
         }
@@ -34,27 +37,52 @@ angular.module('Action').controller('ViewActionController', ['$http', '$resource
         $scope.getStatus = function(date1, date2){
            return CommonService.getStatus(date1, date2); 
         }
+        */
         
+        $scope.critlevels = 
+        [
+          {id: 1, value: 'High'},
+          {id: 2, value: 'Med'},
+          {id: 3, value: 'Low'},
+          {id: 4, value: 'None'} 
+        ];
                      
         $scope.$on("$destroy", function(){
-             angular.element(document.querySelector('link[href="/app/tool/action/ViewActionItem.css"]')).remove();
+             angular.element(document.querySelector('link[href="/app/tool/action/EditActionItem.css"]')).remove();
         });
 
+        
+        $scope.initUsers = function(){
+            return $http.get('api/users').then(function(response){
+                if (response.data.Succeeded){
+                
+                   for (var key = 0; key < response.data.Result.length; key++){
+                        user = response.data.Result[key];     
+                        $scope.users.push({id: user.id, value: user.name});
+                   }
+            
+                   return response.data.Result;
+                }
+                else{
+                     $scope.msg = $sce.trustAsHtml(response.data);
+                }
+            }); 
+        }
+          
          
         $scope.init = function(){
             //var vm = this;
             //vm.dtOptions = DTOptionsBuilder
             //.fromFnPromise(function(){
             return $http.get('api/actionitems/'+$stateParams.id).then(function(response){
-                    
+                  if (response.data.Succeeded){  
                     $scope.actionitem.actionitemid = response.data.Results.actionitemid; 
                     $scope.actionitem.title = response.data.Results.actionitemtitle;
-                    $scope.actionitem.criticality = response.data.Results.criticality;
-                    $scope.actionitem.critlevel = response.data.Results.critlevel;
-                    $scope.actionitem.assignor = response.data.Results.assignor;
-                    $scope.actionitem.owner = response.data.Results.owner;
-                    $scope.actionitem.altowner = response.data.Results.altowner;
-                    $scope.actionitem.approver = response.data.Results.approver;
+                    $scope.actionitem.criticality = response.data.Results.critlevel;
+                    $scope.actionitem.assignor = response.data.Results.assignorId;
+                    $scope.actionitem.owner = response.data.Results.ownerId;
+                    $scope.actionitem.altowner = response.data.Results.altownerId;
+                    $scope.actionitem.approver = response.data.Results.approverId;
                     $scope.actionitem.assigneddate = response.data.Results.assigneddate;
                     $scope.actionitem.duedate = response.data.Results.duedate;
                     $scope.actionitem.ecd = response.data.Results.ecd;
@@ -66,6 +94,110 @@ angular.module('Action').controller('ViewActionController', ['$http', '$resource
                     $scope.actionitem.approvercomments = response.data.Results.approvercommens;
                     $scope.actionitem.activitylog = response.data.Results.activitylog; 
                     return response.data.Results;
+                  }
+                  else{
+                     $scope.msg += $sce.trustAsHtml(response.data);
+                  }
+            }).then(function(){
+                return $scope.initUsers();
             });                                   
-       }              
+       }
+       
+       
+       
+       $scope.clearValidation = function(id){
+            (document.querySelector('#'+id+' > div.webix_control')).classList.remove("webix_invalid");
+        }
+        
+        $scope.validate = function(elem, id){
+           if (typeof elem == 'undefined' || elem == 0 || elem == '' || elem.trim() == '') (document.querySelector('#'+id+' > div.webix_control')).classList.add("webix_invalid");
+        }
+               
+
+        $scope.validateAll = function(){
+        
+               (document.querySelector('#assignor > div.webix_control')).classList.remove("webix_invalid");
+               (document.querySelector('#duedate > div.webix_control')).classList.remove("webix_invalid");
+               (document.querySelector('#ecd > div.webix_control')).classList.remove("webix_invalid");
+               (document.querySelector('#closeddate > div.webix_control')).classList.remove("webix_invalid");
+               (document.querySelector('#completiondate > div.webix_control')).classList.remove("webix_invalid");
+               (document.querySelector('#criticality > div.webix_control')).classList.remove("webix_invalid");
+               (document.querySelector('#owner > div.webix_control')).classList.remove("webix_invalid");
+               (document.querySelector('#altowner > div.webix_control')).classList.remove("webix_invalid");
+               (document.querySelector('#actionitemtitle > div.webix_control')).classList.remove("webix_invalid");
+               (document.querySelector('#approver > div.webix_control')).classList.remove("webix_invalid");
+               (document.querySelector('#actionitemstatement > div.webix_control')).classList.remove("webix_invalid");
+               (document.querySelector('#closurecriteria > div.webix_control')).classList.remove("webix_invalid");
+               (document.querySelector('#ownernotes > div.webix_control')).classList.remove("webix_invalid");
+               (document.querySelector('#approvercomments > div.webix_control')).classList.remove("webix_invalid");
+              
+               if ($scope.actionitem.assignor == 0) (document.querySelector('#assignor > div.webix_control')).classList.add("webix_invalid");
+               if ($scope.actionitem.duedate == '') (document.querySelector('#duedate > div.webix_control')).classList.add("webix_invalid");
+               if ($scope.actionitem.ecd== '' ) (document.querySelector('#ecd > div.webix_control')).classList.add("webix_invalid"); 
+               if ($scope.actionitem.closeddate == '' ) (document.querySelector('#closeddate > div.webix_control')).classList.add("webix_invalid"); 
+               if ($scope.actionitem.completiondate == '' ) (document.querySelector('#completiondate > div.webix_control')).classList.add("webix_invalid"); 
+               if ($scope.actionitem.criticality == 0) (document.querySelector('#criticality > div.webix_control')).classList.add("webix_invalid");
+               if ($scope.actionitem.owner == 0 ) (document.querySelector('#owner > div.webix_control')).classList.add("webix_invalid");
+               if ($scope.actionitem.altowner == 0 ) (document.querySelector('#altowner > div.webix_control')).classList.add("webix_invalid");
+               if ($scope.actionitem.approver == 0 ) (document.querySelector('#approver > div.webix_control')).classList.add("webix_invalid");
+               if ($scope.actionitem.actionitemtitle.trim() == '' )  (document.querySelector('#actionitemtitle > div.webix_control')).classList.add("webix_invalid");
+               if ($scope.actionitem.actionitemstatement.trim() == '')  (document.querySelector('#actionitemstatement > div.webix_control')).classList.add("webix_invalid");
+               if ($scope.actionitem.closurecriteria.trim() == '') (document.querySelector('#closurecriteria > div.webix_control')).classList.add("webix_invalid");
+               if ($scope.actionitem.ownernotes.trim() == '') (document.querySelector('#ownernotes > div.webix_control')).classList.add("webix_invalid");
+               if ($scope.actionitem.approvercomments.trim() == '') (document.querySelector('#approvercomments > div.webix_control')).classList.add("webix_invalid");
+        }
+        
+        $scope.valid = function(){
+            return($scope.actionitem.assignor != 0 &&
+                   $scope.actionitem.duedate != '' &&
+                   $scope.actionitem.ecd != '' &&
+                   $scope.actionitem.closeddate != '' &&
+                   $scope.actionitem.completiondate != '' &&
+                   $scope.actionitem.criticality != 0 &&
+                   $scope.actionitem.owner != 0 &&
+                   $scope.actionitem.altowner != 0 &&
+                   $scope.actionitem.approver != 0 &&
+                   $scope.actionitem.actionitemtitle.trim() != '' &&
+                   $scope.actionitem.actionitemstatement.trim() != '' &&
+                   $scope.actionitem.closurecriteria.trim() != '' &&
+                   $scope.actionitem.ownernotes != '' &&
+                   $scope.actionitem.approvercomments != '');
+        };
+       
+       
+       $scope.getDateValueAndValidate = function(obj, model, field){
+            CommonService.getDateValueAndValidate(obj, model, field);       
+            $scope.clearValidation(field);
+        }               
+                                
+        $scope.getItemValueAndValidate = function(obj, model, field){
+            CommonService.getItemValueAndValidate(obj, model, field);         
+            $scope.clearValidation(field);   
+        }
+        
+        $scope.getTextValueAndValidate = function(obj, model, field){
+            CommonService.getTextValueAndValidate(obj, model, field); 
+            $scope.clearValidation(field);  
+        }
+
+       
+       $scope.submit = function(){
+        
+            $scope.validateAll();
+            if (!$scope.valid())
+                 $scope.msg = "Please complete form and resubmit";
+            else 
+                //$scope.actionitem.duedate = $scope.split($scope.actionitem.duedate,'T')[0];
+                //$scope.actionitem.ecd = $scope.split($scope.actionitem.ecd, 'T')[0];
+              
+                $http.put('/api/actionitems', $scope.actionitem).then(function (response){
+                    if (response.data.Succeeded){
+                        $scope.msg = response.data.Result;
+                    }
+                    else{
+                        $scope.msg = $sce.trustAsHtml(response.data);
+                    }
+                }); 
+        }
+               
 }]);

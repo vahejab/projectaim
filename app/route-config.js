@@ -33,6 +33,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         .when('action@summary', 'action/summary')
         .when('action@create', 'action/create')
         .when('action@view', 'action/view')
+        .when('action@edit', 'action/edit')
         .when('issue', 'issue')
         .when('lesson', 'lesson')
         .when('opportunity', 'opporutnity')
@@ -66,6 +67,14 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             files: [
                     '/app/tool/action/ViewActionItem.css',
                     '/app/tool/action/ViewActionController.js'
+            ],
+            serie: true
+        },
+        {
+            name: 'action@edit',
+            files: [
+                    '/app/tool/action/EditActionItem.css',
+                    '/app/tool/action/EditActionController.js'
             ],
             serie: true
         },
@@ -109,6 +118,19 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             //cache: false,
             templateUrl: '/app/tool/action/ViewActionItem.html',
             controller: 'ViewActionController'
+        })
+        .state('action@edit',
+        {
+            url: "/action/edit/:id",
+            params: {
+                id: {
+                    array: false
+                }
+            },
+            resolve: res,
+            //cache: false,
+            templateUrl: '/app/tool/action/EditActionItem.html',
+            controller: 'EditActionController'
         })
         .state('risk',
         {

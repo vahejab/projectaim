@@ -1,5 +1,5 @@
 
-td > div:not(.filterinput):not(.cell)
+td > div.read
 {
     height: 92px !important;
     max-height: 92px !important;

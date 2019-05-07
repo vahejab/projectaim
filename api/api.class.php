@@ -71,7 +71,7 @@
                     break;
             }
 
-return $this->request;
+            return $this->request;
         }  
         
         public function processRequest() {

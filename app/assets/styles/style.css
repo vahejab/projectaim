@@ -35,6 +35,7 @@ table.grid.table-condensed thead th {
     text-align: left !important;
 }
 
+
 table.grid thead tr th:nth-child(1),
 table.grid tbody tr td:nth-child(1){
     /* max-width: 51px !important; */
@@ -44,71 +45,71 @@ table.grid tbody tr td:nth-child(1){
 
 table.grid thead tr th:nth-child(2),
 table.grid tbody tr td:nth-child(2){
-    max-width: 596px !important;
-    min-width:  596px !important;
+    /* max-width: 51px !important; */
+    max-width:  51px !important;
+    min-width:  51px !important;
 }
-
 
 table.grid thead tr th:nth-child(3),
 table.grid tbody tr td:nth-child(3){
-    max-width: 100px !important;
-    min-width: 100px !important;
-
+    max-width: 596px !important;
+    min-width:  596px !important;
 }
-
 
 
 table.grid thead tr th:nth-child(4),
 table.grid tbody tr td:nth-child(4){
     max-width: 100px !important;
     min-width: 100px !important;
+
 }
+
+
 
 table.grid thead tr th:nth-child(5),
 table.grid tbody tr td:nth-child(5){
-    max-width: 185px !important;
-    min-width: 185px !important;
-  
+    max-width: 100px !important;
+    min-width: 100px !important;
 }
 
 table.grid thead tr th:nth-child(6),
 table.grid tbody tr td:nth-child(6){
     max-width: 185px !important;
     min-width: 185px !important;
-
+  
 }
 
 table.grid thead tr th:nth-child(7),
 table.grid tbody tr td:nth-child(7){
     max-width: 185px !important;
     min-width: 185px !important;
+
 }
 
 table.grid thead tr th:nth-child(8),
 table.grid tbody tr td:nth-child(8){
     max-width: 185px !important;
     min-width: 185px !important;
-
 }
 
 table.grid thead tr th:nth-child(9),
 table.grid tbody tr td:nth-child(9){
+    max-width: 185px !important;
+    min-width: 185px !important;
+
+}
+
+table.grid thead tr th:nth-child(10),
+table.grid tbody tr td:nth-child(10){
     max-width: 130px !important;
     min-width: 130px !important;
   
 }
                              
-table.grid thead tr th:nth-child(10),
-table.grid tbody tr td:nth-child(10){
-    max-width: 130px !important;
-    min-width: 130px !important;
-}
-
 table.grid thead tr th:nth-child(11),
 table.grid tbody tr td:nth-child(11){
     max-width: 130px !important;
     min-width: 130px !important;
-
 }
 
 table.grid thead tr th:nth-child(12),
@@ -120,6 +121,13 @@ table.grid tbody tr td:nth-child(12){
 
 table.grid thead tr th:nth-child(13),
 table.grid tbody tr td:nth-child(13){
+    max-width: 130px !important;
+    min-width: 130px !important;
+
+}
+
+table.grid thead tr th:nth-child(14),
+table.grid tbody tr td:nth-child(14){
     max-width: 130px !important;
     min-width: 130px !important;
 }
@@ -308,4 +316,26 @@ table *{
 
 th:hover{
     cursor: pointer !important;
+}
+
+
+
+/*Edit Page*/
+
+.webix_list_item:hover{
+    background-color: rgb(244, 245, 249);
+}
+  
+.table td, .table th {
+    padding: .75rem;
+    vertical-align: top;
+    border-top: 1px solid black; 
+}
+textarea, input
+{
+    padding: 4px !important;
+    width: 100% !important;
+    max-width: auto !important;  
+    resize: none !important;
+    font-family: inherit !important;
 }

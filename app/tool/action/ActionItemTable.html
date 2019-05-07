@@ -1,6 +1,7 @@
 <tr ng-repeat="actionitem in actionitems | orderBy:propertyName:reverse" ng-repeat-done>
+   <td><a ui-sref="action@edit({id: actionitem.actionitemid})">Edit</a></td> 
    <td><a ui-sref="action@view({id: actionitem.actionitemid})">{{actionitem.actionitemid}}</a></td> 
-   <td>{{actionitem.title}}</td>
+   <td>{{actionitem.actionitemtitle}}</td>
    <td ng-init="actionitem.status = (!actionitem.completiondate ? 'Open' : (actionitem.completiondate && !actionitem.closeddate) ? 'Complete' : actionitem.closeddate ? 'Closed' : 'Closed')">{{actionitem.status}}</td>
    <td ng-class="[[formatCriticality(actionitem.critlevel)]]">{{actionitem.criticality}}</td>
    <td>{{actionitem.assignor}}</td> 

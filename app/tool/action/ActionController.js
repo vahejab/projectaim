@@ -1,4 +1,4 @@
-angular.module('Action').controller('ActionController', ['$http', '$resource', '$scope', '$state', '$window', '$timeout', '$interval', 'CommonService', /*'DTOptionsBuilder',*/ function($http, $resource, $scope, $state, $window, $timeout, $interval, CommonService/*, DTOptionsBuilder*/){
+angular.module('Action').controller('ActionController', ['$http', '$resource', '$scope', '$state', '$window', '$timeout', '$interval', '$sce', 'CommonService', /*'DTOptionsBuilder',*/ function($http, $resource, $scope, $state, $window, $timeout, $interval, $sce, CommonService/*, DTOptionsBuilder*/){
         refresh = true;
         $scope.CommonService = CommonService;
         $scope.actionitems = [];                          
@@ -64,7 +64,7 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
                         response.data.Result[key] =  
                         { 
                             actionitemid: actionitem.actionitemid, 
-                            title: actionitem.actionitemtitle,
+                            actionitemtitle: actionitem.title,
                             criticality: actionitem.criticality,
                             critlevel: actionitem.critlevel,
                             assignor: actionitem.assignor,
@@ -82,10 +82,11 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
                     return response.data.Result;
                }
                else{
-                return [];
+                $scope.msg = response.data;
                }
             });                                   
        }
+
 }]).directive('initTable', function(){
     return {
         restrict: 'A',
