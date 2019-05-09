@@ -3,7 +3,7 @@ angular.module('Action').controller('ViewActionController', ['$http', '$resource
         
         $scope.actionitem = {
                 actionitemid: 0,
-                title: '',
+                actionitemtitle: '',
                 status: (this.completiondate) ? 'Open' : 'Completed',
                 criticality: '',
                 critlevel: '',
@@ -39,7 +39,14 @@ angular.module('Action').controller('ViewActionController', ['$http', '$resource
         $scope.$on("$destroy", function(){
              angular.element(document.querySelector('link[href="/app/tool/action/ViewActionItem.css"]')).remove();
         });
-
+        
+        $scope.critlevels = [
+          {id: 0, value: ''},
+          {id: 1, value: 'High'},
+          {id: 2, value: 'Med'},
+          {id: 3, value: 'Low'},
+          {id: 4, value: 'None'} 
+        ];
          
         $scope.init = function(){
             //var vm = this;
@@ -48,9 +55,9 @@ angular.module('Action').controller('ViewActionController', ['$http', '$resource
             return $http.get('api/actionitems/'+$stateParams.id).then(function(response){
                     
                     $scope.actionitem.actionitemid = response.data.Results.actionitemid; 
-                    $scope.actionitem.title = response.data.Results.actionitemtitle;
-                    $scope.actionitem.criticality = response.data.Results.criticality;
-                    $scope.actionitem.critlevel = response.data.Results.critlevel;
+                    $scope.actionitem.actionitemtitle = response.data.Results.actionitemtitle;
+                    $scope.actionitem.criticality = $scope.critlevels[response.data.Results.criticality || 0].value;
+                    $scope.actionitem.critlevel = response.data.Results.criticality;
                     $scope.actionitem.assignor = response.data.Results.assignor;
                     $scope.actionitem.owner = response.data.Results.owner;
                     $scope.actionitem.altowner = response.data.Results.altowner;

@@ -227,11 +227,14 @@ td.label{
         margin: 0 auto;
     }
     
-    table:not(.grid)#details tr:not(:first-child) td > div:not(.filterinput):not(.cell)
+    table:not(.grid)#details tr:not(:first-child) td.read > div
     {
-        height: 94px !important;
+        height: 97px !important;
+        max-height: 97px !important;
+        overflow-y: scroll !important;
+        overflow-x: hidden !important;
     }
-
+ 
     table:not(.grid)#details tr:not(:first-child) td.label
     {
         padding: 1px;
@@ -270,14 +273,11 @@ td.label{
         width: 150px;
     }
 
-    table:not(.grid)#details tr:not(:first-child) .webix_el_textarea{
-        height: 100px !important;
+    table:not(.grid)#details tr:not(:first-child) .webix_el_textarea,
+    table:not(.grid)#details tr:not(:first-child) td.locked > div{
+        height: 97px !important;
     }
-
-    table:not(.grid)#details tr:not(:first-child) td.locked{
-        height: 100px !important;
-    }
-                                                         
+                                             
     table:not(.grid)#details{
         width: 650px;
         max-width: 750px !important;
@@ -338,4 +338,8 @@ textarea, input
     max-width: auto !important;  
     resize: none !important;
     font-family: inherit !important;
+}
+
+.webix_cal_day_disabled {
+    background-color: #cbcbcd !important;
 }

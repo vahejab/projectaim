@@ -31,4 +31,10 @@
             $mapper = $this->_getMapper();
             return $mapper->createOne($params);
         }
+        
+        public function updateOne($params = [])
+        {
+            $mapper = $this->_getMapper();
+            return $mapper->updateOne($params);
+        }
     }

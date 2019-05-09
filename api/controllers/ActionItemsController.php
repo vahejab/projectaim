@@ -23,5 +23,11 @@
         {
             $service = new \data\service\actionitemservice();
             return $service->createOne($this->payload);
+        } 
+        
+        public function put($id = null)
+        {
+            $service = new \data\service\actionitemservice();
+            return $service->updateOne($this->payload);
         }
    }

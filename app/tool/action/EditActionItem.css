@@ -1,8 +1,0 @@
-
-td > div.read
-{
-    height: 92px !important;
-    max-height: 92px !important;
-    overflow-y:scroll !important;
-    overflow-x:hidden !important;
-}

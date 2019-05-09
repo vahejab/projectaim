@@ -4,7 +4,6 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
          
          $scope.actionitem = {
                 actionitemid: '',
-                title: '',
                 status: (this.completiondate) ? 'Open' : 'Completed',
                 criticality: 0,
                 assignor: 0,
@@ -55,11 +54,12 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
         
         $scope.critlevels = 
         [
+          {id: 0, value: ''},
           {id: 1, value: 'High'},
           {id: 2, value: 'Med'},
           {id: 3, value: 'Low'},
           {id: 4, value: 'None'} 
-        ];   
+        ]; 
           
         $scope.getUsers = function(){
             return $scope.users;  
@@ -110,12 +110,12 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                (document.querySelector('#actionitemtitle > div.webix_control')).classList.remove("webix_invalid");
                (document.querySelector('#actionitemstatement > div.webix_control')).classList.remove("webix_invalid");
                (document.querySelector('#closurecriteria > div.webix_control')).classList.remove("webix_invalid");
-        
+                alert($scope.actionitem.critlevel);
               
                if ($scope.actionitem.assignor == 0) (document.querySelector('#assignor > div.webix_control')).classList.add("webix_invalid");
                if ($scope.actionitem.duedate == '') (document.querySelector('#duedate > div.webix_control')).classList.add("webix_invalid");
                if ($scope.actionitem.ecd == '' )   (document.querySelector('#ecd > div.webix_control')).classList.add("webix_invalid");
-               if ($scope.actionitem.criticality == 0) (document.querySelector('#criticality > div.webix_control')).classList.add("webix_invalid");
+               if ($scope.actionitem.critlevel == 0) (document.querySelector('#criticality > div.webix_control')).classList.add("webix_invalid");
                if ($scope.actionitem.owner == 0 ) (document.querySelector('#owner > div.webix_control')).classList.add("webix_invalid");
                if ($scope.actionitem.altowner == 0 ) (document.querySelector('#altowner > div.webix_control')).classList.add("webix_invalid");
                if ($scope.actionitem.actionitemtitle.trim() == '' )  (document.querySelector('#actionitemtitle > div.webix_control')).classList.add("webix_invalid");
@@ -128,7 +128,7 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
             return($scope.actionitem.assignor != 0 &&
                    $scope.actionitem.duedate != '' &&
                    $scope.actionitem.ecd != '' &&
-                   $scope.actionitem.criticality != 0 &&
+                   $scope.actionitem.critlevel != 0 &&
                    $scope.actionitem.owner != 0 &&
                    $scope.actionitem.altowner != 0 &&
                    $scope.actionitem.actionitemtitle.trim() != '' &&
@@ -164,7 +164,7 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
             else 
                 //$scope.actionitem.duedate = $scope.split($scope.actionitem.duedate,'T')[0];
                 //$scope.actionitem.ecd = $scope.split($scope.actionitem.ecd, 'T')[0];
-              
+  
                 $http.post('/api/actionitems', $scope.actionitem).then(function (response){
                     if (response.data.Succeeded){
                         $scope.msg = response.data.Result;

@@ -4,10 +4,10 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
         $scope.actionitems = [];                          
         $scope.actionitem = {
                 actionitemid: 0,
-                title: '',
+                actionitemtitle: '',
                 status: (this.completiondate) ? 'Open' : 'Completed',
                 criticality: '',
-                critlevel: '',
+                critlevel: 0,
                 assignor: '',
                 owner: '',
                 altowner: '',
@@ -56,17 +56,27 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
         $scope.getStatus = function(date1, date2){
            return CommonService.getStatus(date1, date2); 
         }
-         
+        
+           
+        $scope.critlevels = 
+        [
+          {id: 0, value: ''},
+          {id: 1, value: 'High'},
+          {id: 2, value: 'Med'},
+          {id: 3, value: 'Low'},
+          {id: 4, value: 'None'} 
+        ];
+        
         $scope.init = function(){
             return $http.get('api/actionitems').then(function(response){
                if (response.data.Succeeded){
-                    angular.forEach(response.data.Result, function(key, actionitem){
+                    angular.forEach(response.data.Result, function(actionitem, key){
                         response.data.Result[key] =  
                         { 
                             actionitemid: actionitem.actionitemid, 
                             actionitemtitle: actionitem.title,
-                            criticality: actionitem.criticality,
-                            critlevel: actionitem.critlevel,
+                            critlevel: actionitem.criticality,
+                            criticality: $scope.critlevels[actionitem.criticality || 0].value,
                             assignor: actionitem.assignor,
                             owner: actionitem.owner,
                             altowner: actionitem.altowner,
@@ -81,8 +91,8 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
                     $scope.actionitems = response.data.Result;
                     return response.data.Result;
                }
-               else{
-                $scope.msg = response.data;
+               else{  
+                $scope.msg += "<br />" + $sce.trustAsHtml(response.data);
                }
             });                                   
        }

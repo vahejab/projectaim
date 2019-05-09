@@ -9,7 +9,7 @@ common.service("CommonService", function() {
         scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
     }
-                                
+                
     commonFunctions.formatCriticality = function(value){ 
         switch(Number(value)){
             case 1:
@@ -30,34 +30,41 @@ common.service("CommonService", function() {
                                   + "-" + ((date.getDate() < 10)? '0'+date.getDate(): date.getDate());
     }
     
-    commonFunctions.getDateValueAndValidate = function(obj, model, field){
+    commonFunctions.getDateValueAndValidate = function(obj, scope, field){
         if (!obj.data || !obj.data.value){  
              return;
         }
 
         var value = obj.data.value.toString();
         var year = obj.data.value.getFullYear();
-        var month = obj.data.value.getMonth();
-        var day = obj.data.value.getDay();
-        model[field] = year + "-" + ((month < 10)? '0'+month: month) + "-" + ((day < 10)? '0'+day: day);       
+        var month = obj.data.value.getMonth()+1;
+        var day = obj.data.value.getDate()+1;
+        scope.actionitem[field] = year + "-" + ((month < 10)? '0'+month: month) + "-" + ((day < 10)? '0'+day: day);       
     }               
                                 
-    commonFunctions.getItemValueAndValidate = function(obj, model, field){
+    commonFunctions.getItemValueAndValidate = function(obj, scope, field){
         if (!obj.data || !obj.data.value){
              //scope.validate(field);   
              return;
         }
-        model[field] = obj.data.value;          
+        scope.actionitem[field] = obj.data.value;          
     }
     
-    commonFunctions.getTextValueAndValidate = function(obj, model, field){
+    commonFunctions.getItemId = function(obj, scope, field){
         if (!obj.data || !obj.data.value){
              //scope.validate(field);   
              return;
         }
-        model[field] = obj.data.value; 
+        scope.actionitem[field] = obj.data.value;         
     }
-
+    
+    commonFunctions.getTextValueAndValidate = function(obj, scope, field){
+        if (!obj.data || !obj.data.value){
+             //scope.validate(field);   
+             return;
+        }
+        scope.actionitem[field] = obj.data.value; 
+    }   
     
     return commonFunctions;
 });
@@ -77,6 +84,13 @@ angular.module('Action').directive('initData', function(){
                         webix.ui.fullScreen();
                     });
                     
+                    function GetDate(date)
+                    {
+                        if (date != '' && date != null)
+                            return new Date(date);    
+                        return null;
+                    }
+                    
                     function getSelectConfig(attr, options)
                     {
                         var config = 
@@ -86,7 +100,28 @@ angular.module('Action').directive('initData', function(){
                             options: options,
                             on: {
                                 //"onChange": function(){var obj = this.eventSource || this; getValueAndValidate(obj, 'assignor')},
-                                "onChange": function(){var obj = this.eventSource || this; scope.getItemValueAndValidate(obj, scope.actionitem, attr)}
+                                "onChange": function(){var obj = this.eventSource || this; scope.getItemValueAndValidate(obj, scope, attr)}
+                                //"onBlur": function(){scope.validate(scope.actionitem.assingor, 'assignor')}
+                            },
+                            responsive: true,
+                            width: "200",
+                            height: "30",
+                            validate: webix.rules.isSelected,
+                            required: true
+                        };
+                        return config;
+                    }
+                    
+                    function getSelectTextAndValConfig(attr, attrid, options)
+                    {
+                        var config = 
+                        {
+                            view: "richselect",
+                            value: scope.actionitem[attrid], 
+                            options: options,
+                            on: {
+                                //"onChange": function(){var obj = this.eventSource || this; getValueAndValidate(obj, 'assignor')},
+                                "onChange": function(){ var obj = this.eventSource || this; scope.getItemValueAndValidate(obj, scope, attr);  scope.getItemIdAndValidate(obj, scope, attrid)}
                                 //"onBlur": function(){scope.validate(scope.actionitem.assingor, 'assignor')}
                             },
                             responsive: true,
@@ -105,7 +140,7 @@ angular.module('Action').directive('initData', function(){
                             view:"text",
                             value: scope.actionitem[attr],      
                             on: {
-                                "onChange": function(){var obj = this.eventSource || this; scope.getTextValueAndValidate(obj, scope.actionitem, attr)},
+                                "onChange": function(){var obj = this.eventSource || this; scope.getTextValueAndValidate(obj, scope, attr)},
                                 //"onBlur": function(){scope.validate(scope.actionitem.title, 'title')}
                             },
                            
@@ -125,7 +160,7 @@ angular.module('Action').directive('initData', function(){
                             view:"textarea",
                             value: scope.actionitem[attr],
                             on: {                                  
-                                "onChange": function(){var obj = this.eventSource || this; scope.getTextValueAndValidate(obj, scope.actionitem, attr)},
+                                "onChange": function(){var obj = this.eventSource || this; scope.getTextValueAndValidate(obj, scope, attr)},
                                 //"onBlur": function(){scope.validate(scope.actionitem.actionitemstatement, 'actionitemstatement')}
                             },
                             responsive: true,
@@ -142,17 +177,17 @@ angular.module('Action').directive('initData', function(){
                         var config = 
                         {
                             view: "datepicker", 
-                            value: scope.actionitem[attr], 
+                            value: GetDate(scope.actionitem[attr]),
                             timepicker: false,
                             //multiselect: true,
                             suggest:{
                                 type:"calendar", 
                                 body:{
-                                    minDate:new Date()
-                                }
+                                    minDate:(new Date()).setDate(new Date())
+                                }                                         
                             },      
                             on: {
-                                "onChange": function(){var obj = this.eventSource || this; scope.getDateValueAndValidate(obj, scope.actionitem, attr)},
+                                "onChange": function(){var obj = this.eventSource || this; scope.getDateValueAndValidate(obj, scope, attr)},
                                 //"onBlur": function(){scope.validate(scope.actionitem.duedate, 'duedate')}  
                             },   
                             responsive: true,
@@ -172,9 +207,9 @@ angular.module('Action').directive('initData', function(){
                     
                     scope.altownerConfig = getSelectConfig('altowner', scope.users);
                     
-                    scope.critConfig = getSelectConfig('criticality', scope.critlevels);
+                    scope.critConfig = getSelectTextAndValConfig('criticality', 'critlevel', scope.critlevels);
                     
-                    scope.titleConfig = getTextConfig('title');
+                    scope.titleConfig = getTextConfig('actionitemtitle');
                     
                     scope.closurecriteriaConfig = getTextareaConfig('closurecriteria');
                     
@@ -192,8 +227,7 @@ angular.module('Action').directive('initData', function(){
                     
                     scope.approvercommentsConfig = getTextareaConfig('approvercomments');
                     
-                    scope.ownernotesConfig = getTextareaConfig('ownernotes');
-                        
+                    scope.ownernotesConfig = getTextareaConfig('ownernotes');    
             });
       }
 }            

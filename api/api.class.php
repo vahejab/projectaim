@@ -62,40 +62,40 @@
                     $this->request = $this->_cleanInputs($_GET);
                     //echo json_encode($this->request, JSON_PRETTY_PRINT);
                     break;
-                case 'PUT':
-                    $this->request = $this->_cleanInputs($_GET);
-                    $this->file = file_get_contents("php://input");
+                case 'PUT': 
+                    $this->payload = $this->_cleanInputs(file_get_contents('php://input'));
+                    $this->payload = json_decode($this->payload, true);
+                    $this->request = $this->payload;
                     break;
                 default:
                     $this->_response('Invalid Method', 405);
                     break;
-            }
-
+            }                       
             return $this->request;
         }  
         
         public function processRequest() {
             if(count($this->endpoint) > 0){
-                $class = "\\controllers\\{$this->endpoint[0]}Controller";  
+                $class = "\\controllers\\{$this->endpoint[0]}Controller";
+                 
                 if (class_exists($class, true))
                 {
-                        $method = strtolower($this->method);  
-                        if (method_exists($class, $method)){
-                            $args = $this->args;
-                            $id = $this->id;
-                            $endpoint2 =  $this->endpoint[1] ?? null;
-                            $payload = $this->payload;
-                            $response = (new $class($args,$endpoint2,$payload))->{$method}($id);
-                            if ($response['Succeeded']==true){    
-                                header("Content-Type: application/json");
-                                return $this->_response($response);
-                            }
-                            else{
-                                header("Content-Type: application/html");
-                                return trim($response['Result'], '"');
-                            }
+                    $method = strtolower($this->method); 
+                    if (method_exists($class, $method)){
+                        $args = $this->args;
+                        $id = $this->id;
+                        $endpoint2 =  $this->endpoint[1] ?? null;
+                        $payload = $this->payload;
+                        $response = (new $class($args,$endpoint2,$payload))->{$method}($id);
+                        if ($response['Succeeded']==true){    
+                            header("Content-Type: application/json");
+                            return $this->_response($response);
                         }
-                           
+                        else{
+                            header("Content-Type: application/html");
+                            return $response['Result'];
+                        }
+                    }
                 }
                 return $this->_response("No Endpoint: {$this->endpoint[0]}");
             }

@@ -33,7 +33,6 @@
             
             if (!is_null($array['ActionItemTitle'])) $actionitem->actionitemtitle = $array['ActionItemTitle'];
             if (!is_null($array['Criticality']))  $actionitem->criticality = $array['Criticality'];
-            if (!is_null($array['CritLevel']))  $actionitem->critlevel = $array['CritLevel'];
             if (!is_null($array['ActionItemStatement'])) $actionitem->actionitemstatement = $array['ActionItemStatement'];
             if (!is_null($array['ClosureCriteria'])) $actionitem->closurecriteria = $array['ClosureCriteria'];
             if (!is_null($array['ClosureStatement'])) $actionitem->closurestatement = $array['ClosureStatement'];
@@ -97,10 +96,10 @@
             }
  
             $sql = "select
-                        assignor.userid as 'assignorid',
-                        owner.userid as 'ownerid',
-                        altowner.userid as 'altownerid',
-                        approver.userid as 'approverid',
+                        assignor.userid as 'AssignorID',
+                        owner.userid as 'OwnerID',
+                        altowner.userid as 'AltOwnerID',
+                        approver.userid as 'ApproverID',
                         assignor.lastname as 'assignor.lastname',
                         assignor.firstname as 'assignor.firstname',
                         owner.lastname as 'owner.lastname',
@@ -109,7 +108,12 @@
                         altowner.firstname as 'altowner.firstname',
                         approver.lastname as 'approver.lastname',
                         approver.firstname as 'approver.firstname',
-                        a.*, coalesce(convert(a.Criticality, unsigned), 4) as 'CritLevel' 
+                        a.actionitemid as 'ActionItemID', a.criticality+0 as 'Criticality',
+                        a.completiondate as 'CompletionDate',
+                        a.duedate as 'DueDate', a.closeddate as 'ClosedDate', a.ecd as 'ECD', a.assigneddate as 'AssignedDate',
+                        a.actionitemtitle as 'ActionItemTitle', a.actionitemstatement as 'ActionItemStatement',
+                        a.closurecriteria as 'ClosureCriteria', a.closurestatement as 'ClosureStatement', 
+                        a.ownernotes as 'OwnerNotes', a.rejectionjustification as 'RejectionJustification', a.approvercomments as 'ApproverComments'
                     from actionitems a
                     left join users assignor
                         ON a.assignorid = assignor.userid
@@ -148,9 +152,9 @@
         }
 
         public function createOne($params = [])
-        {   
+        {                         
             $sql = "insert
-                    into actionitems(    
+                    into actionitems(   
                             assignorid,
                             ownerid,
                             altownerid,
@@ -161,7 +165,7 @@
                             actionitemstatement,
                             closurecriteria
                     )
-                    values(
+                    values(  
                             :assignorid,
                             :ownerid,
                             :altownerid,
@@ -173,18 +177,22 @@
                             :closurecriteria
                     )";
             try
-            {      
+            { 
+                $this->db->beginTransaction();     
                 $statement = $this->db->prepare($sql);
                 $statement->bindValue(':assignorid', $params['assignor']);
                 $statement->bindValue(':ownerid' , $params['owner']);
                 $statement->bindValue(':altownerid' , $params['altowner']);
                 $statement->bindValue(':duedate' , $params['duedate']);
                 $statement->bindValue(':ecd' , $params['ecd']);      
-                $statement->bindValue(':criticality' , $params['critlevel']);
+                $statement->bindValue(':criticality' , $params['criticality']);
                 $statement->bindValue(':actionitemtitle' , $params['actionitemtitle']);
                 $statement->bindValue(':actionitemstatement' , $params['actionitemstatement']);
                 $statement->bindValue(':closurecriteria', $params['closurecriteria']);                        
                 $statement->execute();
+                $statement = $this->db->prepare("update actionitems set actionitemid = id where actionitemid is null");
+                $statement->execute();
+                $this->db->commit();
                 return ["Succeeded" => true, "Result" => "Action Item Created!"];
             }
             catch (\PDOException $e)
@@ -194,19 +202,25 @@
         }
         
         public function updateOne($params = [])
-        {   
+        {
             $sql = "update
                     actionitems
                     set
                         assignorid = :assignorid,
                         ownerid = :ownerid,
                         altownerid = :altownerid,
+                        approverid = :approverid,
+                        assigneddate = :assigneddate,
                         duedate = :duedate,
+                        completiondate = :completiondate,
                         ecd = :ecd,
+                        closeddate = :closeddate,
                         criticality = :criticality,
                         actionitemtitle = :actionitemtitle,
                         actionitemstatement = :actionitemstatement,
-                        closurecriteria = :closurecriteria
+                        closurecriteria = :closurecriteria,
+                        ownernotes = :ownernotes,
+                        approvercomments = :approvercomments
                     where
                         actionitemid = :actionitemid";
             try
@@ -215,14 +229,22 @@
                 $statement->bindValue(':assignorid', $params['assignor']);
                 $statement->bindValue(':ownerid' , $params['owner']);
                 $statement->bindValue(':altownerid' , $params['altowner']);
+                $statement->bindValue(':approverid' , $params['approver']);
+                $statement->bindValue(':assigneddate' , $params['assigneddate']);
                 $statement->bindValue(':duedate' , $params['duedate']);
-                $statement->bindValue(':ecd' , $params['ecd']);      
-                $statement->bindValue(':criticality' , $params['critlevel']);
+                $statement->bindValue(':completiondate' , $params['completiondate']);
+                $statement->bindValue(':ecd' , $params['ecd']);  
+                $statement->bindValue(':closeddate', $params['closeddate']);  
+                $statement->bindValue(':criticality' , $params['criticality']);
                 $statement->bindValue(':actionitemtitle' , $params['actionitemtitle']);
                 $statement->bindValue(':actionitemstatement' , $params['actionitemstatement']);
-                $statement->bindValue(':closurecriteria', $params['closurecriteria']);                        
+                $statement->bindValue(':closurecriteria', $params['closurecriteria']); 
+                $statement->bindValue(':ownernotes' , $params['ownernotes']); 
+                $statement->bindValue(':approvercomments' , $params['approvercomments']);
+                $statement->bindValue(':actionitemid' , $params['actionitemid']);                        
                 $statement->execute();
-                return ["Succeeded" => true, "Result" => "Action Item Created!"];
+                
+                return ["Succeeded" => true, "Result" => "Action Item Updated!"];
             }
             catch (\PDOException $e)
             {

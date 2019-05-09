@@ -3,10 +3,10 @@ angular.module('Action').controller('EditActionController', ['$http', '$resource
         
         $scope.actionitem = {
                 actionitemid: 0,
-                title: '',
+                actionitemtitle: '',
                 status: (this.completiondate) ? 'Open' : 'Completed',
                 criticality: '',
-                critlevel: '',
+                critlevel: 0,
                 assignor: 0,
                 owner: 0,
                 altowner: 0,
@@ -24,23 +24,10 @@ angular.module('Action').controller('EditActionController', ['$http', '$resource
         }
         
         $scope.users = [];
-        
-        /*                       
-        $scope.setMargin = function(elem, times){
-            CommonService.setMargin(elem, times);
-        }
-        
-        $scope.formatCriticality = function(value){ 
-            return CommonService.formatCriticality(value);
-        }
-        
-        $scope.getStatus = function(date1, date2){
-           return CommonService.getStatus(date1, date2); 
-        }
-        */
-        
+
         $scope.critlevels = 
         [
+          {id: 0, value: ''},
           {id: 1, value: 'High'},
           {id: 2, value: 'Med'},
           {id: 3, value: 'Low'},
@@ -64,7 +51,7 @@ angular.module('Action').controller('EditActionController', ['$http', '$resource
                    return response.data.Result;
                 }
                 else{
-                     $scope.msg = $sce.trustAsHtml(response.data);
+                     $scope.msg += "<br />"+ $sce.trustAsHtml(response.data);
                 }
             }); 
         }
@@ -77,8 +64,9 @@ angular.module('Action').controller('EditActionController', ['$http', '$resource
             return $http.get('api/actionitems/'+$stateParams.id).then(function(response){
                   if (response.data.Succeeded){  
                     $scope.actionitem.actionitemid = response.data.Results.actionitemid; 
-                    $scope.actionitem.title = response.data.Results.actionitemtitle;
-                    $scope.actionitem.criticality = response.data.Results.critlevel;
+                    $scope.actionitem.actionitemtitle = response.data.Results.actionitemtitle;
+                    $scope.actionitem.criticality = $scope.critlevels[response.data.Results.criticality || 0].value;
+                    $scope.actionitem.critlevel = response.data.Results.criticality;
                     $scope.actionitem.assignor = response.data.Results.assignorId;
                     $scope.actionitem.owner = response.data.Results.ownerId;
                     $scope.actionitem.altowner = response.data.Results.altownerId;
@@ -91,26 +79,24 @@ angular.module('Action').controller('EditActionController', ['$http', '$resource
                     $scope.actionitem.actionitemstatement = response.data.Results.actionitemstatement;
                     $scope.actionitem.closurecriteria = response.data.Results.closurecriteria;
                     $scope.actionitem.ownernotes = response.data.Results.ownernotes;
-                    $scope.actionitem.approvercomments = response.data.Results.approvercommens;
+                    $scope.actionitem.approvercomments = response.data.Results.approvercomments;
                     $scope.actionitem.activitylog = response.data.Results.activitylog; 
                     return response.data.Results;
                   }
                   else{
-                     $scope.msg += $sce.trustAsHtml(response.data);
+                     $scope.msg += "<br />"+$sce.trustAsHtml(response.data);
                   }
             }).then(function(){
                 return $scope.initUsers();
             });                                   
        }
-       
-       
-       
+
        $scope.clearValidation = function(id){
             (document.querySelector('#'+id+' > div.webix_control')).classList.remove("webix_invalid");
-        }
+       }
         
         $scope.validate = function(elem, id){
-           if (typeof elem == 'undefined' || elem == 0 || elem == '' || elem.trim() == '') (document.querySelector('#'+id+' > div.webix_control')).classList.add("webix_invalid");
+            if (typeof elem == 'undefined' || elem == 0 || elem == '' || elem.trim() == '') (document.querySelector('#'+id+' > div.webix_control')).classList.add("webix_invalid");
         }
                
 
@@ -136,7 +122,7 @@ angular.module('Action').controller('EditActionController', ['$http', '$resource
                if ($scope.actionitem.ecd== '' ) (document.querySelector('#ecd > div.webix_control')).classList.add("webix_invalid"); 
                if ($scope.actionitem.closeddate == '' ) (document.querySelector('#closeddate > div.webix_control')).classList.add("webix_invalid"); 
                if ($scope.actionitem.completiondate == '' ) (document.querySelector('#completiondate > div.webix_control')).classList.add("webix_invalid"); 
-               if ($scope.actionitem.criticality == 0) (document.querySelector('#criticality > div.webix_control')).classList.add("webix_invalid");
+               if ($scope.actionitem.critlevel == 0) (document.querySelector('#criticality > div.webix_control')).classList.add("webix_invalid");
                if ($scope.actionitem.owner == 0 ) (document.querySelector('#owner > div.webix_control')).classList.add("webix_invalid");
                if ($scope.actionitem.altowner == 0 ) (document.querySelector('#altowner > div.webix_control')).classList.add("webix_invalid");
                if ($scope.actionitem.approver == 0 ) (document.querySelector('#approver > div.webix_control')).classList.add("webix_invalid");
@@ -153,7 +139,7 @@ angular.module('Action').controller('EditActionController', ['$http', '$resource
                    $scope.actionitem.ecd != '' &&
                    $scope.actionitem.closeddate != '' &&
                    $scope.actionitem.completiondate != '' &&
-                   $scope.actionitem.criticality != 0 &&
+                   $scope.actionitem.critlevel != 0 &&
                    $scope.actionitem.owner != 0 &&
                    $scope.actionitem.altowner != 0 &&
                    $scope.actionitem.approver != 0 &&
@@ -175,6 +161,10 @@ angular.module('Action').controller('EditActionController', ['$http', '$resource
             $scope.clearValidation(field);   
         }
         
+        $scope.getItemIdAndValidate = function(obj, model, field){
+            CommonService.getItemId(obj, model, field);       
+        }
+        
         $scope.getTextValueAndValidate = function(obj, model, field){
             CommonService.getTextValueAndValidate(obj, model, field); 
             $scope.clearValidation(field);  
@@ -189,8 +179,7 @@ angular.module('Action').controller('EditActionController', ['$http', '$resource
             else 
                 //$scope.actionitem.duedate = $scope.split($scope.actionitem.duedate,'T')[0];
                 //$scope.actionitem.ecd = $scope.split($scope.actionitem.ecd, 'T')[0];
-              
-                $http.put('/api/actionitems', $scope.actionitem).then(function (response){
+                $http.put('/api/actionitems', $scope.actionitem).then(function(response){
                     if (response.data.Succeeded){
                         $scope.msg = response.data.Result;
                     }
@@ -200,4 +189,11 @@ angular.module('Action').controller('EditActionController', ['$http', '$resource
                 }); 
         }
                
-}]);
+}]).filter('unquote', function () {
+    return function(value) {
+        if(!angular.isString(value)) {
+            return value;
+        }  
+        return value.replace(/^['"]+$/g, ''); // you could use .trim, but it's not going to work in IE<9
+    };
+});;
