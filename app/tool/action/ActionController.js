@@ -74,7 +74,7 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
                         response.data.Result[key] =  
                         { 
                             actionitemid: actionitem.actionitemid, 
-                            actionitemtitle: actionitem.title,
+                            actionitemtitle: actionitem.actionitemtitle,
                             critlevel: actionitem.criticality,
                             criticality: $scope.critlevels[actionitem.criticality || 0].value,
                             assignor: actionitem.assignor,

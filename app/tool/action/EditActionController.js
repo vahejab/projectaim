@@ -27,7 +27,6 @@ angular.module('Action').controller('EditActionController', ['$http', '$resource
 
         $scope.critlevels = 
         [
-          {id: 0, value: ''},
           {id: 1, value: 'High'},
           {id: 2, value: 'Med'},
           {id: 3, value: 'Low'},
@@ -65,7 +64,7 @@ angular.module('Action').controller('EditActionController', ['$http', '$resource
                   if (response.data.Succeeded){  
                     $scope.actionitem.actionitemid = response.data.Results.actionitemid; 
                     $scope.actionitem.actionitemtitle = response.data.Results.actionitemtitle;
-                    $scope.actionitem.criticality = $scope.critlevels[response.data.Results.criticality || 0].value;
+                    $scope.actionitem.criticality = $scope.critlevels[response.data.Results.criticality].value;
                     $scope.actionitem.critlevel = response.data.Results.criticality;
                     $scope.actionitem.assignor = response.data.Results.assignorId;
                     $scope.actionitem.owner = response.data.Results.ownerId;
@@ -122,7 +121,7 @@ angular.module('Action').controller('EditActionController', ['$http', '$resource
                if ($scope.actionitem.ecd== '' ) (document.querySelector('#ecd > div.webix_control')).classList.add("webix_invalid"); 
                if ($scope.actionitem.closeddate == '' ) (document.querySelector('#closeddate > div.webix_control')).classList.add("webix_invalid"); 
                if ($scope.actionitem.completiondate == '' ) (document.querySelector('#completiondate > div.webix_control')).classList.add("webix_invalid"); 
-               if ($scope.actionitem.critlevel == 0) (document.querySelector('#criticality > div.webix_control')).classList.add("webix_invalid");
+               if ($scope.actionitem.criticality == '') (document.querySelector('#criticality > div.webix_control')).classList.add("webix_invalid");
                if ($scope.actionitem.owner == 0 ) (document.querySelector('#owner > div.webix_control')).classList.add("webix_invalid");
                if ($scope.actionitem.altowner == 0 ) (document.querySelector('#altowner > div.webix_control')).classList.add("webix_invalid");
                if ($scope.actionitem.approver == 0 ) (document.querySelector('#approver > div.webix_control')).classList.add("webix_invalid");
@@ -139,7 +138,7 @@ angular.module('Action').controller('EditActionController', ['$http', '$resource
                    $scope.actionitem.ecd != '' &&
                    $scope.actionitem.closeddate != '' &&
                    $scope.actionitem.completiondate != '' &&
-                   $scope.actionitem.critlevel != 0 &&
+                   $scope.actionitem.criticality != '' &&
                    $scope.actionitem.owner != 0 &&
                    $scope.actionitem.altowner != 0 &&
                    $scope.actionitem.approver != 0 &&

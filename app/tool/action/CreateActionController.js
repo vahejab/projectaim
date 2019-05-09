@@ -54,7 +54,6 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
         
         $scope.critlevels = 
         [
-          {id: 0, value: ''},
           {id: 1, value: 'High'},
           {id: 2, value: 'Med'},
           {id: 3, value: 'Low'},
@@ -110,12 +109,11 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                (document.querySelector('#actionitemtitle > div.webix_control')).classList.remove("webix_invalid");
                (document.querySelector('#actionitemstatement > div.webix_control')).classList.remove("webix_invalid");
                (document.querySelector('#closurecriteria > div.webix_control')).classList.remove("webix_invalid");
-                alert($scope.actionitem.critlevel);
-              
+               
                if ($scope.actionitem.assignor == 0) (document.querySelector('#assignor > div.webix_control')).classList.add("webix_invalid");
                if ($scope.actionitem.duedate == '') (document.querySelector('#duedate > div.webix_control')).classList.add("webix_invalid");
                if ($scope.actionitem.ecd == '' )   (document.querySelector('#ecd > div.webix_control')).classList.add("webix_invalid");
-               if ($scope.actionitem.critlevel == 0) (document.querySelector('#criticality > div.webix_control')).classList.add("webix_invalid");
+               if (typeof $scope.actionitem.critlevel === 'undefined') (document.querySelector('#criticality > div.webix_control')).classList.add("webix_invalid");
                if ($scope.actionitem.owner == 0 ) (document.querySelector('#owner > div.webix_control')).classList.add("webix_invalid");
                if ($scope.actionitem.altowner == 0 ) (document.querySelector('#altowner > div.webix_control')).classList.add("webix_invalid");
                if ($scope.actionitem.actionitemtitle.trim() == '' )  (document.querySelector('#actionitemtitle > div.webix_control')).classList.add("webix_invalid");
@@ -144,6 +142,10 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
         $scope.getItemValueAndValidate = function(obj, model, field){
             CommonService.getItemValueAndValidate(obj, model, field);         
             $scope.clearValidation(field);   
+        }
+        
+        $scope.getItemIdAndValidate = function(obj, model, field){
+            CommonService.getItemId(obj, model, field);       
         }
         
         $scope.getTextValueAndValidate = function(obj, model, field){
