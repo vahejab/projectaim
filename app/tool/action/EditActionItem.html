@@ -1,9 +1,9 @@
-<div id="formcontainer">
-    <div id="myeditform" class="container" type="space" ng-controller="EditActionController" layout-padding="" ng-cloak="">   
-        <init-data />
+<div id="formcontainer"  ng-controller="EditActionController" ng-app="Action">
+    <div id="myeditform" type="space" layout-padding="" ng-cloak="">   
+        <init-action />
         <form webix-ui="config" id="form" name="EditActionItem" role="form" ng-submit="EditActionItem.$valid && submit()" novalidate>
-            <div class="container" ng-init="init()">
-                    <table id="summary" class="data" border="1">
+            <div class="layout" ng-init="init()">
+                    <table id="summary" class="layout" border="1">
                         <tr>
                             <td class="label">Action Item #</td>
                             <td class="locked">{{actionitem.actionitemid}}</td>
@@ -42,7 +42,7 @@
                         </tr>
                     </table>
                     <br />
-                    <table id="summary" class="data" border="1">
+                    <table id="summary" class="layout" border="1">
                         <tr>
                             <td class="label">
                                 Assigned Date
@@ -89,7 +89,7 @@
                     </table>
 
                     <h2>Action Item Information</h2>
-                    <table id="details" class="data" border="1">
+                    <table id="details" class="layout" border="1">
                         <tr>
                             <td class="label" style="vertical-align: top">
                                 Title

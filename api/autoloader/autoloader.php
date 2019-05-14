@@ -11,9 +11,14 @@
         
         public function autoload()
         {
+            foreach (glob("{$this->directoryName}/*.class.php") as $filename)
+            {
+                include_once $filename;           
+            }
+         
             foreach (glob("{$this->directoryName}/*.php") as $filename)
             {
-                include_once $filename;
+                include_once $filename;           
             }
         }    
     }
@@ -27,7 +32,6 @@
                     new autoloader('controllers'), 
                     new autoloader('models'),
                     new autoloader('data')
-     
     ];
 
     # register the loader functions

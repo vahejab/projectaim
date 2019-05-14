@@ -1,0 +1,5 @@
+table.layout#details tr:not(:first-child) .webix_el_textarea,
+table.layout#details tr:not(:first-child) td.locked > div{
+    height: 97px !important;
+}
+                                     

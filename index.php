@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>ProjectAIM Suite</title>
@@ -19,7 +20,7 @@
     }
     body{
         width: 100vw;
-    }
+    } 
   </style>
 </head>
 <body ng-app="Main" ng-controller="MainController" ng-init="init()">
@@ -27,11 +28,14 @@
             <img id="logo" src="/app/assets/images/ProjectAIM.png" />
         </a>      
 
-            <a href="/#!/action/create" name="create">
+            <a href="/#!/action/create" name="createaction">
                 Create Action Item
             </a>
-            <a href="/#!/action/summary" name="summary">
+            <a href="/#!/action/summary" name="actionsummary">
                 Action Item Summary
+            </a>
+            <a href="/#!/risk/create" name="createrisk">
+                Create Risk
             </a>
         <div class="ui-view">
             
@@ -56,5 +60,5 @@
     <script src="/app/js/ocLazyLoad/ocLazyLoad.js"></script>
     <script src="/app/route-config.js"></script> 
     <script src="/app/app.js"></script>
-</body>
+   </body>
 </html>

@@ -1,5 +1,5 @@
-<div class="container" ng-init="init()">
-        <table id="summary" class="data" border="1">
+<div class="container" ng-init="init()" ng-app="Action" ng-controller="ViewActionController">
+        <table id="summary" class="layout" border="1">
             <tr>
                 <td class="label">Action Item #</td>
                 <td class="locked">{{actionitem.actionitemid}}</td>
@@ -38,7 +38,7 @@
             </tr>
         </table>
         <br />
-        <table id="summary" class="data" border="1">
+        <table id="summary" class="layout" border="1">
             <tr>
                 <td class="label">
                     Assigned Date
@@ -87,7 +87,7 @@
         </table>
 
         <h2>Action Item Information</h2>
-        <table id="details" class="data" border="1">
+        <table id="details" class="layout" border="1">
             <tr>
                 <td class="label" style="vertical-align: top">
                     Title

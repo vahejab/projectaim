@@ -135,21 +135,21 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
         };
         
         $scope.getDateValueAndValidate = function(obj, model, field){
-            CommonService.getDateValueAndValidate(obj, model, field);       
+            CommonService.getDateValue(obj, model, 'actionitem', field);       
             $scope.clearValidation(field);
         }               
                                 
         $scope.getItemValueAndValidate = function(obj, model, field){
-            CommonService.getItemValueAndValidate(obj, model, field);         
+            CommonService.getItemValue(obj, model, 'actionitem', field);         
             $scope.clearValidation(field);   
         }
         
-        $scope.getItemIdAndValidate = function(obj, model, field){
-            CommonService.getItemId(obj, model, field);       
+        $scope.getItemId = function(obj, model, field){
+            CommonService.getItemId(obj, model, 'actionitem', field);       
         }
         
         $scope.getTextValueAndValidate = function(obj, model, field){
-            CommonService.getTextValueAndValidate(obj, model, field); 
+            CommonService.getTextValue(obj, model, 'actionitem', field); 
             $scope.clearValidation(field);  
         }
 

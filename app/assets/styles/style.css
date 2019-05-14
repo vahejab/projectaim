@@ -1,7 +1,7 @@
 html{
     overflow-y: overlay;
 }
-
+  
 img#logo{
     width: 200px !important;
     max-width: 75vw !important;
@@ -10,6 +10,11 @@ img#logo{
 body{
     font-family: arial !important;
 }
+
+body *{
+    margin: 0 auto;
+}
+
 .msg-container{
     height: 30px !important;
 }
@@ -17,15 +22,263 @@ body{
     background-color: #0038a8 !important;
 }
 
-
-.header-fixed {
-    width: 100% 
+td.red{
+    background-color: #00b050;
 }
+
+td.yellow{
+    background-color: #eeee00 ;
+}
+
+td.green{
+    background-color: #ee0000;
+}
+
+td.Late{
+    color: red;
+}
+
+.grid th{
+    white-space: nowrap !important;
+}
+
+.grid td{
+    white-space: nowrap !important;
+}
+
+td.label{
+    white-space: nowrap !important;
+}
+
+div.nested{
+    text-align: center !important;
+} 
+
+    
+
+@media only screen and (max-width: 800px) {
+
+
+div.nested table#details{
+    width: 151px !important;
+    max-width: 151px !important;
+    margin-bottom: 10px;
+    margin-left:  34px;
+    /* padding-left:  5px; */
+}
+
+    table#summary td.label,
+    table#details td.label {
+        background-color: #0038a8 !important;
+        font-weight: bold !important;
+        font-style: italic !important;
+        color: white !important;
+        text-align: left !important;
+    }    
+
+    /* Force table to not be like tables anymore */    
+    table.layout,
+    table.layout thead,
+    table.layout tbody,
+    table.layout tr,
+    table.layout th,
+    table.layout td,
+    table.layout td .webix_view,
+    table.layout td .webix_el_box,
+    table.layout td .webix_inp_static{
+        display: block !important;
+        width: 100% !important;
+    }
+
+    
+    div.ui-view form {
+        width: 95% !important;
+        padding: 0px !important;
+        /* padding-right: 5vw; */
+    }
+    
+    input, textarea{
+        width: 100% !important;
+    }                           
+     
+    table#details tr:not(:first-child) td.label{
+        height: 23px !important;
+    }   
+    
+} 
+@media only screen and (min-width: 801px){
+  
+  
+    table#summary td.label,
+    table#details td.label {
+        background-color: #0038a8 !important;
+        font-weight: bold !important;
+        font-style: italic !important;
+        color: white !important;
+        text-align: left !important;
+    }
+  
+
+
+    div.ui-view,
+    div.ui-view table:not(.grid){
+        text-align: center;
+        /* margin: 0 auto; */
+    }
+    
+    table.layout#details tr:not(:first-child):not(.text) td.read > div
+    {
+        height: 97px !important;
+        max-height: 97px !important;
+        overflow-y: scroll !important;
+        overflow-x: hidden !important;
+    }
+ 
+    table.layout#details tr:not(:first-child):not(.text) td.label
+    {
+        padding: 1px;
+        height: 97px;
+        width: 200px;
+    }
+
+
+    table.layout#details td:nth-child(1){
+        width: 150px;
+    }
+
+    table.layout#information tr td
+    {
+        height:  23px !important;
+    }
+    table.layout#categories tr td
+    {
+        height: 23px !important;
+    }
+                      
+    table.layout#summary td.locked
+    {
+        vertical-align: middle !important;
+        color: black;
+        width: 140px !important;
+    }
+
+
+    table.layout#details tr:not(:first-child) .webix_el_textarea,
+    table.layout#details tr:not(:first-child):not(.text) td.locked > div{
+        height: 97px !important;
+    }
+                                             
+    table.layout#details{
+        width: 650px;
+        max-width: 650px !important;
+    }
+
+    table.layout#summary{
+        width: 650px;
+        max-width: 750px !important;
+    } 
+}     
+
+
+body{
+    background-color: rgb(250, 253, 252) !important;  
+}
+
+label, span{
+    color: black !important;
+}
+
+
+table.xdebug-error *{
+    font-size: 12pt !important;
+}
+
+table *{
+    text-align: left;
+}
+
+
+
+
+/*Edit Page*/
+
+.webix_list_item:hover{
+    background-color: rgb(244, 245, 249);
+}
+  
+.table td, .table th {
+    padding: .75rem;
+    vertical-align: top;
+    border-top: 1px solid black; 
+}
+textarea, input
+{
+    padding: 4px !important;
+    width: 100%;
+    max-width: auto !important;  
+    resize: none !important;
+    font-family: inherit !important;
+}
+
+.webix_cal_day_disabled {
+    background-color: #cbcbcd !important;
+}
+
+.label{
+    vertical-align: top !important;
+}
+
+table.nested{
+    margin: 0 auto;
+}
+
+
+table.nested table.layout{
+    width: 125px !important; 
+}
+
+table.nested td{
+    vertical-align: top;
+}
+
+
 
 table.grid{
-    width: 100%;
+    width: 100% !important;
 }
 
+table.grid td{
+    text-align: left;
+}
+
+
+
+table.grid thead th {
+    background-color: #0038a8 !important;
+    font-weight: bold !important;
+    font-style: italic !important;
+    color: white !important;
+    text-align: left !important;
+}
+
+
+div.header-fixed {
+    width: 100% !important; 
+}
+
+
+div.tableheader{
+    overflow-y: hidden !important;
+    overflow-x: hidden !important;
+}
+
+
+div.tablebody{
+    overflow-y: scroll;
+    overflow-x: scroll;
+    max-height: 450px !important;
+    /* margin-right: 17px !important; */
+}
 
 table.grid.table-condensed thead th {
     background-color: #0038a8 !important;
@@ -36,6 +289,9 @@ table.grid.table-condensed thead th {
 }
 
 
+
+
+   
 table.grid thead tr th:nth-child(1),
 table.grid tbody tr td:nth-child(1){
     /* max-width: 51px !important; */
@@ -63,8 +319,6 @@ table.grid tbody tr td:nth-child(4){
     min-width: 100px !important;
 
 }
-
-
 
 table.grid thead tr th:nth-child(5),
 table.grid tbody tr td:nth-child(5){
@@ -132,214 +386,155 @@ table.grid tbody tr td:nth-child(14){
     min-width: 130px !important;
 }
 
-div.tableheader{
-    overflow-y: hidden !important;
-    overflow-x: hidden !important;
+
+
+
+
+
+
+
+
+
+
+
+
+.vlabel {
+  /* FF3.5+ */
+  -moz-transform: rotate(-90.0deg);
+  /* Opera 10.5 */
+  -o-transform: rotate(-90.0deg);
+  /* Saf3.1+, Chrome */
+  -webkit-transform: rotate(-90.0deg);
+  /* IE6,IE7 */
+  filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=0.083);
+  /* IE8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
+  /* Standard */
+  transform: rotate(-90.0deg);
 }
 
-
-div.tablebody{
-    overflow-y: scroll;
-    overflow-x: scroll;
-    max-height: 450px !important;
-    /* margin-right: 17px !important; */
-}
-
-td.red{
-    background-color: red;
-}
-
-td.yellow{
-    background-color: yellow;
-}
-
-td.green{
-    background-color: green;
-}
-
-td.Late{
-    color: red;
-}
-
-.grid th{
-    white-space: nowrap !important;
-}
-
-.grid td{
-    white-space: nowrap !important;
-}
-
-td.label{
-    white-space: nowrap !important;
-} 
-
- 
-@media only screen and (max-width: 800px) {
-    /* Force table to not be like tables anymore */    
-    table:not(.grid),
-    table:not(.grid) thead,
-    table:not(.grid) tbody,
-    table:not(.grid) tr,
-    table:not(.grid) th,
-    table:not(.grid) td,
-    table:not(.grid) td .webix_view,
-    table:not(.grid) td .webix_el_box,
-    table:not(.grid) td .webix_inp_static{
-        display: block !important;
-        width: 100% !important;
-    }
-    
-    div.ui-view,
-    div.ui-view *{
-        text-align: center;
-        margin: 0; 
-    }
-    
-    div.ui-view form {
-        width: 92vw !important;
-        padding: 0px !important;
-        margin: 0px !important;
-        /* padding-right: 5vw; */
-    }
-    
-    input, textarea{
-        width: 100% !important;
-    }                           
-     
-    table#details tr:not(:first-child) td.label{
-        height: 23px !important;
-    }   
-    
-    table#summary td.label,
-    table#details td.label {
-        background-color: #0038a8 !important;
-        font-weight: bold !important;
-        font-style: italic !important;
-        color: white !important;
-        text-align: left !important;
-    }
-} 
-@media only screen and (min-width: 801px){
-
-    div.ui-view,
-    div.ui-view table{
-        text-align: center;
-        margin: 0 auto;
-    }
-    
-    table:not(.grid)#details tr:not(:first-child) td.read > div
-    {
-        height: 97px !important;
-        max-height: 97px !important;
-        overflow-y: scroll !important;
-        overflow-x: hidden !important;
-    }
- 
-    table:not(.grid)#details tr:not(:first-child) td.label
-    {
-        padding: 1px;
-        height: 93px;
-        width: 200px;
-    }
-
-
-    table:not(.grid)#details td:nth-child(1){
-        width: 150px;
-    }
-
-    table:not(.grid)#information tr td
-    {
-        height:  23px !important;
-    }
-    table:not(.grid)#categories tr td
-    {
-        height: 23px !important;
-    }
-                      
-    table:not(.grid)#summary td.locked
-    {
-        vertical-align: middle !important;
-        color: black;
-        width: 140px !important;
-    }
-
-    table:not(.grid)#summary td.label,
-    table:not(.grid)#details td.label {
-        background-color: #0038a8 !important;
-        font-weight: bold !important;
-        font-style: italic !important;
-        color: white !important;
-        text-align: left !important;
-        width: 150px;
-    }
-
-    table:not(.grid)#details tr:not(:first-child) .webix_el_textarea,
-    table:not(.grid)#details tr:not(:first-child) td.locked > div{
-        height: 97px !important;
-    }
-                                             
-    table:not(.grid)#details{
-        width: 650px;
-        max-width: 750px !important;
-    }
-
-    table:not(.grid)#summary{
-        width: 650px;
-        max-width: 750px !important;
-    } 
-}     
-
-
-body{
-    background-color: rgb(250, 253, 252) !important;  
-}
-
-label, span{
-    color: black !important;
-}
-
-table.table-condensed thead th {
-    background-color: #0038a8 !important;
-    font-weight: bold !important;
-    font-style: italic !important;
-    color: white !important;
-    text-align: left !important;
-}
-
-table.xdebug-error *{
-    font-size: 12pt !important;
-}
-
-table *{
-    text-align: left !important;
-}
-
-th:hover{
-    cursor: pointer !important;
-}
-
-
-
-/*Edit Page*/
-
-.webix_list_item:hover{
-    background-color: rgb(244, 245, 249);
-}
-  
-.table td, .table th {
-    padding: .75rem;
+                    
+div.nested > div.info,
+div.nested > table{
+    display: inline-block !important;
     vertical-align: top;
-    border-top: 1px solid black; 
-}
-textarea, input
-{
-    padding: 4px !important;
-    width: 100% !important;
-    max-width: auto !important;  
-    resize: none !important;
-    font-family: inherit !important;
+    /* margin: 0 auto !important; */
+    /* width:  100%; */
 }
 
-.webix_cal_day_disabled {
-    background-color: #cbcbcd !important;
+.margin-left{
+    padding-left: 20px !important;
 }
+
+.webix_el_counter input.webix_inp_counter_value{
+    width: 36px !important;
+}
+ 
+#riskmatrix {
+    display: table !important;
+}
+
+#riskmatrix td:not(:first-child){
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+    border: 1px solid black;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 2px;
+}
+#riskmatrix{
+    border-spacing: 0;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+#riskmatrix tr td:first-child {
+    max-width: 5px !important;
+    width: 5px;
+    text-align: right !important;
+}  
+
+
+#riskmatrix tr:nth-child(2) td{
+    max-height: 5px !important;
+    height: 5px;
+}
+
+
+#riskmatrix tr:nth-child(6) td,
+#riskmatrix tr:nth-child(7) td{
+    padding-top: 10px;
+}
+
+#riskmatrix tr td:first-child{
+    border: none;
+}
+
+#riskmatrix tr td:nth-child(2){
+    border-top: 0px;
+    border-left: 0px;
+    border-bottom: 0px;  
+}
+#riskmatrix tr:not(:last-child):not(:nth-last-child(2)) td:not(:first-child):not(:nth-child(2)){
+    background-color: #eeeeee;
+}
+
+#riskmatrix tr:first-child td:first-child{
+    border: none;
+}
+
+#riskmatrix tr:first-child td:nth-child(2){
+    border: none;
+}
+
+#riskmatrix tr:last-child td{
+    border: none;
+}
+#riskmatrix tr:nth-last-child(2) td{
+    border: none;
+}
+ 
+.risklevel{
+    min-width: 37px !important;
+    width: 37px !important;
+    font-size: 12px;
+    padding-left: 2px;
+}                     
+                
+.evt{           
+    margin: 0 auto;
+    position: relative;
+    width: 5px;
+    height: 5px;
+    background-color: black;
+}
+
+td.low, td.med, td.high{
+    border: 1px solid black;
+    width: 30px;
+    height: 30px;
+    margin: 0 auto;
+}
+td.low{
+    background-color: #00b050 !important;    
+}
+td.med{
+    background-color: #eeee00 !important;
+}
+td.high{
+    background-color: #ee0000 !important;
+}
+
+                     
+#riskmatrix td:first-child{
+    max-width: 0px !important;
+    width: 0px !important;
+}
+#riskmatrix tr:last-child td,
+#riskmatrix tr:nth-last-child(2) td
+{
+    height: 20px !important;
+}
+

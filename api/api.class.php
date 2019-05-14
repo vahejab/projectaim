@@ -77,7 +77,6 @@
         public function processRequest() {
             if(count($this->endpoint) > 0){
                 $class = "\\controllers\\{$this->endpoint[0]}Controller";
-                 
                 if (class_exists($class, true))
                 {
                     $method = strtolower($this->method); 

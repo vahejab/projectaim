@@ -1,16 +1,34 @@
 <?php
-   class RiskController
-   {
+   namespace controllers; 
+   
+   class RisksController
+   { 
         private $_params;
         
-        public function __construct($params)
+        public function __construct($params = [], $endpoint2 = null, $payload = [])
         {
-            $risk = new Risk();
-        }   
+            $this->params = $params;
+            $this->payload = $payload;
+        } 
         
-        public function createRisk()
+        public function get($id = null)
         {
-            
+            $service = new \data\service\riskservice();
+            if ($id == null)
+                return $service->findAll();
+            return $service->findOne($id);
+        }
+
+        public function post($id = null)
+        {
+            $service = new \data\service\riskservice();
+            return $service->createOne($this->payload);
+        } 
+        
+        public function put($id = null)
+        {
+            $service = new \data\service\riskservice();
+            return $service->updateOne($this->payload);
         }
    }
    

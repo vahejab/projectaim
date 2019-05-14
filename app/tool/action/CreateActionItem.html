@@ -1,8 +1,8 @@
 <div id="formcontainer">
     <div id="mycreateform" class="container" type="space" ng-controller="CreateActionController" layout-padding="" ng-cloak="">   
-        <init-data />
+        <init-action />
         <form webix-ui="config" id="form" name="CreateActionItem" role="form" ng-submit="CreateActionItem.$valid && submit()" novalidate>
-            <table id="summary" class="data" border="1">
+            <table id="summary" class="layout" border="1">
                 <tr>
                     <td class="label">
                         Assignor
@@ -71,9 +71,9 @@
                 </tr>
             </table>
             <h2>Action Item Information</h2>
-            <table id="details" class="data" border="1">
+            <table id="details" class="layout" border="1">
             <tr>
-                <td class="label" style="vertical-align: top">
+                <td class="label">
                     Title
                 </td>
                 <td class="locked">
@@ -85,10 +85,10 @@
                 </td>
             </tr>
             <tr>
-                <td class="label" style="vertical-align: top">
+                <td class="label" >
                     Action Item Statement
                 </td>
-                <td  class="locked" style="vertical-align: top">
+                <td  class="locked">
                     <div webix-ui="statementConfig" id="actionitemstatement" name="actionitemstatement" />
                     <!--div class="msg-container">
                       <div ng-if="!actionitem.actionitemstatement.trim().length" for="CreateActionItem.actionitemstatement.$error" ng-messages="CreateAction.$submitted">
@@ -97,10 +97,10 @@
                 </td>
             </tr>
             <tr>
-                <td class="label" style="vertical-align: top">
+                <td class="label">
                     Closure Criteria
                 </td>
-                <td  class="locked" style=" vertical-align: top">
+                <td  class="locked">
                     <div webix-ui="closurecriteriaConfig" id="closurecriteria" name="closurecriteria" />
                     <!--div class="msg-container">
                         <div ng-if="!actionitem.actionitemstatement.trim().length" for="CreateActionItem.actionitemstatement.$error" ng-messages="CreateAction.$submitted">

@@ -37,7 +37,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         .when('issue', 'issue')
         .when('lesson', 'lesson')
         .when('opportunity', 'opporutnity')
-        .when('risk', 'risk')
+        .when('risk@create', 'risk/create')
         .when('home', 'home')
         .otherwise('main');
         
@@ -47,41 +47,44 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         {
             name: 'home',
             files: ['/app/tool/home/HomeController.js'],
-            serie: true
         },
         {
             name: 'action@summary',
-            files: ['/app/tool/action/ActionController.js'],
-            serie: true
+            files: ['/app/tool/action/ActionItems.css',
+                    '/app/tool/action/ActionDirective.js',
+                    '/app/tool/action/ActionController.js'
+            ],
         },
         {
             name: 'action@create',
             files: [
                     '/app/tool/action/CreateActionItem.css',
+                    '/app/tool/action/ActionDirective.js',
                     '/app/tool/action/CreateActionController.js'
-            ],
-            serie: true
+            ]
         },
         {
             name: 'action@view',
             files: [
                     '/app/tool/action/ViewActionItem.css',
+                    '/app/tool/action/ActionDirective.js',
                     '/app/tool/action/ViewActionController.js'
-            ],
-            serie: true
+            ]
         },
         {
             name: 'action@edit',
             files: [
                     '/app/tool/action/EditActionItem.css',
+                    '/app/tool/action/ActionDirective.js',
                     '/app/tool/action/EditActionController.js'
-            ],
-            serie: true
+            ]
         },
         {
-            name: 'risk',
-            files: ['/app/tool/risk/RiskController.js'],
-            serie: true
+            name: 'risk@create',
+            files: ['/app/tool/risk/CreateRisk.css',
+                    '/app/tool/risk/RiskDirective.js',
+                    '/app/tool/risk/CreateRiskController.js'
+            ],
         }]
     });
 
@@ -132,10 +135,11 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             templateUrl: '/app/tool/action/EditActionItem.html',
             controller: 'EditActionController'
         })
-        .state('risk',
+        .state('risk@create',
         {
-            url: "/risks",
+            url: "/risk/create",
             resolve: res,
-            templateUrl: '/app/tool/risk/Risks.html'
+            templateUrl: '/app/tool/risk/CreateRisk.html',
+            controller: 'CreateRiskController'
         });
 }

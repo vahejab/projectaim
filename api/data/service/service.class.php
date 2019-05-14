@@ -3,17 +3,29 @@
    
   abstract class service
   {
+    public function db()
+    {
+        return new \data\provider\database();
+    }
+   
     public function findAll($params = [])
     {
         $mapper = $this->_getMapper();
         return $mapper->findAll($params);  
     }
 
-    public function db()
+    public function createOne($params = [])
     {
-        return new \data\provider\database();
+        $mapper = $this->_getMapper();
+        return $mapper->createOne($params);
     }
 
+    public function updateOne($params = [])
+    {
+        $mapper = $this->_getMapper();
+        return $mapper->updateOne($params);
+    }
+ 
     protected function _getMapper()
     {
         $db = $this->db()->getHandle();

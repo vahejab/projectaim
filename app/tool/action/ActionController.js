@@ -43,9 +43,11 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
  
         
         $scope.$on("$destroy", function(){
+             angular.element(document.querySelector('link[href="/app/tool/action/ActionItems.css"]')).remove();   
              $timeout.cancel($scope.refreshingPromise);
              $scope.isRefreshing = false;  //stop refreshing
              $scope.refresh = false;
+             refresh = false; //stop refreshing globally
         });
 
         
@@ -130,10 +132,11 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
             $scope.setMarginsWidths = function(){
                 $scope.flag = 0;
                 refresh = 1;
+                var msie = document.documentMode;
                 if(refresh){ 
-                    $timeout(refreshEvery,0);
+                    $timeout(refreshEvery,1);
                 }
-
+                
                 function refreshEvery(){
                     if ($scope.flag == 0 || window.devicePixelRatio != $scope.devicePixelRatio)
                     {   
@@ -146,9 +149,9 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
                             headers[idx].width = cellwidth;
                         });
                     }
-                    
-                    if (refresh)
-                        $scope.refreshingPromise = $timeout(refreshEvery,0);
+
+                    if (refresh && !msie)
+                        $scope.refreshingPromise = $timeout(refreshEvery,1);
                     else{
                          $scope.isRefreshing = false;
                          $timeout.cancel($scope.refreshingPromise);
