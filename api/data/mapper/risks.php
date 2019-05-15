@@ -116,34 +116,42 @@
         public function createOne($params = [])
         {                         
             $sql = "insert
-                    into risks(   
-                            creatorid,
-                            ownerid, 
+                    into risks( 
                             assessmentdate,
                             risktitle,
                             riskstatement,
                             closurecriteria,
-                            context
+                            context,
+                            likelihood,
+                            technical,
+                            schedule,
+                            cost
                     )
-                    values(  
-                            :creatorid,
-                            :ownerid,
+                    values(
                             NOW(),
                             :risktitle,
                             :riskstatement,
                             :closurecriteria,
-                            :context
+                            :context,
+                            :likelihood,
+                            :technical,
+                            :schedule,
+                            :cost
                     )";
             try
             { 
                 $this->db->beginTransaction();     
                 $statement = $this->db->prepare($sql);
-                $statement->bindValue(':creatorid', $params['creator']);
-                $statement->bindValue(':ownerid' , $params['owner']);
+                //$statement->bindValue(':creatorid', $params['creator']);
+                //$statement->bindValue(':ownerid' , $params['owner']);
                 $statement->bindValue(':risktitle' , $params['risktitle']);
                 $statement->bindValue(':riskstatement' , $params['riskstatement']);
                 $statement->bindValue(':closurecriteria' , $params['closurecriteria']);
-                $statement->bindValue(':context', $params['context']);                        
+                $statement->bindValue(':context', $params['context']);
+                $statement->bindValue(':likelihood', $params['likelihood']); 
+                $statement->bindValue(':technical', $params['technical']); 
+                $statement->bindValue(':schedule', $params['schedule']);
+                $statement->bindValue(':cost', $params['cost']);                       
                 $statement->execute();
                 $statement = $this->db->prepare("update risks set riskid = id where riskid is null");
                 $statement->execute();

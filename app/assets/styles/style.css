@@ -54,7 +54,9 @@ div.nested{
     text-align: center !important;
 } 
 
-    
+.grid th:hover{
+    cursor: pointer;
+}  
 
 @media only screen and (max-width: 800px) {
 

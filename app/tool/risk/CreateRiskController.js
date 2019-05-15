@@ -12,6 +12,10 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
     context: ''
   }
   
+  $scope.flags = {
+    disabled: true
+  }
+  
   $scope.categoryConfig = function(){
     CommonService.categoryConfig();
   }
@@ -22,6 +26,7 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
      
   $scope.technicalConfig = function(){
     CommonService.technicalConfig();
+
   }
   
   $scope.scheduleConfig = function(){
@@ -33,8 +38,11 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
   } 
 
   $scope.getTextValueAndValidate = function(obj, model, field){
-    CommonService.getTextValue(obj, model, 'risk', field); 
     $scope.clearValidation(field);  
+    CommonService.getTextValue(obj, model, 'risk', field); 
+    $scope.validate(obj, field);
+    $scope.flags.disabled = !$scope.valid();
+    $scope.$apply();
   }
   
    $scope.submit = function(){
@@ -54,6 +62,4 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
                     }
                 }); 
         }
-       
-        
 }]);

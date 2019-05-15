@@ -1,7 +1,7 @@
 <div id="formcontainer"  ng-controller="EditActionController" ng-app="Action">
     <div id="myeditform" type="space" layout-padding="" ng-cloak="">   
         <init-action />
-        <form webix-ui="config" id="form" name="EditActionItem" role="form" ng-submit="EditActionItem.$valid && submit()" novalidate>
+        <form webix-ui="config" id="form" name="EditActionItem" role="form" ng-submit="EditActionItem.$valid" novalidate>
             <div class="layout" ng-init="init()">
                     <table id="summary" class="layout" border="1">
                         <tr>
@@ -142,7 +142,7 @@
             </div> 
             <div>
               <!--button class="raised">Button</button-->
-              <button type="submit" class="raised primary">Edit Action Item</button>
+              <button ng-click="submit()" class="raised primary">Edit Action Item</button>
               <!--button ng-disabled="true" class="raised primary">Disabled</button>
                     <button class="raised warn">Warn</button>
                     <div class="label">Raised</div-->

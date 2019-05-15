@@ -31,7 +31,8 @@ common.service("CommonService", function() {
     }
     
     commonFunctions.getDateValue = function(obj, scope, type, field){
-        if (!obj.data || !obj.data.value){  
+        if (!obj && !obj.value && !obj.data && !obj.data.value){ 
+             scope[type][field] = '';
              return;
         }
 
@@ -43,27 +44,28 @@ common.service("CommonService", function() {
     }               
                                 
     commonFunctions.getItemValue = function(obj, scope, type, field){
-        if (!obj.data || !obj.data.value){
-             //scope.validate(field);   
+        if (!obj && !obj.value && !obj.data && !obj.data.value){
+             scope[type][field] = '';   
              return;
         }
-        scope[type][field] = obj.data.value;          
+        scope[type][field] = obj.value || obj.data.value;          
     }
     
     commonFunctions.getItemId = function(obj, scope, type, field){
-        if (!obj.data || !obj.data.value){
-             //scope.validate(field);   
+        if (!obj && !obj.value && !obj.data && !obj.data.value){
+             scope[type][field] = 0;  
              return;
         }
-        scope[type][field] = obj.data.value;         
+        scope[type][field] = obj.value || obj.data.value;         
     }
     
     commonFunctions.getTextValue = function(obj, scope, type, field){
-        if (!obj.data || !obj.data.value){
-             //scope.validate(field);   
+        
+        if (!obj && !obj.value && !obj.data && !obj.data.value){
+             scope[type][field] = '';
              return;
         }
-        scope[type][field] = obj.data.value; 
+        scope[type][field] = obj.value || obj.data.value; 
     }   
     
     return commonFunctions;

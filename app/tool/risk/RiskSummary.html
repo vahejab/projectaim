@@ -1,0 +1,67 @@
+<div class="container-fluid">
+    <div ng-controller="ActionController" ng-app="Action">
+       <init-action/>
+        ActionItems
+        <div class="tableheader">
+        <table id="actionitems" class="table-striped table-condensed table-bordered sortable action grid"> <!--datatable="" dt-options="dtOptions"-->
+             <thead>
+                <tr>  
+                    <th>
+                        Edit
+                    </th>
+                    <th ng-click="sort('actionitemid')" ng-class="{reverse: reverse}">
+                        ID                       
+                    </th>
+                    <th ng-click="sort('actionitemtitle')" ng-class="{reverse: reverse}">
+                        Action Item Title 
+                    </th>
+                    <th ng-click="sort('status')" ng-class="{reverse: reverse}">
+                        Status
+                    </th>                         
+                    <th ng-click="sort('critlevel')" ng-class="{reverse: reverse}">
+                        Criticality
+                    </th>
+                    <th ng-click="sort('assignor')" ng-class="{reverse: reverse}">
+                        Assignor
+                    </th>
+                    <th ng-click="sort('owner')" ng-class="{reverse: reverse}">
+                        Owner
+                    </th>
+                    <th ng-click="sort('altowner')" ng-class="{reverse: reverse}">
+                        Alt Owner
+                    </th>
+                    <th ng-click="sort('approver')" ng-class="{reverse: reverse}">
+                        Approver
+                    </th>
+                    <th ng-click="sort('assigneddate')" ng-class="{reverse: reverse}">
+                        Assigned Date
+                    </th>
+                    <th ng-click="sort('duedate')" ng-class="{reverse: reverse}">
+                        Due Date
+                    </th>
+                    <th ng-click="sort('ecd')" ng-class="{reverse: reverse}">
+                        ECD
+                    </th>
+                    <th ng-click="sort('completiondate')" ng-class="{reverse: reverse}">
+                        Completed
+                    </th>
+                    <th ng-click="sort('closedate')" ng-class="{reverse: reverse}">
+                        Closed
+                    </th>
+                </tr>
+             </thead> 
+        </table>
+        </div>
+        <div class="tablebody">
+            <table class="table-striped table-condensed table-bordered grid">
+                <tbody init-table>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <divider></divider>
+      <div class="msg" layout-align="center">
+        <span ng-bind-html="msg">{{msg}}</span>
+      </div>
+</div>
+
