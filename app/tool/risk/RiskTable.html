@@ -1,0 +1,13 @@
+<tr ng-repeat="risk in risks| orderBy:propertyName:reverse" ng-repeat-done>
+   <td><a ui-sref="risk@edit({id: riskitem.riskid})">Edit</a></td> 
+   <td><a ui-sref="risk@view({id: riskitem.riskid})">{{risk.riskid}}</a></td> 
+   <td>{{risk.risktitle}}</td>
+   <td>{{risk.assessmentdate | date : 'MM/dd/yyyy'}}</td> 
+   <td>{{risk.creator}}</td> 
+   <td>{{risk.owner}}</td>
+   <td>{{risk.approver}}</td>
+   <td>{{risk.likelihood}}</td>
+   <td>{{risk.technical}}</td>
+   <td>{{risk.schedule}}</td>
+   <td>{{risk.cost}}</td>
+</tr>

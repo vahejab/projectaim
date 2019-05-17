@@ -1,7 +1,7 @@
-<div id="formcontainer" ng-app="Risk" ng-controller="CreateRiskController">
+<div id="formcontainer" ng-app="Risk" ng-controller="CreateRiskController" ng-init="init()">
     <div id="mycreateform" class="container" type="space" layout-padding="" ng-cloak="">   
         <init-risk />
-        <form webix-ui="config" id="form" name="CreateRisk" role="form" ng-submit="valid() && submit()" novalidate>
+        <form webix-ui="config" id="form" name="CreateRisk" role="form"ng-submit="valid() && submit()" novalidate>
             <table id="details" class="layout" border="1">
                 <tr>
                     <td class="label">
@@ -156,7 +156,7 @@
         <divider></divider>
         <div>
             <div>
-              <button type="submit" ng-disabled="flags.disabled" class="raised primary">Create Risk</button>
+              <button id="submit" type="submit" disabled="disabled" class="raised primary">Create Risk</button>
             </div>
         </div>
         <div>

@@ -22,15 +22,39 @@ angular.module('Risk').directive('initRisk', function(){
                 scope.validate = function(elem, id){
                    if (id == 'likelihood' || id == 'technical' || id == 'schedule' || id == 'cost')
                    {
-                         if (elem.data.value.charCodeAt(0)- '0'.charCodeAt(0) < 1 || elem.data.value.charCodeAt(0) - '0'.charCodeAt(0) > 5)
+                         if (elem.getValue().charCodeAt(0)- '0'.charCodeAt(0) < 1 || elem.getValue().charCodeAt(0) - '0'.charCodeAt(0) > 5)
+                         {
                             (document.querySelector('#'+id+' > div.webix_control')).classList.add("webix_invalid");
-                         else if (elem.data.value == '' || elem.data.value.trim() == '')
-                            (document.querySelector('#'+id+' > div.webix_control')).classList.add("webix_invalid");      
+                             scope.clearDot();
+                         }
+                         else if (elem.getValue() == '' || elem.getValue().trim() == '')
+                         {
+                            (document.querySelector('#'+id+' > div.webix_control')).classList.add("webix_invalid");
+                             scope.clearDot();      
+                           
+                         }
                    }        
-                   else if (typeof elem == 'undefined' || elem.data.value == 0 || elem.data.value == '' || elem.data.value.trim() == '')
-                        (document.querySelector('#'+id+' > div.webix_control')).classList.add("webix_invalid");                
+                   else if (typeof elem !== 'undefined' && (elem.getValue() == 0 || elem.getValue() == '' || elem.getValue().trim() == ''))
+                   {
+                        (document.querySelector('#'+id+' > div.webix_control')).classList.add("webix_invalid");
+                   }    
+                   if (scope.valid() && elem.getValue() != '' && elem.getValue().trim() != '')
+                   {
+                      (document.querySelector('#submit')).removeAttribute('disabled');
+                   }
+                   else
+                   {
+                      (document.querySelector('#submit')).setAttribute('disabled', 'disabled'); 
+                   }
                 }
-                       
+                
+                scope.validCharacter = function(c){
+                    return (c >= 32 && c <= 126);
+                }
+                
+                scope.validLevel = function(obj){
+                    return obj.getValue().charCodeAt(0)- '0'.charCodeAt(0) >= 1 && obj.getValue().charCodeAt(0) - '0'.charCodeAt(0) <= 5;    
+                }   
 
                 scope.validateAll = function(){
                 
@@ -67,17 +91,26 @@ angular.module('Risk').directive('initRisk', function(){
                            !isNaN(scope.risk.schedule) && Number(scope.risk.schedule) >= 1 && Number(scope.risk.schedule) <= 5 &&
                            !isNaN(scope.risk.cost) && Number(scope.risk.cost) >= 1 && Number(scope.risk.cost) <= 5);
                 }
-                        
                 
-                function assignRiskLevel()
+                scope.drawDot = function(){
+                    document.querySelector("td[name='risk["+likelihood+"]["+consequence+"]']").innerHTML = "<div class='level' style='width:15px; height:15px; background-color: black'/>";
+                }
+  
+                scope.clearDot = function(){                       
+                    levelDiv = document.querySelector("div.level");
+                
+                    if (levelDiv)
+                        levelDiv.parentNode.removeChild(levelDiv);
+                }
+                
+                scope.assignRiskLevel = function(obj)
                 {
-                    
-                    if (scope.risk["likelihood"] != ''
+                    if (scope.validLevel(obj) && scope.risk["likelihood"] != ''
                     &&  scope.risk["technical"] != ''
                     &&  scope.risk["schedule"] != ''
                     &&  scope.risk["cost"] != '')
                     {
-                        if ( !isNaN(scope.risk.likelihood) && Number(scope.risk.likelihood) >= 1 && Number(scope.risk.likelihood) <= 55 &&
+                        if (!isNaN(scope.risk.likelihood) && Number(scope.risk.likelihood) >= 1 && Number(scope.risk.likelihood) <= 5 &&
                            !isNaN(scope.risk.technical) && Number(scope.risk.technical) >= 1 && Number(scope.risk.technical) <= 5 &&
                            !isNaN(scope.risk.schedule) && Number(scope.risk.schedule) >= 1 && Number(scope.risk.schedule) <= 5 &&
                            !isNaN(scope.risk.cost) && Number(scope.risk.cost) >= 1 && Number(scope.risk.cost) <= 5 )
@@ -89,14 +122,13 @@ angular.module('Risk').directive('initRisk', function(){
                             cost = Number(scope.risk.cost);
                             consequence = Math.max(technical, schedule, cost);
                             
-                            levelDiv = document.querySelector("div.level");
+                            scope.clearDot();
                         
-                            if (levelDiv)
-                                levelDiv.parentNode.removeChild(levelDiv);
-                        
-                            document.querySelector("td[name='risk["+likelihood+"]["+consequence+"]']").innerHTML = "<div class='level' style='width:15px; height:15px; background-color: black'/>";
-                        }
-                        
+                            scope.drawDot();
+                        }  
+                    }
+                    else{
+                        scope.clearDot();
                     }
                 }
                 
@@ -107,7 +139,8 @@ angular.module('Risk').directive('initRisk', function(){
                         view:"text",
                         value: scope.risk[attr],      
                         on: {
-                            "onChange": function(){var obj = this.eventSource || this; scope.getTextValueAndValidate(obj, scope, attr); assignRiskLevel();}
+                            "onTimedKeyPress": function(code){ var obj = this.eventSource || this; scope.getTextValueAndValidate(code, obj, scope, attr); scope.validate(obj, attr);  scope.assignRiskLevel(obj);},
+                            "onBlur": function(){var obj = this.eventSource || this; scope.updateTextValue(obj, attr); scope.validate(obj, attr);}
                         },
                         attributes: {
                             maxlength: 1
@@ -127,7 +160,8 @@ angular.module('Risk').directive('initRisk', function(){
                         view:"text",
                         value: scope.risk[attr],      
                         on: {
-                            "onChange": function(){ var obj = this.eventSource || this; scope.getTextValueAndValidate(obj, scope, attr)}
+                            "onTimedKeyPress": function(code){ var obj = this.eventSource || this; scope.getTextValueAndValidate(code, obj, scope, attr);  scope.validate(obj, attr);},
+                            "onBlur": function(){var obj = this.eventSource || this; scope.validate(obj, attr);}
                         },
                        
                         responsive: true,
@@ -146,7 +180,8 @@ angular.module('Risk').directive('initRisk', function(){
                         view:"textarea",
                         value: scope.risk[attr],
                         on: {                                  
-                            "onChange": function(){var obj = this.eventSource || this; scope.getTextValueAndValidate(obj, scope, attr)},
+                            "onTimedKeyPress": function(code){ var obj = this.eventSource || this; scope.getTextValueAndValidate(code, obj, scope, attr); scope.validate(obj, attr);},
+                            "onBlur": function(){var obj = this.eventSource || this; scope.validate(obj, attr);}
                             //"onBlur": function(){scope.validate(scope.actionitem.actionitemstatement, 'actionitemstatement')}
                         },
                         responsive: true,
@@ -167,7 +202,7 @@ angular.module('Risk').directive('initRisk', function(){
                         value: scope.risk[attr], 
                         options: options,
                         on: {
-                            //"onChange": function(){var obj = this.eventSource || this; getValue(obj, 'assignor')},
+                            //"onTimedKeyPress": function(){var obj = this.eventSource || this; getValue(obj, 'assignor')},
                             "onChange": function(){var obj = this.eventSource || this; scope.getItemValueAndValidate(obj, scope, attr)}
                             //"onBlur": function(){scope.validate(scope.actionitem.assingor, 'assignor')}
                         },
@@ -200,8 +235,77 @@ angular.module('Risk').directive('initRisk', function(){
                 scope.costConfig = getLevelConfig('cost');
       }
 }            
-}); 
-         
+}).directive('initRiskTable', function(){
+    return {
+        restrict: 'A',
+        //transclude: true,
+        templateUrl: '/app/tool/risk/RiskTable.html',
+        controller: function($scope, $timeout) {
+            $scope.scrollBarWidth = function(){
+                    var outer = document.createElement("div");
+                    outer.style.visibility = "hidden";
+                    outer.style.width = "100px";
+                    outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
+
+                    document.body.appendChild(outer);
+
+                    var widthNoScroll = outer.offsetWidth;
+                    // force scrollbars
+                    outer.style.overflow = "scroll";
+
+                    // add innerdiv
+                    var inner = document.createElement("div");
+                    inner.style.width = "100%";  
+                    outer.appendChild(inner);        
+
+                    var widthWithScroll = inner.offsetWidth;
+
+                    // remove divs
+                    outer.parentNode.removeChild(outer);
+
+                    return widthNoScroll - widthWithScroll;
+            }
+            $scope.setMarginsWidths = function(){
+                $scope.flag = 0;
+                refresh = 1;
+                var msie = document.documentMode;
+                if(refresh){ 
+                    $timeout(refreshEvery,1);
+                }
+                
+                function refreshEvery(){
+                    if ($scope.flag == 0 || window.devicePixelRatio != $scope.devicePixelRatio)
+                    {   
+                        $scope.flag = 1;
+                        $scope.devicePixelRatio = window.devicePixelRatio;
+                        var headers = angular.element(document.querySelector('div.tableheader table.grid thead tr')).children();
+                        var cells = angular.element(document.querySelector('div.tablebody table.grid tbody tr:nth-child(1)')).children();
+                        angular.forEach(cells, function(cell, idx){
+                            var cellwidth = cell.getBoundingClientRect().width;
+                            headers[idx].width = cellwidth;
+                        });
+                    }
+
+                    if (refresh && !msie)
+                        $scope.refreshingPromise = $timeout(refreshEvery,1);
+                    else{
+                         $scope.isRefreshing = false;
+                         $timeout.cancel($scope.refreshingPromise);
+                    }
+                    
+                    //angular.element(document.querySelector('html')).attr("style", "margin-right: " + 0*$scope.scrollBarWidth() + "px !important");
+                    angular.element(document.querySelector('div.tableheader')).attr("style", "margin-right: " + $scope.scrollBarWidth() + "px !important");
+                    angular.element(document.querySelector('div.tablebody')).attr("style", "margin-right " + $scope.scrollBarWidth() + "px !important");    
+                }
+            }
+        },
+        link: function (scope, element, attrs) {
+            scope.init().then(function(){
+                
+            });
+        }
+    }
+});  
          
          
          

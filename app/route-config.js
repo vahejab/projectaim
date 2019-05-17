@@ -37,7 +37,9 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         .when('issue', 'issue')
         .when('lesson', 'lesson')
         .when('opportunity', 'opporutnity')
+        .when('risk@summary', 'risk/summary')
         .when('risk@create', 'risk/create')
+        .when('risk@config', 'risk/config')
         .when('home', 'home')
         .otherwise('main');
         
@@ -80,11 +82,25 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             ]
         },
         {
+            name: 'risk@summary',
+            files: [
+                    '/app/tool/risk/RiskDirective.js',
+                    '/app/tool/risk/RiskSummaryController.js'
+            ],
+        },
+        {
             name: 'risk@create',
             files: ['/app/tool/risk/CreateRisk.css',
                     '/app/tool/risk/RiskDirective.js',
                     '/app/tool/risk/CreateRiskController.js'
-            ],
+            ]
+        },
+        {
+            name: 'risk@config',
+            files: ['/app/tool/risk/RiskMatrixConfig.css',
+                    '/app/tool/risk/RiskDirective.js',
+                    '/app/tool/risk/RiskMatrixConfigController.js'
+            ]
         }]
     });
 
@@ -99,7 +115,8 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         {
             url: "/action/summary",
             resolve: res,
-            templateUrl: '/app/tool/action/ActionItems.html'
+            templateUrl: '/app/tool/action/ActionItems.html',
+            controller: 'ActionController'
         })
         .state('action@create',
         {
@@ -135,11 +152,25 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             templateUrl: '/app/tool/action/EditActionItem.html',
             controller: 'EditActionController'
         })
+        .state('risk@summary',
+        {
+            url: "/risk/summary",
+            resolve: res,
+            templateUrl: '/app/tool/risk/RiskSummary.html',
+            controller: 'RiskSummaryController'
+        })
         .state('risk@create',
         {
             url: "/risk/create",
             resolve: res,
             templateUrl: '/app/tool/risk/CreateRisk.html',
             controller: 'CreateRiskController'
+        })
+        .state('risk@config',
+        {
+            url: "/risk/config",
+            resolve: res,
+            templateUrl: '/app/tool/risk/RiskMatrixConfig.html',
+            controller: 'RiskMatrixConfigController'
         });
 }

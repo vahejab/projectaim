@@ -37,6 +37,12 @@
             <a href="/#!/risk/create" name="createrisk">
                 Create Risk
             </a>
+             <a href="/#!/risk/summary" name="risksummary">
+                Risk Summary
+            </a>
+             <a href="/#!/risk/config" name="riskmatrixconfig">
+                Risk Matrix Config
+            </a>
         <div class="ui-view">
             
         </div> 

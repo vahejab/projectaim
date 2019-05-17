@@ -1,5 +1,6 @@
 var common = angular.module('Common', []);
 var refresh = false;
+var formcheck = false;
 common.service("CommonService", function() {
     var commonFunctions = {};
     
@@ -31,7 +32,7 @@ common.service("CommonService", function() {
     }
     
     commonFunctions.getDateValue = function(obj, scope, type, field){
-        if (!obj && !obj.value && !obj.data && !obj.data.value){ 
+        if (!obj && !obj.getValue()){ 
              scope[type][field] = '';
              return;
         }
@@ -44,7 +45,7 @@ common.service("CommonService", function() {
     }               
                                 
     commonFunctions.getItemValue = function(obj, scope, type, field){
-        if (!obj && !obj.value && !obj.data && !obj.data.value){
+        if (!obj && !obj.getValue()){
              scope[type][field] = '';   
              return;
         }
@@ -52,7 +53,7 @@ common.service("CommonService", function() {
     }
     
     commonFunctions.getItemId = function(obj, scope, type, field){
-        if (!obj && !obj.value && !obj.data && !obj.data.value){
+        if (!obj && !obj.getValue()){
              scope[type][field] = 0;  
              return;
         }
@@ -61,11 +62,11 @@ common.service("CommonService", function() {
     
     commonFunctions.getTextValue = function(obj, scope, type, field){
         
-        if (!obj && !obj.value && !obj.data && !obj.data.value){
+        if (!obj && !obj.getValue()){
              scope[type][field] = '';
              return;
         }
-        scope[type][field] = obj.value || obj.data.value; 
+        scope[type][field] = obj.getValue(); 
     }   
     
     return commonFunctions;
@@ -75,7 +76,23 @@ angular.module('Home', []);
 angular.module('Action', [/*'datatables', 'datatables.scroller', *//*'ngMaterial',*/ 'webix', 'ngResource', 'Common']);
 angular.module('Risk',   [/*'datatables', 'datatables.scroller', */'ngResource', 'Common']);
 
-var app = angular.module('Main', ['ui.router', 'oc.lazyLoad',/* 'datatables',*/ 'ngResource', 'ngSanitize', /*'ngMaterial'*/ 'webix', 'Common', 'Home', 'Action', 'Risk']);
+var app = angular.module('Main', ['ui.router', 'oc.lazyLoad',/* 'datatables',*/ 'ngResource', 'ngSanitize', /*'ngMaterial'*/ 'webix', 'Common', 'Home', 'Action', 'Risk'])
+            .directive('ngRepeatDone', function(){
+                return {
+                    restrict: 'A',
+                    controller: function($scope, $timeout){
+                        $scope.devicePixelRatio = window.devicePixelRatio;
+                        $scope.setMarginsWidths();
+                        var tablebody = document.querySelector('div.tablebody');
+                        var tableheader = document.querySelector('div.tableheader');
+                        angular.element(tablebody).on("scroll", function(elem, attrs){  //activate when #center scrolls  
+                            left = $scope.CommonService.offset(angular.element(document.querySelector("div.tablebody table.grid"))[0]).left; //save #center position to var left
+                            (angular.element(tableheader)[0]).scrollLeft = -1*left + $scope.scrollBarWidth();
+                        }); 
+                    }
+                }
+            }); 
+       
   
 app.controller('MainController',  ['CommonService', '$scope', '$window', '$state', function(CommonService, $scope, $window, $state){
 }]);

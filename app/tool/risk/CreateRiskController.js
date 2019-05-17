@@ -1,6 +1,7 @@
 angular.module('Risk').controller('CreateRiskController', ['$http', '$resource', '$scope', '$state', '$window', '$timeout', '$interval', '$sce', 'CommonService', function($http, $resource, $scope, $state, $window, $timeout, $interval, $sce, CommonService){
-  
-  $scope.risk = {
+    refresh = false;
+    
+    $scope.risk = {
     likelihood:'',
     technical:'',
     schedule:'',
@@ -10,41 +11,56 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
     riskstatement: '',
     category: null,
     context: ''
-  }
-  
-  $scope.flags = {
-    disabled: true
-  }
-  
-  $scope.categoryConfig = function(){
-    CommonService.categoryConfig();
-  }
-    
-  $scope.likelihoodConfig = function(){
-    CommonService.likelihoodConfig();
-  }
+    }
+
+    $scope.flags = {
+        disabled: true
+    }
+
+    $scope.categoryConfig = function(){
+        CommonService.categoryConfig();
+    }
+
+    $scope.likelihoodConfig = function(){
+        CommonService.likelihoodConfig();
+    }
      
-  $scope.technicalConfig = function(){
-    CommonService.technicalConfig();
+    $scope.technicalConfig = function(){
+        CommonService.technicalConfig();
 
-  }
-  
-  $scope.scheduleConfig = function(){
-    CommonService.scheduleConfig();
-  }
-  
-  $scope.costConfig = function(){
-    CommonService.costConfig();
-  } 
+    }
 
-  $scope.getTextValueAndValidate = function(obj, model, field){
-    $scope.clearValidation(field);  
-    CommonService.getTextValue(obj, model, 'risk', field); 
-    $scope.validate(obj, field);
-    $scope.flags.disabled = !$scope.valid();
-    $scope.$apply();
-  }
-  
+    $scope.scheduleConfig = function(){
+        CommonService.scheduleConfig();
+    }
+
+    $scope.costConfig = function(){
+        CommonService.costConfig();
+    } 
+    
+    $scope.updateTextValue = function(code, obj, field){
+        if (!$scope.validCharacter(code) || obj.getValue().trim() == '') 
+        {
+            $scope['risk'][field] = '';
+            return;
+        }
+    }
+
+    $scope.getTextValueAndValidate = function(code, obj, model, field){
+        if (!$scope.validCharacter(code) && obj.getValue().trim() == '') 
+        {
+            $scope['risk'][field] = '';
+            return;
+        }
+        $scope.clearValidation(field);  
+        CommonService.getTextValue(obj, model, 'risk', field); 
+        $scope.validate(obj, field);
+    }
+              
+    $scope.$on("$destroy", function(){
+         formcheck = 0;
+    });
+ 
    $scope.submit = function(){
         
             $scope.validateAll();

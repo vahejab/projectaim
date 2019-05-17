@@ -73,18 +73,31 @@
  
             $sql = "select
                         creator.userid as 'CreatorID',
-                        owner.userid as 'OwnerID',      
-                        r.riskid as 'RiskID', r.lilelihood as 'Likelihood',
-                        r.technical as 'Technical', r.schedule as 'Schedule',
-                        r.cost as 'Cost,
-                        r.creationdate as 'CreationDate',
-                        r.risktitle as 'RiskTitle', r.riskstatement as 'RiskStatement',
-                        r.context as 'Context', r.closurecriteria as 'ClosureCriteria'
+                        owner.userid as 'OwnerID',  
+                        approver.userid as 'ApproverID', 
+                        creator.lastname as 'creator.lastname',
+                        creator.firstname as 'creator.firstname',
+                        owner.lastname as 'owner.lastname',
+                        owner.firstname as 'owner.firstname',
+                        approver.lastname as 'approver.lastname',
+                        approver.firstname as 'approver.firstname',    
+                        r.riskid as 'RiskID',
+                        r.likelihood as 'Likelihood',
+                        r.technical as 'Technical', 
+                        r.schedule as 'Schedule',
+                        r.cost as 'Cost',
+                        r.AssessmentDate as 'AssessmentDate',
+                        r.risktitle as 'RiskTitle', 
+                        r.riskstatement as 'RiskStatement',
+                        r.context as 'Context',
+                        r.closurecriteria as 'ClosureCriteria'
                     from risks r
                     left join users creator
                         ON r.creatorid = creator.userid
                     left join users owner
                         ON r.ownerid = owner.userid
+                    left join users approver
+                        ON r.approverid = approver.userid
                     ";
  
             if (!empty($whereStrings))

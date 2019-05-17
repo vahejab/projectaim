@@ -32,4 +32,9 @@
         {
              return trim(join(', ', [$this->ownerlastname, $this->ownerfirstname]), ', ');
         }
+        
+        public function getApproverFullName()
+        {
+             return trim(join(', ', [$this->ownerlastname, $this->ownerfirstname]), ', ');
+        }
     }
