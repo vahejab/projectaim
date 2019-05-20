@@ -4,18 +4,22 @@
     border: 1px solid black;
     text-align: center;
     vertical-align: middle;
-    line-height: 1px;
-    /* margin:  0 auto; */
+    line-height: 2px;
 }
 #riskmatrix{
     border-spacing: 0;
     border-collapse: collapse;
     table-layout: fixed;
+    border-left: 0px;
+}
+
+#riskmatrix tr:firstchild td:first-child{
+    width: 20px !important;
 }
 
 #riskmatrix tr td:nth-child(2){
     max-width: 30px !important;
-    width: 30px;
+    /* width: 30px; */
 }
 
 
@@ -29,11 +33,15 @@
     border-left: 0px;
     border-bottom: 0px;  
 }
-#riskmatrix tr:not(:last-child):not(:nth-last-child(2)) td:not(:first-child){
+#riskmatrix tr:not(:last-child):not(:nth-last-child(2)) td:not(:first-child):not(:nth-child(2)){
     background-color: #eeeeee;
 }
 
 #riskmatrix tr:first-child td:first-child{
+    border: none;
+}
+
+#riskmatrix tr:first-child td:nth-child(2){
     border: none;
 }
 
@@ -46,11 +54,18 @@
  
 .risklevel{
     min-width: 37px !important;
-    width: 37px !important;
+    width: 40px !important;
     font-size: 12px;
     padding-left: 2px;
 }                     
-    
+                
+.evt{           
+    margin: 0 auto;
+    position: relative;
+    width: 5px;
+    height: 5px;
+    background-color: black;
+}
 
 div.low, div.med, div.high{
     border: 1px solid black;
@@ -68,11 +83,12 @@ div.high{
     background: #ee0000;
 }
 div.vlabel{
-    transform: translateX(10px)rotate(-90deg)translateX(-25px);
+    transform: translateX(30px)rotate(-90deg)translateX(-25px);
 }                         
 #riskmatrix td:first-child{
     max-width: 0px !important;
     width: 0px !important;
+    
 }
 #riskmatrix tr:last-child td,
 #riskmatrix tr:nth-last-child(2) td
@@ -80,8 +96,10 @@ div.vlabel{
     height: 20px !important;
 }
 #riskmatrix tr:first-child td:nth-child(2),
-#riskmatrix tr:not(:first-child) td:first-child{
-    /* text-align: right; */
+#riskmatrix tr:not(:first-child) td:first-child{ 
+    text-align: right;
 }
 
-div.likelihood{margin-right:  10px;}
+div.likelihood{
+    padding-right: 2px;
+}

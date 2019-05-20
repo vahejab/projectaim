@@ -56,10 +56,17 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
         CommonService.getTextValue(obj, model, 'risk', field); 
         $scope.validate(obj, field);
     }
+    
+    $scope.init = function(){
+      //angular.element(document.querySelector('link[href="/app/tool/risk/CreateRisk.css"]')).remove();
+      //angular.element(document.querySelector('head')).append('<link type="text/css" rel="stylesheet" href="/app/tool/risk/CreateRisk.css"/>'); 
+    }
+    
               
     $scope.$on("$destroy", function(){
          formcheck = 0;
-    });
+         angular.element(document.querySelector('link[href="/app/tool/risk/CreateRisk.css"]')).remove();   
+     });
  
    $scope.submit = function(){
         

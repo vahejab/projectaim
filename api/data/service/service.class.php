@@ -25,7 +25,7 @@
         $mapper = $this->_getMapper();
         return $mapper->updateOne($params);
     }
- 
+   
     protected function _getMapper()
     {
         $db = $this->db()->getHandle();

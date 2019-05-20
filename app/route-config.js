@@ -48,10 +48,12 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         modules: [
         {
             name: 'home',
+            serie: true,
             files: ['/app/tool/home/HomeController.js'],
         },
         {
             name: 'action@summary',
+            serie: true,
             files: ['/app/tool/action/ActionItems.css',
                     '/app/tool/action/ActionDirective.js',
                     '/app/tool/action/ActionController.js'
@@ -59,6 +61,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         },
         {
             name: 'action@create',
+            serie: true,
             files: [
                     '/app/tool/action/CreateActionItem.css',
                     '/app/tool/action/ActionDirective.js',
@@ -67,6 +70,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         },
         {
             name: 'action@view',
+            serie: true,
             files: [
                     '/app/tool/action/ViewActionItem.css',
                     '/app/tool/action/ActionDirective.js',
@@ -75,6 +79,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         },
         {
             name: 'action@edit',
+            serie: true,
             files: [
                     '/app/tool/action/EditActionItem.css',
                     '/app/tool/action/ActionDirective.js',
@@ -83,6 +88,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         },
         {
             name: 'risk@summary',
+            serie: true,
             files: [
                     '/app/tool/risk/RiskDirective.js',
                     '/app/tool/risk/RiskSummaryController.js'
@@ -90,6 +96,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         },
         {
             name: 'risk@create',
+            serie: true,
             files: ['/app/tool/risk/CreateRisk.css',
                     '/app/tool/risk/RiskDirective.js',
                     '/app/tool/risk/CreateRiskController.js'
@@ -97,6 +104,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         },
         {
             name: 'risk@config',
+            serie: true,
             files: ['/app/tool/risk/RiskMatrixConfig.css',
                     '/app/tool/risk/RiskDirective.js',
                     '/app/tool/risk/RiskMatrixConfigController.js'
