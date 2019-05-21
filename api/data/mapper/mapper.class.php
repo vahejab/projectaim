@@ -12,7 +12,7 @@
         
         abstract public function findAll($params = []);
   
-        protected function  _populateFromCollection($results, $results2)
+        protected function  _populateFromCollection($results = null, $results2 = null)
         {
             $return = [];  
             

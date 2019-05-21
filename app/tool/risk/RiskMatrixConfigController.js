@@ -68,6 +68,7 @@ angular.module('Risk').controller('RiskMatrixConfigController', ['$http', '$reso
             
        return $http.put('/api/riskconfig', $scope.vals).then(function(response){
            if (response.data.Succeeded){
+                $scope.msg = response.data.Result;
                 return response.data.Result;
            }
            else{

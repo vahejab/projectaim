@@ -68,21 +68,22 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
          angular.element(document.querySelector('link[href="/app/tool/risk/CreateRisk.css"]')).remove();   
      });
  
-   $scope.submit = function(){
+    $scope.submit = function(){
         
-            $scope.validateAll();
-            if (!$scope.valid())
-                 $scope.msg = "Please complete form and resubmit";
-            else 
-                //$scope.actionitem.duedate = $scope.split($scope.actionitem.duedate,'T')[0];
-                //$scope.actionitem.ecd = $scope.split($scope.actionitem.ecd, 'T')[0];
-                $http.post('/api/risks', $scope.risk).then(function(response){
-                    if (response.data.Succeeded){
-                        $scope.msg = response.data.Result;
-                    }
-                    else{
-                        $scope.msg = $sce.trustAsHtml(response.data);
-                    }
-                }); 
-        }
+        $scope.validateAll();
+        if (!$scope.valid())
+             $scope.msg = "Please complete form and resubmit";
+        else{ 
+            //$scope.actionitem.duedate = $scope.split($scope.actionitem.duedate,'T')[0];
+            //$scope.actionitem.ecd = $scope.split($scope.actionitem.ecd, 'T')[0];
+            $http.post('/api/risks', $scope.risk).then(function(response){
+                if (response.data.Succeeded){
+                    $scope.msg = response.data.Result;
+                }
+                else{
+                    $scope.msg = $sce.trustAsHtml(response.data);
+                }
+            });
+        } 
+    }
 }]);

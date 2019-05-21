@@ -27,7 +27,7 @@ angular.module('Risk').directive('configMatrix', function(){
                     
                     if (risk == '')
                         return (elem && elem.hasAttribute('class'))?
-                                elem.attribute('class') : ''; 
+                                elem.getAttribute('class') : ''; 
                     
                     if (risk >= $scope.risklevels.riskhigh) 
                         return 'high';

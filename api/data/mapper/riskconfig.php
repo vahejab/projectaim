@@ -68,7 +68,7 @@
             
         }
 
-        public function createOne($params = [])
+        /*public function createOne($params = [])
         {                         
             $sql = "insert
                     into risks( 
@@ -117,43 +117,51 @@
             {
                 return ["Succeeded" => false, "Result" => $e->getMessage()];
             }
-        }
+        } */
         
-        public function updateOne($params = [])
+        public function updateAll($params = [])
         {
             $sql = "update
-                    risks
+                    risklevels
                     set
-                        creatorid = :creatorid,
-                        ownerid = :ownerid,
-                        risktitle = :risktitleid,
-                        riskstatement = :riskstatementid,
-                        assessmentdate = :assessmentdate,
-                        closurecriteria = :closurecriteria,
-                        context = :context,
-                        likelihood = :likelihood,
-                        technical = :technical,
-                        scheudle = :schedule,
-                        cost = :cost
-                    where
-                        risk = :riskid";
+                        riskmaximum = :riskmaximum,
+                        riskhigh = :riskhigh,
+                        riskmedium = :riskmedium,
+                        riskminimum = :riskminimum
+                    where risklevelid = 1";
+                    
+            $sql2 = "update
+                     riskmatrixthresholds
+                     set 
+                        level = :level
+                     where likelihood = :likelihood
+                     and consequence = :consequence";
             try
-            {      
+            {    
+                $this->db->beginTransaction();  
                 $statement = $this->db->prepare($sql);
-                $statement->bindValue(':creatorid', $params['creator']);
-                $statement->bindValue(':ownerid' , $params['owner']);
-                $statement->bindValue(':risktitle' , $params['risktitle']);
-                $statement->bindValue(':riskstatement' , $params['riskstatement']);
-                $statement->bindValue(':assessmentdate' , $params['assessmentdate']);
-                $statement->bindValue(':closurecriteria' , $params['closurecriteria']);  
-                $statement->bindValue(':context', $params['context']);  
-                $statement->bindValue(':likelihood' , $params['likelihood']);
-                $statement->bindValue(':technical' , $params['technical']);
-                $statement->bindValue(':schedule' , $params['schedule']);  
-                $statement->bindValue(':cost', $params['cost']);                    
-                $statement->execute();
-                
-                return ["Succeeded" => true, "Result" => "Risk Updated!"];
+                $statement->bindValue(':riskmaximum', $params['Levels']['riskmaximum']);
+                $statement->bindValue(':riskhigh' , $params['Levels']['riskhigh']);
+                $statement->bindValue(':riskmedium' , $params['Levels']['riskmedium']);
+                $statement->bindValue(':riskminimum' , $params['Levels']['riskminimum']);
+                              
+                $statement->execute(); 
+                               
+                for ($l = 1; $l <= 5; $l++)
+                {
+                    for($c = 1; $c <= 5; $c++)
+                    {
+                        $threshold = $params['Thresholds'][$l][$c];
+                        $statement2 = $this->db->prepare($sql2);  
+                        $statement2->bindValue(':level', $threshold);
+                        $statement2->bindValue(':likelihood', $l);
+                        $statement2->bindValue(':consequence', $c);
+                        $statement2->execute();
+                    }
+                }
+                $this->db->commit();
+                 
+                return ["Succeeded" => true, "Result" => "Risk Configuration Updated!"];
             }
             catch (\PDOException $e)
             {
