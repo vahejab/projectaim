@@ -1,10 +1,10 @@
 <?php
     namespace data\model;
     
-    class riskmatrixthresold
+    class riskmatrixthreshold
     {
         public $cellid;          
-        public $row;
-        public $col;
+        public $likelihood;
+        public $consequence;
         public $level;
     }

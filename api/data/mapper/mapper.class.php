@@ -12,15 +12,25 @@
         
         abstract public function findAll($params = []);
   
-        protected function _populateFromCollection($results)
+        protected function  _populateFromCollection($results, $results2)
         {
-            $return = [];
+            $return = [];  
             
-            foreach($results as $result)
+            if ($results != null)
             {
-                $return[] = $this->mapFromArray($result, null);
+                foreach($results as $result)
+                {
+                    $return[] = $this->mapFromArray($result, null);
+                }
             }
-            
+            else if ($results2 != null)
+            {
+                foreach($results2 as $result2)
+                {
+                    $return[] = $this->mapFromArray(null, $result2);
+                }
+            }
+        
             return $return;
         }
       

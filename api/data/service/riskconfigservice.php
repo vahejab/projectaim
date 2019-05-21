@@ -18,6 +18,6 @@
         public function getConfig()
         {
             $mapper = $this->_getMapper();
-            return $mapper->findOne();   
+            return $mapper->findAll();   
         }
     }

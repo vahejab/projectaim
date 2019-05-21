@@ -2,58 +2,64 @@
     namespace data\mapper;
     class riskconfig extends mapper
     { 
-        public function mapFromArray($array, \data\model\risklevels $risklevel = null)
+        public function mapFromArray($array, $array2, \data\model\risklevels $risklevel = null, \data\model\riskmatrixthreshold $riskmatrixthreshold = null)
         {
-            /*if (is_null($riskmatrixthresholds)) $riskmatrixthresolds = [];
-            $idx = 0;
-            for ($r = 0; $r < count($array['cells']); $r++)
+            if (!is_null($array))
             {
-                for ($c = 0; $c < count($array['cells']); $c++)
-                {
-                    $row = $r+1;
-                    $col = $c+1;
-                    $riskmatrixthresholds[] = new \data\model\riskmatrixthresold();
-                    $riskmatrixthresholds[$idx]->row = $row;
-                    $riskmatrixthresholds[$idx]->col = $col;
-                    $idx++;
-                }
-
-            }
-            return $risk;*/
-            
-            if ( is_null($risklevel)) $risklevel = new \data\model\risklevels();
-            if (!is_null($array['RiskMaximum'])) $risklevel->riskmaximum = $array['RiskMaximum'];
-            if (!is_null($array['RiskHigh'])) $risklevel->riskhigh = $array['RiskHigh'];         
-            if (!is_null($array['RiskMedium'])) $risklevel->riskmedium = $array['RiskMedium'];
-            if (!is_null($array['RiskMinimum'])) $risklevel->riskminimum = $array['RiskMinimum'];
-            return $risklevel;
-                           
+                if ( is_null($risklevel)) $risklevel = new \data\model\risklevels();
+                if (!is_null($array['RiskMaximum'])) $risklevel->riskmaximum = $array['RiskMaximum'];
+                if (!is_null($array['RiskHigh'])) $risklevel->riskhigh = $array['RiskHigh'];         
+                if (!is_null($array['RiskMedium'])) $risklevel->riskmedium = $array['RiskMedium'];
+                if (!is_null($array['RiskMinimum'])) $risklevel->riskminimum = $array['RiskMinimum'];
+                return $risklevel;
+            } 
+            else if (!is_null($array2))
+            {
+                if ( is_null($riskmatrixthreshold)) $riskmatrixthreshold = new \data\model\riskmatrixthreshold();
+                if (!is_null($array2['CellID'])) $riskmatrixthreshold->cellid  = $array2['CellID'];
+                if (!is_null($array2['Likelihood'])) $riskmatrixthreshold->likelihood  = $array2['Likelihood'];
+                if (!is_null($array2['Consequence'])) $riskmatrixthreshold->consequence  = $array2['Consequence'];
+                if (!is_null($array2['Level'])) $riskmatrixthreshold->level = $array2['Level'];
+                return $riskmatrixthreshold;
+            }              
         }
-        
-        public function findAll($params = []){
-        }
-        
-        public function findOne($params = [])
+         
+        public function findAll($params = [])
         {
-            $whereStrings = [];
-            $whereParams = [];
-        
-            $sql = "select
+         
+            $sqlLevels = "select
                         RiskMaximum,
                         RiskHigh,
                         RiskMedium,
                         RiskMinimum
                     from risklevels
-                    ";
-
-            $sql .= " order by RiskLevelID";
+                    order by RiskLevelID";
+            
+            $sqlThresholds = "select
+                                CellID,
+                                Likelihood,
+                                Consequence,
+                                COALESCE(Level, '') as Level
+                              from riskmatrixthresholds
+                              order by CellID asc";
+            
             
             try
             {
-                $statement  = $this->db->prepare($sql);
-                $statement->execute($whereParams);
+                $statement  = $this->db->prepare($sqlLevels);
+                $statement->execute();
                 $results = $statement->fetchAll();
-                return(["Succeeded" => true, "Result" => $this->_populateFromCollection($results)]);
+                
+                
+                $statement2  = $this->db->prepare($sqlThresholds);
+                $statement2->execute();
+                $results2 = $statement2->fetchAll();
+               
+                return(["Succeeded" => true, "Result" => [
+                           'Levels' => $this->_populateFromCollection($results, null),
+                           'Thresholds' => $this->_populateFromCollection(null, $results2) 
+                       ]
+                ]);
             }
             catch(PDOException $e)
             {

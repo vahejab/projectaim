@@ -4,24 +4,23 @@
     <table id="riskthesholds">
         <tr>
             <td>Risk Maximum</td>
-            <td><input type="text" ng-model="risklevels" ng-value="risklevels.riskhigh" /></td>
+            <td><input type="text" name="riskmax" ng-model="risklevels.riskmaximum" ng-value="risklevels.riskmaximum" /></td>
         </tr>
         <tr>
             <td>Risk High</td>
-            <td><input type="text" name="riskhigh" ng-model="risklevels" ng-value="risklevels.riskmaximum" /></td>
+            <td><input type="text" name="riskmax" ng-model="risklevels.riskhigh" ng-value="risklevels.riskhigh" /></td>
         </tr>
         <tr>
             <td>Risk Medium</td>
-            <td><input type="text" name="riskmed" ng-model="risklevels" ng-value="risklevels.riskmedium"  /></td>
+            <td><input type="text" name="riskmed" ng-model="risklevels.riskmedium" ng-value="risklevels.riskmedium"  /></td>
         </tr> 
          <tr>
             <td>Risk Minimum</td>
-            <td><input type="text" ng-model="risklevels" ng-value="risklevels.riskminimum" /></td>
+            <td><input type="text" name="riskmin" ng-model="risklevels.riskminimum" ng-value="risklevels.riskminimum" /></td>
         </tr>
     </table>
-    <input type="button" value="Initialize" ng-click="initialize()" name="updatematrix" />
-                            
-    <table id="riskmatrix" class="ng-scope">
+    <input type="button" value="Update" ng-click="reload()" name="updatematrix" />
+     <table id="riskmatrix" class="ng-scope" ng-init="initMatrix()">
         <tbody><!-- ngRepeat: likelihood in [5,4,3,2,1] -->
             <tr  class="ng-scope">
                 <td rowspan="6" class="ng-scope"><div class="vlabel">Likelihood</div></td>
@@ -29,71 +28,71 @@
                 <td><div class="likelihood ng-binding">5</div></td>
             
                 <td class="ng-scope">
-                    <div  ng-class="[risk(5,1)]"></div><br>
-                <input class="risklevel" type="text"name="risk[5][1]">
-            </td><td class="ng-scope"><div ng-class="[risk(5,2)]"></div><br>
-                <input class="risklevel" type="text" value="" name="risk[5][2]">
-            </td><td class="ng-scope"><div ng-class="[risk(5,3)]"></div><br>
-                <input class="risklevel" type="text" value="" name="risk[5][3]">
-            </td><td class="ng-scope"><div ng-class="[risk(5,4)]"></div><br>
-                <input class="risklevel" type="text" value="" name="risk[5][4]">
-            </td><td class="ng-scope"><div ng-class="[risk(5,5)]"></div><br>
-                <input class="risklevel" type="text" value="" name="risk[5][5]">
+                    <div  ng-class="[riskLevel(5,1)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[5][1]" ng-value="risk[5][1]" name="risk[5][1]">
+            </td><td class="ng-scope"><div ng-class="[riskLevel(5,2)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[5][2]"  ng-value="risk[5][2]" name="risk[5][2]">
+            </td><td class="ng-scope"><div ng-class="[riskLevel(5,3)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[5][3]"  ng-value="risk[5][3]" name="risk[5][3]">
+            </td><td class="ng-scope"><div ng-class="[riskLevel(5,4)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[5][4]"  ng-value="risk[5][4]" name="risk[5][4]">
+            </td><td class="ng-scope"><div ng-class="[riskLevel(5,5)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[5][5]"  ng-value="risk[5][5]" name="risk[5][5]">
             </td>
         </tr><tr  class="ng-scope">
             
             <td><div class="likelihood ng-binding">4</div></td>
-            <td class="ng-scope"><div ng-class="[risk(4,1)]"></div><br>
-                <input class="risklevel" type="text" value="" name="risk[4][1]">
-            </td><td class="ng-scope"><div ng-class="[risk(4,2)]"></div><br>
-                <input class="risklevel" type="text" value="" name="risk[4][2]">
-            </td><td class="ng-scope"><div ng-class="[risk(4,3)]"></div><br>
-                <input class="risklevel" type="text" value="" name="risk[4][3]">
-            </td><td class="ng-scope"><div ng-class="[risk(4,4)]"></div><br>
-                <input class="risklevel" type="text" value="" name="risk[4][4]">
-            </td><td class="ng-scope"><div ng-class="[risk(4,5)]"></div><br>
-                <input class="risklevel" type="text" value="" name="risk[4][5]">
+            <td class="ng-scope"><div ng-class="[riskLevel(4,1)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[4][1]"  ng-value="risk[4][1]" name="risk[4][1]">
+            </td><td class="ng-scope"><div ng-class="[riskLevel(4,2)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[4][2]"  ng-value="risk[4][2]" name="risk[4][2]">
+            </td><td class="ng-scope"><div ng-class="[riskLevel(4,3)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[4][3]"  ng-value="risk[4][3]" name="risk[4][3]">
+            </td><td class="ng-scope"><div ng-class="[riskLevel(4,4)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[4][4]" ng-value="risk[4][4]" name="risk[4][4]">
+            </td><td class="ng-scope"><div ng-class="[riskLevel(4,5)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[4][5]" ng-value="risk[4][5]" name="risk[4][5]">
             </td>
         </tr><tr  class="ng-scope">
             
             <td><div class="likelihood ng-binding">3</div></td>
-            <td class="ng-scope"><div ng-class="[risk(3,1)]"></div><br>
-                <input class="risklevel" type="text" value="" name="risk[3][1]">
-            </td><td class="ng-scope"><div ng-class="[risk(3,2)]"></div><br>
-                <input class="risklevel" type="text" value="" name="risk[3][2]">
-            </td><td class="ng-scope"><div ng-class="[risk(3,3)]"></div><br>
-                <input class="risklevel" type="text" value="" name="risk[3][3]">
-            </td><td class="ng-scope"><div ng-class="[risk(3,4)]"></div><br>
-                <input class="risklevel" type="text" value="" name="risk[3][4]">
-            </td><td class="ng-scope"><div ng-class="[risk(3,5)]"></div><br>
-                <input class="risklevel" type="text" value="" name="risk[3][5]">
+            <td class="ng-scope"><div ng-class="[riskLevel(3,1)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[3][1]" ng-value="risk[3][1]" name="risk[3][1]">
+            </td><td class="ng-scope"><div ng-class="[riskLevel(3,2)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[3][2]" ng-value="risk[3][2]" name="risk[3][2]">
+            </td><td class="ng-scope"><div ng-class="[riskLevel(3,3)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[3][3]" ng-value="risk[3][3]" name="risk[3][3]">
+            </td><td class="ng-scope"><div ng-class="[riskLevel(3,4)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[3][4]" ng-value="risk[3][4]" name="risk[3][4]">
+            </td><td class="ng-scope"><div ng-class="[riskLevel(3,5)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[3][5]" ng-value="risk[3][5]" name="risk[3][5]">
             </td>
         </tr><tr  class="ng-scope">
             <td><div class="likelihood ng-binding">2</div></td>
-            <td class="ng-scope"><div ng-class="[risk(2,1)]"></div><br>
-                <input class="risklevel" type="text" value="" name="risk[2][1]">
-            </td><td class="ng-scope"><div ng-class="[risk(2,2)]"></div><br>
-                <input class="risklevel" type="text" value="" name="risk[2][2]">
-            </td><td class="ng-scope"><div  ng-class="[risk(2,3)]"></div><br>
-                <input class="risklevel" type="text" value="" name="risk[2][3]">
-            </td><td class="ng-scope"><div ng-class="[risk(2,4)]"></div><br>
-                <input class="risklevel" type="text" value="" name="risk[2][4]">
-            </td><td class="ng-scope"><div  ng-class="[risk(2,5)]"></div><br>
-                <input class="risklevel" type="text" value="" name="risk[2][5]">
+            <td class="ng-scope"><div ng-class="[riskLevel(2,1)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[2][1]" ng-value="risk[2][1]" name="risk[2][1]">
+            </td><td class="ng-scope"><div ng-class="[riskLevel(2,2)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[2][2]" ng-value="risk[2][2]" name="risk[2][2]">
+            </td><td class="ng-scope"><div  ng-class="[riskLevel(2,3)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[2][3]" ng-value="risk[2][3]" name="risk[2][3]">
+            </td><td class="ng-scope"><div ng-class="[riskLevel(2,4)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[2][4]" ng-value="risk[2][4]" name="risk[2][4]">
+            </td><td class="ng-scope"><div  ng-class="[riskLevel(2,5)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[2][5]" ng-value="risk[2][5]" name="risk[2][5]">
             </td>
         </tr><tr  class="ng-scope">
             
             <td><div class="likelihood ng-binding">1</div></td>
-            <td class="ng-scope"><div ng-class="[risk(1,1)]"></div><br>
-                <input class="risklevel" type="text" value="" name="risk[1][1]">
-            </td><td class="ng-scope"><div ng-class="[risk(1,2)]"></div><br>
-                <input class="risklevel" type="text" value="" name="risk[1][2]">
-            </td><td class="ng-scope"><div ng-class="[risk(1,3)]"></div><br>
-                <input class="risklevel" type="text" value="" name="risk[1][3]">
-            </td><td class="ng-scope"><div ng-class="[risk(1,4)]"></div><br>
-                <input class="risklevel" type="text" value="" name="risk[1][4]">
-            </td><td class="ng-scope"><div ng-class="[risk(1,5)]"></div><br>
-                <input class="risklevel" type="text" value="" name="risk[1][5]">
+            <td class="ng-scope"><div ng-class="[riskLevel(1,1)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[1][1]" ng-value="risk[1][1]" name="risk[1][1]">
+            </td><td class="ng-scope"><div ng-class="[riskLevel(1,2)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[1][2]" ng-value="risk[1][2]" name="risk[1][2]">
+            </td><td class="ng-scope"><div ng-class="[riskLevel(1,3)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[1][3]" ng-value="risk[1][3]" name="risk[1][3]">
+            </td><td class="ng-scope"><div ng-class="[riskLevel(1,4)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[1][4]" ng-value="risk[1][4]" name="risk[1][4]">
+            </td><td class="ng-scope"><div ng-class="[riskLevel(1,5)]"></div><br>
+                <input class="risklevel" type="text" ng-model="risk[1][5]" ng-value="risk[1][5]" name="risk[1][5]">
             </td>
         </tr>
         <tr>
@@ -104,8 +103,12 @@
              <td></td><td></td><td colspan="5" class="consequence">Consequence</td> 
           </tr>
     </tbody></table>
-    <input type="button" value="Update" name="updatematrix" />
+    <input type="button" value="Save" ng-click="save()" name="savematrix" />
     </form>
-    
     </div>
+     <divider></divider>
+      <div class="msg" layout-align="center">
+        <span ng-bind-html="msg">{{msg}}</span>
+      </div>
+    <config-matrix />
 </div> 

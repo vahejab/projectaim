@@ -2,15 +2,15 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
     refresh = false;
     
     $scope.risk = {
-    likelihood:'',
-    technical:'',
-    schedule:'',
-    cost:'',
-    risktitle:'',
-    closurecriteria: '',
-    riskstatement: '',
-    category: null,
-    context: ''
+        likelihood:'',
+        technical:'',
+        schedule:'',
+        cost:'',
+        risktitle:'',
+        closurecriteria: '',
+        riskstatement: '',
+        category: null,
+        context: ''
     }
 
     $scope.flags = {
@@ -58,8 +58,8 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
     }
     
     $scope.init = function(){
-      //angular.element(document.querySelector('link[href="/app/tool/risk/CreateRisk.css"]')).remove();
-      //angular.element(document.querySelector('head')).append('<link type="text/css" rel="stylesheet" href="/app/tool/risk/CreateRisk.css"/>'); 
+      angular.element(document.querySelector('link[href="/app/tool/risk/CreateRisk.css"]')).remove();
+      angular.element(document.querySelector('head')).append('<link type="text/css" rel="stylesheet" href="/app/tool/risk/CreateRisk.css"/>'); 
     }
     
               

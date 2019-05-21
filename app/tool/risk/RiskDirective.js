@@ -1,4 +1,44 @@
-angular.module('Risk').directive('initRisk', function(){                     
+angular.module('Risk').directive('configMatrix', function(){
+     return {
+        restrict: 'E', 
+        link: function(scope, element, attrs){
+             scope.init().then(function(){
+                scope.update();
+             });
+        },
+        controller: function($scope){
+     
+            $scope.update = function(){
+                for (var likelihood = 1; likelihood <= 5; likelihood++)
+                {
+                    for (var consequence = 1; consequence <= 5; consequence++)
+                    {  
+                        $scope.risk[likelihood][consequence] = (((0.9*likelihood*consequence)/25) + 0.05).toFixed(2);  
+                        //if ($scope.risk[likelihood][consequence] == '' ||
+                        //    document.querySelector("input[name='risk["+likelihood+"]["+consequence+"]']").value != $scope.risk[likelihood][consequence])
+                        document.querySelector("input[name='risk["+likelihood+"]["+consequence+"]']").value = $scope.risk[likelihood][consequence];
+                    }
+                }  
+            }
+             
+            $scope.riskLevel = function(l, c){
+                    elem = document.querySelector("input[name='risk["+l+"]["+c+"]']");
+                    risk = elem.value;
+                    
+                    if (risk == '')
+                        return (elem && elem.hasAttribute('class'))?
+                                elem.attribute('class') : ''; 
+                    
+                    if (risk >= $scope.risklevels.riskhigh) 
+                        return 'high';
+                    else if (risk > $scope.risklevels.riskmedium && risk < $scope.risklevels.riskhigh)
+                        return 'med';
+                    else if (risk <= $scope.risklevels.riskmedium)
+                        return 'low';
+            }
+        }
+     }       
+}).directive('initRisk', function(){                     
       return {
             restrict: 'E',
             link: function (scope, element, attrs) {
