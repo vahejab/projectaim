@@ -1,25 +1,16 @@
 angular.module('Risk').controller('RiskMatrixConfigController', ['$http', '$resource', '$scope', '$state', '$window', '$timeout', '$interval', '$sce', 'CommonService', function($http, $resource, $scope, $state, $window, $timeout, $interval, $sce, CommonService){
 
     $scope.risklevels = {
-        riskminimum: '',
+        riskmaximum: '',
         riskhigh: '',
         riskmedium: '',
         riskminimum: ''
     };
-
-    /*$scope.risk = {
-        1: {1: '', 2: '', 3: '', 4: '', 5: ''},
-        2: {1: '', 2: '', 3: '', 4: '', 5: ''},
-        3: {1: '', 2: '', 3: '', 4: '', 5: ''},
-        4: {1: '', 2: '', 3: '', 4: '', 5: ''},
-        5: {1: '', 2: '', 3: '', 4: '', 5: ''},
-    };*/
-    
     $scope.risk = [];
     for(var l = 1; l <= 5; l++)
     {
         $scope.risk[l] = [];
-        for (var c = 0; c <= 5; c++)
+        for (var c = 1; c <= 5; c++)
         {
             $scope.risk[l][c] = '';  
         }

@@ -12,6 +12,7 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
                 technical: '',
                 schedule: '',
                 cost: '',
+                risklevel: '',
                 assignor: '',
                 owner: '',
                 approver: '',
@@ -26,7 +27,22 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
             $scope.propertyName = propertyName;
         };
         
+        $scope.risklevels = {
+            riskmaximum: '',
+            riskhigh: '',
+            riskmedium: '',
+            riskminimum: ''
+        };
         
+        $scope.riskMatrix = [];
+        for(var l = 1; l <= 5; l++)
+        {
+            $scope.riskMatrix[l] = [];
+            for (var c = 1; c <= 5; c++)
+            {
+                $scope.riskMatrix[l][c] = '';  
+            }
+        }   
       
         $scope.devicePixelRatio = window.devicePixelRatio;
         $scope.flag = 0;
@@ -49,8 +65,61 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
            return CommonService.getStatus(date1, date2); 
         }
         
+        $scope.getLevel = function(level, l, c){
+           if (level >= $scope.risklevels.riskhigh)
+           {
+               return  {level: 'H ' + l + '-' + c, cls: 'high', threshold: level};
+               //leveldiv.setAttribute('class', 'high'); 
+           }
+           else if (level < $scope.risklevels.riskhigh  && level >= $scope.risklevels.riskmedium)
+           {
+                return {level: 'M ' + l + '-' + c, cls: 'med', threshold: level};
+                //leveldiv.setAttribute('class', 'med'); 
+           }
+           else if (level < $scope.risklevels.riskmedium)
+           {
+                return {level:'L ' + l + '-' + c, cls: 'low', threshold: level};
+                //leveldiv.setAttribute('class', 'low'); 
+           }
+        }      
+ 
+        $scope.getRisk = function(l, t, s, c){
+            
+            likelihood = Number(l);
+            technical = Number(t);
+            schedule = Number(s);
+            cost = Number(c);
+            consequence = Math.max(technical, schedule, cost);
+            level = $scope.riskMatrix[likelihood][consequence];
+            risk = $scope.getLevel(level, likelihood, consequence);
+            return risk;
+        }
+        
         $scope.init = function(){  
-            return $http.get('api/risks').then(function(response){
+           return $http.get('/api/riskconfig').then(function(response){
+               if (response.data.Succeeded){
+                    $scope.risklevels.riskmaximum = response.data.Result.Levels[0].riskmaximum;
+                    $scope.risklevels.riskhigh = response.data.Result.Levels[0].riskhigh;
+                    $scope.risklevels.riskmedium = response.data.Result.Levels[0].riskmedium;
+                    $scope.risklevels.riskminimum = response.data.Result.Levels[0].riskminimum; 
+                
+                 
+                    for (var idx = 0; idx < response.data.Result.Thresholds.length; idx++)
+                    {
+                        var l = response.data.Result.Thresholds[idx].likelihood;
+                        var c = response.data.Result.Thresholds[idx].consequence;
+                        v = response.data.Result.Thresholds[idx].level;
+                        $scope.riskMatrix[l][c] = v;
+                    }
+                 
+                    return response.data.Result;
+                    
+               }
+               else{
+                    $scope.msg = $sce.trustAsHtml(response.data);
+               }
+          }).then(function(){
+             return $http.get('api/risks').then(function(response){
                if (response.data.Succeeded){
                     angular.forEach(response.data.Result, function(risk, key){
                         response.data.Result[key] =  
@@ -64,19 +133,22 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
                             technical: risk.technical,
                             schedule: risk.schedule,
                             cost: risk.cost,
+                            risklevel: $scope.getRisk(risk.likelihood, risk.technical, risk.schedule, risk.cost),
+                            riskthreshold: 100*$scope.riskMatrix[risk.likelihood][Math.max(risk.technical, risk.schedule, risk.cost)],
                             assignor: risk.assignor,
                             owner: risk.owner,
                             approver: risk.approver,
                             assessmentdate: risk.assessmentdate
                         };    
                     });
+                    
                     $scope.risks = response.data.Result;
                     return response.data.Result;
                }
                else{  
                 $scope.msg += "<br />" + $sce.trustAsHtml(response.data);
                }
-            });                                   
-       }
-
+            });
+        });
+      }                                   
 }]);

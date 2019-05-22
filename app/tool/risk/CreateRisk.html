@@ -86,6 +86,7 @@
                             </td>
                         </tr>
                     </table>
+                     <div name="level"></div>
                 </div> 
                 &nbsp;&nbsp;    
                 <div class="info">
@@ -93,47 +94,47 @@
                     <tbody>
                             <td></td>
                             <td class="likelihood">5</td>
-                            <td name="risk[5][1]" class="cell low"></td>
-                            <td name="risk[5][2]" class="cell med"></td>
-                            <td name="risk[5][3]" class="cell high"></td>
-                            <td name="risk[5][4]" class="cell high"></td>
-                            <td name="risk[5][5]" class="cell high"></td>
+                            <td name="risk[5][1]" ng-model="riskMatrix[5][1]" ng-class="[riskLevel(5,1)]"></td>
+                            <td name="risk[5][2]" ng-model="riskMatrix[5][2]" ng-class="[riskLevel(5,2)]"></td>
+                            <td name="risk[5][3]" ng-model="riskMatrix[5][3]" ng-class="[riskLevel(5,3)]"></td>
+                            <td name="risk[5][4]" ng-model="riskMatrix[5][4]" ng-class="[riskLevel(5,4)]"</td>
+                            <td name="risk[5][5]" ng-model="riskMatrix[5][5]" ng-class="[riskLevel(5,5)]"></td>
                     </tr>
                     <tr>
                        <td></td>
                        <td class="likelihood">4</td>
-                            <td name="risk[4][1]" class="cell low"></td>
-                            <td name="risk[4][2]" class="cell med"></td>
-                            <td name="risk[4][3]" class="cell med"></td>
-                            <td name="risk[4][4]" class="cell high"></td>
-                            <td name="risk[4][5]" class="cell high"></td>
+                            <td name="risk[4][1]" ng-model="riskMatrix[4][1]" ng-class="[riskLevel(4,1)]"></td>
+                            <td name="risk[4][2]" ng-model="riskMatrix[4][2]" ng-class="[riskLevel(4,2)]"></td>
+                            <td name="risk[4][3]" ng-model="riskMatrix[4][3]" ng-class="[riskLevel(4,3)]"></td>
+                            <td name="risk[4][4]" ng-model="riskMatrix[4][4]" ng-class="[riskLevel(4,4)]"></td>
+                            <td name="risk[4][5]" ng-model="riskMatrix[4][5]" ng-class="[riskLevel(4,5)]"></td>
                     </tr>
                     <tr>
                        <td></td>
                        <td class="likelihood">3</td>
-                            <td name="risk[3][1]" class="cell low"></td>
-                            <td name="risk[3][2]" class="cell low"></td>
-                            <td name="risk[3][3]" class="cell med"></td>
-                            <td name="risk[3][4]" class="cell med"></td>
-                            <td name="risk[3][5]" class="cell high"></td>
+                            <td name="risk[3][1]" ng-model="riskMatrix[3][1]" ng-class="[riskLevel(3,1)]"></td>
+                            <td name="risk[3][2]" ng-model="riskMatrix[3][2]" ng-class="[riskLevel(3,2)]"></td>
+                            <td name="risk[3][3]" ng-model="riskMatrix[3][3]" ng-class="[riskLevel(3,3)]"></td>
+                            <td name="risk[3][4]" ng-model="riskMatrix[3][4]" ng-class="[riskLevel(3,4)]"></td>
+                            <td name="risk[3][5]" ng-model="riskMatrix[3][5]" ng-class="[riskLevel(3,5)]"></td>
                     </tr>
                     <tr>
                         <td class="vlabel">Likelihood</td>
                        <td class="likelihood">2</td>
-                            <td name="risk[2][1]" class="cell low"></td>
-                            <td name="risk[2][2]" class="cell low"></td>
-                            <td name="risk[2][3]" class="cell low"></td>
-                            <td name="risk[2][4]" class="cell med"></td>
-                            <td name="risk[2][5]" class="cell med"></td>
+                            <td name="risk[2][1]" ng-model="riskMatrix[2][1]" ng-class="[riskLevel(2,1)]"></td>
+                            <td name="risk[2][2]" ng-model="riskMatrix[2][2]" ng-class="[riskLevel(2,2)]"></td>
+                            <td name="risk[2][3]" ng-model="riskMatrix[2][3]" ng-class="[riskLevel(2,3)]"></td>
+                            <td name="risk[2][4]" ng-model="riskMatrix[2][4]" ng-class="[riskLevel(2,4)]"></td>
+                            <td name="risk[2][5]" ng-model="riskMatrix[2][5]" ng-class="[riskLevel(2,5)]"></td>
                     </tr>
                     <tr>
                         <td></td>
                        <td class="likelihood">1</td>
-                            <td name="risk[1][1]" class="cell low"></td>
-                            <td name="risk[1][2]" class="cell low"></td>
-                            <td name="risk[1][3]" class="cell low"></td>
-                            <td name="risk[1][4]" class="cell low"></td>
-                            <td name="risk[1][5]" class="cell low"></td>
+                            <td name="risk[1][1]"  ng-model="riskMatrix[1][1]" ng-class="[riskLevel(1,1)]"></td>
+                            <td name="risk[1][2]"  ng-model="riskMatrix[1][2]" ng-class="[riskLevel(1,2)]"></td>
+                            <td name="risk[1][3]"  ng-model="riskMatrix[1][3]" ng-class="[riskLevel(1,3)]"></td>
+                            <td name="risk[1][4]"  ng-model="riskMatrix[1][4]" ng-class="[riskLevel(1,4)]"></td>
+                            <td name="risk[1][5]"  ng-model="riskMatrix[1][5]" ng-class="[riskLevel(1,5)]"></td>
                        
                     </tr>
                     <tr>
@@ -147,7 +148,7 @@
                        </tr>
                     <tr>
                     <td></td><td></td><td colspan="5">Consequence</td> 
-                    </tr>
+                    </tr>  
                     </tbody></table>
                 </div>
                  &nbsp;&nbsp;   

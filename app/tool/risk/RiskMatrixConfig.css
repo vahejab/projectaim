@@ -67,20 +67,22 @@
     background-color: black;
 }
 
+
 div.low, div.med, div.high{
     border: 1px solid black;
     width: 40px;
     height: 40px;
     margin: 0 auto;
 }
+ 
 div.low{
-    background: #00b050;    
+    background-color: #00b050 !important;    
 }
 div.med{
-    background: #eeee00;
+    background-color: #eeee00 !important;
 }
 div.high{
-    background: #ee0000;
+    background-color: #ee0000 !important;
 }
 div.vlabel{
     transform: translateX(30px)rotate(-90deg)translateX(-25px);

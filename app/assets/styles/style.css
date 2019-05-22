@@ -315,12 +315,21 @@ table.grid tbody tr td:nth-child(3){
 }
 
 
-table.grid thead tr th:nth-child(4),
-table.grid tbody tr td:nth-child(4){
+table.actionitems thead tr th:nth-child(4),
+table.actionitems tbody tr td:nth-child(4){
     max-width: 120px !important;
     min-width: 120px !important;
 
 }
+
+
+table.risks thead tr th:nth-child(4),
+table.risks tbody tr td:nth-child(4){
+    max-width: 75px !important;
+    min-width: 75px !important;
+
+}
+
 
 
 table.actionitems thead tr th:nth-child(5),
@@ -358,8 +367,8 @@ table.actionitems tbody tr td:nth-child(8){
 
 table.risks thead tr th:nth-child(8),
 table.risks tbody tr td:nth-child(8){
-    max-width: 60px !important;
-    min-width: 60px !important;
+    max-width: 185px !important;
+    min-width: 185px !important;
 }
 
 
@@ -454,4 +463,15 @@ div.nested > table{
 
 .webix_el_counter input.webix_inp_counter_value{
     width: 36px !important;
+}
+
+
+td.low{
+    background-color: #00b050 !important;    
+}
+td.med{
+    background-color: #eeee00 !important;
+}
+td.high{
+    background-color: #ee0000 !important;
 }

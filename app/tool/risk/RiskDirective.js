@@ -31,9 +31,9 @@ angular.module('Risk').directive('configMatrix', function(){
                     
                     if (risk >= $scope.risklevels.riskhigh) 
                         return 'high';
-                    else if (risk > $scope.risklevels.riskmedium && risk < $scope.risklevels.riskhigh)
+                    else if (risk >= $scope.risklevels.riskmedium && risk < $scope.risklevels.riskhigh)
                         return 'med';
-                    else if (risk <= $scope.risklevels.riskmedium)
+                    else if (risk < $scope.risklevels.riskmedium)
                         return 'low';
             }
         }
@@ -143,6 +143,31 @@ angular.module('Risk').directive('configMatrix', function(){
                         levelDiv.parentNode.removeChild(levelDiv);
                 }
                 
+                scope.displayLevel = function(level, l, c){
+                   leveldiv =  document.querySelector("div[name='level']");
+                   if (level >= scope.risklevels.riskhigh)
+                   {
+                       leveldiv.innerHTML = 'H ' + l + '-' + c;
+                       leveldiv.setAttribute('class', 'high'); 
+                   }
+                   else if (level < scope.risklevels.riskhigh  && level >= scope.risklevels.riskmedium)
+                   {
+                        leveldiv.innerHTML = 'M ' + l + '-' + c;
+                        leveldiv.setAttribute('class', 'med'); 
+                   }
+                   else if (level < scope.risklevels.riskmedium)
+                   {
+                        leveldiv.innerHTML = 'L ' + l + '-' + c;
+                        leveldiv.setAttribute('class', 'low'); 
+                   }
+                }
+                
+                scope.clearLevel = function(){
+                    leveldiv =  document.querySelector("div[name='level']");
+                    leveldiv.innerHTML = '';
+                    leveldiv.setAttribute('class', '');
+                }
+                
                 scope.assignRiskLevel = function(obj)
                 {
                     if (scope.validLevel(obj) && scope.risk["likelihood"] != ''
@@ -162,12 +187,15 @@ angular.module('Risk').directive('configMatrix', function(){
                             cost = Number(scope.risk.cost);
                             consequence = Math.max(technical, schedule, cost);
                             
+                            scope.displayLevel(scope.riskMatrix[likelihood][consequence], likelihood, consequence);
+                            
                             scope.clearDot();
                         
                             scope.drawDot();
                         }  
                     }
                     else{
+                        scope.clearLevel();
                         scope.clearDot();
                     }
                 }

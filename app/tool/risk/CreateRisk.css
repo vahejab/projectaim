@@ -86,15 +86,6 @@ td.low, td.med, td.high{
     height: 30px;
     margin: 0 auto;
 }
-td.low{
-    background-color: #00b050 !important;    
-}
-td.med{
-    background-color: #eeee00 !important;
-}
-td.high{
-    background-color: #ee0000 !important;
-}
 
                      
 #riskmatrix td:first-child{
@@ -107,3 +98,13 @@ td.high{
     height: 20px !important;
 }
 
+ 
+div.low{
+    background-color: #00b050 !important;    
+}
+div.med{
+    background-color: #eeee00 !important;
+}
+div.high{
+    background-color: #ee0000 !important;
+}

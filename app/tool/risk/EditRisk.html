@@ -1,0 +1,122 @@
+<div id="formcontainer"  ng-controller="EditRiskController" ng-app="Action">
+    <div id="myeditform" type="space" layout-padding="" ng-cloak="">   
+        <init-risk />
+        <form webix-ui="config" id="form" name="EditRisk" role="form" ng-submit="EditRisk.$valid" novalidate>
+            <div class="layout" ng-init="init()">
+                    <table id="summary" class="layout" border="1">
+                        <tr>
+                            <td class="label">Risk #</td>
+                            <td class="locked">{{risk.riskid}}</td>
+                            <td class="label">
+                                Current Risk Level
+                            </td>
+                            <td class="locked">
+                               {{risk.level}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">
+                                Owner
+                            </td>
+                            <td class="locked">
+                               <div webix-ui="ownerConfig" id="owner" name="owner" />
+                            </td>
+                            <td class="label">
+                                Risk State
+                            </td>
+                            <td class="locked">
+                               {{risk.riskstate}}
+                            </td>
+                        </tr>
+                         <tr>
+                            <td class="label">
+                                Team
+                            </td>
+                            <td class="locked">
+                               <div webix-ui="approverConfig" id="approver" name="approver" />
+                            </td>
+                            <td class="label">
+                                Risk Approver
+                            </td>
+                            <td class="locked">
+                               {{risk.approver}}
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    
+                    <h2>Risk Information</h2>
+                    <table id="details" class="layout" border="1">
+                        <tr>
+                            <td class="label" style="vertical-align: top">
+                                Title
+                            </td>
+                            <td class="locked">
+                                <div webix-ui="titleConfig" id="risktitle" name="risktitle" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label" style="vertical-align: top">
+                                Risk Statement
+                            </td>
+                            <td  class="locked" style="vertical-align: top">
+                                <div webix-ui="statementConfig" id="riskstatement" name="riskstatement" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label" style="vertical-align: top">
+                                Context
+                            </td>
+                            <td  class="locked" style="vertical-align: top">
+                                <div webix-ui="contextConfig" id="context" name="context" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label" style="vertical-align: top">
+                                Closure Criteria
+                            </td>
+                            <td  class="locked" style=" vertical-align: top">
+                                <div webix-ui="closurecriteriaConfig" id="closurecriteria" name="closurecriteria" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label" style="vertical-align: top">
+                                Owner Notes
+                            </td>
+                            <td  class="locked" style=" vertical-align: top">
+                                <div webix-ui="ownernotesConfig" id="ownernotes" name="ownernotes" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label" style="vertical-align: top">
+                                Approver Comments
+                            </td>
+                            <td  class="locked" style=" vertical-align: top">
+                                <div webix-ui="approvercommentsConfig" id="approvercomments" name="approvercomments" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label" style="vertical-align: top">
+                                Activity Log
+                            </td>
+                            <td  class="locked" style=" vertical-align: top">
+                                <div class="read">{{risk.activitylog}}</div>
+                            </td>
+                        </tr>
+                    </table>
+            </div> 
+            <div>
+              <!--button class="raised">Button</button-->
+              <button ng-click="submit()" class="raised primary">Edit Risk</button>
+              <!--button ng-disabled="true" class="raised primary">Disabled</button>
+                    <button class="raised warn">Warn</button>
+                    <div class="label">Raised</div-->
+            </div>       
+        </form>
+         <divider></divider>
+          <div class="msg" layout-align="center">
+            <span ng-bind-html="msg">{{msg}}</span>
+          </div>
+    </div>     
+</div>
+    

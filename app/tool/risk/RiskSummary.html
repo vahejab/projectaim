@@ -13,7 +13,10 @@
                     </th>
                     <th ng-click="sort('risktitle')" ng-class="{reverse: reverse}">
                         Risk Title 
-                    </th>
+                    </th> 
+                    <th ng-click="sort('riskthreshold')" ng-class="{reverse: reverse}">
+                        Risk
+                    </th>          
                     <th ng-click="sort('creationdate')" ng-class="{reverse: reverse}">
                         Creation Date
                     </th>
@@ -26,18 +29,7 @@
                     <th ng-click="sort('approver')" ng-class="{reverse: reverse}">
                         Approver
                     </th>
-                    <th ng-click="sort('likelihood')" ng-class="{reverse: reverse}">
-                        Like
-                    </th>
-                    <th ng-click="sort('technical')" ng-class="{reverse: reverse}">
-                        Tech
-                    </th>
-                    <th ng-click="sort('schedule')" ng-class="{reverse: reverse}">
-                        Sched
-                    </th>
-                    <th ng-click="sort('Cost')" ng-class="{reverse: reverse}">
-                        Cost
-                    </th>              
+                       
                 </tr>
              </thead> 
         </table>
