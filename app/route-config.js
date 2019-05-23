@@ -39,6 +39,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         .when('opportunity', 'opporutnity')
         .when('risk@summary', 'risk/summary')
         .when('risk@create', 'risk/create')
+        .when('risk@edit', 'risk/edit')
         .when('risk@config', 'risk/config')
         .when('home', 'home')
         .otherwise('main');
@@ -100,6 +101,15 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             files: ['/app/tool/risk/CreateRisk.css',
                     '/app/tool/risk/RiskDirective.js',
                     '/app/tool/risk/CreateRiskController.js'
+            ]
+        },
+        {
+            name: 'risk@edit',
+            serie: true,
+            files: [
+                    '/app/tool/risk/EditRisk.css',
+                    '/app/tool/risk/RiskDirective.js',
+                    '/app/tool/risk/EditRiskController.js'
             ]
         },
         {
@@ -174,9 +184,20 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             templateUrl: '/app/tool/risk/CreateRisk.html',
             controller: 'CreateRiskController'
         })
+        .state('risk@edit',
+        {
+            url: "/risk/edit/:id",
+            params: {
+                id: {
+                    array: false
+                }
+            },
+            resolve: res,
+            templateUrl: '/app/tool/risk/EditRisk.html',
+            controller: 'EditRiskController'
+        })
         .state('risk@config',
         {
-            url: "/risk/config",
             resolve: res,
             templateUrl: '/app/tool/risk/RiskMatrixConfig.html',
             controller: 'RiskMatrixConfigController'

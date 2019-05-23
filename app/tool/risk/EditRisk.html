@@ -1,8 +1,9 @@
-<div id="formcontainer"  ng-controller="EditRiskController" ng-app="Action">
+<div id="formcontainer"  ng-controller="EditRiskController" ng-app="Risk" ng-init="init()">
+    <get-risk-level />
+    <init-risk />  
     <div id="myeditform" type="space" layout-padding="" ng-cloak="">   
-        <init-risk />
         <form webix-ui="config" id="form" name="EditRisk" role="form" ng-submit="EditRisk.$valid" novalidate>
-            <div class="layout" ng-init="init()">
+            <div class="layout">
                     <table id="summary" class="layout" border="1">
                         <tr>
                             <td class="label">Risk #</td>
@@ -10,8 +11,8 @@
                             <td class="label">
                                 Current Risk Level
                             </td>
-                            <td class="locked">
-                               {{risk.level}}
+                            <td class="locked {{risk.risklevel.cls}}">
+                               {{risk.risklevel.level}}
                             </td>
                         </tr>
                         <tr>
@@ -33,7 +34,7 @@
                                 Team
                             </td>
                             <td class="locked">
-                               <div webix-ui="approverConfig" id="approver" name="approver" />
+                               <div webix-ui="teamConfig" id="team" name="team" />
                             </td>
                             <td class="label">
                                 Risk Approver
@@ -52,7 +53,7 @@
                                 Title
                             </td>
                             <td class="locked">
-                                <div webix-ui="titleConfig" id="risktitle" name="risktitle" />
+                                <div webix-ui="risktitleConfig" id="risktitle" name="risktitle" />
                             </td>
                         </tr>
                         <tr>
@@ -60,7 +61,7 @@
                                 Risk Statement
                             </td>
                             <td  class="locked" style="vertical-align: top">
-                                <div webix-ui="statementConfig" id="riskstatement" name="riskstatement" />
+                                <div webix-ui="riskstatementConfig" id="riskstatement" name="riskstatement" />
                             </td>
                         </tr>
                         <tr>
@@ -107,7 +108,7 @@
             </div> 
             <div>
               <!--button class="raised">Button</button-->
-              <button ng-click="submit()" class="raised primary">Edit Risk</button>
+              <button ng-click="submit()" id="submit" class="raised primary">Edit Risk</button>
               <!--button ng-disabled="true" class="raised primary">Disabled</button>
                     <button class="raised warn">Warn</button>
                     <div class="label">Raised</div-->
@@ -117,6 +118,6 @@
           <div class="msg" layout-align="center">
             <span ng-bind-html="msg">{{msg}}</span>
           </div>
-    </div>     
+    </div> 
 </div>
     

@@ -93,7 +93,7 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
       angular.element(document.querySelector('link[href="/app/tool/risk/CreateRisk.css"]')).remove();
       angular.element(document.querySelector('head')).append('<link type="text/css" rel="stylesheet" href="/app/tool/risk/CreateRisk.css"/>'); 
       
-      $scope.getConfig();
+      return $scope.getConfig();
     }
     
               

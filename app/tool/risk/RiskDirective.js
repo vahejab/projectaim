@@ -22,19 +22,19 @@ angular.module('Risk').directive('configMatrix', function(){
             }
              
             $scope.riskLevel = function(l, c){
-                    elem = document.querySelector("input[name='risk["+l+"]["+c+"]']");
-                    risk = elem.value;
-                    
-                    if (risk == '')
-                        return (elem && elem.hasAttribute('class'))?
-                                elem.getAttribute('class') : ''; 
-                    
-                    if (risk >= $scope.risklevels.riskhigh) 
-                        return 'high';
-                    else if (risk >= $scope.risklevels.riskmedium && risk < $scope.risklevels.riskhigh)
-                        return 'med';
-                    else if (risk < $scope.risklevels.riskmedium)
-                        return 'low';
+                elem = document.querySelector("input[name='risk["+l+"]["+c+"]']");
+                risk = elem.value;
+                
+                if (risk == '')
+                    return (elem && elem.hasAttribute('class'))?
+                            elem.getAttribute('class') : ''; 
+                
+                if (risk >= $scope.risklevels.riskhigh) 
+                    return 'high';
+                else if (risk >= $scope.risklevels.riskmedium && risk < $scope.risklevels.riskhigh)
+                    return 'med';
+                else if (risk < $scope.risklevels.riskmedium)
+                    return 'low';
             }
         }
      }       
@@ -143,25 +143,7 @@ angular.module('Risk').directive('configMatrix', function(){
                         levelDiv.parentNode.removeChild(levelDiv);
                 }
                 
-                scope.displayLevel = function(level, l, c){
-                   leveldiv =  document.querySelector("div[name='level']");
-                   if (level >= scope.risklevels.riskhigh)
-                   {
-                       leveldiv.innerHTML = 'H ' + l + '-' + c;
-                       leveldiv.setAttribute('class', 'high'); 
-                   }
-                   else if (level < scope.risklevels.riskhigh  && level >= scope.risklevels.riskmedium)
-                   {
-                        leveldiv.innerHTML = 'M ' + l + '-' + c;
-                        leveldiv.setAttribute('class', 'med'); 
-                   }
-                   else if (level < scope.risklevels.riskmedium)
-                   {
-                        leveldiv.innerHTML = 'L ' + l + '-' + c;
-                        leveldiv.setAttribute('class', 'low'); 
-                   }
-                }
-                
+              
                 scope.clearLevel = function(){
                     leveldiv =  document.querySelector("div[name='level']");
                     leveldiv.innerHTML = '';
@@ -275,7 +257,7 @@ angular.module('Risk').directive('configMatrix', function(){
                             //"onBlur": function(){scope.validate(scope.actionitem.assingor, 'assignor')}
                         },
                         responsive: true,
-                        width: "520",
+                        width: "200",
                         height: "30",
                         validate: webix.rules.isSelected,
                         required: true
@@ -284,23 +266,23 @@ angular.module('Risk').directive('configMatrix', function(){
                 }
                 
                 
-                scope.risktitleConfig = getTextConfig('risktitle');
-                
-                scope.riskstatementConfig = getTextareaConfig('riskstatement');
-                
-                scope.contextConfig = getTextareaConfig('context');
-                
-                scope.closurecriteriaConfig = getTextareaConfig('closurecriteria');
-                
-                scope.categoryConfig = getSelectConfig('category');
-                              
-                scope.likelihoodConfig = getLevelConfig('likelihood');
-                
-                scope.technicalConfig = getLevelConfig('technical');
-                
-                scope.scheduleConfig = getLevelConfig('schedule');
-                
-                scope.costConfig = getLevelConfig('cost');
+                scope.init().then(function(){
+                    scope.assignorConfig = getSelectConfig('assignor', scope.users);
+                    scope.approverConfig = getSelectConfig('approver', scope.users);
+                    scope.ownerConfig = getSelectConfig('owner', scope.users);
+                    scope.risktitleConfig = getTextConfig('risktitle');                    
+                    scope.riskstatementConfig = getTextareaConfig('riskstatement');
+                    scope.contextConfig = getTextareaConfig('context');                    
+                    scope.closurecriteriaConfig = getTextareaConfig('closurecriteria');
+                    scope.ownerntesConfig = getTextareaConfig('ownernotes');
+                    scope.approvercommentsConfig = getTextareaConfig('approvercomments');                    
+                    scope.categoryConfig = getSelectConfig('category');                
+                    scope.likelihoodConfig = getLevelConfig('likelihood');                    
+                    scope.technicalConfig = getLevelConfig('technical');                    
+                    scope.scheduleConfig = getLevelConfig('schedule');                    
+                    scope.costConfig = getLevelConfig('cost');                    
+                });
+
       }
 }            
 }).directive('initRiskTable', function(){

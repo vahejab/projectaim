@@ -1,6 +1,7 @@
 <div id="formcontainer" ng-app="Risk" ng-controller="CreateRiskController" ng-init="init()">
     <div id="mycreateform" class="container" type="space" layout-padding="" ng-cloak="">   
-        <init-risk />
+        <get-risk-level />
+        <init-risk />  
         <form webix-ui="config" id="form" name="CreateRisk" role="form"ng-submit="valid() && submit()" novalidate>
             <table id="details" class="layout" border="1">
                 <tr>

@@ -151,21 +151,21 @@ angular.module('Action').controller('EditActionController', ['$http', '$resource
        
        
        $scope.getDateValueAndValidate = function(obj, model, field){
-            CommonService.getDateValue(obj, model, field);       
+            CommonService.getDateValue(obj, model,'actionitem',  field);       
             $scope.clearValidation(field);
         }               
                                 
         $scope.getItemValueAndValidate = function(obj, model, field){
-            CommonService.getItemValue(obj, model, field);         
+            CommonService.getItemValue(obj, model, 'actionitem', field);         
             $scope.clearValidation(field);   
         }
         
         $scope.getItemId= function(obj, model, field){
-            CommonService.getItemId(obj, model, field);       
+            CommonService.getItemId(obj, model, 'actionitem', field);       
         }
         
         $scope.getTextValueAndValidate = function(obj, model, field){
-            CommonService.getTextValue(obj, model, field); 
+            CommonService.getTextValue(obj, model, 'actionitem', field); 
             $scope.clearValidation(field);  
         }
 
