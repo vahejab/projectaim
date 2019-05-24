@@ -23,7 +23,7 @@ common.service("CommonService", function() {
     }
     
     commonFunctions.getStatus = function(date1, date2){
-       return (date1 > date2)? 'Late': 'Timely';    
+       return (date1 > date2)? 'Late': 'On Time';    
     }
     
     commonFunctions.formatDate = function(date){
@@ -73,26 +73,10 @@ common.service("CommonService", function() {
 });
 
 angular.module('Home', []);
-angular.module('Action', [/*'datatables', 'datatables.scroller', *//*'ngMaterial',*/ 'webix', 'ngResource', 'Common']);
-angular.module('Risk',   [/*'datatables', 'datatables.scroller', */'ngResource', 'Common']);
+angular.module('Action', ['webix', 'ngResource', 'Common']);
+angular.module('Risk',   ['ngResource', 'Common']);
 
-var app = angular.module('Main', ['ui.router', 'oc.lazyLoad',/* 'datatables',*/ 'ngResource', 'ngSanitize', /*'ngMaterial'*/ 'webix', 'Common', 'Home', 'Action', 'Risk'])
-            .directive('ngRepeatDone', function(){
-                return {
-                    restrict: 'A',
-                    controller: function($scope, $timeout){
-                        $scope.devicePixelRatio = window.devicePixelRatio;
-                        $scope.setMarginsWidths();
-                        var tablebody = document.querySelector('div.tablebody');
-                        var tableheader = document.querySelector('div.tableheader');
-                        angular.element(tablebody).on("scroll", function(elem, attrs){  //activate when #center scrolls  
-                            left = $scope.CommonService.offset(angular.element(document.querySelector("div.tablebody table.grid"))[0]).left; //save #center position to var left
-                            (angular.element(tableheader)[0]).scrollLeft = -1*left + $scope.scrollBarWidth();
-                        }); 
-                    }
-                }
-            }); 
-       
+var app = angular.module('Main', ['ui.router', 'oc.lazyLoad', 'ngResource', 'ngSanitize', 'webix', 'Common', 'Home', 'Action', 'Risk']);
   
 app.controller('MainController',  ['CommonService', '$scope', '$window', '$state', function(CommonService, $scope, $window, $state){
 }]);

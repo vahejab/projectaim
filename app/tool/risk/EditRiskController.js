@@ -72,25 +72,16 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         }    
      
             
-        $scope.getLevel = function(level, l, c){
-           if (level >= $scope.risklevels.riskhigh)
-           {
+        $scope.getLevel = function(risk, l, c){
+           if (risk >= $scope.risklevels.riskhigh)
                return  {level: 'H ' + l + '-' + c, cls: 'high', threshold: level};
-               //leveldiv.setAttribute('class', 'high'); 
-           }
-           else if (level < $scope.risklevels.riskhigh  && level >= $scope.risklevels.riskmedium)
-           {
+           else if (risk < $scope.risklevels.riskhigh  && risk >= $scope.risklevels.riskmedium)
                 return {level: 'M ' + l + '-' + c, cls: 'med', threshold: level};
-                //leveldiv.setAttribute('class', 'med'); 
-           }
-           else if (level < $scope.risklevels.riskmedium)
-           {
-                return {level:'L ' + l + '-' + c, cls: 'low', threshold: level};
-                //leveldiv.setAttribute('class', 'low'); 
-           }
-        }  
-         
-         $scope.getConfig = function(){
+           else if (risk < $scope.risklevels.riskmedium_
+                return {level:'L ' + l + '-' + c, cls: 'low', threshold: level}
+        }                                            
+        
+        $scope.getConfig = function(){
            return $http.get('/api/riskconfig').then(function(response){
                if (response.data.Succeeded){
                     $scope.risklevels.riskmaximum = response.data.Result.Levels[0].riskmaximum;
@@ -117,10 +108,9 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         }
          
         $scope.init = function(){
-            //var vm = this;
-            //vm.dtOptions = DTOptionsBuilder
-            //.fromFnPromise(function(){
             return $scope.getConfig().then(function(){
+                return $scope.initUsers();
+            }).then(function(){
                 $http.get('api/risks/'+$stateParams.id).then(function(response){
                   if (response.data.Succeeded){  
                         $scope.risk.riskid = response.data.Results.riskid;
@@ -148,8 +138,6 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                   else{
                      $scope.msg += "<br />"+$sce.trustAsHtml(response.data);
                   }
-            }).then(function(){
-                return $scope.initUsers();
             }); 
         });                                  
        }

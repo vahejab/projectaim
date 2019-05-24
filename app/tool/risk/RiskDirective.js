@@ -1,25 +1,9 @@
 angular.module('Risk').directive('configMatrix', function(){
      return {
-        restrict: 'E', 
+        restrict: 'A', 
         link: function(scope, element, attrs){
-             scope.init().then(function(){
-                scope.update();
-             });
         },
         controller: function($scope){
-     
-            $scope.update = function(){
-                for (var likelihood = 1; likelihood <= 5; likelihood++)
-                {
-                    for (var consequence = 1; consequence <= 5; consequence++)
-                    {  
-                        $scope.risk[likelihood][consequence] = (((0.9*likelihood*consequence)/25) + 0.05).toFixed(2);  
-                        //if ($scope.risk[likelihood][consequence] == '' ||
-                        //    document.querySelector("input[name='risk["+likelihood+"]["+consequence+"]']").value != $scope.risk[likelihood][consequence])
-                        document.querySelector("input[name='risk["+likelihood+"]["+consequence+"]']").value = $scope.risk[likelihood][consequence];
-                    }
-                }  
-            }
              
             $scope.riskLevel = function(l, c){
                 elem = document.querySelector("input[name='risk["+l+"]["+c+"]']");
@@ -355,13 +339,18 @@ angular.module('Risk').directive('configMatrix', function(){
             });
         }
     }
-});  
-         
-         
-         
-         
-         
-         
-         
-         
-         
+}).directive('load', function(){
+        function link(scope, elem, attrs){
+            scope.init().then(function(){
+                    for (var likelihood = 1; likelihood <= 5; likelihood++)
+                        for (var consequence = 1; consequence <= 5; consequence++)
+                            scope.risk[likelihood][consequence] = (((0.9*likelihood*consequence)/25) + 0.05).toFixed(2);  
+            }); 
+        }
+        var directive = {
+            restrict: 'A',
+            link: link
+        };
+        
+        return directive;
+});

@@ -1,6 +1,4 @@
 <div id="formcontainer"  ng-controller="EditRiskController" ng-app="Risk" ng-init="init()">
-    <get-risk-level />
-    <init-risk />  
     <div id="myeditform" type="space" layout-padding="" ng-cloak="">   
         <form webix-ui="config" id="form" name="EditRisk" role="form" ng-submit="EditRisk.$valid" novalidate>
             <div class="layout">
@@ -40,7 +38,7 @@
                                 Risk Approver
                             </td>
                             <td class="locked">
-                               {{risk.approver}}
+                               <div webix-ui="approverConfig" id="approver" name="approver" />
                             </td>
                         </tr>
                     </table>
@@ -119,5 +117,6 @@
             <span ng-bind-html="msg">{{msg}}</span>
           </div>
     </div> 
+    <init-risk />  
 </div>
     

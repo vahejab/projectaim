@@ -198,6 +198,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         })
         .state('risk@config',
         {
+            url: "/risk/config",
             resolve: res,
             templateUrl: '/app/tool/risk/RiskMatrixConfig.html',
             controller: 'RiskMatrixConfigController'
