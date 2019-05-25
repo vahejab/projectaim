@@ -77,7 +77,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                return  {level: 'H ' + l + '-' + c, cls: 'high', threshold: level};
            else if (risk < $scope.risklevels.riskhigh  && risk >= $scope.risklevels.riskmedium)
                 return {level: 'M ' + l + '-' + c, cls: 'med', threshold: level};
-           else if (risk < $scope.risklevels.riskmedium_
+           else if (risk < $scope.risklevels.riskmedium)
                 return {level:'L ' + l + '-' + c, cls: 'low', threshold: level}
         }                                            
         
