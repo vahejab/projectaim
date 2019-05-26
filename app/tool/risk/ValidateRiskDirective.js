@@ -1,20 +1,16 @@
-angular.module('Risk').directive('validateRisk', validateRisk);
+angular.module('Risk').directive('ValidateElement', validateElement);
 
-function validateRisk(){                     
+function ValidateElement(){                     
       return {
-            restrict: 'E',
+            restrict: 'A',
             link: function (scope, element, attrs) {
-  
-                webix.ready(function(){
-                    webix.ui.fullScreen();
-                });
+                
+                function validLevel(lvl){
+                    return !isNaN(lvl) && Number(lvl) >= 1 && Number(lvl) <= 5;
+                }
                 
                 function validRisk(l, t, s, c){
-                   return (!isNaN(l) && Number(l) >= 1 && Number(l) <= 5 &&
-                           !isNaN(t) && Number(t) >= 1 && Number(t) <= 5 &&
-                           !isNaN(s) && Number(s) >= 1 && Number(s) <= 5 &&
-                           !isNaN(c) && Number(c) >= 1 && Number(c) <= 5); 
-                
+                   return validLevel(l) && validLevel(t) && validLevel(s) && validLevel(c);
                 }
                 
                 function isLevelField(id){
@@ -30,8 +26,8 @@ function validateRisk(){
                 }
                 
                 function validLevel(obj){
-                    return obj.getValue().charCodeAt(0)- '0'.charCodeAt(0) >= 1 
-                        && obj.getValue().charCodeAt(0)- '0'.charCodeAt(0) <= 5;    
+                    return obj.getValue().charCodeAt(0) - '0'.charCodeAt(0) >= 1 
+                        && obj.getValue().charCodeAt(0) - '0'.charCodeAt(0) <= 5;    
                 } 
                 
                   
@@ -62,7 +58,7 @@ function validateRisk(){
                 }
 
                 
-                function validate (elem, id){
+                function validate(elem, id){
                    if (isLevelField(id) && (!validLevel(elem) || fieldEmpty(elem)){
                         makeInvalid(id);
                         clearDot();                                                     
@@ -75,62 +71,43 @@ function validateRisk(){
                    else
                       disableElement("#submit");
                 }
-                
-                scope.validCharacter = function(c){
-                    return (c >= 32 && c <= 126);
-                }
-                
-  
 
-                function validateAll(){
-                       (document.querySelector('#risktitle > div.webix_control')).classList.remove("webix_invalid");
-                       (document.querySelector('#riskstatement > div.webix_control')).classList.remove("webix_invalid");
-                       (document.querySelector('#context > div.webix_control')).classList.remove("webix_invalid");
-                       (document.querySelector('#closurecriteria > div.webix_control')).classList.remove("webix_invalid");
-                       (document.querySelector('#likelihood > div.webix_control')).classList.remove("webix_invalid");
-                       (document.querySelector('#technical > div.webix_control')).classList.remove("webix_invalid");
-                       (document.querySelector('#schedule > div.webix_control')).classList.remove("webix_invalid");
-                       (document.querySelector('#cost > div.webix_control')).classList.remove("webix_invalid");
-                      
-                       if (scope.risk.risktitle.trim() == '') (document.querySelector('#risktitle > div.webix_control')).classList.add("webix_invalid");
-                       if (scope.risk.riskstatement.trim() == '') (document.querySelector('#riskstatement > div.webix_control')).classList.add("webix_invalid");
-                       if (scope.risk.context.trim() == '' )   (document.querySelector('#context > div.webix_control')).classList.add("webix_invalid");
-                       if (scope.risk.closurecriteria.trim() == '') (document.querySelector('#closurecriteria > div.webix_control')).classList.add("webix_invalid");
-                       if (isNaN(scope.risk.likelihood) && Number(scope.risk.likelihood) < 1 && Number(scope.risk.likelihood) > 5)  (document.querySelector('#likelihood > div.webix_control')).classList.add("webix_invalid");
-                       if (isNaN(scope.risk.technical) && Number(scope.risk.technical) < 1 && Number(scope.risk.technical) > 5)  (document.querySelector('#technical > div.webix_control')).classList.add("webix_invalid");
-                       if (isNaN(scope.risk.schedule) && Number(scope.risk.schedule) < 1 && Number(scope.risk.schedule) > 5)   (document.querySelector('#schedule > div.webix_control')).classList.add("webix_invalid");
-                       if (isNaN(scope.risk.cost) && Number(scope.risk.cost) < 1 && Number(scope.risk.cost) > 5) (document.querySelector('#cost > div.webix_control')).classList.add("webix_invalid");
+                function validateAll(fields){
+                       for (var idx = 0; idx < fields.length; idx++){
+                             field = fields[idx];
+                             clearValidation(field);
+                             if (isLevelField(field) && !validLevel(scope.risk[field]))
+                                makeInvalid(field);
+                             else if (!isLevelField(field) && scope.risk[field].trim() == '')
+                                makeInvalid(field);                                
+                       }
                 }
                 
-                scope.valid = function(){
-                    return(scope.risk.risktitle.trim() != '' &&
-                           scope.risk.riskstatement.trim() != '' &&
-                           scope.risk.context.trim() != '' &&
-                           scope.risk.closurecriteria.trim() != '' &&
-                           scope.risk.likelihood.trim() != '' &&
-                           scope.risk.technical.trim() != '' &&
-                           scope.risk.technical.trim() != '' &&
-                           scope.risk.cost.trim() != '' &&
-                           !isNaN(scope.risk.likelihood) && Number(scope.risk.likelihood) >= 1 && Number(scope.risk.likelihood) <= 5 &&
-                           !isNaN(scope.risk.technical) && Number(scope.risk.technical) >= 1 && Number(scope.risk.technical) <= 5 && 
-                           !isNaN(scope.risk.schedule) && Number(scope.risk.schedule) >= 1 && Number(scope.risk.schedule) <= 5 &&
-                           !isNaN(scope.risk.cost) && Number(scope.risk.cost) >= 1 && Number(scope.risk.cost) <= 5);
+                function valid(){          
+                    for (var idx = 0; idx < fields.length; idx++){
+                        field = fields[idx];
+                        if (isLevelField(field) && !validLevel(scope.risk[field]))
+                            return false;
+                        else if (scope.risk[field] == '')
+                            reutrn false
+                    }
+                    
+                    return true;
                 }
-                
-                scope.drawDot = function(l, c){
+                              
+                function drawDot(l, c){
                     document.querySelector("td[name='risk["+l+"]["+c+"]']").innerHTML 
                     = "<div class='level' style='width:15px; height:15px; background-color: black'/>";
                 }
 
               
-                scope.clearLevel = function(){
-                    leveldiv =  document.querySelector("div[name='level']");
+                function clearLevel(){
+                    leveldiv = document.querySelector("div[name='level']");
                     leveldiv.innerHTML = '';
                     leveldiv.setAttribute('class', '');
                 }
                 
-                scope.assignRiskLevel = function(obj)
-                {
+                function assignRiskLevel(obj){
                     l = scope.risk.likelihood;
                     t = scope.risk.technical;
                     s = scope.risk.schedule;
@@ -163,7 +140,7 @@ function validateRisk(){
                         view:"text",
                         value: scope.risk[attr],      
                         on: {
-                            "onTimedKeyPress": function(code){ var obj = this.eventSource || this; scope.getTextValueAndValidate(code, obj, scope, attr); scope.validate(obj, attr);  scope.assignRiskLevel(obj);},
+                            "onTimedKeyPress": function(code){ var obj = this.eventSource || this; scope.getTextValueAndValidate(code, obj, scope, attr); validate(obj, attr); assignRiskLevel(obj);},
                             "onBlur": function(){var obj = this.eventSource || this; scope.updateTextValue(obj, attr); scope.validate(obj, attr);}
                         },
                         attributes: {
@@ -176,42 +153,20 @@ function validateRisk(){
                     };
                     return config;
                 }
-              
-                function getTextConfig(attr)
+
+                function getTextConfig(attr, type, width, height)
                 {
                     var config = 
                     {
-                        view:"text",
-                        value: scope.risk[attr],      
-                        on: {
-                            "onTimedKeyPress": function(code){ var obj = this.eventSource || this; scope.getTextValueAndValidate(code, obj, scope, attr);  scope.validate(obj, attr);},
-                            "onBlur": function(){var obj = this.eventSource || this; scope.validate(obj, attr);}
-                        },
-                       
-                        responsive: true,
-                        width: "520",
-                        height: "30",
-                        validate: webix.rules.isNotEmpty,
-                        required: true
-                    };
-                    return config;
-                }
-                
-                function getTextareaConfig(attr)
-                {
-                    var config = 
-                    {
-                        view:"textarea",
+                        view:type,
                         value: scope.risk[attr],
                         on: {                                  
                             "onTimedKeyPress": function(code){ var obj = this.eventSource || this; scope.getTextValueAndValidate(code, obj, scope, attr); scope.validate(obj, attr);},
                             "onBlur": function(){var obj = this.eventSource || this; scope.validate(obj, attr);}
                         },
                         responsive: true,
-                        width: "520",
-                        height: "97",
-                        validate: webix.rules.isSelected,
-                        required: true
+                        width: width,//"520",
+                        height: height//"97"
                     };
                  
                     return config;
@@ -241,12 +196,12 @@ function validateRisk(){
                     scope.assignorConfig = getSelectConfig('assignor', scope.users);
                     scope.approverConfig = getSelectConfig('approver', scope.users);
                     scope.ownerConfig = getSelectConfig('owner', scope.users);
-                    scope.risktitleConfig = getTextConfig('risktitle');                    
-                    scope.riskstatementConfig = getTextareaConfig('riskstatement');
-                    scope.contextConfig = getTextareaConfig('context');                    
-                    scope.closurecriteriaConfig = getTextareaConfig('closurecriteria');
-                    scope.ownerntesConfig = getTextareaConfig('ownernotes');
-                    scope.approvercommentsConfig = getTextareaConfig('approvercomments');                    
+                    scope.risktitleConfig = getTextConfig('risktitle', 'text', '520', '30');                    
+                    scope.riskstatementConfig = getTextConfig('riskstatement', 'textarea', '520', '97');
+                    scope.contextConfig = getTextConfig('context', 'textarea', '520', '97');                    
+                    scope.closurecriteriaConfig = getTextConfig('closurecriteria', 'textarea', '520', '97');
+                    scope.ownerntesConfig = getTextConfig('ownernotes', 'textarea', '520', '97');
+                    scope.approvercommentsConfig = getTextConfig('approvercomments', 'textarea', '520', '97');                    
                     scope.categoryConfig = getSelectConfig('category');                
                     scope.likelihoodConfig = getLevelConfig('likelihood');                    
                     scope.technicalConfig = getLevelConfig('technical');                    
@@ -256,4 +211,4 @@ function validateRisk(){
 
       }
 }            
-})
+});

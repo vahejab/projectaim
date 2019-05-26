@@ -17,7 +17,6 @@ angular.module('Risk').controller('RiskMatrixConfigController', ['$http', '$reso
         }
     }
     
-    
     $scope.update = function(){
         for (var likelihood = 1; likelihood <= 5; likelihood++)
             for (var consequence = 1; consequence <= 5; consequence++)

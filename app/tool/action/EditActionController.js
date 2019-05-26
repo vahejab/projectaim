@@ -171,7 +171,6 @@ angular.module('Action').controller('EditActionController', ['$http', '$resource
 
        
        $scope.submit = function(){
-        
             $scope.validateAll();
             if (!$scope.valid())
                  $scope.msg = "Please complete form and resubmit";

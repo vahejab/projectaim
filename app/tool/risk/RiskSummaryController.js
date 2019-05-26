@@ -84,7 +84,6 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
                     $scope.risklevels.riskhigh = response.data.Result.Levels[0].riskhigh;
                     $scope.risklevels.riskmedium = response.data.Result.Levels[0].riskmedium;
                     $scope.risklevels.riskminimum = response.data.Result.Levels[0].riskminimum; 
-                
                  
                     for (var idx = 0; idx < response.data.Result.Thresholds.length; idx++)
                     {

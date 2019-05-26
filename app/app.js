@@ -28,8 +28,6 @@ common.service("CommonService", function() {
         return null;
     }
     
-                
-    
     commonFunctions.getStatus = function(date1, date2){
        return (date1 > date2)? 'Late': 'On Time';    
     }
