@@ -36,27 +36,11 @@ function ValidateElement(){
                     if (levelDiv)
                         levelDiv.parentNode.removeChild(levelDiv);
                 }
-                                                                                              
-                function clearValidation(id){
-                    (document.querySelector('#'+id+' > div.webix_control')).classList.remove("webix_invalid");
-                }
-                
-                function makeInvalid(id){
-                   (document.querySelector('#'+id+' > div.webix_control')).classList.add("webix_invalid");
-                }
                 
                 function fieldEmpty(elem){
                     return elem.getValue() == '' || elem.getValue().trim() == '';
                 }
                 
-                function enableElement(id){
-                    (document.querySelector(id)).removeAttribute('disabled');
-                }
-                
-                function disableElement(id){
-                    (document.querySelector(id)).setAttribute('disabled', 'disabled'); 
-                }
-
                 
                 function validate(elem, id){
                    if (isLevelField(id) && (!validLevel(elem) || fieldEmpty(elem)){
@@ -65,12 +49,19 @@ function ValidateElement(){
                    }        
                    else if (typeof elem !== 'undefined' && (elem.getValue() == 0 || fieldEmpty(elem)))
                         makeInvalid(id);
-                     
-                   if (scope.valid() && !fieldEmpty(elem))
-                      enableElement("#submit");
+
                    else
                       disableElement("#submit");
                 }
+                                                                                              
+                function enableElement(id){
+                    (document.querySelector(id)).removeAttribute('disabled');
+                }
+                
+                function disableElement(id){
+                    (document.querySelector(id)).setAttribute('disabled', 'disabled'); 
+                }
+          
 
                 function validateAll(fields){
                        for (var idx = 0; idx < fields.length; idx++){
@@ -101,6 +92,25 @@ function ValidateElement(){
                 }
 
               
+                function displayLevel(level, l, c){
+                   leveldiv =  document.querySelector("div[name='level']");
+                   if (level >= scope.risklevels.riskhigh)
+                   {
+                       leveldiv.innerHTML = 'H ' + l + '-' + c;
+                       leveldiv.setAttribute('class', 'high'); 
+                   }
+                   else if (level < scope.risklevels.riskhigh  && level >= scope.risklevels.riskmedium)
+                   {
+                        leveldiv.innerHTML = 'M ' + l + '-' + c;
+                        leveldiv.setAttribute('class', 'med'); 
+                   }
+                   else if (level < scope.risklevels.riskmedium)
+                   {
+                        leveldiv.innerHTML = 'L ' + l + '-' + c;
+                        leveldiv.setAttribute('class', 'low'); 
+                   }
+                }
+              
                 function clearLevel(){
                     leveldiv = document.querySelector("div[name='level']");
                     leveldiv.innerHTML = '';
@@ -121,7 +131,7 @@ function ValidateElement(){
                             s = Number(s);
                             c = Number(c);
                             consequence = Math.max(t,s,c);
-                            scope.displayLevel(scope.riskMatrix[l][c],l,c);
+                            displayLevel(scope.riskMatrix[l][c],l,c);
                             clearDot();
                             drawDot(l,c);
                         }  
@@ -190,7 +200,7 @@ function ValidateElement(){
                     };
                     return config;
                 }
-                
+                    
                 
                 scope.init().then(function(){
                     scope.assignorConfig = getSelectConfig('assignor', scope.users);

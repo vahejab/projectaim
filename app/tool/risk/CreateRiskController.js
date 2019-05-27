@@ -1,7 +1,19 @@
 angular.module('Risk').controller('CreateRiskController', ['$http', '$resource', '$scope', '$state', '$window', '$timeout', '$interval', '$sce', 'CommonService', function($http, $resource, $scope, $state, $window, $timeout, $interval, $sce, CommonService){
     refresh = false;
     
-    $scope.formFields = [   
+    $scope.risk = {
+                    likelihood:'',
+                    technical:'',
+                    schedule:'',
+                    cost:'',
+                    risktitle:'',
+                    closurecriteria: '',
+                    riskstatement: '',
+                    category: null,
+                    context: ''
+                }
+                
+    $scope.fields = [   
         'risktitle',
         'riskstatement',
         'context',
@@ -11,6 +23,7 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
         'schedule',
         'cost'
     ]
+                     
     
     $scope.flags = {
         disabled: true

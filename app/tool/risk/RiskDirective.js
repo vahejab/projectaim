@@ -76,7 +76,7 @@ function getRisk(){
                                 $scope.msg = $sce.trustAsHtml(response.data);
                            }
                       });
-                }
+                } 
                 
                 $scope.init().then(function(){
                     $rootScope.initDone = true;
