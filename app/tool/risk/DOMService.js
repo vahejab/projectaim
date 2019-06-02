@@ -1,29 +1,38 @@
 angular.module('Risk').service("DOMops", function() {
     var commonFunctions = {};
+    var ValidationService = {};
 
+    commonFunctions.setValidationServiceObj = function(obj){
+        ValidationService = obj;
+    }
+    
+    commonFunctions.setValue = function(field, obj){
+        commonFunctions[field] = obj;
+    }
+    
     commonFunctions.clearLevel = function(){
         leveldiv = document.querySelector("div[name='level']");
         leveldiv.innerHTML = '';
         leveldiv.setAttribute('class', '');
     }     
 
-    commonFunctions.assignRiskLevel = function(scope, obj){
-        l = scope.risk.likelihood;
-        t = scope.risk.technical;
-        s = scope.risk.schedule;
-        c = scope.risk.cost;
+    commonFunctions.assignRiskLevel = function(obj){
+        l = commonFunctions.risk.likelihood;
+        t = commonFunctions.risk.technical;
+        s = commonFunctions.risk.schedule;
+        c = commonFunctions.risk.cost;
         
         if (ValidationService.validLevel(obj) && ValidationService.riskNotEmpty(l,t,s,c))
         {
-            if (riskIsValid(l,t,s,c))
+            if (ValidationService.riskIsValid(l,t,s,c))
             {
                 l = Number(l);
                 tech = Number(t);
                 schd = Number(s);
                 cost = Number(c);
                 c = Math.max(tech,schd,cost);
-                commonFunctions.displayLevel(scope.riskMatrix[l][c],l,c);
-                commonFucntions.clearDot();
+                commonFunctions.displayLevel(commonFunctions.riskMatrix[l][c],l,c);
+                commonFunctions.clearDot();
                 commonFunctions.drawDot(l,c);
             }  
         }
@@ -63,17 +72,17 @@ angular.module('Risk').service("DOMops", function() {
     
     commonFunctions.displayLevel = function(level, l, c){
        leveldiv =  document.querySelector("div[name='level']");
-       if (level >= scope.risklevels.riskhigh)
+       if (level >= commonFunctions.risklevels.riskhigh)
        {
            leveldiv.innerHTML = 'H ' + l + '-' + c;
            leveldiv.setAttribute('class', 'high'); 
        }
-       else if (level < scope.risklevels.riskhigh  && level >= scope.risklevels.riskmedium)
+       else if (level < commonFunctions.risklevels.riskhigh  && level >= commonFunctions.risklevels.riskmedium)
        {
             leveldiv.innerHTML = 'M ' + l + '-' + c;
             leveldiv.setAttribute('class', 'med'); 
        }
-       else if (level < scope.risklevels.riskmedium)
+       else if (level < commonFunctions.risklevels.riskmedium)
        {
             leveldiv.innerHTML = 'L ' + l + '-' + c;
             leveldiv.setAttribute('class', 'low'); 

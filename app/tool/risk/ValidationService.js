@@ -1,6 +1,15 @@
 angular.module('Risk').service("ValidationService", function() {
     var commonFunctions = {};
-
+    var DOMops = {};
+   
+    commonFunctions.setDOMobj = function(obj){
+        DOMops = obj;
+    }
+    
+    commonFunctions.setValue = function(field, obj){
+        commonFunctions[field] = obj; 
+    }
+    
     commonFunctions.isLevelField = function(id){
             return (id == 'likelihood' || id == 'technical' || id == 'schedule' || id == 'cost');
     }
@@ -18,18 +27,18 @@ angular.module('Risk').service("ValidationService", function() {
         return (lvl.charCodeAt(0) - '0'.charCodeAt(0) < 1) || (lvl.charCodeAt(0) - '0'.charCodeAt(0) > 5);
     }
     
-    commonFunctions.valid = function(fields, $scope){
+    commonFunctions.valid = function(fields){
           for (var idx = 0; idx < fields.length; idx++){
             field = fields[idx];
-            if (commonFunctions.isLevelField(field) && commonFunctions.invalidLevel($scope.risk[field]))
+            if (commonFunctions.isLevelField(field) && commonFunctions.invalidLevel(commonFunctions.risk[field]))
                 return false;
-            else if ($scope.risk[field] == '')
+            else if (commonFunctions.risk[field] == '')
                 return false;
         }
         return true; 
     }
    
-    commonFunctions.riskIsValid = function(scope,l,t,s,c){
+    commonFunctions.riskIsValid = function(l,t,s,c){
         var lvl = [l,t,s,c];
         valid = true;
         for (var idx = 0; idx < lvl.length; idx++)
@@ -48,15 +57,15 @@ angular.module('Risk').service("ValidationService", function() {
         return elem.getValue() == '' || elem.getValue().trim() == '';
     }
     
-    commonFunctions.validate = function(elem, id){
-       if (DOMops.isLevelField(id) && (!commonFunctions.validLevel(elem) || commonFunctions.fieldEmpty(elem))){
+    commonFunctions.validate = function(elem, scope, id){
+       if (commonFunctions.isLevelField(id) && (!commonFunctions.validLevel(elem) || commonFunctions.fieldEmpty(elem))){
             DOMops.makeInvalid(id);
             DOMops.clearDot();                                                     
        }        
        else if (typeof elem !== 'undefined' && (elem.getValue() == 0 || commonFunctions.fieldEmpty(elem)))
             DOMops.makeInvalid(id);
 
-       if (commonFunctions.valid())
+       if (commonFunctions.valid(scope.fields))
           DOMops.enableElement("#submit");
        else
           DOMops.disableElement("#submit");
@@ -66,29 +75,29 @@ angular.module('Risk').service("ValidationService", function() {
         return (c >= 32 && c <= 126);
     }
   
-    commonFunctions.clearTextValue = function(scope, code, obj, field){
+    commonFunctions.clearTextValue = function(code, obj, field){
         if (!commonFunctions.validCharacter(code) || obj.getValue().trim() == '') 
         {
-            scope.risk[field] = '';
+            commonFunctions.risk[field] = '';
             return;
         }
     }     
             
-    commonFunctions.handleKeyPress = function(obj, code, attr){   
-         commonFunctions.getTextValueAndValidate(code, obj, attr); 
-         commonFunctions.validate(obj, attr);
+    commonFunctions.handleKeyPress = function(code, scope, obj, attr){   
+         commonFunctions.getTextValueAndValidate(code, scope, obj, attr); 
+         commonFunctions.validate(obj, scope, attr);
     }
     
-    commonFunctions.updateAndValidate = function(code, obj, attr){ 
+    commonFunctions.updateAndValidate = function(code, scope, obj, attr){ 
         commonFunctions.clearTextValue(code, obj, attr); 
-        commonFunctions.validate(obj, attr);
+        commonFunctions.validate(obj, scope, attr);
     }
     
-    commonFunctions.getTextValueAndValidate = function(scope, code, obj, field){
-        commonFunctions.clearTextValue(scope, code, obj, field);
-        commonFunctions.clearValidation(field);  
-        scope.getTextValue(obj, scope, 'risk', field); 
-        commonFunctions.validate(obj, field);
+    commonFunctions.getTextValueAndValidate = function(code, scope, obj, field){
+        commonFunctions.clearTextValue(code, obj, field);
+        DOMops.clearValidation(field);  
+        scope.getTextValue(obj, 'risk', field); 
+        commonFunctions.validate(obj, scope, field);
     }
     
     return commonFunctions;

@@ -1,6 +1,5 @@
 angular.module('Risk').controller('CreateRiskController', ['$http', '$resource', '$scope', '$state', '$window', '$timeout', '$interval', '$sce', 'CommonService', 'DOMops', 'ValidationService', function($http, $resource, $scope, $state, $window, $timeout, $interval, $sce, CommonService, DOMops, ValidationService){
     refresh = false;
-
     this.DOMops = DOMops;
     this.ValidationService = ValidationService;
     this.initDone = false;
@@ -73,10 +72,14 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
         return CommonService.riskFormValid(this.fields, this);
     }
     
+    this.getTextValue = function(obj, type, field){
+        return CommonService.getTextValue(obj, this, type, field);
+    }
+  
     this.invalidLevel = function(lvl){
         return CommonService.invalidLevel(lvl);
     }
-              
+           
     $scope.$on("$destroy", function(){
          formcheck = 0;
          angular.element(document.querySelector('link[href="/app/tool/risk/CreateRisk.css"]')).remove();   

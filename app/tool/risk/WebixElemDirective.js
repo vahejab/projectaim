@@ -19,21 +19,31 @@ function ConfigElement(){
                 view = "text";
             else
                 view = type;
+                
+            scope.ctrl.DOMops.setValidationServiceObj(scope.ctrl.ValidationService);
+            scope.ctrl.DOMops.setValue('risk', scope.ctrl.risk);
+            scope.ctrl.DOMops.setValue('riskMatrix', scope.ctrl.riskMatrix);   
+            scope.ctrl.DOMops.setValue('risklevels', scope.ctrl.risklevels);
+            
+            scope.ctrl.ValidationService.setValue('risk', scope.ctrl.risk);
+            scope.ctrl.ValidationService.setDOMobj(scope.ctrl.DOMops);
                   
             var config = 
             {
                 view: view,
                 value: scope.ctrl.risk[attr],      
                 on: {
-                    "onTimedKeyPress": function(code){  
+                    "onTimedKeyPress": function(){  
                         var obj = this.eventSource || this; 
-                        scope.ValidationService.handleKeyPress(obj, code, attr);
+                        code = this.getValue();
+                        scope.ctrl.ValidationService.handleKeyPress(code, scope.ctrl, obj, attr);
                         if (type == "level")
-                            scope.ctrl.DOMops.assignRiskLevel(scope, obj); 
+                            scope.ctrl.DOMops.assignRiskLevel(obj); 
                     },
-                    "onBlur": function(code){  
+                    "onBlur": function(){  
                         var obj = this.eventSource || this;  
-                        scope.ctrl.ValidationService.updateAndValidate(obj,code,attr); 
+                        code = this.getValue();
+                        scope.ctrl.ValidationService.updateAndValidate(code, scope.ctrl, obj, attr); 
                     }
                 },
                 responsive: true,
