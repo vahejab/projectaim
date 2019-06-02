@@ -5,7 +5,7 @@
         },
         controller: function($scope){
              
-            $scope.riskLevel = function(l, c){
+            vm.riskLevel = function(l, c){
                 elem = document.querySelector("input[name='risk["+l+"]["+c+"]']");
                 risk = elem.value;
                 
@@ -13,11 +13,11 @@
                     return (elem && elem.hasAttribute('class'))?
                             elem.getAttribute('class') : ''; 
                 
-                if (risk >= $scope.risklevels.riskhigh) 
+                if (risk >= vm.risklevels.riskhigh) 
                     return 'high';
-                else if (risk >= $scope.risklevels.riskmedium && risk < $scope.risklevels.riskhigh)
+                else if (risk >= vm.risklevels.riskmedium && risk < vm.risklevels.riskhigh)
                     return 'med';
-                else if (risk < $scope.risklevels.riskmedium)
+                else if (risk < vm.risklevels.riskmedium)
                     return 'low';
             }
         }
@@ -28,62 +28,25 @@ angular.module('Risk').directive('getRisk', getRisk);
 
 function getRisk(){
      return {
-            restrict: 'A',
-            controller: function ($rootScope, $scope, $http, $sce){
-                
-                $scope.risklevels = {
-                    riskmaximum: '',
-                    riskhigh: '',
-                    riskmedium: '',
-                    riskminimum: ''
-                }
-                
-                $scope.riskMatrix = [];
-                for(var l = 1; l <= 5; l++)
-                {
-                    $scope.riskMatrix[l] = [];
-                    for (var c = 0; c <= 5; c++)
-                    {
-                        $scope.riskMatrix[l][c] = '';  
+            restrict: 'E',
+            controller: function ($scope, $element, $attrs, $http, $sce){
+            
+                angular.element(document.querySelector('link[href="/app/tool/risk/CreateRisk.css"]')).remove();
+                angular.element(document.querySelector('head')).append('<link type="text/css" rel="stylesheet" href="/app/tool/risk/CreateRisk.css"/>'); 
+          
+                return $http.get('/api/riskconfig').then(function(response){
+                    if (response.data.Succeeded){
+                        $scope.ctrl.initRisk(response.data.Result);
+                        $scope.ctrl.setup.done = true;
+                        return response.data.Result;
                     }
-                }
-                
-                $rootScope.initDone = false;
-                         
-                $scope.init = function(){
-                      angular.element(document.querySelector('link[href="/app/tool/risk/CreateRisk.css"]')).remove();
-                      angular.element(document.querySelector('head')).append('<link type="text/css" rel="stylesheet" href="/app/tool/risk/CreateRisk.css"/>'); 
-                      
-                      return $http.get('/api/riskconfig').then(function(response){
-                           if (response.data.Succeeded){
-                                $scope.risklevels.riskmaximum = response.data.Result.Levels[0].riskmaximum;
-                                $scope.risklevels.riskhigh = response.data.Result.Levels[0].riskhigh;
-                                $scope.risklevels.riskmedium = response.data.Result.Levels[0].riskmedium;
-                                $scope.risklevels.riskminimum = response.data.Result.Levels[0].riskminimum; 
-                            
-                             
-                                for (var idx = 0; idx < response.data.Result.Thresholds.length; idx++)
-                                {
-                                    var l = response.data.Result.Thresholds[idx].likelihood;
-                                    var c = response.data.Result.Thresholds[idx].consequence;
-                                    v = response.data.Result.Thresholds[idx].level;
-                                    $scope.riskMatrix[l][c] = v;
-                                }
-                             
-                                return response.data.Result;
-                           }
-                           else{
-                                $scope.msg = $sce.trustAsHtml(response.data);
-                           }
-                      });
-                } 
-                
-                $scope.init().then(function(){
-                    $rootScope.initDone = true;
-                    return $rootScope.initDone;
+                    else{
+                        $scope.msg = $sce.trustAsHtml(response.data);
+                    }
                 });
-            } 
-     }  
+          }
+     } 
+  
 }
 /*.directive('initRiskTable', function(){
     return {
@@ -91,7 +54,7 @@ function getRisk(){
         //transclude: true,
         templateUrl: '/app/tool/risk/RiskTable.html',
         controller: function($scope, $timeout) {
-            $scope.scrollBarWidth = function(){
+            vm.scrollBarWidth = function(){
                     var outer = document.createElement("div");
                     outer.style.visibility = "hidden";
                     outer.style.width = "100px";
@@ -115,8 +78,8 @@ function getRisk(){
 
                     return widthNoScroll - widthWithScroll;
             }
-            $scope.setMarginsWidths = function(){
-                $scope.flag = 0;
+            vm.setMarginsWidths = function(){
+                vm.flag = 0;
                 refresh = 1;
                 var msie = document.documentMode;
                 if(refresh){ 
@@ -124,10 +87,10 @@ function getRisk(){
                 }
                 
                 function refreshEvery(){
-                    if ($scope.flag == 0 || window.devicePixelRatio != $scope.devicePixelRatio)
+                    if (vm.flag == 0 || window.devicePixelRatio != vm.devicePixelRatio)
                     {   
-                        $scope.flag = 1;
-                        $scope.devicePixelRatio = window.devicePixelRatio;
+                        vm.flag = 1;
+                        vm.devicePixelRatio = window.devicePixelRatio;
                         var headers = angular.element(document.querySelector('div.tableheader table.grid thead tr')).children();
                         var cells = angular.element(document.querySelector('div.tablebody table.grid tbody tr:nth-child(1)')).children();
                         angular.forEach(cells, function(cell, idx){
@@ -137,15 +100,15 @@ function getRisk(){
                     }
 
                     if (refresh && !msie)
-                        $scope.refreshingPromise = $timeout(refreshEvery,1);
+                        vm.refreshingPromise = $timeout(refreshEvery,1);
                     else{
-                         $scope.isRefreshing = false;
-                         $timeout.cancel($scope.refreshingPromise);
+                         vm.isRefreshing = false;
+                         $timeout.cancel(vm.refreshingPromise);
                     }
                     
-                    //angular.element(document.querySelector('html')).attr("style", "margin-right: " + 0*$scope.scrollBarWidth() + "px !important");
-                    angular.element(document.querySelector('div.tableheader')).attr("style", "margin-right: " + $scope.scrollBarWidth() + "px !important");
-                    angular.element(document.querySelector('div.tablebody')).attr("style", "margin-right " + $scope.scrollBarWidth() + "px !important");    
+                    //angular.element(document.querySelector('html')).attr("style", "margin-right: " + 0*vm.scrollBarWidth() + "px !important");
+                    angular.element(document.querySelector('div.tableheader')).attr("style", "margin-right: " + vm.scrollBarWidth() + "px !important");
+                    angular.element(document.querySelector('div.tablebody')).attr("style", "margin-right " + vm.scrollBarWidth() + "px !important");    
                 }
             }
         },

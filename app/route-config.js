@@ -98,12 +98,13 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         {
             name: 'risk@create',
             serie: true,
-            files: ['/app/tool/risk/CreateRisk.css',
-                    '/app/tool/risk/CreateRiskController.js',
-                    '/app/tool/risk/RiskDirective.js',
+            files: ['/app/tool/risk/CreateRisk.css',     
+                    '/app/tool/risk/DOMService.js',
+                    '/app/tool/risk/ValidationService.js', 
                     '/app/tool/risk/WebixElemDirective.js',
-                    
-            ]
+                    '/app/tool/risk/RiskDirective.js',
+                    '/app/tool/risk/CreateRiskController.js'
+            ]                                                             
         },
         {
             name: 'risk@edit',

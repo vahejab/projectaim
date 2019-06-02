@@ -73,7 +73,7 @@ common.service("CommonService", function() {
              return;
         }
         scope[type][field] = obj.getValue(); 
-    }   
+    }
     
     return commonFunctions;
 });

@@ -1,4 +1,5 @@
-<div id="formcontainer" ng-app="Risk" ng-controller="CreateRiskController" get-risk>
+<div id="formcontainer" ng-app="Risk" ng-controller="CreateRiskController as ctrl">
+    <get-risk></get-risk>
     <div id="mycreateform" class="container" type="space" layout-padding="" ng-cloak="">     
         <form id="form" name="CreateRisk" role="form" ng-submit="valid() && submit()" novalidate>
             <table id="details" class="layout" border="1">
@@ -7,7 +8,7 @@
                         Title
                     </td>
                     <td class="locked">
-                        <div ng-if="$root.initDone"><div webix-ui="risktitle" width="500" height="30" type="text" id="risktitle" name="risktitle" /></div>
+                        <div ng-show="ctrl.config.risktitle.done" config="risktitle" webix-ui="risktitle" width="500" height="30" type="text" id="risktitle" name="risktitle"></div>
                     </td>
                 </tr>
                 <tr>    
@@ -15,7 +16,7 @@
                         Risk Statement
                     </td>
                     <td class="locked">
-                        <div ng-if="$root.initDone"><div webix-ui="riskstatement" width="500" height="97" type="textarea" id="riskstatement" name="riskstatement" /></div>
+                        <div ng-show="ctrl.config.riskstatement.done" config="riskstatement" webix-ui="riskstatement" width="500" height="97" type="textarea" id="riskstatement" name="riskstatement"></div>
                     </td>
                 </tr>
                 <tr>
@@ -23,7 +24,7 @@
                         Context
                     </td>
                     <td class="locked">
-                        <div ng-if="$root.initDone"><div webix-ui="context" width="500" height="97" type="textarea" id="context" name="context" /></div>
+                        <div ng-show="ctrl.config.context.done" config="context" webix-ui="context" width="500" height="97" type="textarea" id="context" name="context"></div>
                     </td>
                 </tr>
                 <tr>
@@ -31,7 +32,7 @@
                         Closure Criteria
                     </td>
                     <td class="locked">
-                        <div ng-if="$root.initDone"><div webix-ui="closurecriteria" width="500" height="97" type="textarea" id="closurecriteria" name="closurecriteria" /></div>
+                        <div ng-show="ctrl.config.closurecriteria.done" config="closurecriteria" webix-ui="closurecriteria" width="500" height="97" type="textarea" id="closurecriteria" name="closurecriteria"></div>
                     </td>
                 </tr>
                  <!--tr class="text">
@@ -52,7 +53,7 @@
                                 Likelihood
                             </td>
                             <td class="locked">
-                                <div ng-if="$root.initDone"><div webix-ui="likelihood" width="30" height="30" type="level" id="likelihood" name="likelihood" maxlength="1" /></div>
+                               <div ng-show="ctrl.config.likelihood.done" config="likelihood"  webix-ui="likelihood" width="30" height="30" type="level" id="likelihood" name="likelihood" maxlength="1"></div>
                             </td>
                         </tr>
                         <tr>
@@ -65,7 +66,7 @@
                                 Technical
                             </td>
                             <td class="locked">
-                                <div ng-if="$root.initDone"><div webix-ui="technical" width="30" height="30" type="level" id="technical" name="technical" maxlength="1" /></div>
+                                <div ng-show="ctrl.config.technical.done" config="technical" webix-ui="technical" width="30" height="30" type="level" id="technical" name="technical" maxlength="1"></div>
                             </td>
                         </tr>
                          <tr>
@@ -73,7 +74,7 @@
                                 Schedule
                             </td>
                             <td class="locked">
-                                <div ng-if="$root.initDone"><div webix-ui="schedule" width="30" height="30" type="level" id="schedule" name="schedule" maxlength="1" /></div>
+                                <div ng-show="ctrl.config.schedule.done" config="schedule" webix-ui="schedule" width="30" height="30" type="level" id="schedule" name="schedule" maxlength="1"></div>
                             </td>
                         </tr>
                          <tr>
@@ -81,21 +82,21 @@
                                 Cost
                             </td>
                             <td class="locked">
-                               <div ng-if="$root.initDone"><div webix-ui="cost" width="30" height="30" type="level" id="cost" name="cost" maxlength="1" /></div>
+                               <div ng-show="ctrl.config.cost.done" config="cost" webix-ui="cost" width="30" height="30" type="level" id="cost" name="cost" maxlength="1"></div>
                             </td>
                         </tr>
                     </table>
                      <div name="level"></div>
                 </div> 
-                &nbsp;&nbsp;    
-                <div class="info" ng-if="$root.initDone">
+                &nbsp;&nbsp;  
+                <div class="info" ng-if="ctrl.setup.done">
                     <table class="matrix" id="riskmatrix">
                     <tbody>
                     <tr ng-repeat="likelihood in [5,4,3,2,1]">
                             <td ng-if="likelihood == 2" class="vlabel">Likelihood</td>
                             <td ng-if="likelihood != 2"></td>
                             <td class="likelihood">{{likelihood}}</td>
-                            <td ng-repeat="consequence in [1,2,3,4,5]" name="risk[{{likelihood}}][{{consequence}}]" ng-model="riskMatrix[likelihood][consequence]" ng-class="[riskLevel(likelihood,consequence)]"></td>
+                            <td ng-repeat="consequence in [1,2,3,4,5]" name="risk[{{likelihood}}][{{consequence}}]" ng-model="ctrl.riskMatrix[likelihood][consequence]" ng-class="[ctrl.riskLevel(likelihood,consequence)]"></td>
                     </tr>
                     <tr>
                             <td></td>

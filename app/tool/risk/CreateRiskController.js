@@ -1,19 +1,27 @@
-angular.module('Risk').controller('CreateRiskController', ['$http', '$resource', '$scope', '$state', '$window', '$timeout', '$interval', '$sce', 'CommonService', function($http, $resource, $scope, $state, $window, $timeout, $interval, $sce, CommonService){
+angular.module('Risk').controller('CreateRiskController', ['$http', '$resource', '$scope', '$state', '$window', '$timeout', '$interval', '$sce', 'CommonService', 'DOMops', 'ValidationService', function($http, $resource, $scope, $state, $window, $timeout, $interval, $sce, CommonService, DOMops, ValidationService){
     refresh = false;
+
+    this.DOMops = DOMops;
+    this.ValidationService = ValidationService;
+    this.initDone = false;
+    this.setup = {
+        done: false
+    }
+    this.config = {}
+    this.model = { elem: true }
     
-    $scope.risk = {
-                    likelihood:'',
-                    technical:'',
-                    schedule:'',
-                    cost:'',
-                    risktitle:'',
-                    closurecriteria: '',
-                    riskstatement: '',
-                    category: null,
-                    context: ''
-                }
-                
-    $scope.fields = [   
+    this.risk = {
+        risktitle: '',
+        riskstatement: '',
+        context: '',
+        closurecriteria: '',
+        likelihood:'',
+        technical:'',
+        schedule:'',
+        cost:''
+     }; 
+     
+    this.fields = [   
         'risktitle',
         'riskstatement',
         'context',
@@ -23,82 +31,85 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
         'schedule',
         'cost'
     ]
-                     
     
-    $scope.flags = {
+    this.risklevels = {
+        riskmaximum: '',
+        riskhigh: '',
+        riskmedium: '',
+        riskminimum: ''
+    }
+
+    this.flags = {
         disabled: true
     }
-    
-    $scope.categoryConfig = function(){
-        CommonService.categoryConfig();
-    }
-
-    $scope.likelihoodConfig = function(){
-        CommonService.likelihoodConfig();
+  
+    this.riskMatrix = [];
+    for(var l = 1; l <= 5; l++)
+    {
+        this.riskMatrix[l] = [];
+        for (var c = 0; c <= 5; c++)
+        {
+            this.riskMatrix[l][c] = '';  
+        }
     }
      
-    $scope.technicalConfig = function(){
-        CommonService.technicalConfig();
-
-    }
-
-    $scope.scheduleConfig = function(){
-        CommonService.scheduleConfig();
-    }
-
-    $scope.costConfig = function(){
-        CommonService.costConfig();
-    } 
-    
-    
-    
-    $scope.riskLevel = function(l, c){
+    this.riskLevel = function(l, c){
         elem = document.querySelector("div[name='risk["+l+"]["+c+"]']");
-        risk = $scope.riskMatrix[l][c];
+        risk = this.riskMatrix[l][c];
         if (risk == '')
             return (elem && elem.hasAttribute('class'))?
                     elem.getAttribute('class') : ''; 
         
-        if (risk >= $scope.risklevels.riskhigh) 
+        if (risk >= this.risklevels.riskhigh) 
             return 'cell high';
-        else if (risk >= $scope.risklevels.riskmedium && risk < $scope.risklevels.riskhigh)
+        else if (risk >= this.risklevels.riskmedium && risk < this.risklevels.riskhigh)
             return 'cell med';
-        else if (risk < $scope.risklevels.riskmedium)
+        else if (risk < this.risklevels.riskmedium)
             return 'cell low';
     }
 
-    $scope.getTextValueAndValidate = function(code, obj, model, field){
-        if (!$scope.validCharacter(code) && obj.getValue().trim() == '') 
-        {
-            $scope['risk'][field] = '';
-            return;
-        }
-        $scope.clearValidation(field);  
-        CommonService.getTextValue(obj, model, 'risk', field); 
-        $scope.validate(obj, field);
+             
+    this.valid = function(){          
+        return CommonService.riskFormValid(this.fields, this);
     }
     
-    
+    this.invalidLevel = function(lvl){
+        return CommonService.invalidLevel(lvl);
+    }
               
     $scope.$on("$destroy", function(){
          formcheck = 0;
          angular.element(document.querySelector('link[href="/app/tool/risk/CreateRisk.css"]')).remove();   
-    }); 
-
-    $scope.submit = function(){
-        
-        $scope.validateAll($scope.formFields);
-        if (!$scope.valid())
-             $scope.msg = "Please complete form and resubmit";
+    });
+    
+    this.initRisk = function(data){
+        this.risklevels.riskmaximum = data.Levels[0].riskmaximum;
+        this.risklevels.riskhigh = data.Levels[0].riskhigh;
+        this.risklevels.riskmedium = data.Levels[0].riskmedium;
+        this.risklevels.riskminimum = data.Levels[0].riskminimum; 
+    
+     
+        for (var idx = 0; idx < data.Thresholds.length; idx++)
+        {
+            var l = data.Thresholds[idx].likelihood;
+            var c = data.Thresholds[idx].consequence;
+            v = data.Thresholds[idx].level;
+            this.riskMatrix[l][c] = v;
+        }
+    }
+  
+    this.submit = function(){
+        if (!this.valid())
+             this.msg = "Please complete form and resubmit";
         else{ 
-            //$scope.actionitem.duedate = $scope.split($scope.actionitem.duedate,'T')[0];
-            //$scope.actionitem.ecd = $scope.split($scope.actionitem.ecd, 'T')[0];
-            $http.post('/api/risks', $scope.risk).then(function(response){
+            //this.actionitem.duedate = this.split(this.actionitem.duedate,'T')[0];
+            //this.actionitem.ecd = this.split(this.actionitem.ecd, 'T')[0];
+            $http.post('/api/risks', this.risk).then(function(response){
                 if (response.data.Succeeded){
-                    $scope.msg = response.data.Result;
+                    this.msg = response.data.Result;
                 }
                 else{
-                    $scope.msg = $sce.trustAsHtml(response.data);
+                    this.msg = $sce.trustAsHtml(response.data);
                 }
             });
         } 

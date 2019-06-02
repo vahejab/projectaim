@@ -236,6 +236,7 @@ angular.module('Action').directive('initAction', function(){
                 angular.element(tablebody).on("scroll", function(elem, attrs){  //activate when #center scrolls  
                     left = $scope.CommonService.offset(angular.element(document.querySelector("div.tablebody table.grid"))[0]).left; //save #center position to var left
                     (angular.element(tableheader)[0]).scrollLeft = -1*left + $scope.scrollBarWidth();
+                    //(angular.element(tableheader)).attr("style", "transform: translate3d("+ left - $scope.scrollBarWidth() + "px,0,0)");
                 }); 
             }
         }

@@ -56,8 +56,8 @@ angular.module("webix", [])
             //configuration
             var watcher = function(data){
               if (wxRoot) wxRoot.destructor();
-              if ($scope[dataname]){
-                var config = webix.copy($scope[dataname]);
+              if ($scope.ctrl.config[dataname]){
+                var config = webix.copy($scope.ctrl.config[dataname]);
                 config.$scope =$scope;
                 $element[0].innerHTML = "";
                 wxRoot = webix.ui(config, $element[0]);

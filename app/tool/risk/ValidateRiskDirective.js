@@ -1,6 +1,6 @@
 angular.module('Risk').directive('ValidateElement', validateElement);
 
-function ValidateElement(){                     
+function ValidateElement(DOMops){                     
       return {
             restrict: 'A',
             link: function (scope, element, attrs) {
@@ -14,7 +14,7 @@ function ValidateElement(){
                 }
                 
                 function isLevelField(id){
-                    return (id == 'likelihood' || id == 'technical' || id == 'schedule' || id == 'cost');
+                    return scope.isLevelField(id);
                 }
   
                 function riskNotEmpty(l, t, s, c){
@@ -73,19 +73,7 @@ function ValidateElement(){
                                 makeInvalid(field);                                
                        }
                 }
-                
-                function valid(){          
-                    for (var idx = 0; idx < fields.length; idx++){
-                        field = fields[idx];
-                        if (isLevelField(field) && !validLevel(scope.risk[field]))
-                            return false;
-                        else if (scope.risk[field] == '')
-                            reutrn false
-                    }
-                    
-                    return true;
-                }
-                              
+                           
                 function drawDot(l, c){
                     document.querySelector("td[name='risk["+l+"]["+c+"]']").innerHTML 
                     = "<div class='level' style='width:15px; height:15px; background-color: black'/>";

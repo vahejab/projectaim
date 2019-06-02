@@ -23,7 +23,7 @@
     } 
   </style>
 </head>
-<body ng-app="Main" ng-controller="MainController" ng-init="init()">
+<body ng-app="Main">
         <a class="nav-link">
             <img id="logo" src="/app/assets/images/ProjectAIM.png" />
         </a>      

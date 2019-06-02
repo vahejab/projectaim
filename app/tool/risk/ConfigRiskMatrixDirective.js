@@ -5,8 +5,7 @@ function configMatrix(){
         restrict: 'A', 
         link: function(scope, element, attrs){
         },
-        controller: function($scope){
-             
+        controller: function($scope){ 
             $scope.riskLevel = function(l, c){
                 elem = document.querySelector("input[name='risk["+l+"]["+c+"]']");
                 risk = elem.value;
