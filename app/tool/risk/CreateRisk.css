@@ -13,6 +13,7 @@
     vertical-align: middle;
     line-height: 2px;
 }
+
 #riskmatrix{
     border-spacing: 0;
     border-collapse: collapse;
@@ -97,7 +98,6 @@ td.low, td.med, td.high{
 {
     height: 20px !important;
 }
-
  
 div.low{
     background-color: #00b050 !important;    

@@ -27,7 +27,7 @@ td.red{
 }
 
 td.yellow{
-    background-color: #eeee00 ;
+    background-color: #eeee00;
 }
 
 td.green{
@@ -52,6 +52,7 @@ td.label{
 
 div.nested{
     text-align: center !important;
+    margin-right:  20px;
 } 
 
 .grid th:hover{
@@ -59,15 +60,25 @@ div.nested{
 }  
 
 @media only screen and (max-width: 800px) {
-
-
-div.nested table#details{
-    width: 151px !important;
-    max-width: 151px !important;
-    margin-bottom: 10px;
-    margin-left:  34px;
-    /* padding-left:  5px; */
-}
+    
+    div.nested table#details tr:not(:nth-child(2)) td:first-child{
+        width: 400px;
+    }
+    
+    div.nested div.info{
+        margin-left: 0;
+    }
+      
+    div.nested table#details,
+    div.nested div#level{
+        width: 151px !important;
+        margin-left: 35px;
+    }
+    
+    div#level{
+        height: 24px;
+        margin-bottom: 10px;
+    }
 
     table#summary td.label,
     table#details td.label {
@@ -110,7 +121,6 @@ div.nested table#details{
 } 
 @media only screen and (min-width: 801px){
   
-  
     table#summary td.label,
     table#details td.label {
         background-color: #0038a8 !important;
@@ -119,8 +129,6 @@ div.nested table#details{
         color: white !important;
         text-align: left !important;
     }
-  
-
 
     div.ui-view,
     div.ui-view table:not(.grid){
@@ -455,6 +463,8 @@ div.nested > table{
     vertical-align: top;
     /* margin: 0 auto !important; */
     /* width:  100%; */
+    maring-left:  10px;
+    /* padding-left:  100px; */
 }
 
 .margin-left{
@@ -474,4 +484,9 @@ td.med{
 }
 td.high{
     background-color: #ee0000 !important;
+}
+
+div.center{
+    margin: 0 auto;
+    text-align: center;
 }

@@ -1,7 +1,7 @@
-<div id="formcontainer" ng-app="Risk" ng-controller="CreateRiskController as ctrl">
+<div id="formcontainer" ng-app="Risk" ng-controller="CreateRiskController as ctrl" ng-cloak>
     <get-risk></get-risk>
-    <div id="mycreateform" class="container" type="space" layout-padding="" ng-cloak="">     
-        <form id="form" name="CreateRisk" role="form" ng-submit="valid() && submit()" novalidate>
+    <div id="mycreateform" class="container" type="space" layout-padding="">     
+        <form id="form" name="CreateRisk" role="form" ng-submit="ctrl.valid() && ctrl.submit()" novalidate>
             <table id="details" class="layout" border="1">
                 <tr>
                     <td class="label">
@@ -35,16 +35,8 @@
                         <div ng-show="ctrl.config.closurecriteria.done" config="closurecriteria" webix-ui="closurecriteria" width="500" height="97" type="textarea" id="closurecriteria" name="closurecriteria"></div>
                     </td>
                 </tr>
-                 <!--tr class="text">
-                        <td class="label">
-                            Category
-                        </td>
-                        <td class="locked">
-                             <div id="category" name="category" />
-                        </td>
-                  </tr-->
             </table>
-            <h2>Initial Risk Assessment</h2>
+            <div class="center"<h2>Initial Risk Assessment</h2></div>
             <div class="nested">
                 <div class="info">
                     <table id="details" border="1">
@@ -86,7 +78,7 @@
                             </td>
                         </tr>
                     </table>
-                     <div name="level"></div>
+                    <div id="level" name="level"></div>
                 </div> 
                 &nbsp;&nbsp;  
                 <div class="info" ng-if="ctrl.setup.done">
@@ -110,16 +102,11 @@
                 </div>
                  &nbsp;&nbsp;   
             </div>
-        <divider></divider>
-        <div>
-            <div>
-              <button id="submit" type="submit" disabled="disabled" class="raised primary">Create Risk</button>
-            </div>
-        </div>
-        <div>
-          <div class="msg" layout-align="center">
+        <br />
+        <div class="center">
+            <button id="submit" type="submit" disabled="disabled" class="raised primary">Create Risk</button>
+            </br />
             <span ng-bind-html="msg">{{msg}}</span>
-          </div>
         </div>
         </form>
     </div>

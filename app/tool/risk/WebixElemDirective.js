@@ -43,7 +43,7 @@ function ConfigElement(){
                     "onBlur": function(){  
                         var obj = this.eventSource || this;  
                         code = this.getValue();
-                        scope.ctrl.ValidationService.updateAndValidate(code, scope.ctrl, obj, attr); 
+                        scope.ctrl.ValidationService.getTextValueAndValidate(code, scope.ctrl, obj, attr); 
                     }
                 },
                 responsive: true,
@@ -61,8 +61,5 @@ function ConfigElement(){
                     
 
 function ConfigController($scope, $element, $attrs){
-            $scope.ctrl.config[$attrs.config] = {done: false};
-            //$scope.$eval($attrs.onConfig, {$config: $scope.config[$attrs.name]});                    
-     // }
-   //});  
+    $scope.ctrl.config[$attrs.config] = {done: false};
 }       

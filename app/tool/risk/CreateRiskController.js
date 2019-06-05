@@ -8,7 +8,6 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
     }
     this.config = {}
     this.model = { elem: true }
-    
     this.risk = {
         risktitle: '',
         riskstatement: '',
@@ -51,7 +50,7 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
             this.riskMatrix[l][c] = '';  
         }
     }
-     
+         
     this.riskLevel = function(l, c){
         elem = document.querySelector("div[name='risk["+l+"]["+c+"]']");
         risk = this.riskMatrix[l][c];
@@ -69,7 +68,7 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
 
              
     this.valid = function(){          
-        return CommonService.riskFormValid(this.fields, this);
+        return ValidationService.valid(this.fields);
     }
     
     this.getTextValue = function(obj, type, field){
@@ -100,19 +99,23 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
             this.riskMatrix[l][c] = v;
         }
     }
+    
+    $scope.resetForm = function(){
+        DOMops.resetForm($scope.ctrl.risk, $scope.ctrl.fields);
+    }
   
     this.submit = function(){
         if (!this.valid())
              this.msg = "Please complete form and resubmit";
         else{ 
-            //this.actionitem.duedate = this.split(this.actionitem.duedate,'T')[0];
-            //this.actionitem.ecd = this.split(this.actionitem.ecd, 'T')[0];
-            $http.post('/api/risks', this.risk).then(function(response){
+            return $http.post('/api/risks', this.risk).then(function(response){
                 if (response.data.Succeeded){
-                    this.msg = response.data.Result;
+                    $scope.msg = response.data.Result;
+                    $scope.resetForm();
+                    return response.data.Result;
                 }
                 else{
-                    this.msg = $sce.trustAsHtml(response.data);
+                    $scope.msg = $sce.trustAsHtml(response.data);
                 }
             });
         } 

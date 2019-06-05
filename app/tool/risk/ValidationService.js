@@ -35,7 +35,7 @@ angular.module('Risk').service("ValidationService", function() {
             else if (commonFunctions.risk[field] == '')
                 return false;
         }
-        return true; 
+            return true; 
     }
    
     commonFunctions.riskIsValid = function(l,t,s,c){

@@ -42,7 +42,7 @@ angular.module('Risk').service("DOMops", function() {
             commonFunctions.clearDot();
         }
     }
-    
+      
     commonFunctions.clearValidation = function(id){
         (document.querySelector('#'+id+ ' > div.webix_control')).classList.remove("webix_invalid");
     }
@@ -50,6 +50,11 @@ angular.module('Risk').service("DOMops", function() {
     commonFunctions.makeInvalid = function(id){
         (document.querySelector('#'+id+' > div.webix_control')).classList.add("webix_invalid");
     }
+     
+    commonFunctions.clearElement = function(id){
+        (document.querySelector('#'+id+' > div.webix_control')).text = '';
+    }
+    
     
     commonFunctions.clearDot = function(){                       
         levelDiv = document.querySelector("div.level");
@@ -69,6 +74,26 @@ angular.module('Risk').service("DOMops", function() {
         document.querySelector("td[name='risk["+l+"]["+c+"]']").innerHTML 
         = "<div class='level' style='width:15px; height:15px; background-color: black'/>";
     }
+    
+    commonFunctions.clearLevel = function(){
+        element =  document.querySelector("#level");
+        element.innerHTML = '';
+        element.classList.remove('high');
+        element.classList.remove('med');
+        element.classList.remove('low');
+    }
+    
+    commonFunctions.resetForm = function(risk, fields){
+          for (var idx = 0; idx < fields.length; idx++){
+            field = fields[idx];
+            risk[field] = '';
+            commonFunctions.clearElement(field);
+          }
+          commonFunctions.clearDot();
+          commonFunctions.clearLevel()
+          commonFunctions.disableElement('#submit');                         
+    }
+   
     
     commonFunctions.displayLevel = function(level, l, c){
        leveldiv =  document.querySelector("div[name='level']");
