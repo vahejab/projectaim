@@ -83,6 +83,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             serie: true,
             files: [
                     '/app/tool/action/EditActionItem.css',
+                    '/app/tool/risk/WebixElemDirective.js',
                     '/app/tool/action/ActionDirective.js',
                     '/app/tool/action/EditActionController.js'
             ]
@@ -91,7 +92,8 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             name: 'risk@summary',
             serie: true,
             files: [
-                    '/app/tool/risk/RiskDirective.js',
+                    '/app/tool/risk/directives/RiskDirective.js',
+                    '/app/tool/risk/directives/InitRiskTableDirective.js',
                     '/app/tool/risk/RiskSummaryController.js'
             ],
         },
@@ -99,10 +101,10 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             name: 'risk@create',
             serie: true,
             files: ['/app/tool/risk/CreateRisk.css',     
-                    '/app/tool/risk/DOMService.js',
-                    '/app/tool/risk/ValidationService.js', 
-                    '/app/tool/risk/WebixElemDirective.js',
-                    '/app/tool/risk/RiskDirective.js',
+                    '/app/tool/risk/services/DOMService.js',
+                    '/app/tool/risk/services/ValidationService.js', 
+                    '/app/tool/risk/directives/RiskDirective.js',
+                    '/app/tool/risk/directives/WebixElemDirective.js',
                     '/app/tool/risk/CreateRiskController.js'
             ]                                                             
         },
@@ -111,7 +113,11 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             serie: true,
             files: [
                     '/app/tool/risk/EditRisk.css',
-                    '/app/tool/risk/RiskDirective.js',
+                    '/app/tool/risk/services/DOMService.js',
+                    '/app/tool/risk/services/ValidationService.js', 
+                    '/app/tool/risk/directives/RiskDirective.js',
+                    '/app/tool/risk/directives/GetRiskDirective.js',
+                    '/app/tool/risk/directives/WebixElemDirective.js',
                     '/app/tool/risk/EditRiskController.js'
             ]
         },

@@ -1,29 +1,6 @@
-angular.module('Risk').directive('configMatrix', configMatrix);
+angular.module('Risk').directive('initRiskTable', initRiskTable);
 
-function configMatrix(){
-     return {
-        restrict: 'A', 
-        link: function(scope, element, attrs){
-        },
-        controller: function($scope){ 
-            $scope.riskLevel = function(l, c){
-                elem = document.querySelector("input[name='risk["+l+"]["+c+"]']");
-                risk = elem.value;
-                
-                if (risk == '')
-                    return (elem && elem.hasAttribute('class'))?
-                            elem.getAttribute('class') : ''; 
-                
-                if (risk >= $scope.risklevels.riskhigh) 
-                    return 'high';
-                else if (risk >= $scope.risklevels.riskmedium && risk < $scope.risklevels.riskhigh)
-                    return 'med';
-                else if (risk < $scope.risklevels.riskmedium)
-                    return 'low';
-            }
-        }
-     }       
-}/*.directive('initRiskTable', function(){
+function initRiskTable(){
     return {
         restrict: 'A',
         //transclude: true,
@@ -93,18 +70,4 @@ function configMatrix(){
             });
         }
     }
-}).directive('load', function(){
-        function link(scope, elem, attrs){
-            scope.init().then(function(){
-                    for (var likelihood = 1; likelihood <= 5; likelihood++)
-                        for (var consequence = 1; consequence <= 5; consequence++)
-                            scope.risk[likelihood][consequence] = (((0.9*likelihood*consequence)/25) + 0.05).toFixed(2);  
-            }); 
-        }
-        var directive = {
-            restrict: 'A',
-            link: link
-        };
-        
-        return directive;
-});*/
+}

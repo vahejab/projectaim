@@ -65,6 +65,15 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
         $scope.getStatus = function(date1, date2){
            return CommonService.getStatus(date1, date2); 
         }
+        
+        $scope.getLevel = function(risk, l, c){
+           if (risk >= $scope.risklevels.riskhigh)
+               return  {level: 'H ' + l + '-' + c, cls: 'high', threshold: level};
+           else if (risk < $scope.risklevels.riskhigh  && risk >= $scope.risklevels.riskmedium)
+                return {level: 'M ' + l + '-' + c, cls: 'med', threshold: level};
+           else if (risk < $scope.risklevels.riskmedium)
+                return {level:'L ' + l + '-' + c, cls: 'low', threshold: level}
+        }  
  
         $scope.getRisk = function(l, t, s, c){
             

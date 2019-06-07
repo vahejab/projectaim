@@ -1,14 +1,17 @@
 angular.module('Risk').controller('CreateRiskController', ['$http', '$resource', '$scope', '$state', '$window', '$timeout', '$interval', '$sce', 'CommonService', 'DOMops', 'ValidationService', function($http, $resource, $scope, $state, $window, $timeout, $interval, $sce, CommonService, DOMops, ValidationService){
     refresh = false;
-    this.DOMops = DOMops;
-    this.ValidationService = ValidationService;
-    this.initDone = false;
-    this.setup = {
+    var ctrl = this;
+    
+    ctrl.DOMops = DOMops;
+    ctrl.ValidationService = ValidationService;
+    ctrl.initDone = false;
+    ctrl.setup = {
         done: false
     }
-    this.config = {}
-    this.model = { elem: true }
-    this.risk = {
+    ctrl.users = {}
+    ctrl.config = {}
+    ctrl.model = { elem: true }
+    ctrl.risk = {
         risktitle: '',
         riskstatement: '',
         context: '',
@@ -19,7 +22,7 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
         cost:''
      }; 
      
-    this.fields = [   
+    ctrl.fields = [   
         'risktitle',
         'riskstatement',
         'context',
@@ -30,52 +33,52 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
         'cost'
     ]
     
-    this.risklevels = {
+    ctrl.risklevels = {
         riskmaximum: '',
         riskhigh: '',
         riskmedium: '',
         riskminimum: ''
     }
 
-    this.flags = {
+    ctrl.flags = {
         disabled: true
     }
   
-    this.riskMatrix = [];
+    ctrl.riskMatrix = [];
     for(var l = 1; l <= 5; l++)
     {
-        this.riskMatrix[l] = [];
+        ctrl.riskMatrix[l] = [];
         for (var c = 0; c <= 5; c++)
         {
-            this.riskMatrix[l][c] = '';  
+            ctrl.riskMatrix[l][c] = '';  
         }
     }
          
-    this.riskLevel = function(l, c){
+    ctrl.riskLevel = function(l, c){
         elem = document.querySelector("div[name='risk["+l+"]["+c+"]']");
-        risk = this.riskMatrix[l][c];
+        risk = ctrl.riskMatrix[l][c];
         if (risk == '')
             return (elem && elem.hasAttribute('class'))?
                     elem.getAttribute('class') : ''; 
         
-        if (risk >= this.risklevels.riskhigh) 
+        if (risk >= ctrl.risklevels.riskhigh) 
             return 'cell high';
-        else if (risk >= this.risklevels.riskmedium && risk < this.risklevels.riskhigh)
+        else if (risk >= ctrl.risklevels.riskmedium && risk < ctrl.risklevels.riskhigh)
             return 'cell med';
-        else if (risk < this.risklevels.riskmedium)
+        else if (risk < ctrl.risklevels.riskmedium)
             return 'cell low';
     }
 
              
-    this.valid = function(){          
-        return ValidationService.valid(this.fields);
+    ctrl.valid = function(){          
+        return ValidationService.valid(ctrl.fields);
     }
     
-    this.getTextValue = function(obj, type, field){
-        return CommonService.getTextValue(obj, this, type, field);
+    ctrl.getTextValue = function(obj, type, field){
+        return CommonService.getTextValue(obj, ctrl, type, field);
     }
   
-    this.invalidLevel = function(lvl){
+    ctrl.invalidLevel = function(lvl){
         return CommonService.invalidLevel(lvl);
     }
            
@@ -84,11 +87,11 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
          angular.element(document.querySelector('link[href="/app/tool/risk/CreateRisk.css"]')).remove();   
     });
     
-    this.initRisk = function(data){
-        this.risklevels.riskmaximum = data.Levels[0].riskmaximum;
-        this.risklevels.riskhigh = data.Levels[0].riskhigh;
-        this.risklevels.riskmedium = data.Levels[0].riskmedium;
-        this.risklevels.riskminimum = data.Levels[0].riskminimum; 
+    ctrl.initRisk = function(data){
+        ctrl.risklevels.riskmaximum = data.Levels[0].riskmaximum;
+        ctrl.risklevels.riskhigh = data.Levels[0].riskhigh;
+        ctrl.risklevels.riskmedium = data.Levels[0].riskmedium;
+        ctrl.risklevels.riskminimum = data.Levels[0].riskminimum; 
     
      
         for (var idx = 0; idx < data.Thresholds.length; idx++)
@@ -96,22 +99,22 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
             var l = data.Thresholds[idx].likelihood;
             var c = data.Thresholds[idx].consequence;
             v = data.Thresholds[idx].level;
-            this.riskMatrix[l][c] = v;
+            ctrl.riskMatrix[l][c] = v;
         }
     }
     
-    $scope.resetForm = function(){
-        DOMops.resetForm($scope.ctrl.risk, $scope.ctrl.fields);
+    ctrl.resetForm = function(){ 
+        DOMops.resetForm(ctrl.risk, ctrl.fields);
     }
   
-    this.submit = function(){
-        if (!this.valid())
-             this.msg = "Please complete form and resubmit";
+    ctrl.submit = function(){
+        if (!ctrl.valid())
+             ctrl.msg = "Please complete form and resubmit";
         else{ 
-            return $http.post('/api/risks', this.risk).then(function(response){
+            return $http.post('/api/risks', ctrl.risk).then(function(response){
                 if (response.data.Succeeded){
                     $scope.msg = response.data.Result;
-                    $scope.resetForm();
+                    ctrl.resetForm();
                     return response.data.Result;
                 }
                 else{
@@ -120,4 +123,4 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
             });
         } 
     }
-}]);
+}]); 

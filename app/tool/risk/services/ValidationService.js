@@ -58,7 +58,7 @@ angular.module('Risk').service("ValidationService", function() {
     }
     
     commonFunctions.validate = function(elem, scope, id){
-       if (commonFunctions.isLevelField(id) && (!commonFunctions.validLevel(elem) || commonFunctions.fieldEmpty(elem))){
+        if (commonFunctions.isLevelField(id) && (!commonFunctions.validLevel(elem) || commonFunctions.fieldEmpty(elem))){
             DOMops.makeInvalid(id);
             DOMops.clearDot();                                                     
        }        

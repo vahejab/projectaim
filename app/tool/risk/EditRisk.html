@@ -1,16 +1,17 @@
-<div id="formcontainer"  ng-controller="EditRiskController">
-    <div id="myeditform" type="space" layout-padding="" ng-cloak="">   
-        <form webix-ui="config" id="form" name="EditRisk" role="form" ng-submit="EditRisk.$valid" novalidate>
+<div id="formcontainer"  ng-app="Risk" ng-controller="EditRiskController as ctrl">
+    <get-risk></get-risk>
+    <div ng-if="ctrl.initDone && ctrl.userDone" id="myeditform" type="space" layout-padding="" ng-cloak="">   
+        <form id="form" name="EditRisk" role="form" ng-submit="ctrl.valid() && ctrl.submit()" novalidate>
             <div class="layout">
                     <table id="summary" class="layout" border="1">
                         <tr>
                             <td class="label">Risk #</td>
-                            <td class="locked">{{risk.riskid}}</td>
+                            <td class="locked">{{ctrl.risk.riskid}}</td>
                             <td class="label">
                                 Current Risk Level
                             </td>
-                            <td class="locked {{risk.risklevel.cls}}">
-                               {{risk.risklevel.level}}
+                            <td class="locked {{ctrl.risk.risklevel.cls}}">
+                                {{ctrl.risk.risklevel.level}}
                             </td>
                         </tr>
                         <tr>
@@ -18,13 +19,13 @@
                                 Owner
                             </td>
                             <td class="locked">
-                               <div webix-ui="ownerConfig" id="owner" name="owner" />
+                               <div ng-show="ctrl.config.owner.done" config="owner" webix-ui="owner" id="owner" width="200" height="30" name="owner" options="users" type="richselect" />
                             </td>
                             <td class="label">
                                 Risk State
                             </td>
                             <td class="locked">
-                               {{risk.riskstate}}
+                               Open
                             </td>
                         </tr>
                          <tr>
@@ -32,13 +33,13 @@
                                 Team
                             </td>
                             <td class="locked">
-                               <div webix-ui="teamConfig" id="team" name="team" />
+                               <div webix-ui="team" id="team" name="team" />
                             </td>
                             <td class="label">
                                 Risk Approver
                             </td>
                             <td class="locked">
-                               <div webix-ui="approverConfig" id="approver" name="approver" />
+                               <div ng-show="ctrl.config.approver.done" config="approver" webix-ui="approver" id="approver" width="200" height="30" name="approver" options="users" type="richselect" />
                             </td>
                         </tr>
                     </table>
@@ -51,7 +52,7 @@
                                 Title
                             </td>
                             <td class="locked">
-                                <div webix-ui="risktitleConfig" id="risktitle" name="risktitle" />
+                                <div ng-show="ctrl.config.risktitle.done" config="risktitle" webix-ui="risktitle" width="500" height="30" type="text" id="risktitle" name="risktitle"></div>
                             </td>
                         </tr>
                         <tr>
@@ -59,7 +60,7 @@
                                 Risk Statement
                             </td>
                             <td  class="locked" style="vertical-align: top">
-                                <div webix-ui="riskstatementConfig" id="riskstatement" name="riskstatement" />
+                                <div ng-show="ctrl.config.closurecriteria.done" config="closurecriteria" webix-ui="closurecriteria" width="500" height="97" type="textarea" id="closurecriteria" name="closurecriteria"></div>
                             </td>
                         </tr>
                         <tr>
@@ -67,7 +68,7 @@
                                 Context
                             </td>
                             <td  class="locked" style="vertical-align: top">
-                                <div webix-ui="contextConfig" id="context" name="context" />
+                                 <div ng-show="ctrl.config.context.done" config="context" webix-ui="context" width="500" height="97" type="textarea" id="context" name="context"></div>
                             </td>
                         </tr>
                         <tr>
@@ -75,7 +76,7 @@
                                 Closure Criteria
                             </td>
                             <td  class="locked" style=" vertical-align: top">
-                                <div webix-ui="closurecriteriaConfig" id="closurecriteria" name="closurecriteria" />
+                                 <div ng-show="ctrl.config.closurecriteria.done" config="closurecriteria" webix-ui="closurecriteria" width="500" height="97" type="textarea" id="closurecriteria" name="closurecriteria"></div>
                             </td>
                         </tr>
                         <tr>
@@ -83,7 +84,7 @@
                                 Owner Notes
                             </td>
                             <td  class="locked" style=" vertical-align: top">
-                                <div webix-ui="ownernotesConfig" id="ownernotes" name="ownernotes" />
+                                 <div ng-show="ctrl.config.ownernotes.done" config="ownernotes" webix-ui="ownernotes" width="500" height="97" type="textarea" id="ownernotes" name="ownernotes"></div>
                             </td>
                         </tr>
                         <tr>
@@ -91,18 +92,12 @@
                                 Approver Comments
                             </td>
                             <td  class="locked" style=" vertical-align: top">
-                                <div webix-ui="approvercommentsConfig" id="approvercomments" name="approvercomments" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label" style="vertical-align: top">
-                                Activity Log
-                            </td>
-                            <td  class="locked" style=" vertical-align: top">
-                                <div class="read">{{risk.activitylog}}</div>
+                                <div ng-show="ctrl.config.approvercomments.done" config="approvercomments" webix-ui="approvercomments" width="500" height="97" type="textarea" id="approvercomments" name="approvercomments"></div>
                             </td>
                         </tr>
                     </table>
+                                                  
+                    <div config="risk" webix-ui="risk" type="datatable" />
             </div> 
             <div>
               <!--button class="raised">Button</button-->
