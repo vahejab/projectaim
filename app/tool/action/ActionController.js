@@ -1,11 +1,12 @@
 angular.module('Action').controller('ActionController', ['$http', '$resource', '$scope', '$state', '$window', '$timeout', '$interval', '$sce', 'CommonService',/*'DTOptionsBuilder',*/ function($http, $resource, $scope, $state, $window, $timeout, $interval, $sce, CommonService/*, DTOptionsBuilder*/){
-        refresh = true;
-        $scope.CommonService = CommonService;
-        $scope.actionitems = [];                          
-        $scope.actionitem = {
+        refresh = true; 
+        var ctrl = this;
+        ctrl.CommonService = CommonService;
+        ctrl.actionitems = [];                          
+        ctrl.actionitem = {
                 actionitemid: 0,
                 actionitemtitle: '',
-                status: (this.completiondate) ? 'Open' : 'Completed',
+                status: (ctrl.completiondate) ? 'Open' : 'Completed',
                 criticality: '',
                 critlevel: 0,
                 assignor: '',
@@ -28,39 +29,37 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
            return $resource('actionitems.json').query().$promise;
         }   
         
-        $scope.propertyName = 'actionitemid';
-        $scope.reverse = false;
+        ctrl.propertyName = 'actionitemid';
+        ctrl.reverse = false;
                 
-        $scope.sort = function(propertyName) {
-            $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
-            $scope.propertyName = propertyName;
+        ctrl.sort = function(propertyName) {
+            ctrl.reverse = (ctrl.propertyName === propertyName) ? !ctrl.reverse : false;
+            ctrl.propertyName = propertyName;
         };
         
-        
-      
-        $scope.devicePixelRatio = window.devicePixelRatio;
-        $scope.flag = 0;
+        ctrl.devicePixelRatio = window.devicePixelRatio;
+        ctrl.flag = 0;
  
         
         $scope.$on("$destroy", function(){
              angular.element(document.querySelector('link[href="/app/tool/action/ActionItems.css"]')).remove();   
-             $timeout.cancel($scope.refreshingPromise);
-             $scope.isRefreshing = false;  //stop refreshing
-             $scope.refresh = false;
+             $timeout.cancel(ctrl.refreshingPromise);
+             ctrl.isRefreshing = false;  //stop refreshing
+             ctrl.refresh = false;
              refresh = false;
         });
 
         
-        $scope.formatCriticality = function(value){ 
+        ctrl.formatCriticality = function(value){ 
             return CommonService.formatCriticality(value);
         }
         
-        $scope.getStatus = function(date1, date2){
+        ctrl.getStatus = function(date1, date2){
            return CommonService.getStatus(date1, date2); 
         }
         
            
-        $scope.critlevels = 
+        ctrl.critlevels = 
         [
           {id: 0, value: ''},
           {id: 1, value: 'High'},
@@ -78,7 +77,7 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
                             actionitemid: actionitem.actionitemid, 
                             actionitemtitle: actionitem.actionitemtitle,
                             critlevel: actionitem.criticality,
-                            criticality: $scope.critlevels[actionitem.criticality || 0].value,
+                            criticality: ctrl.critlevels[actionitem.criticality || 0].value,
                             assignor: actionitem.assignor,
                             owner: actionitem.owner,
                             altowner: actionitem.altowner,
@@ -90,7 +89,8 @@ angular.module('Action').controller('ActionController', ['$http', '$resource', '
                             closeddate: actionitem.closeddate
                         };    
                     });
-                    $scope.actionitems = response.data.Result;
+                    $scope.msg = "Action Item Created!";
+                    ctrl.actionitems = response.data.Result;
                     return response.data.Result;
                }
                else{  

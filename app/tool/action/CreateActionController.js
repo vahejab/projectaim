@@ -1,8 +1,9 @@
 angular.module('Action').config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
   }]).controller('CreateActionController', ['$http', '$resource', '$scope', '$window', '$state', '$interval', '$timeout', '$sce', 'CommonService', function($http, $resource, $scope, $window, $state, $interval, $timeout, $sce, CommonService){
          refresh = false;
-         
-         $scope.actionitem = {
+         var ctrl = this;
+         ctrl.config = {}
+         ctrl.actionitem = {
                 actionitemid: '',
                 status: (this.completiondate) ? 'Open' : 'Completed',
                 criticality: 0,
@@ -23,36 +24,36 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                 activitylog: ''
         }  
         
-        $scope.assignor = {
+        ctrl.assignor = {
             id: '',
             value: ''
         }
         
-        $scope.owner = {
+        ctrl.owner = {
             id: '',
             value: ''
         }
         
-        $scope.altowner = {
+        ctrl.altowner = {
             id: '',
             value: ''
         }
         
-        $scope.approver = {
+        ctrl.approver = {
             id: '',
             value: ''
         }
 
-        $scope.criticality = {
+        ctrl.criticality = {
             id: '',
             value: ''
         }
   
     
-        $scope.users = [];
-        $scope.minDate = null;
+        ctrl.users = [];
+        ctrl.minDate = null;
         
-        $scope.critlevels = 
+        ctrl.critlevels = 
         [
           {id: 1, value: 'High'},
           {id: 2, value: 'Med'},
@@ -60,45 +61,45 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
           {id: 4, value: 'None'} 
         ]; 
           
-        $scope.getUsers = function(){
-            return $scope.users;  
+        ctrl.getUsers = function(){
+            return ctrl.users;  
         };
         
-        $scope.getMinDate = function(){  
-            return $scope.minDate;
+        ctrl.getMinDate = function(){  
+            return ctrl.minDate;
         }
         
-        $scope.getCrticalities = function(){
-            return $scope.criricalitylevels;
+        ctrl.getCrticalities = function(){
+            return ctrl.criricalitylevels;
         }                       
              
-        $scope.init = function(){
+        ctrl.init = function(){
             return $http.get('api/users').then(function(response){
                 if (response.data.Succeeded){
                 
                    for (var key = 0; key < response.data.Result.length; key++){
                         user = response.data.Result[key];     
-                        $scope.users.push({id: user.id, value: user.name});
+                        ctrl.users.push({id: user.id, value: user.name});
                    }
             
                    return response.data.Result;
                 }
                 else{
-                     $scope.msg = $sce.trustAsHtml(response.data);
+                     ctrl.msg = $sce.trustAsHtml(response.data);
                 }
             }); 
         }
         
-        $scope.clearValidation = function(id){
+        ctrl.clearValidation = function(id){
             (document.querySelector('#'+id+' > div.webix_control')).classList.remove("webix_invalid");
         }
         
-        $scope.validate = function(elem, id){
+        ctrl.validate = function(elem, id){
            if (typeof elem == 'undefined' || elem == 0 || elem == '' || elem.trim() == '') (document.querySelector('#'+id+' > div.webix_control')).classList.add("webix_invalid");
         }
                
 
-        $scope.validateAll = function(){
+        ctrl.validateAll = function(){
         
                (document.querySelector('#assignor > div.webix_control')).classList.remove("webix_invalid");
                (document.querySelector('#duedate > div.webix_control')).classList.remove("webix_invalid");
@@ -110,64 +111,64 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
                (document.querySelector('#actionitemstatement > div.webix_control')).classList.remove("webix_invalid");
                (document.querySelector('#closurecriteria > div.webix_control')).classList.remove("webix_invalid");
                
-               if ($scope.actionitem.assignor == 0) (document.querySelector('#assignor > div.webix_control')).classList.add("webix_invalid");
-               if ($scope.actionitem.duedate == '') (document.querySelector('#duedate > div.webix_control')).classList.add("webix_invalid");
-               if ($scope.actionitem.ecd == '' )   (document.querySelector('#ecd > div.webix_control')).classList.add("webix_invalid");
-               if (typeof $scope.actionitem.critlevel === 'undefined') (document.querySelector('#criticality > div.webix_control')).classList.add("webix_invalid");
-               if ($scope.actionitem.owner == 0 ) (document.querySelector('#owner > div.webix_control')).classList.add("webix_invalid");
-               if ($scope.actionitem.altowner == 0 ) (document.querySelector('#altowner > div.webix_control')).classList.add("webix_invalid");
-               if ($scope.actionitem.actionitemtitle.trim() == '' )  (document.querySelector('#actionitemtitle > div.webix_control')).classList.add("webix_invalid");
-               if ($scope.actionitem.actionitemstatement.trim() == '')  (document.querySelector('#actionitemstatement > div.webix_control')).classList.add("webix_invalid");
-               if ($scope.actionitem.closurecriteria.trim() == '') (document.querySelector('#closurecriteria > div.webix_control')).classList.add("webix_invalid");
+               if (ctrl.actionitem.assignor == 0) (document.querySelector('#assignor > div.webix_control')).classList.add("webix_invalid");
+               if (ctrl.actionitem.duedate == '') (document.querySelector('#duedate > div.webix_control')).classList.add("webix_invalid");
+               if (ctrl.actionitem.ecd == '' )   (document.querySelector('#ecd > div.webix_control')).classList.add("webix_invalid");
+               if (typeof ctrl.actionitem.critlevel === 'undefined') (document.querySelector('#criticality > div.webix_control')).classList.add("webix_invalid");
+               if (ctrl.actionitem.owner == 0 ) (document.querySelector('#owner > div.webix_control')).classList.add("webix_invalid");
+               if (ctrl.actionitem.altowner == 0 ) (document.querySelector('#altowner > div.webix_control')).classList.add("webix_invalid");
+               if (ctrl.actionitem.actionitemtitle.trim() == '' )  (document.querySelector('#actionitemtitle > div.webix_control')).classList.add("webix_invalid");
+               if (ctrl.actionitem.actionitemstatement.trim() == '')  (document.querySelector('#actionitemstatement > div.webix_control')).classList.add("webix_invalid");
+               if (ctrl.actionitem.closurecriteria.trim() == '') (document.querySelector('#closurecriteria > div.webix_control')).classList.add("webix_invalid");
         
         }
         
-        $scope.valid = function(){
-            return($scope.actionitem.assignor != 0 &&
-                   $scope.actionitem.duedate != '' &&
-                   $scope.actionitem.ecd != '' &&
-                   $scope.actionitem.critlevel != 0 &&
-                   $scope.actionitem.owner != 0 &&
-                   $scope.actionitem.altowner != 0 &&
-                   $scope.actionitem.actionitemtitle.trim() != '' &&
-                   $scope.actionitem.actionitemstatement.trim() != '' &&
-                   $scope.actionitem.closurecriteria.trim() != '');
+        ctrl.valid = function(){
+            return(ctrl.actionitem.assignor != 0 &&
+                   ctrl.actionitem.duedate != '' &&
+                   ctrl.actionitem.ecd != '' &&
+                   ctrl.actionitem.critlevel != 0 &&
+                   ctrl.actionitem.owner != 0 &&
+                   ctrl.actionitem.altowner != 0 &&
+                   ctrl.actionitem.actionitemtitle.trim() != '' &&
+                   ctrl.actionitem.actionitemstatement.trim() != '' &&
+                   ctrl.actionitem.closurecriteria.trim() != '');
         };
         
-        $scope.getDateValueAndValidate = function(obj, model, field){
+        ctrl.getDateValueAndValidate = function(obj, model, field){
             CommonService.getDateValue(obj, model, 'actionitem', field);       
-            $scope.clearValidation(field);
+            ctrl.clearValidation(field);
         }               
                                 
-        $scope.getItemValueAndValidate = function(obj, model, field){
+        ctrl.getItemValueAndValidate = function(obj, model, field){
             CommonService.getItemValue(obj, model, 'actionitem', field);         
-            $scope.clearValidation(field);   
+            ctrl.clearValidation(field);   
         }
         
-        $scope.getItemId = function(obj, model, field){
+        ctrl.getItemId = function(obj, model, field){
             CommonService.getItemId(obj, model, 'actionitem', field);       
         }
         
-        $scope.getTextValueAndValidate = function(obj, model, field){
+        ctrl.getTextValueAndValidate = function(obj, model, field){
             CommonService.getTextValue(obj, model, 'actionitem', field); 
-            $scope.clearValidation(field);  
+            ctrl.clearValidation(field);  
         }
 
-        $scope.split = function(str, delimit) {
+        ctrl.split = function(str, delimit) {
             var array = str.split(str, delimit);
             return array;
         }
 
-        $scope.submit = function(){
+        ctrl.submit = function(){
         
-            $scope.validateAll();
-            if (!$scope.valid())
-                 $scope.msg = "Please complete form and resubmit";
+            ctrl.validateAll();
+            if (!ctrl.valid())
+                 ctrl.msg = "Please complete form and resubmit";
             else 
-                //$scope.actionitem.duedate = $scope.split($scope.actionitem.duedate,'T')[0];
-                //$scope.actionitem.ecd = $scope.split($scope.actionitem.ecd, 'T')[0];
+                //ctrl.actionitem.duedate = ctrl.split(ctrl.actionitem.duedate,'T')[0];
+                //ctrl.actionitem.ecd = ctrl.split(ctrl.actionitem.ecd, 'T')[0];
   
-                $http.post('/api/actionitems', $scope.actionitem).then(function (response){
+                $http.post('/api/actionitems', ctrl.actionitem).then(function (response){
                     if (response.data.Succeeded){
                         $scope.msg = response.data.Result;
                     }
@@ -179,7 +180,7 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
         
      
 
-        $scope.date = function(){
+        ctrl.date = function(){
             return CommonService.formatDate(new Date());
         }
         
@@ -190,10 +191,10 @@ angular.module('Action').config(['$stateProvider', '$urlRouterProvider', functio
              
         
                        
-        $scope.today = new Date()
+        ctrl.today = new Date()
 
-        this.duedate = new Date();
-        this.ecd = new Date();
-        this.isOpen = false;
+        ctrl.duedate = new Date();
+        ctrl.ecd = new Date();
+        ctrl.isOpen = false;
         
   }]);

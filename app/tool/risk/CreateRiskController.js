@@ -20,7 +20,7 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
         technical:'',
         schedule:'',
         cost:''
-     }; 
+    }; 
      
     ctrl.fields = [   
         'risktitle',
@@ -71,7 +71,7 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
 
              
     ctrl.valid = function(){          
-        return ValidationService.valid(ctrl.fields);
+        return ValidationService.valid(ctrl, ctrl.fields);
     }
     
     ctrl.getTextValue = function(obj, type, field){

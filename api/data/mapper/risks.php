@@ -9,6 +9,7 @@
             if (!is_null($array['RiskID'])) $risk->riskid = $array['RiskID'];     
             if (!is_null($array['CreatorID'])) $risk->creatorid = $array['CreatorID'];
             if (!is_null($array['OwnerID'])) $risk->ownerid = $array['OwnerID'];
+            if (!is_null($array['ApproverID'])) $risk->approverid = $array['ApproverID'];
             if (!is_null($array['AssessmentDate'])) $risk->assessmentdate = $array['AssessmentDate'];
             
             if (!is_null($array['creator.lastname'])) $risk->creatorlastname = $array['creator.lastname'];
@@ -17,7 +18,7 @@
             if (!is_null($array['owner.firstname'])) $risk->ownerfirstname = $array['owner.firstname'];
 
             if (!is_null($array['creator.lastname']) 
-            ||  !is_null($array['creator.firstname'])) $risk->altowner = $risk->getAltOwnerFullName();
+            ||  !is_null($array['creator.firstname'])) $risk->creator = $risk->getCreatorFullName();
             if (!is_null($array['owner.lastname']) 
             ||  !is_null($array['owner.firstname'])) $risk->owner = $risk->getOwnerFullName();
             
@@ -182,33 +183,26 @@
             $sql = "update
                     risks
                     set
-                        creatorid = :creatorid,
                         ownerid = :ownerid,
-                        risktitle = :risktitleid,
-                        riskstatement = :riskstatementid,
+                        approverid = :approverid,
+                        risktitle = :risktitle,
+                        riskstatement = :riskstatement,
                         assessmentdate = :assessmentdate,
                         closurecriteria = :closurecriteria,
-                        context = :context,
-                        likelihood = :likelihood,
-                        technical = :technical,
-                        scheudle = :schedule,
-                        cost = :cost
+                        context = :context
                     where
-                        risk = :riskid";
+                        riskid = :riskid";
             try
             {      
-                $statement = $this->db->prepare($sql);
-                $statement->bindValue(':creatorid', $params['creator']);
+                $statement = $this->db->prepare($sql);              
                 $statement->bindValue(':ownerid' , $params['owner']);
+                $statement->bindValue(':approverid' , $params['approver']);
                 $statement->bindValue(':risktitle' , $params['risktitle']);
                 $statement->bindValue(':riskstatement' , $params['riskstatement']);
                 $statement->bindValue(':assessmentdate' , $params['assessmentdate']);
                 $statement->bindValue(':closurecriteria' , $params['closurecriteria']);  
-                $statement->bindValue(':context', $params['context']);  
-                $statement->bindValue(':likelihood' , $params['likelihood']);
-                $statement->bindValue(':technical' , $params['technical']);
-                $statement->bindValue(':schedule' , $params['schedule']);  
-                $statement->bindValue(':cost', $params['cost']);                    
+                $statement->bindValue(':context', $params['context']);
+                $statement->bindValue(':riskid', $params['riskid']);                    
                 $statement->execute();
                 
                 return ["Succeeded" => true, "Result" => "Risk Updated!"];

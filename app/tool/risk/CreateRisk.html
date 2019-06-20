@@ -1,7 +1,7 @@
 <div id="formcontainer" ng-app="Risk" ng-controller="CreateRiskController as ctrl" ng-cloak>
     <get-risk-config></get-risk-config>
     <div id="mycreateform" class="container" type="space" layout-padding="">     
-        <form ng-init="ctrl.initDone()" id="form" name="CreateRisk" role="form" ng-submit="ctrl.valid() && ctrl.submit()" novalidate>
+        <form id="form" name="CreateRisk" role="form" ng-submit="ctrl.valid() && ctrl.submit()" novalidate>
             <table id="details" class="layout" border="1">
                 <tr>
                     <td class="label">

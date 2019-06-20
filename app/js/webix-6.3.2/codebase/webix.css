@@ -1532,7 +1532,7 @@ button,
 /*normal data cell of the table*/
 .webix_column > div,
 .webix_table_cell {
-  border-right: 1px solid #EDEFF0;
+  /* border-right: 1px solid #EDEFF0; */
   padding: 0 12px;
   border-bottom: 1px solid #EDEFF0;
 }
@@ -6178,8 +6178,8 @@ body.webix_print {
 }
 .webix_dtable .webix_ss_body .webix_column > div,
 .webix_dtable .webix_ss_body .webix_table_cell {
-  border-right-color: transparent;
-  border-left-color: transparent;
+  /* border-right-color: transparent; */
+  /* border-left-color: transparent; */
 }
 .webix_dtable.webix_header_border .webix_ss_header td {
   border-right-color: #DADEE0;

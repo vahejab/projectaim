@@ -2,7 +2,7 @@ angular.module('Action').directive('initAction', function(){
       return {
             restrict: 'E',
             link: function (scope, element, attrs) {
-                  scope.init().then(function(){
+                  scope.ctrl.init().then(function(){
                     
                     webix.ready(function(){
                         webix.ui.fullScreen();
@@ -20,12 +20,12 @@ angular.module('Action').directive('initAction', function(){
                         var config = 
                         {
                             view: "richselect",
-                            value: scope.actionitem[attr], 
+                            value: scope.ctrl.actionitem[attr], 
                             options: options,
                             on: {
                                 //"onChange": function(){var obj = this.eventSource || this; getValue(obj, 'assignor')},
-                                "onChange": function(){var obj = this.eventSource || this; scope.getItemValueAndValidate(obj, scope, attr)}
-                                //"onBlur": function(){scope.validate(scope.actionitem.assingor, 'assignor')}
+                                "onChange": function(){var obj = this.eventSource || this; scope.ctrl.getItemValueAndValidate(obj, scope.ctrl, attr)}
+                                //"onBlur": function(){scope.ctrl.validate(scope.ctrl.actionitem.assingor, 'assignor')}
                             },
                             responsive: true,
                             width: "200",
@@ -41,12 +41,12 @@ angular.module('Action').directive('initAction', function(){
                         var config = 
                         {
                             view: "richselect",
-                            value: scope.actionitem[attrid], 
+                            value: scope.ctrl.actionitem[attrid], 
                             options: options,
                             on: {
                                 //"onChange": function(){var obj = this.eventSource || this; getValue(obj, 'assignor')},
-                                "onChange": function(){ var obj = this.eventSource || this; scope.getItemValueAndValidate(obj, scope, attr);  scope.getItemId(obj, scope, attrid)}
-                                //"onBlur": function(){scope.validate(scope.actionitem.assingor, 'assignor')}
+                                "onChange": function(){ var obj = this.eventSource || this; scope.ctrl.getItemValueAndValidate(obj, scope.ctrl, attr);  scope.ctrl.getItemId(obj, scope.ctrl, attrid)}
+                                //"onBlur": function(){scope.ctrl.validate(scope.ctrl.actionitem.assingor, 'assignor')}
                             },
                             responsive: true,
                             width: "200",
@@ -62,10 +62,10 @@ angular.module('Action').directive('initAction', function(){
                         var config = 
                         {
                             view:"text",
-                            value: scope.actionitem[attr],      
+                            value: scope.ctrl.actionitem[attr],      
                             on: {
-                                "onChange": function(){var obj = this.eventSource || this; scope.getTextValueAndValidate(obj, scope, attr)},
-                                //"onBlur": function(){scope.validate(scope.actionitem.title, 'title')}
+                                "onChange": function(){var obj = this.eventSource || this; scope.ctrl.getTextValueAndValidate(obj, scope.ctrl, attr)},
+                                //"onBlur": function(){scope.ctrl.validate(scope.ctrl.actionitem.title, 'title')}
                             },
                            
                             responsive: true,
@@ -82,10 +82,10 @@ angular.module('Action').directive('initAction', function(){
                         var config = 
                         {
                             view:"textarea",
-                            value: scope.actionitem[attr],
+                            value: scope.ctrl.actionitem[attr],
                             on: {                                  
-                                "onChange": function(){var obj = this.eventSource || this; scope.getTextValueAndValidate(obj, scope, attr)},
-                                //"onBlur": function(){scope.validate(scope.actionitem.actionitemstatement, 'actionitemstatement')}
+                                "onChange": function(){var obj = this.eventSource || this; scope.ctrl.getTextValueAndValidate(obj, scope.ctrl, attr)},
+                                //"onBlur": function(){scope.ctrl.validate(scope.ctrl.actionitem.actionitemstatement, 'actionitemstatement')}
                             },
                             responsive: true,
                             width: "520",
@@ -101,7 +101,7 @@ angular.module('Action').directive('initAction', function(){
                         var config = 
                         {
                             view: "datepicker", 
-                            value: GetDate(scope.actionitem[attr]),
+                            value: GetDate(scope.ctrl.actionitem[attr]),
                             timepicker: false,
                             //multiselect: true,
                             suggest:{
@@ -111,8 +111,8 @@ angular.module('Action').directive('initAction', function(){
                                 }                                         
                             },      
                             on: {
-                                "onChange": function(){var obj = this.eventSource || this; scope.getDateValueAndValidate(obj, scope, attr)},
-                                //"onBlur": function(){scope.validate(scope.actionitem.duedate, 'duedate')}  
+                                "onChange": function(){var obj = this.eventSource || this; scope.ctrl.getDateValueAndValidate(obj, scope.ctrl, attr)},
+                                //"onBlur": function(){scope.ctrl.validate(scope.ctrl.actionitem.duedate, 'duedate')}  
                             },   
                             responsive: true,
                             width: "200",                       
@@ -123,35 +123,35 @@ angular.module('Action').directive('initAction', function(){
                         return config;
                     }
                     
-                    scope.assignorConfig = getSelectConfig('assignor', scope.users);
+                    scope.ctrl.config.assignorConfig = getSelectConfig('assignor', scope.ctrl.users);
                     
-                    scope.approverConfig = getSelectConfig('approver', scope.users);
+                    scope.ctrl.config.approverConfig = getSelectConfig('approver', scope.ctrl.users);
                     
-                    scope.ownerConfig = getSelectConfig('owner', scope.users);
+                    scope.ctrl.config.ownerConfig = getSelectConfig('owner', scope.ctrl.users);
                     
-                    scope.altownerConfig = getSelectConfig('altowner', scope.users);
+                    scope.ctrl.config.altownerConfig = getSelectConfig('altowner', scope.ctrl.users);
                     
-                    scope.critConfig = getSelectTextAndValConfig('criticality', 'critlevel', scope.critlevels);
+                    scope.ctrl.config.critConfig = getSelectTextAndValConfig('criticality', 'critlevel', scope.ctrl.critlevels);
                     
-                    scope.titleConfig = getTextConfig('actionitemtitle');
+                    scope.ctrl.config.titleConfig = getTextConfig('actionitemtitle');
                     
-                    scope.closurecriteriaConfig = getTextareaConfig('closurecriteria');
+                    scope.ctrl.config.closurecriteriaConfig = getTextareaConfig('closurecriteria');
                     
-                    scope.statementConfig = getTextareaConfig('actionitemstatement');
+                    scope.ctrl.config.statementConfig = getTextareaConfig('actionitemstatement');
                    
-                    scope.duedateConfig = getDatepickerConfig('duedate');     
+                    scope.ctrl.config.duedateConfig = getDatepickerConfig('duedate');     
                     
-                    scope.assigneddateConfig = getDatepickerConfig('assigneddate');
+                    scope.ctrl.config.assigneddateConfig = getDatepickerConfig('assigneddate');
                      
-                    scope.ecdConfig = getDatepickerConfig('ecd');
+                    scope.ctrl.config.ecdConfig = getDatepickerConfig('ecd');
                     
-                    scope.completiondateConfig = getDatepickerConfig('completiondate');
+                    scope.ctrl.config.completiondateConfig = getDatepickerConfig('completiondate');
                    
-                    scope.closeddateConfig = getDatepickerConfig('closeddate');
+                    scope.ctrl.config.closeddateConfig = getDatepickerConfig('closeddate');
                     
-                    scope.approvercommentsConfig = getTextareaConfig('approvercomments');
+                    scope.ctrl.config.approvercommentsConfig = getTextareaConfig('approvercomments');
                     
-                    scope.ownernotesConfig = getTextareaConfig('ownernotes');    
+                    scope.ctrl.config.ownernotesConfig = getTextareaConfig('ownernotes');    
             });
       }
 }            

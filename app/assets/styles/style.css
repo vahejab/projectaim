@@ -15,6 +15,11 @@ body *{
     margin: 0 auto;
 }
 
+
+div.webix-control{
+    margin: 0px !important;
+}
+
 .msg-container{
     height: 30px !important;
 }
@@ -170,6 +175,7 @@ div.nested{
         vertical-align: middle !important;
         color: black;
         width: 140px !important;
+        text-align: left;
     }
 
 
@@ -290,17 +296,14 @@ div.tablebody{
     /* margin-right: 17px !important; */
 }
 
-table.grid.table-condensed thead th {
+table.grid thead th,
+table.table-condensed thead th {
     background-color: #0038a8 !important;
     font-weight: bold !important;
     font-style: italic !important;
     color: white !important;
     text-align: left !important;
 }
-
-
-
-
    
 table.grid thead tr th:nth-child(1),
 table.grid tbody tr td:nth-child(1){
@@ -488,5 +491,26 @@ td.high{
 
 div.center{
     margin: 0 auto;
-    text-align: center;
+}
+
+
+.custom .webix_hcell{
+    background-color: #0038a8 !important;
+    font-family: arial !important;
+    font-weight: bold !important;
+    font-style: italic !important;
+    color: white !important;
+    /* text-align: left !important; */
+    border-bottom: black;
+}
+
+.custom .webix_column > div{
+    border-color: black;
+}
+.webix_dtable .webix_ss_header td.webix_last_row{
+    border-bottom: 1px solid black;
+}
+
+.webix-view{
+    border-color: black;
 }

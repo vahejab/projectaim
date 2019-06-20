@@ -1,6 +1,6 @@
-angular.module('Risk').directive('config', ConfigElement);
+angular.module('Risk').directive('config', ['$timeout', ConfigElement]);
 
-function ConfigElement(){
+function ConfigElement($timeout){
       var directive = {
             restrict: 'A',
             link: linkFn,
@@ -43,8 +43,7 @@ function ConfigElement(){
                 config.on = {
                     "onTimedKeyPress": function(){  
                         var obj = this.eventSource || this; 
-                        code = this.getValue();
-                        scope.ctrl.ValidationService.handleKeyPress(code, scope.ctrl, obj, attr);
+                        code = this.getValue();                                                 
                         if (type == "level")
                             scope.ctrl.DOMops.assignRiskLevel(obj); 
                     },
@@ -57,38 +56,78 @@ function ConfigElement(){
                 config.value = scope.ctrl.risk[attr];
             }
             else if (view == "datatable")      
-            {
+            {         
+                config.columns = [
+                    { id:"id",           header:"#",              width: 25,   editor: "text"},
+                    { id:"title",        header:"Event Title",    width:200,   editor: "text"},
+                    { id:"eventowner",   header:"Event Owner",    width:200,   editor: "richselect"},
+                    { id:"actualdate",   header:"Actual Date",    width: 85,   editor: "datepicker"},
+                    { id:"scheduledate", header:"Schedule Date",  width: 85,   editor: "datepicker"},
+                    { id:"risklevel",    header:"Risk Level",     width: 50},
+                    { id:"likelihood",   header:"Like",           width: 50,   editor: "text"},
+                    { id:"technical",    header:"Tech",           width: 50,   editor: "text"},
+                    { id:"schedule",     header:"Schd",           width: 50,   editor: "text"},
+                    { id:"cost",         header:"Cost",           width: 50,   editor: "text"},
+                ]
+                
+                for (idx = 0; idx < config.columns.length; idx++)
+                    config.columns[idx].editor = "text";    
+            
+                //config.editaction = "custom";
+                config.editable = true;
+                config.autowidth = true;
+                config.autoheight = true;
+                config.editaction = "click";
+                
+                config.data = [
+                    {id: 1, title: "Risk Identified", eventowner: "Jabagchourian, Vahe", actualdate: "7/28/2011", risklevel: "M 3-4", likelihood: 3, technical: 3, schedule: 4, cost: 3},
+                    {id: 2, title: "Risk Identified", eventowner: "Jabagchourian, Vahe", actualdate: "7/28/2011", risklevel: "M 3-4", likelihood: 3, technical: 3, schedule: 4, cost: 3},
+                    {id: 3, title: "Risk Identified", eventowner: "Jabagchourian, Vahe", actualdate: "7/28/2011", risklevel: "M 3-4", likelihood: 3, technical: 3, schedule: 4, cost: 3},
+                    {id: 4, title: "Risk Identified", eventowner: "Jabagchourian, Vahe", actualdate: "7/28/2011", risklevel: "M 3-4", likelihood: 3, technical: 3, schedule: 4, cost: 3},
+                    {id: 5, title: "Risk Identified", eventowner: "Jabagchourian, Vahe", actualdate: "7/28/2011", risklevel: "M 3-4", likelihood: 3, technical: 3, schedule: 4, cost: 3},
+                    {id: 6, title: "Risk Identified", eventowner: "Jabagchourian, Vahe", actualdate: "7/28/2011", risklevel: "M 3-4", likelihood: 3, technical: 3, schedule: 4, cost: 3},
+                ]
+                
+                config.css = "custom";
+            
                 config.on = {
                     "onItemClick": function(id) {
                         this.editRow(id);
                     }
                 }
-                
-                config.columns = [
-                    { id:"rank",    header:"",              width:50},
-                    { id:"title",   header:"Film title",    width:200},
-                    { id:"year",    header:"Released",      width:80},
-                    { id:"votes",   header:"Votes",         width:100}
-                ]
-                
-                config.data = [
-                    { id:1, title:"The Shawshank Redemption", year:1994, votes:678790, rank:1},
-                    { id:2, title:"The Godfather", year:1972, votes:511495, rank:2}
-                ]
             }
             else if (view == "richselect")
             {
-                config.value = scope.ctrl.risk[attr] || 0; 
+                config.value = scope.ctrl.risk[attr];
                 config.options = scope.ctrl[options];
                 
                 config.on =  {
                     "onChange": function(){
                         var obj = this.eventSource || this; 
                         scope.ctrl.getItemValueAndValidate(obj, scope.ctrl, attr);
+                        config.value = obj.getValue();
                     }
-                };
+                }
             }
-           
+            else if (view = "datepicker")
+            {
+                config.timepicker = false;
+                //multiselect: true,
+                config.suggest = {
+                    type:"calendar", 
+                    body:{
+                        minDate:(new Date()).setDate(new Date())
+                    }                                         
+                }      
+                config.on = {
+                    "onChange": function(){
+                        var obj = this.eventSource || this; 
+                        scope.ctrl.getDateValueAndValidate(obj, scope.ctrl, attr);
+                        config.value = obj.getValue();
+                    }
+                }   
+            }
+              
             if (maxlength)
                 config.attributes = {maxlength : maxlength};
             config.done = true;

@@ -5,7 +5,7 @@ angular.module('Risk').service("ValidationService", function() {
     commonFunctions.setDOMobj = function(obj){
         DOMops = obj;
     }
-    
+     
     commonFunctions.setValue = function(field, obj){
         commonFunctions[field] = obj; 
     }
@@ -27,12 +27,12 @@ angular.module('Risk').service("ValidationService", function() {
         return (lvl.charCodeAt(0) - '0'.charCodeAt(0) < 1) || (lvl.charCodeAt(0) - '0'.charCodeAt(0) > 5);
     }
     
-    commonFunctions.valid = function(fields){
+    commonFunctions.valid = function(scope, fields){
           for (var idx = 0; idx < fields.length; idx++){
             field = fields[idx];
-            if (commonFunctions.isLevelField(field) && commonFunctions.invalidLevel(commonFunctions.risk[field]))
+            if (commonFunctions.isLevelField(field) && commonFunctions.invalidLevel(scope.risk[field]))
                 return false;
-            else if (commonFunctions.risk[field] == '')
+            else if (scope.risk[field] == '')
                 return false;
         }
             return true; 
@@ -65,7 +65,7 @@ angular.module('Risk').service("ValidationService", function() {
        else if (typeof elem !== 'undefined' && (elem.getValue() == 0 || commonFunctions.fieldEmpty(elem)))
             DOMops.makeInvalid(id);
 
-       if (commonFunctions.valid(scope.fields))
+       if (commonFunctions.valid(scope, scope.fields))
           DOMops.enableElement("#submit");
        else
           DOMops.disableElement("#submit");
@@ -75,10 +75,10 @@ angular.module('Risk').service("ValidationService", function() {
         return (c >= 32 && c <= 126);
     }
   
-    commonFunctions.clearTextValue = function(code, obj, field){
+    commonFunctions.clearTextValue = function(code, scope, obj, field){
         if (!commonFunctions.validCharacter(code) || obj.getValue().trim() == '') 
         {
-            commonFunctions.risk[field] = '';
+            scope.risk[field] = '';
             return;
         }
     }     
@@ -89,12 +89,12 @@ angular.module('Risk').service("ValidationService", function() {
     }
     
     commonFunctions.updateAndValidate = function(code, scope, obj, attr){ 
-        commonFunctions.clearTextValue(code, obj, attr); 
+        commonFunctions.clearTextValue(code, scope, obj, attr); 
         commonFunctions.validate(obj, scope, attr);
     }
     
     commonFunctions.getTextValueAndValidate = function(code, scope, obj, field){
-        commonFunctions.clearTextValue(code, obj, field);
+        commonFunctions.clearTextValue(code, scope, obj, field);
         DOMops.clearValidation(field);  
         scope.getTextValue(obj, 'risk', field); 
         commonFunctions.validate(obj, scope, field);

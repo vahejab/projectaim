@@ -1,7 +1,7 @@
 <div id="formcontainer">
-    <div id="mycreateform" class="container" type="space" ng-controller="CreateActionController" layout-padding="" ng-cloak="">   
+    <div id="mycreateform" class="container" type="space" ng-controller="CreateActionController as ctrl" layout-padding="" ng-cloak="">   
         <init-action />
-        <form webix-ui="config" id="form" name="CreateActionItem" role="form" ng-submit="CreateActionItem.$valid && submit()" novalidate>
+        <form webix-ui="config" id="form" name="CreateActionItem" role="form" ng-submit="ctrl.submit()" novalidate>
             <table id="summary" class="layout" border="1">
                 <tr>
                     <td class="label">

@@ -29,7 +29,7 @@ function getRisk(){
                }).then(function(){
                     return $http.get('api/users').then(function(response){
                             if (response.data.Succeeded){
-                            
+                               //$scope.ctrl.users.push({id: 0, value: ''});
                                for (var key = 0; key < response.data.Result.length; key++){
                                     user = response.data.Result[key];     
                                     $scope.ctrl.users.push({id: user.id, value: user.name});
@@ -54,9 +54,21 @@ function getRisk(){
                             cost = response.data.Results.cost;
                             
                             $scope.ctrl.risk.risklevel = $scope.ctrl.getRisk(likelihood, technical, scheudle, cost);
+                           
+                            $scope.ctrl.risk.assignorname = response.data.Results.assignor;
+                            $scope.ctrl.risk.ownername = response.data.Results.owner;
+                            $scope.ctrl.risk.creatorname = response.data.Results.creator;
+                            $scope.ctrl.risk.approvername = response.data.Results.approver;
+                       
                             $scope.ctrl.risk.assignor = response.data.Results.assignorid;
                             $scope.ctrl.risk.owner = response.data.Results.ownerid;
+                            $scope.ctrl.risk.creator = response.data.Results.creatorid;
                             $scope.ctrl.risk.approver = response.data.Results.approverid;
+                            
+                            $scope.ctrl.risk.likelihood = response.data.Results.likelihood;
+                            $scope.ctrl.risk.technical = response.data.Results.technical;
+                            $scope.ctrl.risk.schedule = response.data.Results.schedule;
+                            $scope.ctrl.risk.cost = response.data.Results.cost;
                             $scope.ctrl.risk.assessmentdate = response.data.Results.assessmentdate;
                             $scope.ctrl.risk.risktitle = response.data.Results.risktitle;
                             $scope.ctrl.risk.riskstatement = response.data.Results.riskstatement;

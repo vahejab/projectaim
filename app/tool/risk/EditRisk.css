@@ -1,0 +1,78 @@
+table.events tbody td{
+    text-align: left;
+}
+     
+
+table.events thead th{
+    background-color: #0038a8 !important;
+    font-weight: bold !important;
+    font-style: italic !important;
+    color: white !important;
+    text-align: left !important;
+}
+   
+table.events thead tr th:nth-child(1),
+table.events tbody tr td:nth-child(1){
+    /* max-width: 51px !important; */
+    max-width:  25px !important;
+    min-width:  25px !important;
+}
+
+table.events thead tr th:nth-child(2),
+table.events tbody tr td:nth-child(2){
+    /* max-width: 51px !important; */
+    max-width:  250px !important;
+    min-width:  250px !important;
+}
+
+table.events thead tr th:nth-child(3),
+table.events tbody tr td:nth-child(3){
+    max-width: 250px !important;
+    min-width: 250px !important;
+}
+
+
+table.events thead tr th:nth-child(4),
+table.events tbody tr td:nth-child(4){
+    max-width: 200px !important;
+    min-width: 200px !important;
+}
+
+table.events thead tr th:nth-child(5),
+table.events tbody tr td:nth-child(5){
+    max-width: 150px !important;
+    min-width: 150px !important;
+}
+
+table.events thead tr th:nth-child(6),
+table.events tbody tr td:nth-child(6){
+    max-width: 100px !important;
+    min-width: 100px !important;
+}
+
+table.events thead tr th:nth-child(7),
+table.events tbody tr td:nth-child(7){
+    max-width: 50px !important;
+    min-width: 50px !important;
+
+}
+
+
+table.events thead tr th:nth-child(8),
+table.evetns tbody tr td:nth-child(8){
+    max-width: 50px !important;
+    min-width: 50px !important;
+}
+
+table.events thead tr th:nth-child(9),
+table.events tbody tr td:nth-child(9){
+    max-width: 50px !important;
+    min-width: 50px !important;
+
+}       
+table.events thead tr th:nth-child(10),
+table.events tbody tr td:nth-child(10){
+    max-width: 50px !important;
+    min-width: 50px !important;
+  
+}

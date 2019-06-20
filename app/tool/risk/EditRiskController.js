@@ -14,21 +14,16 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         }
 
         ctrl.risk = {
-                riskid: 0,
-                risktitle: '',
-                status: 'Open',
-                risklevel: '',
-                assignor: 0,
-                owner: 0,
-                approver: 0,
-                assessmentdate: '',
-                risktitle: '',
-                riskstatement: '',
-                context: '',
-                closurecriteria: '',
-                approvernotes: '',
-                ownercomments: ''
         }
+         
+        ctrl.fields = [   
+            'risktitle',
+            'riskstatement',
+            'context',
+            'closurecriteria',
+            'owner',
+            'approver'
+        ]
         
             
         ctrl.risklevels = {
@@ -46,7 +41,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             {
                 ctrl.riskMatrix[l][c] = '';  
             }
-        }  
+        } 
         
         ctrl.getItemValueAndValidate = function(obj, model, field){
             CommonService.getItemValue(obj, model, 'risk', field);         
@@ -58,7 +53,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         $scope.$on("$destroy", function(){
              angular.element(document.querySelector('link[href="/app/tool/risk/EditRisk.css"]')).remove();
         });
-           
+
         ctrl.getTextValue = function(obj, type, field){
               return CommonService.getTextValue(obj, ctrl, type, field);
         }
@@ -75,30 +70,40 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             return risk;
         }    
      
+        ctrl.valid = function(){          
+            return ValidationService.valid(ctrl, ctrl.fields);
+        }
+        
+        ctrl.getDateValueAndValidate = function(obj, model, field){
+            CommonService.getDateValue(obj, model, 'risk',  field);       
+            $scope.clearValidation(field);
+        }
+        
+        $scope.clearValidation = function(id){
+            (document.querySelector('#'+id+' > div.webix_control')).classList.remove("webix_invalid");
+        }
+  
             
         ctrl.getLevel = function(risk, l, c){
-           if (risk >= ctrl.risklevels.riskhigh)
+           if (risk >= ctrl.risklevels.riskhigh)                                                                                      
                return  {level: 'H ' + l + '-' + c, cls: 'high', threshold: level};
            else if (risk < ctrl.risklevels.riskhigh  && risk >= ctrl.risklevels.riskmedium)
                 return {level: 'M ' + l + '-' + c, cls: 'med', threshold: level};
            else if (risk < ctrl.risklevels.riskmedium)
                 return {level:'L ' + l + '-' + c, cls: 'low', threshold: level}
-        }                                            
-        
-                               
+        }
+
         ctrl.submit = function(){
-            ctrl.validateAll();
             if (!ctrl.valid())
                  ctrl.msg = "Please complete form and resubmit";
             else 
-                //ctrl.risk.duedate = ctrl.split(ctrl.risk.duedate,'T')[0];
-                //ctrl.risk.ecd = ctrl.split(ctrl.risk.ecd, 'T')[0];
-                $http.put('/api/risks', ctrl.risk).then(function(response){
+                return $http.put('/api/risks', ctrl.risk).then(function(response){
                     if (response.data.Succeeded){
                         $scope.msg = response.data.Result;
+                        return response.data.Result;
                     }
                     else{
-                        $scope.msg = $sce.trustAsHtml(response.data);
+                         $scope.msg = $sce.trustAsHtml(response.data);
                     }
                 }); 
         }

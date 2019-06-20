@@ -13337,7 +13337,7 @@
 
 	      return;
 	    }
-
+        
 	    assert(this.data.exists(id), "Incorrect id in select command: " + id); //block selection mode
 
 	    if (shiftKey && this._selected.length) return this.selectAll(this._selected[this._selected.length - 1], id); //single selection mode
