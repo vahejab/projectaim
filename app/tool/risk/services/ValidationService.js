@@ -24,7 +24,7 @@ angular.module('Risk').service("ValidationService", function() {
     } 
            
     commonFunctions.invalidLevel = function(lvl){
-        return (lvl.charCodeAt(0) - '0'.charCodeAt(0) < 1) || (lvl.charCodeAt(0) - '0'.charCodeAt(0) > 5);
+        return (lvl == '') || (lvl.charCodeAt(0) - '0'.charCodeAt(0) < 1) || (lvl.charCodeAt(0) - '0'.charCodeAt(0) > 5);
     }
     
     commonFunctions.valid = function(scope, fields){
@@ -34,8 +34,8 @@ angular.module('Risk').service("ValidationService", function() {
                 return false;
             else if (scope.risk[field] == '')
                 return false;
-        }
-            return true; 
+          }
+          return true; 
     }
    
     commonFunctions.riskIsValid = function(l,t,s,c){
@@ -69,6 +69,26 @@ angular.module('Risk').service("ValidationService", function() {
           DOMops.enableElement("#submit");
        else
           DOMops.disableElement("#submit");
+    }
+    
+    commonFunctions.evtValid = function(evt){
+         return (
+            document.querySelector("#eventtitle"+evt+ " input[type=text]") != null
+         && document.querySelector("#eventtitle"+evt+ " input[type=text]").value != ''
+         && document.querySelector("#owner"+evt+ " div.webix_el_box div.webix_inp_static")  != null
+         && document.querySelector("#owner"+evt+ " div.webix_el_box div.webix_inp_static").outerText != ''
+         && document.querySelector("#actualdate"+evt + " div.webix_el_box div.webix_inp_static") != null
+         && document.querySelector("#actualdate"+evt + " div.webix_el_box div.webix_inp_static").innerHTML != ''
+         && document.querySelector("#scheduledate"+evt+ " div.webix_el_box div.webix_inp_static") != null
+         && document.querySelector("#scheduledate"+evt+ " div.webix_el_box div.webix_inp_static").innerHTML != ''
+         && document.querySelector("#likelihood"+evt+ " input[type=text]") != null
+         && !commonFunctions.invalidLevel(document.querySelector("#likelihood"+evt+ " input[type=text]").value)
+         && document.querySelector("#technical"+evt+ " input[type=text]") != null
+         && !commonFunctions.invalidLevel(document.querySelector("#technical"+evt+ " input[type=text]").value)
+         && document.querySelector("#schedule"+evt+ " input[type=text]") != null
+         && !commonFunctions.invalidLevel(document.querySelector("#schedule"+evt+ " input[type=text]").value)
+         && document.querySelector("#cost"+evt+ " input[type=text]") != null
+         && !commonFunctions.invalidLevel(document.querySelector("#cost"+evt+ " input[type=text]").value));   
     }
                
     commonFunctions.validCharacter = function(c){

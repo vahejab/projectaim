@@ -15,7 +15,14 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
 
         ctrl.risk = {
         }
-         
+
+        ctrl.evt = []
+        
+        for(var e = 0; e <= 5; e++)
+        {
+            ctrl.evt[e] = {valid: false}
+        }
+        
         ctrl.fields = [   
             'risktitle',
             'riskstatement',
@@ -82,8 +89,14 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         $scope.clearValidation = function(id){
             (document.querySelector('#'+id+' > div.webix_control')).classList.remove("webix_invalid");
         }
-  
-            
+        
+        ctrl.enabled = function(evt){
+            if (evt == 0)
+                return 'true';
+            else
+                return 'false';
+        }
+
         ctrl.getLevel = function(risk, l, c){
            if (risk >= ctrl.risklevels.riskhigh)                                                                                      
                return  {level: 'H ' + l + '-' + c, cls: 'high', threshold: level};

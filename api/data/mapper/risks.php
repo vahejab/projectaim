@@ -17,10 +17,16 @@
             if (!is_null($array['owner.lastname'])) $risk->ownerlastname = $array['owner.lastname'];
             if (!is_null($array['owner.firstname'])) $risk->ownerfirstname = $array['owner.firstname'];
 
+            if (!is_null($array['approver.lastname'])) $risk->approverlastname = $array['approver.lastname'];
+            if (!is_null($array['approver.firstname'])) $risk->approverfirstname = $array['approver.firstname'];
+            
             if (!is_null($array['creator.lastname']) 
             ||  !is_null($array['creator.firstname'])) $risk->creator = $risk->getCreatorFullName();
             if (!is_null($array['owner.lastname']) 
             ||  !is_null($array['owner.firstname'])) $risk->owner = $risk->getOwnerFullName();
+            
+            if (!is_null($array['approver.lastname']) 
+            ||  !is_null($array['approver.firstname'])) $risk->approver = $risk->getApproverFullName();
             
             
             if (!is_null($array['RiskTitle'])) $risk->risktitle = $array['RiskTitle'];

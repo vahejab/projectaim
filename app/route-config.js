@@ -125,7 +125,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             name: 'risk@config',
             serie: true,
             files: ['/app/tool/risk/RiskMatrixConfig.css',
-                    '/app/tool/risk/RiskDirective.js',
+                    '/app/tool/risk/directives/RiskDirective.js',
                     '/app/tool/risk/RiskMatrixConfigController.js'
             ]
         }]

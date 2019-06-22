@@ -7,15 +7,24 @@ function ConfigElement($timeout){
             controller: ConfigController
       }
       
-      function linkFn(scope, elem, attrs){
+      function linkFn(scope, elem, attrs){ 
             var attr = attrs.config;
             var type = attrs.type;
             var width = attrs.width;
-            var height = attrs.height;
+            var height = attrs.height; 
+            var evt;
+            if (attrs.hasOwnProperty('class'))
+            {
+                evt = parseInt(attrs.class[3]);
+            }
+            
+            var disabled = false;
+            if (attrs.hasOwnProperty('enabled') && attrs.enabled == 'false')
+                disabled = true;
             var maxlength = attrs.hasOwnProperty('maxlength')? attrs.maxlength: null;  
             var options = attrs.hasOwnProperty('options')? attrs.options : null;
             var view;
-            var evt = {};
+            
             if (type == "level")
                 view = "text";
             else
@@ -35,7 +44,8 @@ function ConfigElement($timeout){
                 view: view,     
                 responsive: true,
                 width: width,
-                height: height
+                height: height,
+                disabled: disabled
             };
             
             if (view == "text" || view == "textarea")
@@ -44,13 +54,11 @@ function ConfigElement($timeout){
                     "onTimedKeyPress": function(){  
                         var obj = this.eventSource || this; 
                         code = this.getValue();                                                 
+                        scope.ctrl.ValidationService.getTextValueAndValidate(code, scope.ctrl, obj, attr);  
                         if (type == "level")
                             scope.ctrl.DOMops.assignRiskLevel(obj); 
-                    },
-                    "onBlur": function(){  
-                        var obj = this.eventSource || this;  
-                        code = this.getValue();
-                        scope.ctrl.ValidationService.getTextValueAndValidate(code, scope.ctrl, obj, attr); 
+                                    if (evt != null)
+                            scope.ctrl.evt[evt].valid = scope.ctrl.ValidationService.evtValid(evt); 
                     }
                 }
                 config.value = scope.ctrl.risk[attr];
@@ -105,7 +113,9 @@ function ConfigElement($timeout){
                     "onChange": function(){
                         var obj = this.eventSource || this; 
                         scope.ctrl.getItemValueAndValidate(obj, scope.ctrl, attr);
-                        config.value = obj.getValue();
+                        config.value = obj.getValue(); 
+                        if (evt != null)
+                            scope.ctrl.evt[evt].valid = scope.ctrl.ValidationService.evtValid(evt); 
                     }
                 }
             }
@@ -123,8 +133,10 @@ function ConfigElement($timeout){
                     "onChange": function(){
                         var obj = this.eventSource || this; 
                         scope.ctrl.getDateValueAndValidate(obj, scope.ctrl, attr);
-                        config.value = obj.getValue();
-                    }
+                        config.value = obj.getValue(); 
+                        if (evt != null)
+                            scope.ctrl.evt[evt].valid = scope.ctrl.ValidationService.evtValid(evt); 
+                     }
                 }   
             }
               

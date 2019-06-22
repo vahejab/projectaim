@@ -7,6 +7,9 @@
         public $risktitle;
         public $riskstatement;
         public $context;
+        public $approver;
+        public $owner;
+        public $creator;
         public $approverid;
         public $ownerid;
         public $creatorid;
@@ -20,7 +23,8 @@
         public $cratorfirstname = '';
         public $ownerlastname = '';
         public $ownerfirstname = '';
-    
+        public $approverlastname = '';
+        public $approverfirstname = '';
     
     
         public function getCreatorFullName()
@@ -35,6 +39,6 @@
         
         public function getApproverFullName()
         {
-             return trim(join(', ', [$this->ownerlastname, $this->ownerfirstname]), ', ');
+             return trim(join(', ', [$this->approverlastname, $this->approverfirstname]), ', ');
         }
     }
