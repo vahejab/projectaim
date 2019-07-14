@@ -15,12 +15,13 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
 
         ctrl.risk = {
         }
-
-        ctrl.evt = []
         
-        for(var e = 0; e <= 5; e++)
+        ctrl.enabledItem = [false, true, false, false, false, false];
+        ctrl.evt = [];
+            
+        for(var e = 1; e <= 5; e++)
         {
-            ctrl.evt[e] = {valid: false}
+            ctrl.evt[e]= {valid: false};
         }
         
         ctrl.fields = [   
@@ -73,7 +74,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             cost = Number(c);
             consequence = Math.max(technical, schedule, cost);
             level = ctrl.riskMatrix[likelihood][consequence];
-            risk = ctrl.getLevel(level, likelihood, consequence);
+            risk = ctrl.getLevel(level, likelihood, technical, schedule, cost, consequence);
             return risk;
         }    
      
@@ -90,20 +91,25 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             (document.querySelector('#'+id+' > div.webix_control')).classList.remove("webix_invalid");
         }
         
+        ctrl.enable = function(evt){
+           ctrl.enabledItem[evt] = true;
+        }
+        
         ctrl.enabled = function(evt){
-            if (evt == 0)
-                return 'true';
-            else
-                return 'false';
+            return ctrl.enabledItem[evt];
         }
 
-        ctrl.getLevel = function(risk, l, c){
+        ctrl.getLevel = function(risk, l, t, s, c, cons){
            if (risk >= ctrl.risklevels.riskhigh)                                                                                      
-               return  {level: 'H ' + l + '-' + c, cls: 'high', threshold: level};
+               return  {level: 'H ' + l + '-' + cons, likelihood: l, technical: t, schedule: s, cost: c, cls: 'high', threshold: level};
            else if (risk < ctrl.risklevels.riskhigh  && risk >= ctrl.risklevels.riskmedium)
-                return {level: 'M ' + l + '-' + c, cls: 'med', threshold: level};
+                return {level: 'M ' + l + '-' + cons, likelihood: l, technical: t, schedule: s, cost: c, cls: 'med', threshold: level};
            else if (risk < ctrl.risklevels.riskmedium)
-                return {level:'L ' + l + '-' + c, cls: 'low', threshold: level}
+                return {level: 'L ' + l + '-' + cons, likelihood: l, technical: t, schedule: s, cost: c, cls: 'low', threshold: level}
+        }
+        
+        ctrl.complete = function(evt){
+            return ValidationService.evtValid(evt);
         }
 
         ctrl.submit = function(){

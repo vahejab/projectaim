@@ -72,7 +72,7 @@ angular.module('Risk').service("ValidationService", function() {
     }
     
     commonFunctions.evtValid = function(evt){
-         return (
+         var valid = (
             document.querySelector("#eventtitle"+evt+ " input[type=text]") != null
          && document.querySelector("#eventtitle"+evt+ " input[type=text]").value != ''
          && document.querySelector("#owner"+evt+ " div.webix_el_box div.webix_inp_static")  != null
@@ -88,7 +88,13 @@ angular.module('Risk').service("ValidationService", function() {
          && document.querySelector("#schedule"+evt+ " input[type=text]") != null
          && !commonFunctions.invalidLevel(document.querySelector("#schedule"+evt+ " input[type=text]").value)
          && document.querySelector("#cost"+evt+ " input[type=text]") != null
-         && !commonFunctions.invalidLevel(document.querySelector("#cost"+evt+ " input[type=text]").value));   
+         && !commonFunctions.invalidLevel(document.querySelector("#cost"+evt+ " input[type=text]").value));
+         
+         if (valid)
+            angular.element(document.getElementById("evt"+evt)).css("display", "block");
+         else
+            angular.element(document.getElementById("evt"+evt)).css("display", "none");
+         return valid;   
     }
                
     commonFunctions.validCharacter = function(c){

@@ -64,7 +64,7 @@ function getRisk(){
                             $scope.ctrl.risk.owner = response.data.Results.ownerid;
                             $scope.ctrl.risk.creator = response.data.Results.creatorid;
                             $scope.ctrl.risk.approver = response.data.Results.approverid;
-                            
+      
                             $scope.ctrl.risk.likelihood = response.data.Results.likelihood;
                             $scope.ctrl.risk.technical = response.data.Results.technical;
                             $scope.ctrl.risk.schedule = response.data.Results.schedule;

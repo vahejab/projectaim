@@ -227,11 +227,11 @@ table *{
     vertical-align: top;
     border-top: 1px solid black; 
 }
-textarea, input
+textarea, input[type=text]
 {
     padding: 4px !important;
     width: 100%;
-    max-width: auto !important;  
+    max-width: auto !important;
     resize: none !important;
     font-family: inherit !important;
 }

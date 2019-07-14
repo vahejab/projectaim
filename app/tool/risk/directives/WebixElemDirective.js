@@ -16,7 +16,6 @@ function ConfigElement($timeout){
             if (attrs.hasOwnProperty('class'))
             {
                 evt = parseInt(attrs.class[3]);
-            }
             
             var disabled = false;
             if (attrs.hasOwnProperty('enabled') && attrs.enabled == 'false')
@@ -58,51 +57,10 @@ function ConfigElement($timeout){
                         if (type == "level")
                             scope.ctrl.DOMops.assignRiskLevel(obj); 
                                     if (evt != null)
-                            scope.ctrl.evt[evt].valid = scope.ctrl.ValidationService.evtValid(evt); 
+                            scope.ctrl.evt[evt].valid = scope.ctrl.ValidationService.evtValid(evt);  
                     }
                 }
                 config.value = scope.ctrl.risk[attr];
-            }
-            else if (view == "datatable")      
-            {         
-                config.columns = [
-                    { id:"id",           header:"#",              width: 25,   editor: "text"},
-                    { id:"title",        header:"Event Title",    width:200,   editor: "text"},
-                    { id:"eventowner",   header:"Event Owner",    width:200,   editor: "richselect"},
-                    { id:"actualdate",   header:"Actual Date",    width: 85,   editor: "datepicker"},
-                    { id:"scheduledate", header:"Schedule Date",  width: 85,   editor: "datepicker"},
-                    { id:"risklevel",    header:"Risk Level",     width: 50},
-                    { id:"likelihood",   header:"Like",           width: 50,   editor: "text"},
-                    { id:"technical",    header:"Tech",           width: 50,   editor: "text"},
-                    { id:"schedule",     header:"Schd",           width: 50,   editor: "text"},
-                    { id:"cost",         header:"Cost",           width: 50,   editor: "text"},
-                ]
-                
-                for (idx = 0; idx < config.columns.length; idx++)
-                    config.columns[idx].editor = "text";    
-            
-                //config.editaction = "custom";
-                config.editable = true;
-                config.autowidth = true;
-                config.autoheight = true;
-                config.editaction = "click";
-                
-                config.data = [
-                    {id: 1, title: "Risk Identified", eventowner: "Jabagchourian, Vahe", actualdate: "7/28/2011", risklevel: "M 3-4", likelihood: 3, technical: 3, schedule: 4, cost: 3},
-                    {id: 2, title: "Risk Identified", eventowner: "Jabagchourian, Vahe", actualdate: "7/28/2011", risklevel: "M 3-4", likelihood: 3, technical: 3, schedule: 4, cost: 3},
-                    {id: 3, title: "Risk Identified", eventowner: "Jabagchourian, Vahe", actualdate: "7/28/2011", risklevel: "M 3-4", likelihood: 3, technical: 3, schedule: 4, cost: 3},
-                    {id: 4, title: "Risk Identified", eventowner: "Jabagchourian, Vahe", actualdate: "7/28/2011", risklevel: "M 3-4", likelihood: 3, technical: 3, schedule: 4, cost: 3},
-                    {id: 5, title: "Risk Identified", eventowner: "Jabagchourian, Vahe", actualdate: "7/28/2011", risklevel: "M 3-4", likelihood: 3, technical: 3, schedule: 4, cost: 3},
-                    {id: 6, title: "Risk Identified", eventowner: "Jabagchourian, Vahe", actualdate: "7/28/2011", risklevel: "M 3-4", likelihood: 3, technical: 3, schedule: 4, cost: 3},
-                ]
-                
-                config.css = "custom";
-            
-                config.on = {
-                    "onItemClick": function(id) {
-                        this.editRow(id);
-                    }
-                }
             }
             else if (view == "richselect")
             {
@@ -110,7 +68,7 @@ function ConfigElement($timeout){
                 config.options = scope.ctrl[options];
                 
                 config.on =  {
-                    "onChange": function(){
+                    "onChange": function(){    
                         var obj = this.eventSource || this; 
                         scope.ctrl.getItemValueAndValidate(obj, scope.ctrl, attr);
                         config.value = obj.getValue(); 
@@ -130,7 +88,7 @@ function ConfigElement($timeout){
                     }                                         
                 }      
                 config.on = {
-                    "onChange": function(){
+                    "onChange": function(){                                                         
                         var obj = this.eventSource || this; 
                         scope.ctrl.getDateValueAndValidate(obj, scope.ctrl, attr);
                         config.value = obj.getValue(); 

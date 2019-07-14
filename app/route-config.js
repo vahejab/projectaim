@@ -114,7 +114,8 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             files: [
                     '/app/tool/risk/EditRisk.css',
                     '/app/tool/risk/services/DOMService.js',
-                    '/app/tool/risk/services/ValidationService.js', 
+                    '/app/tool/risk/services/ValidationService.js',
+                    '/app/tool/risk/directives/PreventDefaultDirective.js', 
                     '/app/tool/risk/directives/RiskDirective.js',
                     '/app/tool/risk/directives/GetRiskDirective.js',
                     '/app/tool/risk/directives/WebixElemDirective.js',

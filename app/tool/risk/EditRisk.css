@@ -2,7 +2,6 @@ table.events tbody td{
     text-align: left;
 }
      
-
 table.events thead th{
     background-color: #0038a8 !important;
     font-weight: bold !important;
@@ -40,14 +39,15 @@ table.events tbody tr td:nth-child(4){
 
 table.events thead tr th:nth-child(5),
 table.events tbody tr td:nth-child(5){
-    max-width: 150px !important;
-    min-width: 150px !important;
+    max-width: 200px !important;
+    min-width: 200px !important;
 }
 
 table.events thead tr th:nth-child(6),
 table.events tbody tr td:nth-child(6){
     max-width: 100px !important;
     min-width: 100px !important;
+    text-align: center;
 }
 
 table.events thead tr th:nth-child(7),
