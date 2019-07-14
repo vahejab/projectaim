@@ -24,6 +24,8 @@ angular.module('Risk').service("ValidationService", function() {
     } 
            
     commonFunctions.invalidLevel = function(lvl){
+        if (typeof lvl === "number") 
+            return (lvl < 1 || lvl > 5)
         return (lvl == '') || (lvl.charCodeAt(0) - '0'.charCodeAt(0) < 1) || (lvl.charCodeAt(0) - '0'.charCodeAt(0) > 5);
     }
     

@@ -1,7 +1,9 @@
 angular.module('Risk').service("DOMops", function() {
     var commonFunctions = {};
     var ValidationService = {};
-
+    
+    commonFunctions.evt = [];
+    
     commonFunctions.setValidationServiceObj = function(obj){
         ValidationService = obj;
     }
@@ -16,11 +18,22 @@ angular.module('Risk').service("DOMops", function() {
         leveldiv.setAttribute('class', '');
     }     
 
-    commonFunctions.assignRiskLevel = function(obj){
-        l = commonFunctions.risk.likelihood;
-        t = commonFunctions.risk.technical;
-        s = commonFunctions.risk.schedule;
-        c = commonFunctions.risk.cost;
+    commonFunctions.assignRiskLevel = function(obj, evt){
+        var l,t,s,c;
+        if (!evt)
+        {
+            l = commonFunctions.risk.likelihood;
+            t = commonFunctions.risk.technical;
+            s = commonFunctions.risk.schedule;
+            c = commonFunctions.risk.cost;
+        }
+        else if (evt)
+        {
+            l = commonFunctions.evt['likelihood'+evt];
+            t = commonFunctions.evt['technical'+evt];
+            s = commonFunctions.evt['schedule'+evt];
+            c = commonFunctions.evt['cost'+evt];
+        }
         
         if (ValidationService.validLevel(obj) && ValidationService.riskNotEmpty(l,t,s,c))
         {
@@ -31,9 +44,12 @@ angular.module('Risk').service("DOMops", function() {
                 schd = Number(s);
                 cost = Number(c);
                 c = Math.max(tech,schd,cost);
-                commonFunctions.displayLevel(commonFunctions.riskMatrix[l][c],l,c);
-                commonFunctions.clearDot();
-                commonFunctions.drawDot(l,c);
+                commonFunctions.displayLevel(commonFunctions.riskMatrix[l][c],l,c,evt);
+
+                if(!evt){
+                    commonFunctions.clearDot();
+                    commonFunctions.drawDot(l,c);
+                }
             }  
         }
         else
@@ -95,8 +111,15 @@ angular.module('Risk').service("DOMops", function() {
     }
    
     
-    commonFunctions.displayLevel = function(level, l, c){
-       leveldiv =  document.querySelector("div[name='level']");
+    commonFunctions.displayLevel = function(level, l, c, evt){
+    
+       var leveldiv;
+       
+       if (evt)
+           leveldiv = document.querySelector("[name='level'][evt='"+evt+"']");
+       else
+           leveldiv =  document.querySelector("div[name='level']");
+    
        if (level >= commonFunctions.risklevels.riskhigh)
        {
            leveldiv.innerHTML = 'H ' + l + '-' + c;

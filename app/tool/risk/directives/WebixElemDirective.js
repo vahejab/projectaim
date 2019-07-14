@@ -16,6 +16,7 @@ function ConfigElement($timeout){
             if (attrs.hasOwnProperty('class'))
             {
                 evt = parseInt(attrs.class[3]);
+            }   
             
             var disabled = false;
             if (attrs.hasOwnProperty('enabled') && attrs.enabled == 'false')
@@ -28,9 +29,10 @@ function ConfigElement($timeout){
                 view = "text";
             else
                 view = type;
-                
+            scope.ctrl.evt = [];    
             scope.ctrl.DOMops.setValidationServiceObj(scope.ctrl.ValidationService);
             scope.ctrl.DOMops.setValue('risk', scope.ctrl.risk);
+      
             scope.ctrl.DOMops.setValue('riskMatrix', scope.ctrl.riskMatrix);   
             scope.ctrl.DOMops.setValue('risklevels', scope.ctrl.risklevels);
             
@@ -54,13 +56,20 @@ function ConfigElement($timeout){
                         var obj = this.eventSource || this; 
                         code = this.getValue();                                                 
                         scope.ctrl.ValidationService.getTextValueAndValidate(code, scope.ctrl, obj, attr);  
-                        if (type == "level")
-                            scope.ctrl.DOMops.assignRiskLevel(obj); 
-                                    if (evt != null)
+                        if (attrs.type == "level")
+                        {
+                            scope.ctrl.DOMops.evt[attrs.config] = code;
+                            scope.ctrl.DOMops.assignRiskLevel(obj, attrs.evt);
+                        }
+                        if (evt != null)
                             scope.ctrl.evt[evt].valid = scope.ctrl.ValidationService.evtValid(evt);  
                     }
                 }
-                config.value = scope.ctrl.risk[attr];
+                
+                if (attrs.type == "level")
+                    config.value = scope.ctrl.evt[attr];
+                else
+                    config.value = scope.ctrl.risk[attr];
             }
             else if (view == "richselect")
             {
