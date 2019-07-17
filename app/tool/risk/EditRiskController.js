@@ -15,7 +15,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
 
         ctrl.risk = {
         }
-        
+
         ctrl.enabledItem = [false, true, false, false, false, false];
         ctrl.evt = [];
             
@@ -124,6 +124,8 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                     else{
                          $scope.msg = $sce.trustAsHtml(response.data);
                     }
+                }).then(function(response){
+                
                 }); 
         }
                

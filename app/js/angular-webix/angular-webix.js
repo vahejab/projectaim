@@ -97,12 +97,14 @@ angular.module("webix", [])
           
           // Add the following block to enable the row
           let rowIndex = dataname[dataname.length - 1];
-          $scope.$watch(() => $scope.ctrl.enabledItem[rowIndex], isEnabled => {
-             if ($scope.ctrl.config[dataname].disabled != false)
-                $scope.ctrl.config[dataname].disabled = !isEnabled;
-            watcher();
-          });
-          
+          if (!isNaN(rowIndex))
+          {
+            $scope.$watch(() => $scope.ctrl.enabledItem[rowIndex], isEnabled => {
+               if ($scope.ctrl.config[dataname].disabled != false)
+                  $scope.ctrl.config[dataname].disabled = !isEnabled;
+              watcher();
+            });
+          }
           $scope.$digest();
         });
       }

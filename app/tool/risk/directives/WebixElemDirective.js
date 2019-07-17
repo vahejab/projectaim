@@ -28,8 +28,7 @@ function ConfigElement($timeout){
             if (type == "level")
                 view = "text";
             else
-                view = type;
-            scope.ctrl.evt = [];    
+                view = type;   
             scope.ctrl.DOMops.setValidationServiceObj(scope.ctrl.ValidationService);
             scope.ctrl.DOMops.setValue('risk', scope.ctrl.risk);
       
@@ -66,7 +65,7 @@ function ConfigElement($timeout){
                     }
                 }
                 
-                if (attrs.type == "level")
+                if (attrs.type == "level" && attrs.category == "event")
                     config.value = scope.ctrl.evt[attr];
                 else
                     config.value = scope.ctrl.risk[attr];

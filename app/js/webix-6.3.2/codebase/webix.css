@@ -392,7 +392,7 @@ x\:ui {
 .webix_view span,
 .webix_view a.webix_list_item,
 .webix_view.webix_window {
-  outline: none;
+  /* outline: none; */
 }
 textarea,
 input,

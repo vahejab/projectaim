@@ -12,8 +12,8 @@ angular.module('Risk').service("DOMops", function() {
         commonFunctions[field] = obj;
     }
     
-    commonFunctions.clearLevel = function(){
-        leveldiv = document.querySelector("div[name='level']");
+    commonFunctions.clearLevel = function(evt){
+        leveldiv = document.querySelector(".level"+evt);
         leveldiv.innerHTML = '';
         leveldiv.setAttribute('class', '');
     }     
@@ -54,8 +54,15 @@ angular.module('Risk').service("DOMops", function() {
         }
         else
         {
-            commonFunctions.clearLevel();
-            commonFunctions.clearDot();
+            if (evt)
+            {
+                commonFunctions.clearLevel(evt);
+            }
+            else
+            {
+                commonFunctions.clearRiskLevel();
+                commonFunctions.clearDot();   
+            }
         }
     }
       
@@ -90,9 +97,17 @@ angular.module('Risk').service("DOMops", function() {
         document.querySelector("td[name='risk["+l+"]["+c+"]']").innerHTML 
         = "<div class='level' style='width:15px; height:15px; background-color: black'/>";
     }
-    
-    commonFunctions.clearLevel = function(){
+
+    commonFunctions.clearRiskLevel = function(){
         element =  document.querySelector("#level");
+        element.innerHTML = '';
+        element.classList.remove('high');
+        element.classList.remove('med');
+        element.classList.remove('low');
+    }
+    
+    commonFunctions.clearLevel = function(evt){
+        element =  document.querySelector(".level"+evt);
         element.innerHTML = '';
         element.classList.remove('high');
         element.classList.remove('med');
@@ -118,7 +133,7 @@ angular.module('Risk').service("DOMops", function() {
        if (evt)
            leveldiv = document.querySelector("[name='level'][evt='"+evt+"']");
        else
-           leveldiv =  document.querySelector("div[name='level']");
+           leveldiv = document.querySelector("div[name='level']");
     
        if (level >= commonFunctions.risklevels.riskhigh)
        {

@@ -1,5 +1,9 @@
+td[name=level]{
+    text-align: center !important;
+}
+
 table.events tbody td{
-    text-align: left;
+    text-align: left !important;
 }
      
 table.events thead th{
@@ -8,71 +12,70 @@ table.events thead th{
     font-style: italic !important;
     color: white !important;
     text-align: left !important;
-}
+} 
+
    
-table.events thead tr th:nth-child(1),
-table.events tbody tr td:nth-child(1){
+table.events thead tr th:not(.placeholder):nth-child(1),
+table.events tbody tr td:not(.header):nth-child(1){
     /* max-width: 51px !important; */
     max-width:  25px !important;
     min-width:  25px !important;
 }
 
-table.events thead tr th:nth-child(2),
-table.events tbody tr td:nth-child(2){
-    /* max-width: 51px !important; */
-    max-width:  250px !important;
-    min-width:  250px !important;
+table.events thead tr th:not(.placeholder):nth-child(2),
+table.events tbody tr td:not(.header):nth-child(2){
+    max-width: 10px;
+    min-width: 10px !important;
 }
 
-table.events thead tr th:nth-child(3),
-table.events tbody tr td:nth-child(3){
-    max-width: 250px !important;
-    min-width: 250px !important;
-}
-
-
-table.events thead tr th:nth-child(4),
-table.events tbody tr td:nth-child(4){
+table.events thead tr th:not(.placeholder):nth-child(3),
+table.events tbody tr td:not(.header):nth-child(3){
     max-width: 200px !important;
     min-width: 200px !important;
 }
 
-table.events thead tr th:nth-child(5),
-table.events tbody tr td:nth-child(5){
+
+table.events thead tr th:not(.placeholder):nth-child(4),
+table.events tbody tr td:not(.header):nth-child(4){
     max-width: 200px !important;
     min-width: 200px !important;
 }
 
-table.events thead tr th:nth-child(6),
-table.events tbody tr td:nth-child(6){
-    max-width: 100px !important;
-    min-width: 100px !important;
+table.events thead tr th:not(.placeholder):nth-child(5),
+table.events tbody tr td:not(.header):nth-child(5){
+    max-width: 200px !important;
+    min-width: 200px !important;
+}
+
+table.events thead tr th:not(.placeholder):nth-child(6),
+table.events tbody tr td:not(.header):nth-child(6){
+    max-width: 200px !important;
+    min-width: 200px !important;
     text-align: center;
 }
 
-table.events thead tr th:nth-child(7),
-table.events tbody tr td:nth-child(7){
+table.events thead tr th:not(.placeholder):nth-child(7),
+table.events tbody tr td:not(.header):nth-child(7){
     max-width: 50px !important;
     min-width: 50px !important;
 
 }
 
 
-table.events thead tr th:nth-child(8),
-table.evetns tbody tr td:nth-child(8){
+table.events thead tr th:not(.placeholder):nth-child(8),
+table.evetns tbody tr td:not(.header):nth-child(8){
     max-width: 50px !important;
     min-width: 50px !important;
 }
 
-table.events thead tr th:nth-child(9),
-table.events tbody tr td:nth-child(9){
+table.events thead tr th:not(.placeholder):nth-child(9),
+table.events tbody tr td:not(.header):nth-child(9){
     max-width: 50px !important;
     min-width: 50px !important;
 
 }       
-table.events thead tr th:nth-child(10),
-table.events tbody tr td:nth-child(10){
-    max-width: 50px !important;
-    min-width: 50px !important;
-  
+table.events thead tr th:not(.placeholder):nth-child(10),
+table.events tbody tr td:not(.header):nth-child(10){
+    max-width: 200px !important;
+    min-width: 200px !important;
 }
