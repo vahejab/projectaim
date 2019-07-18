@@ -318,13 +318,13 @@
                             Add
                         </td>
                         <td class="value">
-                            <input class="addEvent" type="button" id="evt{{event}}" ng-if="event != 5" style="display:none" ng-click="ctrl.enable(event+1)" value="+">
+                            <input class="addEvent" type="button" id="add{{event}}" ng-if="event != 5" style="display:none" ng-click="ctrl.enable(event+1); ctrl.disable(event)" value="+">
                         </td>
                         <td class="header">
                             Remove
                         </td>
                         <td class="value">
-                            <input class="removeEvent" type="button" id="evt{{event}}" ng-if="event != 1" style="display:none" ng-click="ctrl.remove(event)" value="-">
+                            <input class="removeEvent" type="button" id="remove{{event}}" ng-if="event != 1" ng-show="ctrl.enabledItem[event]" ng-click="ctrl.enable(event-1); ctrl.disable(event)" value="-">
                         </td>
                     </tr>
                 </tbody>

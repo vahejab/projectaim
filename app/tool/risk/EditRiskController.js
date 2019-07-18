@@ -89,10 +89,33 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         
         $scope.clearValidation = function(id){
             (document.querySelector('#'+id+' > div.webix_control')).classList.remove("webix_invalid");
+        } 
+        
+        ctrl.disable = function(evt){
+            ids = document.querySelectorAll("div.evt"+evt);
+            angular.forEach(ids, function(elem, key){
+                id = elem.getAttribute("id");
+                view_id = document.querySelector("#" + id.replace("{{event}}", id) + " > div.webix_view").getAttribute("view_id");
+                viewid = view_id.replace('$', '');
+                document.querySelector("#" + id.replace("{{event}}", id) + " > div.webix_view > *").setAttribute("id", viewid);
+                $$(viewid).disable();
+            });
+            angular.element(document.getElementById("add"+evt)).css("display", "none");
+            angular.element(document.getElementById("remove"+evt)).css("display", "none");
         }
         
-        ctrl.enable = function(evt){
+        ctrl.enable = function(evt){ 
            ctrl.enabledItem[evt] = true;
+           ids = document.querySelectorAll("div.evt"+evt);
+            angular.forEach(ids, function(elem, key){
+                id = elem.getAttribute("id");
+                view_id = document.querySelector("#" + id.replace("{{event}}", id) + " > div.webix_view").getAttribute("view_id");
+                viewid = view_id.replace('$', '');
+                document.querySelector("#" + id.replace("{{event}}", id) + " > div.webix_view > *").setAttribute("id", viewid);
+                $$(viewid).enable();
+            });
+            angular.element(document.getElementById("add"+evt)).css("display", "none"); 
+            angular.element(document.getElementById("remove"+evt)).css("display", "block");
         }
         
         ctrl.enabled = function(evt){
@@ -124,9 +147,10 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                     else{
                          $scope.msg = $sce.trustAsHtml(response.data);
                     }
-                }).then(function(response){
+                });
+                /*.then(function(response){
                 
-                }); 
+                });*/ 
         }
                
 }]).filter('unquote', function () {
