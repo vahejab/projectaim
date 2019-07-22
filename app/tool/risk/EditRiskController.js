@@ -91,6 +91,34 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             (document.querySelector('#'+id+' > div.webix_control')).classList.remove("webix_invalid");
         } 
         
+        ctrl.clear = function(evt){
+            ids = document.querySelectorAll("div.evt"+evt);
+            angular.forEach(ids, function(elem, key){
+                id = elem.getAttribute("id");
+                view_id = document.querySelector("#" + id.replace("{{event}}", id) + " > div.webix_view").getAttribute("view_id");
+                viewid = view_id.replace('$', '');
+
+                var el = document.querySelector("#" + id.replace("{{event}}", id));
+                if (el && el.getAttribute('type') == 'datepicker')
+                {
+                    elem = document.querySelector("#" + id.replace("{{event}}", id) + " > div.webix_view > div.webix_el_box > div.webix_inp_static");
+                    elem.setAttribute("id", viewid);
+                    elem.innerHTML = '';
+                    elem.innerText = '';
+                    elem.textContent = '';
+
+                }
+                else
+                {
+                    document.querySelector("#" + id.replace("{{event}}", id) + " > div.webix_view > *").setAttribute("id", viewid);
+                    $$(viewid).setValue('');
+                }
+            });
+            ValidationService.evtValid(evt-1);
+            DOMops.clearEvtLevel(evt);
+        }
+
+        
         ctrl.disable = function(evt){
             ids = document.querySelectorAll("div.evt"+evt);
             angular.forEach(ids, function(elem, key){

@@ -324,7 +324,7 @@
                             Remove
                         </td>
                         <td class="value">
-                            <input class="removeEvent" type="button" id="remove{{event}}" ng-if="event != 1" ng-show="ctrl.enabledItem[event]" ng-click="ctrl.enable(event-1); ctrl.disable(event)" value="-">
+                            <input class="removeEvent" type="button" id="remove{{event}}" ng-if="event != 1" ng-show="ctrl.enabledItem[event]" ng-click="ctrl.enable(event-1); ctrl.disable(event); ctrl.clear(event)" value="-">
                         </td>
                     </tr>
                 </tbody>

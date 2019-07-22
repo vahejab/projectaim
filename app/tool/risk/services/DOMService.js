@@ -12,6 +12,12 @@ angular.module('Risk').service("DOMops", function() {
         commonFunctions[field] = obj;
     }
     
+    commonFunctions.clearEvtLevel = function(evt){
+        leveldiv = document.querySelector("td[evt='"+evt+"']");
+        leveldiv.innerHTML = '';
+        leveldiv.setAttribute('class', '');
+    }  
+    
     commonFunctions.clearLevel = function(evt){
         leveldiv = document.querySelector(".level"+evt);
         leveldiv.innerHTML = '';
