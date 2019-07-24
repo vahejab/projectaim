@@ -45,7 +45,8 @@ function ConfigElement($timeout){
                 responsive: true,
                 width: width,
                 height: height,
-                disabled: disabled
+                disabled: disabled,
+                id: attrs.id
             };
             
             if (view == "text" || view == "textarea")
@@ -74,7 +75,7 @@ function ConfigElement($timeout){
             {
                 config.value = scope.ctrl.risk[attr];
                 config.options = scope.ctrl[options];
-                
+                config.editable = true;
                 config.on =  {
                     "onChange": function(){    
                         var obj = this.eventSource || this; 
@@ -86,14 +87,12 @@ function ConfigElement($timeout){
                 }
             }
             else if (view = "datepicker")
-            {
-                config.timepicker = false;
-                //multiselect: true,
-                config.suggest = {
+            {                                                                                  
+                config.suggest = {   
                     type:"calendar", 
                     body:{
                         minDate:(new Date()).setDate(new Date())
-                    }                                         
+                    }
                 }      
                 config.on = {
                     "onChange": function(){                                                         

@@ -1,6 +1,7 @@
 angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '$stateParams', '$scope', '$state', '$timeout', '$sce', 'CommonService', 'DOMops', 'ValidationService',/*'DTOptionsBuilder',*/ function($http, $resource, $stateParams, $scope, $state, $timeout, $sce, CommonService, DOMops, ValidationService/*, DTOptionsBuilder*/){
         refresh = false;
         var ctrl = this;
+        ctrl.clicked = false;
         ctrl.config = {}
         
         ctrl.DOMops = DOMops;
@@ -106,7 +107,6 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                     elem.innerHTML = '';
                     elem.innerText = '';
                     elem.textContent = '';
-
                 }
                 else
                 {
@@ -116,6 +116,94 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             });
             ValidationService.evtValid(evt-1);
             DOMops.clearEvtLevel(evt);
+        }
+        
+        ctrl.getDate = function(field, evt){
+            elems = document.querySelectorAll("div.evt"+evt);
+            var dateValue = '';
+            for (idx = 0; idx < ids.length; idx++)
+            {   
+                elem = elems[idx];
+                id = elem.getAttribute("id");
+                view_id = document.querySelector("#" + id.replace("{{event}}", id) + " > div.webix_view").getAttribute("view_id");
+                viewid = view_id.replace('$', '');
+
+                var el = document.querySelector("#" + id.replace("{{event}}", id));
+                if (el && el.getAttribute('type') == 'datepicker')
+                {  
+                    elem = document.querySelector("#" + id.replace("{{event}}", id) + " > div.webix_view > div.webix_el_box > div.webix_inp_static");
+                    elemid = id;
+
+                    if (elemid.substring(0, elemid.length-1) == field)
+                    { 
+                        dateValue = elem.innerHTML;
+                    } 
+                }
+            }
+            
+            dateParts = dateValue.split('/');
+            return dateParts[2]+'-'+dateParts[0]+'-'+dateParts[1];
+        }
+        
+        ctrl.add = function(evt){
+            ctrl.enable(evt+1); 
+            ctrl.disable(evt); 
+            ctrl.setDateLimits(evt);
+            
+            if (ctrl.clicked == false)
+            {
+                $timeout(function(){
+                    angular.element(document.querySelector("#remove"+(evt+1))).triggerHandler('click');
+                }, 5);
+                
+                $timeout(function(){
+                    angular.element(document.querySelector("#add"+(evt))).triggerHandler('click');
+                }, 10)
+               
+                $timeout(function(){
+                    ctrl.clicked = false;
+                }, 15) 
+            }                              
+        }
+        
+        ctrl.remove = function(evt){
+            ctrl.enable(evt-1); 
+            ctrl.disable(evt); 
+            ctrl.clear(evt);
+            ctrl.clicked = true;
+        }
+        ctrl.setDateLimits = function(evt){
+
+            ids = document.querySelectorAll("div.evt"+evt);
+            angular.forEach(ids, function(elem, key){
+                id = elem.getAttribute("id");
+                view_id = document.querySelector("#" + id.replace("{{event}}", id) + " > div.webix_view").getAttribute("view_id");
+             
+                var el = document.querySelector("#" + id.replace("{{event}}", id));
+                if (el && el.getAttribute('type') == 'datepicker')
+                {   
+                    elem = document.querySelector("#" + id.replace("{{event}}", id) + " > div.webix_view > div.webix_el_box > div.webix_inp_static");
+                    elemid = id;   
+                    if (elemid.substring(0, elemid.length-1) == 'actualdate')
+                    {                                                                 
+                         actualDate = ctrl.getDate('actualdate', evt);
+                         selector = "actualdate"+(evt+1);
+                         $$(selector).getPopup().getBody().define('minDate', actualDate);
+                         value = $$(selector).getPopup().getBody().getValue();
+                         $$(selector).getPopup().getBody().showCalendar(value);               
+                         $$(selector).refresh();                                               ``
+                    }
+                    else if (elemid.substring(0, elemid.length-1) == 'scheduledate')
+                    {
+                         scheduleDate = ctrl.getDate('scheduledate', evt);
+                         selector = "scheduledate"+(evt+1);
+                         $$(selector).getPopup().getBody().define('minDate', scheduleDate);
+                         value = $$(selector).getPopup().getBody().getValue(); 
+                         $$(selector).getPopup().getBody().showCalendar(value);
+                         $$(selector).refresh();     
+                    } 
+                }
+            });
         }
 
         

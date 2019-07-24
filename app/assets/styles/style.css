@@ -1,7 +1,15 @@
 html{
     overflow-y: overlay;
 }
-  
+
+td.left *{
+    text-align: left;
+}
+
+td.center input{
+    text-align: center !important;
+}
+
 img#logo{
     width: 200px !important;
     max-width: 75vw !important;
@@ -82,7 +90,7 @@ th.placeholder{
        
            
     div.width200{
-        width: 200px !important;
+        width: 200px !important;  
     }
 
     table.events tbody tr td.header,
@@ -167,7 +175,7 @@ th.placeholder{
 @media only screen and (min-width: 801px){
 
     div.width200{
-        width: auto !important;
+        width: auto !important;     
     }
     
     table.events tbody tr td.header{

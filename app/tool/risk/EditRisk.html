@@ -168,13 +168,13 @@
                             
                             </th>
                             <th>
-                                 &nbsp;&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;
+                                 Save
                             </th>
                             <th class="placeholder">
                             
                             </th>
                             <th>
-                                 &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
+                                 Remove
                             </th>
                     </tr>
                 </thead>
@@ -183,74 +183,74 @@
                         <td class="header">
                             <div class="width200">ID</div>
                         </td>
-                        <td class="value">
-                            <div class="width200">{{event}}</div>
+                        <td class="left value">
+                            <div class="left width200">{{event}}</div>
                         </td> 
                         <td class="header">
-                            <div class="width200">Event Title</div>
+                            <div class="lwidth200">Event Title</div>
                         </td>
-                        <td class="value">
+                        <td class="left value">
                             <div class="width200">Risk Identified</div>
                         </td>
                         <td class="header">
                             <div class="width200">Owner</div>
                         </td>
-                        <td class="value">
+                        <td class="left value">
                             <div class="width200">{{ctrl.risk.ownername}}</div>
                         </td>
-                        <td class="header">
+                        <td class="left header">
                             <div class="width200">Actual Date</div>
                         </td>
-                        <td class="value">
+                        <td class="left value">
                             <div class="width200">{{ctrl.risk.assessmentdate | date: "M/d/y"}}</div>
                         </td>
                         <td class="header">
                             <div class="width200">Schedule Date</div>
                         </td>
-                        <td class="value">
+                        <td class="left value">
                             <div class="width200">{{ctrl.risk.assessmentdate | date: "M/d/y"}}</div>
                         </td>
                         <td class="header">
                             <div class="width200">Risk Level</div>
                         </td>
-                        <td class="level value {{ctrl.risk.risklevel.cls}}">
+                        <td class="center level value {{ctrl.risk.risklevel.cls}}">
                             <div class="width200"><nobr>{{ctrl.risk.risklevel.level}}</nobr></div> 
                         </td>
                         <td class="header">
                             <div class="width200">Likelihood</div>
                         </td>
-                        <td class="value" style="text-align: center">
+                        <td class="value center">
                             <div class="width200">{{ctrl.risk.risklevel.likelihood}}</div>
                         </td>
                         <td class="header">
                             <div class="width200">Technical</div>
                         </td>
-                        <td class="value" style="text-align: center">
+                        <td class="value center" style="text-align: center">
                             <div class="width200">{{ctrl.risk.risklevel.technical}}</div>
                         </td>
                         <td class="header">
                             <div class="width200">Schedule</div>
                         </td>
-                        <td class="value" style="text-align: center"></div>
+                        <td class="value center" style="text-align: center"></div>
                            <div class="width200">{{ctrl.risk.risklevel.schedule}}
                         </td>
                         <td class="header">
                             <div class="width200">Cost</div>
                         </td>
-                        <td class="value" style="text-align: center">
+                        <td class="value center">
                            <div class="width200">{{ctrl.risk.risklevel.cost}}</div>
                         </td>
                         <td class="header">
-                           <div class="width200">Add</div>
+                           <div class="width200">Save</div>
                         </td>
                         <td class="value">
-                            <div class="width200">+</div>
+                            <div class="width200"></div>
                         </td>
                         <td class="header">
                            <div class="width200">Remove</div>
                         </td>
                         <td class="value">
-                            <div class="width200">-</div>
+                            <div class="width200"></div>
                         </td>
                     </tr>
                     <tr ng-repeat="event in [1,2,3,4,5]">
@@ -276,13 +276,13 @@
                             Actual Date
                         </td>
                         <td class="value">
-                            <div class="evt{{event}}" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.actualdate{{event}}.done" config="actualdate{{event}}" webix-ui="actualdate{{event}}" id="actualdate{{event}}" width="200" height="30" name="actualate[{{event}}]" value="today" type="datepicker" />
+                            <div class="evt{{event}}" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.actualdate{{event}}.done" config="actualdate{{event}}" webix-ui="actualdate{{event}}" id="actualdate{{event}}" width="200" height="30" name="actualate[{{event}}]" type="datepicker" category="actual" />
                         </td>
                         <td class="header">
                             Schedule Date
                         </td>
                         <td class="value">
-                            <div class="evt{{event}}" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.scheduledate{{event}}.done" config="scheduledate{{event}}" webix-ui="scheduledate{{event}}" id="scheduledate{{event}}" width="200" height="30" name="scheduledate[{{event}}]" value="today" type="datepicker" />
+                            <div class="evt{{event}}" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.scheduledate{{event}}.done" config="scheduledate{{event}}" webix-ui="scheduledate{{event}}" id="scheduledate{{event}}" width="200" height="30" name="scheduledate[{{event}}]" type="datepicker" category="schedule" />
                         </td>
                         <td class="header">
                             Level
@@ -293,42 +293,43 @@
                         <td class="header">
                             Likelihood
                         </td>
-                        <td class="value">
-                            <div evt="{{event}}" class="evt{{event}}" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.likelihood{{event}}.done" type="level" category="event" config="likelihood{{event}}" webix-ui="likelihood{{event}}" width="30" height="30" type="text" id="likelihood{{event}}" name="likelihood[{{event}}]"></div>
+                        <td class="value center">
+                            <div maxlength="1" evt="{{event}}" class="evt{{event}}" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.likelihood{{event}}.done" type="level" category="event" config="likelihood{{event}}" webix-ui="likelihood{{event}}" width="30" height="30" type="text" id="likelihood{{event}}" name="likelihood[{{event}}]"></div>
                         </td>         
-                        <td class="header">
+                        <td class="header ">
                             Technical
                         </td>                                                                                                                
-                        <td class="value">
-                            <div evt="{{event}}" class="evt{{event}}" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.technical{{event}}.done"  type="level" category="event" config="technical{{event}}" webix-ui="technical{{event}}" width="30" height="30" type="text" id="technical{{event}}" name="technical[{{event}}]"></div>
+                        <td class="value center">
+                            <div maxlength="1"  evt="{{event}}" class="evt{{event}}" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.technical{{event}}.done"  type="level" category="event" config="technical{{event}}" webix-ui="technical{{event}}" width="30" height="30" type="text" id="technical{{event}}" name="technical[{{event}}]"></div>
                         </td>
                         <td class="header">
                             Schedule
                         </td>
-                        <td class="value">
-                            <div evt="{{event}}" class="evt{{event}}" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.schedule{{event}}.done"  type="level" category="event" config="schedule{{event}}" webix-ui="schedule{{event}}" width="30" height="30" type="text" id="schedule{{event}}" name="schedule[{{event}}]"></div>
+                        <td class="value center">
+                            <div maxlength="1" evt="{{event}}" class="evt{{event}}" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.schedule{{event}}.done"  type="level" category="event" config="schedule{{event}}" webix-ui="schedule{{event}}" width="30" height="30" type="text" id="schedule{{event}}" name="schedule[{{event}}]"></div>
                         </td>
                         <td class="header">
                             Cost
                         </td>
-                        <td class="value">
-                            <div evt="{{event}}" class="evt{{event}}" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.cost{{event}}.done"  type="level" category="event" config="cost{{event}}" webix-ui="cost{{event}}" width="30" height="30" type="text" id="cost{{event}}" name="cost[{{event}}]"></div>
+                        <td class="value center">
+                            <div maxlength="1" evt="{{event}}" class="evt{{event}}" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.cost{{event}}.done"  type="level" category="event" config="cost{{event}}" webix-ui="cost{{event}}" width="30" height="30" type="text" id="cost{{event}}" name="cost[{{event}}]"></div>
                         </td>
                         <td class="header">
-                            Add
+                            Save
                         </td>
                         <td class="value">
-                            <input class="addEvent" type="button" id="add{{event}}" ng-if="event != 5" style="display:none" ng-click="ctrl.enable(event+1); ctrl.disable(event)" value="+">
+                            <input class="addEvent" type="button" id="add{{event}}" ng-if="event != 5" style="display:none" ng-click="ctrl.add(event);" ng-keydown="$event.keyCode === 13 && ctrl.add(event)" value="Save">
                         </td>
                         <td class="header">
                             Remove
                         </td>
                         <td class="value">
-                            <input class="removeEvent" type="button" id="remove{{event}}" ng-if="event != 1" ng-show="ctrl.enabledItem[event]" ng-click="ctrl.enable(event-1); ctrl.disable(event); ctrl.clear(event)" value="-">
+                            <input class="removeEvent" type="button" id="remove{{event}}" ng-if="event != 1" ng-show="ctrl.enabledItem[event]" ng-click="ctrl.remove(event)" ng-keydown="$event.keyCode === 13 && ctrl.remove(event)"  value="Remove">
                         </td>
                     </tr>
                 </tbody>
             </table>
+             <button id="submit" type="submit">Save Events</button>
            </form>                  
          </div> 
          <divider></divider>
