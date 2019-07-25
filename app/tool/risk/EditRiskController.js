@@ -3,6 +3,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         var ctrl = this;
         ctrl.clicked = false;
         ctrl.config = {}
+        ctrl.lastEventIdSaved = 0;
         
         ctrl.DOMops = DOMops;
         ctrl.ValidationService = ValidationService;
@@ -106,7 +107,9 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                     elem.setAttribute("id", viewid);
                     elem.innerHTML = '';
                     elem.innerText = '';
+                    elem.outerText = '';
                     elem.textContent = '';
+                    $$(viewid).setValue('');
                 }
                 else
                 {
@@ -149,6 +152,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             ctrl.enable(evt+1); 
             ctrl.disable(evt); 
             ctrl.setDateLimits(evt);
+            ctrl.lastEventIdSaved = evt;
             
             if (ctrl.clicked == false)
             {

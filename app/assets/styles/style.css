@@ -2,6 +2,10 @@ html{
     overflow-y: overlay;
 }
 
+.animate.ng-enter * {
+    animation: enter 4s linear;
+}
+
 td.left *{
     text-align: left;
 }

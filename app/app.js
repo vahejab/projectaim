@@ -42,6 +42,8 @@ common.service("CommonService", function() {
              scope[type][field] = '';
              return;
         }
+        
+        alert(JSON.stringify(obj.data.value));
 
         var value = obj.data.value.toString();
         var year = obj.data.value.getFullYear();
@@ -80,7 +82,7 @@ common.service("CommonService", function() {
 
 angular.module('Home', []);
 angular.module('Action', ['webix', 'ngResource', 'Common']);
-angular.module('Risk',   ['ngResource', 'Common']);
+angular.module('Risk',   ['ngResource', 'ngAnimate', 'Common']);
 
 var app = angular.module('Main', ['ui.router', 'oc.lazyLoad', 'ngResource', 'ngSanitize', 'webix', 'Common', 'Home', 'Action', 'Risk']);
   
