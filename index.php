@@ -12,8 +12,9 @@
  <link rel="stylesheet" href="/app/js/webix-6.3.2/codebase/webix.css" type="text/css" /> 
  <!--link rel="stylesheet" href="/app/js/kendoui-2019.1.220/styles/kendo.common.min.css"  />
  <link rel="stylesheet" href="/app/js/kendoui-2019.1.220/styles/kendo.material.min.css"  />
- <link rel="stylesheet" href="/app/css/kendo-ui/kendo/custom.css" /-->  
-  <link rel="stylesheet" href="/app/assets/styles/style.css" />
+ <link rel="stylesheet" href="/app/css/kendo-ui/kendo/custom.css" /--> 
+ <link rel="stylesheet" href="/app/css/animate-css/animate.css" /> 
+ <link rel="stylesheet" href="/app/assets/styles/style.css" />
   <style>
     .ui-view > div.webix_view{
         width: 100vw !important;

@@ -23,10 +23,11 @@
      <table id="riskmatrix" class="ng-scope">
         <tbody>
             <tr ng-repeat="likelihood in [5,4,3,2,1]" class="ng-scope">
-                <td ng-if="likelihood == 5" rowspan="6" class="ng-scope">
-                    <div class="vlabel">Likelihood</div>
+               <td ng-if="likelihood == 5" rowspan="2"></td>
+                <td ng-if="likelihood == 3" rowspan="5" class="ng-scope" style="border:none">
+                    <div class="vlabelconfig">Likelihood</div>
                 </td>
-                <td>
+                <td class="no-border">
                     <div class="likelihood ng-binding">{{likelihood}}</div>
                 </td>
             
@@ -35,7 +36,7 @@
                     <input class="risklevel" type="text" ng-model="risk[likelihood][consequence]" ng-value="risk[likelihood][consequence]" name="risk[{{likelhood}}][{{consequence}}]" />
                 </td>
             </tr>                
-            <tr class="ng-scope">
+            <tr class="ng-scope"></tr>
         <td></td>
         <td ng-repeat="consequence in [1,2,3,4,5]" class="ng-binding ng-scope">{{consequence}}</td>
         </tr>

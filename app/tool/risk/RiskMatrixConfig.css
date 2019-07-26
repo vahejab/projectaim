@@ -28,11 +28,17 @@
     height: 5px;
 }
 
-#riskmatrix tr td:first-child{
+#riskmatrix tr td:first-child, #riskmatrix tr td.no-border{
     border-top: 0px;
     border-left: 0px;
-    border-bottom: 0px;  
+    border-bottom: 0px;
+}                                                         
+
+#riskmatrix tr td.no-border div{
+    text-align: right;
 }
+
+
 #riskmatrix tr:not(:last-child):not(:nth-last-child(2)) td:not(:first-child):not(:nth-child(2)){
     background-color: #eeeeee;
 }
@@ -84,9 +90,20 @@ div.med{
 div.high{
     background-color: #ee0000 !important;
 }
-div.vlabel{
-    transform: translateX(30px)rotate(-90deg)translateX(-25px);
-}                         
+
+
+tr:first-child td:first-child div,
+tr:first-child td:nth-child(2) div{
+     text-align: right;
+}
+
+
+tr:not(:first-child) td:first-child div{
+    text-align: right;
+}
+
+
+                       
 #riskmatrix td:first-child{
     max-width: 0px !important;
     width: 0px !important;

@@ -60,10 +60,13 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             
         ctrl.users = [];
                              
-        $scope.$on("$destroy", function(){
-             angular.element(document.querySelector('link[href="/app/tool/risk/EditRisk.css"]')).remove();
+         
+        $scope.$on("$destroy", function(){                                      
+            $timeout(function(){
+                angular.element(document.querySelector('link[href="/app/tool/risk/EditRisk.css"]')).remove();    
+            }, 400);
         });
-
+        
         ctrl.getTextValue = function(obj, type, field){
               return CommonService.getTextValue(obj, ctrl, type, field);
         }

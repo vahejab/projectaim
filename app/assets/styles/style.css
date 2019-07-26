@@ -1,9 +1,22 @@
 html{
     overflow-y: overlay;
 }
+   
 
-.animate.ng-enter * {
-    animation: enter 4s linear;
+*.ng-leave {
+   -webkit-animation: fadeOut 0s;
+   -moz-animation: fadeOut 0s;
+   -ms-animation: fadeOut 0s;
+   animation: fadeOut 0s;         
+   -webkit-transform-style: preserve-3d;
+}
+
+*.ng-enter {
+   -webkit-animation: fadeIn 0.5s;
+   -moz-animation: fadeIn 0.5s;
+   -ms-animation: fadeIn 0.5s;
+   animation: fadeIn 0.5s;          
+   -webkit-transform-style: preserve-3d;
 }
 
 td.left *{
@@ -503,20 +516,37 @@ table.grid tbody tr td:nth-child(14){
 }
 
 
-.vlabel {
-  /* FF3.5+ */
+.vlabelconfig {
+  transform: translateX(0px)rotate(-90.0deg)translateX(40px);
+    /* FF3.5+ */
   -moz-transform: rotate(-90.0deg);
   /* Opera 10.5 */
   -o-transform: rotate(-90.0deg);
   /* Saf3.1+, Chrome */
-  -webkit-transform: rotate(-90.0deg);
+  -webkit-transform: translateX(0px)rotate(-90.0deg)translateX(40px);
   /* IE6,IE7 */
   filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=0.083);
   /* IE8 */
   -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
-  /* Standard */
-  transform: rotate(-90.0deg);
 }
+
+
+
+.vlabel {
+  transform: translateX(0px)rotate(-90.0deg)translateX(-5px);
+    /* FF3.5+ */
+  -moz-transform: rotate(-90.0deg);
+  /* Opera 10.5 */
+  -o-transform: rotate(-90.0deg);
+  /* Saf3.1+, Chrome */
+  -webkit-transform: translateX(0px)rotate(-90.0deg)translateX(-5px);
+  /* IE6,IE7 */
+  filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=0.083);
+  /* IE8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
+}
+
+
 
                     
 div.nested > div.info,

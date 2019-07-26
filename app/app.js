@@ -41,10 +41,8 @@ common.service("CommonService", function() {
         if (!obj && !obj.getValue()){ 
              scope[type][field] = '';
              return;
-        }
+        }              
         
-        alert(JSON.stringify(obj.data.value));
-
         var value = obj.data.value.toString();
         var year = obj.data.value.getFullYear();
         var month = obj.data.value.getMonth()+1;

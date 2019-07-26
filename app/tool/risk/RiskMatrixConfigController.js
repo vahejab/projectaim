@@ -96,6 +96,6 @@ angular.module('Risk').controller('RiskMatrixConfigController', ['$http', '$reso
     }
     
     $scope.$on("$destroy", function(){
-        angular.element(document.querySelector('link[href="/app/tool/risk/RiskMatrixConfig.css"]')).remove();   
+        angular.element(document.querySelector('link[href="/app/tool/risk/RiskMatrixConfig.css"]')).remove();
     });
 }]);
