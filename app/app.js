@@ -41,7 +41,12 @@ common.service("CommonService", function() {
         if (!obj && !obj.getValue()){ 
              scope[type][field] = '';
              return;
-        }              
+        } 
+
+        if (obj.data.value == ''){
+            scope[type][field] = '';
+            return;
+        }             
         
         var value = obj.data.value.toString();
         var year = obj.data.value.getFullYear();

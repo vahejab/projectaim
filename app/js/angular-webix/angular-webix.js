@@ -105,7 +105,7 @@ angular.module("webix", [])
                if ($scope.ctrl.config[dataname].disabled != false){
                   $scope.ctrl.config[dataname].disabled = !isEnabled;
                } 
-              watcher();
+              watcher(); 
             });              
           }
           $scope.$digest();

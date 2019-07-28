@@ -7631,7 +7631,7 @@ input.webix_invalid,
 select.webix_invalid,
 textarea.webix_invalid {
   color: #FF5C4C;
-  background-color: #ffdedb;
+  background-color: #ff000024;
   border-color: #ff8d82;
 }
 .webix_invalid .webix_inp_bottom_label {

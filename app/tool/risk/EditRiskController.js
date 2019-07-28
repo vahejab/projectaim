@@ -20,9 +20,22 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
 
         ctrl.enabledItem = [false, true, false, false, false, false];
         ctrl.evt = [];
+        ctrl.event = [];
+        
+        
             
         for(var e = 1; e <= 5; e++)
         {
+            ctrl.event[e] = {
+                eventtitle: '',
+                owner: '',
+                actualdate: '',
+                scheduledate: '',
+                likelihood: '',
+                technical: '',
+                schedule: '',
+                cost: ''
+            }
             ctrl.evt[e]= {valid: false};
         }
         
@@ -62,9 +75,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                              
          
         $scope.$on("$destroy", function(){                                      
-            $timeout(function(){
-                angular.element(document.querySelector('link[href="/app/tool/risk/EditRisk.css"]')).remove();    
-            }, 400);
+            angular.element(document.querySelector('link[href="/app/tool/risk/EditRisk.css"]')).remove();    
         });
         
         ctrl.getTextValue = function(obj, type, field){
@@ -151,6 +162,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             return dateParts[2]+'-'+dateParts[0]+'-'+dateParts[1];
         }
         
+        
         ctrl.add = function(evt){
             ctrl.enable(evt+1); 
             ctrl.disable(evt); 
@@ -198,7 +210,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                          $$(selector).getPopup().getBody().define('minDate', actualDate);
                          value = $$(selector).getPopup().getBody().getValue();
                          $$(selector).getPopup().getBody().showCalendar(value);               
-                         $$(selector).refresh();                                               ``
+                         $$(selector).refresh();                                               
                     }
                     else if (elemid.substring(0, elemid.length-1) == 'scheduledate')
                     {
@@ -257,6 +269,29 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.complete = function(evt){
             return ValidationService.evtValid(evt);
         }
+        
+        ctrl.saveEvents = function(){
+            ctrl.event[0] = {
+                eventtitle : ctrl.risk.eventtitle,
+                owner : ctrl.risk.owner,
+                actualdate : ctrl.risk.actualdate,
+                scheduledate : ctrl.risk.scheduledate,
+                lilelihood : ctrl.risk.likelihood,
+                technical : ctrl.risk.technical,
+                schedule : ctrl.risk.schedule,
+                cost : ctrl.risk.cost
+            }
+        
+            $http.post('/api/risks/'+ ctrl.risk.riskid + '/events', ctrl.event).then(function(response){
+                    if (response.data.Succeeded){
+                        $scope.msg = response.data.Result;
+                        return response.data.Result;
+                    }
+                    else{
+                         $scope.msg = $sce.trustAsHtml(response.data);
+                    }
+            });
+        }
 
         ctrl.submit = function(){
             if (!ctrl.valid())
@@ -271,9 +306,6 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                          $scope.msg = $sce.trustAsHtml(response.data);
                     }
                 });
-                /*.then(function(response){
-                
-                });*/ 
         }
                
 }]).filter('unquote', function () {

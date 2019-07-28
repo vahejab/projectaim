@@ -1,7 +1,7 @@
 <?php
    namespace controllers; 
    
-   class RiskConfigController
+   class EventsController
    { 
         private $_params;
         
@@ -13,22 +13,22 @@
         
         public function get($id = null)
         {
-            $service = new \data\service\riskconfigservice();
-            // ($id == null)
-            //  return $service->findAll();
-            return $service->getConfig();
+            $service = new \data\service\eventservice();
+            if ($id == null)
+                return $service->findAll();
+            return $service->findOne($id);
         }
 
         public function post($id = null)
         {
-            $service = new \data\service\riskconfigservice();
+            $service = new \data\service\eventservice();
             return $service->createOne($this->payload);
         } 
         
         public function put($id = null)
         {
-            $service = new \data\service\riskconfigservice();
-            return $service->updateAll($this->payload);
+            $service = new \data\service\eventservice();
+            return $service->updateAllByRisk($this->payload);
         }
    }
    

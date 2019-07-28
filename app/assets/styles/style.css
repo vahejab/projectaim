@@ -58,7 +58,11 @@ div.webix-control{
     height: 30px !important;
 }
 .nav-link{
-    background-color: #0038a8 !important;
+    /*background-color: #0038a8 !important;*/
+    background:#042a7e;
+    background:-moz-linear-gradient(left,#042a7e 0%,#126cfa 100%);
+    background:-webkit-linear-gradient(left,#042a7e 0%,#126cfa 100%);
+    background:linear-gradient(to right,#042a7e 0%,#126cfa 100%);
 }
 
 td.red{
@@ -523,7 +527,7 @@ table.grid tbody tr td:nth-child(14){
   /* Opera 10.5 */
   -o-transform: rotate(-90.0deg);
   /* Saf3.1+, Chrome */
-  -webkit-transform: translateX(0px)rotate(-90.0deg)translateX(40px);
+  -webkit-transform: translateX(30px)rotate(-90.0deg)translateX(40px);
   /* IE6,IE7 */
   filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=0.083);
   /* IE8 */

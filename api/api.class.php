@@ -75,15 +75,22 @@
         }  
         
         public function processRequest() {
-            if(count($this->endpoint) > 0){
-                $class = "\\controllers\\{$this->endpoint[0]}Controller";
+            $endpointCount = count($this->endpoint);
+            if($endpointCount <= 2){
+                if ($endpointCount == 1)
+                    $class = "\\controllers\\{$this->endpoint[0]}Controller";
+                else if ($endpointCount == 2)
+                    $class = "\\controllers\\{$this->endpoint[1]}Controller";  
                 if (class_exists($class, true))
                 {
                     $method = strtolower($this->method); 
                     if (method_exists($class, $method)){
                         $args = $this->args;
                         $id = $this->id;
-                        $endpoint2 =  $this->endpoint[1] ?? null;
+                        if ($endpointCount == 1)
+                            $endpoint2 =  $this->endpoint[1] ?? null;
+                        else if ($endpointCount  == 2)
+                            $endpoint2 =  $this->endpoint[0] ?? null;
                         $payload = $this->payload;
                         $response = (new $class($args,$endpoint2,$payload))->{$method}($id);
                         if ($response['Succeeded']==true){    
@@ -96,7 +103,7 @@
                         }
                     }
                 }
-                return $this->_response("No Endpoint: {$this->endpoint[0]}");
+                return $this->_response("No Endpoint: " . $this->endpoint[1] ?? $this->endpoint[0]);
             }
         }
 
