@@ -11,7 +11,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         
         ctrl.initDone = false;
         ctrl.userDone = false;
-        
+        ctrl.eventsdone = false;
         ctrl.setup = {
             done: false
         }

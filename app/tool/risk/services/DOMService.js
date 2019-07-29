@@ -114,10 +114,12 @@ angular.module('Risk').service("DOMops", function() {
     
     commonFunctions.clearLevel = function(evt){
         element =  document.querySelector(".level"+evt);
-        element.innerHTML = '';
-        element.classList.remove('high');
-        element.classList.remove('med');
-        element.classList.remove('low');
+        if (element){
+            element.innerHTML = '';
+            element.classList.remove('high');
+            element.classList.remove('med');
+            element.classList.remove('low');
+        }
     }
     
     commonFunctions.resetForm = function(risk, fields){

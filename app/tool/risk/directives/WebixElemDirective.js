@@ -11,13 +11,12 @@ function ConfigElement($timeout){
             var attr = attrs.config;
             var type = attrs.type;
             var width = attrs.width;
-            var height = attrs.height; 
-            var evt;
+            var height = attrs.height;   
             if (attrs.hasOwnProperty('class'))
             {
                 evt = parseInt(attrs.class[3]);
             }   
-            
+           
             var disabled = false;
             if (attrs.hasOwnProperty('enabled') && attrs.enabled == 'false')
                 disabled = true;
@@ -131,7 +130,8 @@ function ConfigElement($timeout){
                      }
                 }   
             }
-              
+            if (attrs.hasOwnProperty('event'))
+                config.value = scope.ctrl.event[attrs.event][attrs.input];  
             if (maxlength)
                 config.attributes = {maxlength : maxlength};
             config.done = true;

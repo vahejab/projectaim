@@ -82,7 +82,27 @@ function getRisk(){
                       else{
                          $scope.ctrl.msg += "<br />"+$sce.trustAsHtml(response.data);
                       }
-                }); 
+                }).then(function(){
+                   return $http.get('api/risks/'+$stateParams.id+'/events').then(function(response){
+                        if (response.data.Succeeded){
+                              
+                             for (var key = 0; key < response.data.Result.length; key++){
+                                event = response.data.Result[key];
+                                $scope.ctrl.event[key].eventid = key;
+                                $scope.ctrl.event[key].eventtitle = event.eventtitle;
+                                $scope.ctrl.event[key].riskid = event.riskid;
+                                $scope.ctrl.event[key].ownerid = event.ownerid;
+                                $scope.ctrl.event[key].actualdate = event.actualdate;
+                                $scope.ctrl.event[key].scheduledate = event.scheduledate;
+                                $scope.ctrl.event[key].scheduledlikelihood = event.scheduledlikelihood;
+                                $scope.ctrl.event[key].scheduledtechnical = event.scheduledtechnical;
+                                $scope.ctrl.event[key].scheduledschedule = event.scheduledschedule;
+                                $scope.ctrl.event[key].scheduledcost = event.scheduledcost;
+                             }
+                             $scope.ctrl.eventsdone = true;
+                        } 
+                   });
+                });
             });
          }
      }

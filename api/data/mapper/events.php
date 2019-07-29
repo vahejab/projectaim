@@ -7,17 +7,16 @@
             if (is_null($event)) $event = new \data\model\event();
             
             if (!is_null($array['RiskID'])) $event->riskid = $array['RiskID'];
-            if (!is_null($array['EventID'])) $event->riskeventid = $array['RiskEventID'];     
-            if (!is_null($array['EventOwnerID'])) $event->ownerid = $array['OwnerID'];
-            if (!is_null($array['ApproverID'])) $event->approverid = $array['ApproverID'];
+            if (!is_null($array['EventID'])) $event->eventid = $array['EventID'];     
+            if (!is_null($array['EventOwnerID'])) $event->ownerid = $array['EventOwnerID'];   
             if (!is_null($array['EventTitle'])) $event->eventtitle = $array['EventTitle'];
 
             if (!is_null($array['ActualDate'])) $event->actualdate = $array['ActualDate'];
-            if (!is_null($array['ScheduleDate'])) $event->actualdate = $array['ScheduleDate'];
-            if (!is_null($array['BaselineDate'])) $event->actualdate = $array['BaselineDate'];
+            if (!is_null($array['ScheduleDate'])) $event->scheduledate = $array['ScheduleDate'];
+            if (!is_null($array['BaselineDate'])) $event->baselinedate = $array['BaselineDate'];
 
             if (!is_null($array['ActualLikelihood'])) $event->actuallikelihood = $array['ActualLikelihood'];
-            if (!is_null($array['ActalTechnical'])) $event->actualtechnical = $array['ActualTechnical'];
+            if (!is_null($array['ActualTechnical'])) $event->actualtechnical = $array['ActualTechnical'];
             if (!is_null($array['ActualSchedule'])) $event->actualschedule = $array['ActualSchedule'];
             if (!is_null($array['ActualCost'])) $event->actualcost = $array['ActualCost'];
             
