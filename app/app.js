@@ -1,6 +1,7 @@
 var common = angular.module('Common', []);
 var refresh = false;
 var formcheck = false;
+
 common.service("CommonService", function() {
     var commonFunctions = {};
     
@@ -27,7 +28,7 @@ common.service("CommonService", function() {
             return new Date(date);    
         return null;
     }
-    
+        
     commonFunctions.getStatus = function(date1, date2){
        return (date1 > date2)? 'Late': 'On Time';    
     }
@@ -37,23 +38,27 @@ common.service("CommonService", function() {
                                   + "-" + ((date.getDate() < 10)? '0'+date.getDate(): date.getDate());
     }
     
+    commonFunctions.dateValue = function(val){
+        var year = val.getFullYear();
+        var month = val.getMonth()+1;
+        var day = val.getDate();
+        dateValue =  year + "-" + ((month < 10)? '0'+month: month) + "-" + ((day < 10)? '0'+day: day);     
+        return dateValue;
+    }
+    
     commonFunctions.getDateValue = function(obj, scope, type, field){
         if (!obj && !obj.getValue()){ 
              scope[type][field] = '';
              return;
-        } 
+        }
 
-        if (obj.data.value == ''){
+        if (obj.data && obj.data.value == ''){
             scope[type][field] = '';
             return;
         }             
         
-        var value = obj.data.value.toString();
-        var year = obj.data.value.getFullYear();
-        var month = obj.data.value.getMonth()+1;
-        var day = obj.data.value.getDate()+1;
-        scope[type][field] = year + "-" + ((month < 10)? '0'+month: month) + "-" + ((day < 10)? '0'+day: day);       
-    }               
+        scope[type][field] = commonFunctions.dateValue(obj.data.value); 
+    }              
                                 
     commonFunctions.getItemValue = function(obj, scope, type, field){
         if (!obj && !obj.getValue()){

@@ -23,10 +23,10 @@
             return $mapper->findAllByRisk($params);   
         }
         
-        public function updateAllByRisk($id)
+        public function updateAllByRisk($params)
         {
             $mapper = $this->_getMapper();
-            $params = array('riskid' => $id);
-            return $mapper->updateAllByRisk($params);   
+            $events = array('riskid' => $params['riskid'], 'events' => $params['events']);
+            return $mapper->updateAllByRisk($events);   
         }  
     }

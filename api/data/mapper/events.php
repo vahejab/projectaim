@@ -129,19 +129,86 @@
         }
 
         public function updateAllByRisk($params = [])
-        {                         
+        {                      
             try
-            {
+            { 
                 $riskid = $params['riskid'];
-                $this->db->beginTransaction();     
+                $this->db->beginTransaction(); 
                 foreach ($params['events'] as $event) 
                 {  
-                    $statement = $this->db->prepare($sql);
+                    $statement = $this->db->prepare("update riskevents set
+                                                            eventtitle =:eventtitle,
+                                                            eventownerid = :eventownerid,
+                                                            actualdate = :actualdate,
+                                                            scheduledate = :scheduledate,
+                                                            scheduledlikelihood = :scheduledlikelihood,
+                                                            scheduledtechnical = :scheduledtechnical,
+                                                            scheduledschedule = :scheduledschedule,
+                                                            scheduledcost = :scheduledcost
+                                                        where riskid = :riskid and eventid = :eventid");  
+                     
+                    $statement->bindValue(':riskid' , $params['riskid']);
+                    $statement->bindValue(':eventid' , $event['eventid']);
+                    $statement->bindValue(':eventtitle' , $event['eventtitle']);
+                    $statement->bindValue(':eventownerid' , $event['ownerid']);
+                   
+                   /* $statement->bindValue(':actuallikelihood' , $event['actuallikelihood']);
+                    $statement->bindValue(':actualtechnical', $event['actualtechnical']);
+                    $statement->bindValue(':actualschedule', $event['actualschedule']); 
+                    $statement->bindValue(':actualcost', $event['actualcost']);                 
+                     */
+                    
+                    $statement->bindValue(':actualdate', $event['actualdate']);
+                    $statement->bindValue(':scheduledate', $event['scheduledate']);
+                    
+                    $statement->bindValue(':scheduledlikelihood' , $event['scheduledlikelihood']);
+                    $statement->bindValue(':scheduledtechnical', $event['scheduledtechnical']);
+                    $statement->bindValue(':scheduledschedule', $event['scheduledschedule']); 
+                    $statement->bindValue(':scheduledcost', $event['scheduledcost']);                 
+                    /*
+                    $statement->bindValue(':baselinelikelihood' , $event['baselinelikelihood']);
+                    $statement->bindValue(':baselinetechnical', $params['baselinetechnical']);
+                    $statement->bindValue(':baselineschedule', $params['baselineschedule']); 
+                    $statement->bindValue(':baselinecost', $params['baselinecost']);                 
+                      */
+                    $statement->execute();
+                   
+
+                    $statement = $this->db->prepare("insert into riskevents( 
+                                                        riskid,
+                                                        eventid,
+                                                        eventtitle,
+                                                        eventownerid,
+                                                        actualdate,
+                                                        scheduledate,  
+                                                        scheduledlikelihood,
+                                                        scheduledtechnical,
+                                                        scheduledschedule,
+                                                        scheduledcost
+                                                        )
+                                                        select
+                                                            :riskid,
+                                                            :eventid,
+                                                            :eventtitle,
+                                                            :eventownerid,
+                                                            :actualdate,
+                                                            :scheduledate,
+                                                            :scheduledlikelihood,
+                                                            :scheduledtechnical,
+                                                            :scheduledschedule,
+                                                            :scheduledcost
+                                                        having (select count(*) from riskevents where riskid = :riskid and eventid = :eventid) = 0");
+                
+                   
                     $statement->bindValue(':riskid' , $riskid);
                     $statement->bindValue(':eventid' , $event['eventid']);
                     $statement->bindValue(':eventtitle' , $event['eventtitle']);
-                    $statement->bindValue(':eventownerid' , $event['eventownerid']);
+                    $statement->bindValue(':eventownerid' , $event['ownerid']);
                    
+                         
+                    $statement->bindValue(':actualdate', $event['actualdate']);
+                    $statement->bindValue(':scheduledate', $event['scheduledate']);
+                    
                    /* $statement->bindValue(':actuallikelihood' , $event['actuallikelihood']);
                     $statement->bindValue(':actualtechnical', $event['actualtechnical']);
                     $statement->bindValue(':actualschedule', $event['actualschedule']); 
@@ -157,40 +224,7 @@
                     $statement->bindValue(':baselineschedule', $params['baselineschedule']); 
                     $statement->bindValue(':baselinecost', $params['baselinecost']);                 
                       */
-                      
-                      
-                    $statement = $this->db->prepare("update events set
-                                                            eventtitle =:eventtitle,
-                                                            eventownerid = :eventownerid,
-                                                            scheduledlikelihood = :scheduledlikelihood,
-                                                            scheduledtechnical = :scheduledtechnical,
-                                                            scheduledschedule = :scheduledschedule,
-                                                            scheduledcost = :scheduledcost
-                                                        where riskid = :riskid and eventid = :eventid");  
-                    $statement->execute();
-                     
-                    $statement = $this->db->prepare("insert into events( 
-                                                        riskid,
-                                                        eventid,
-                                                        eventtitle,
-                                                        eventownerid,  
-                                                        scheduledlikelihood,
-                                                        scheduledtechncial,
-                                                        scheduledschedule,
-                                                        scheduledcost
-                                                        )
-                                                        select
-                                                            :riskid,
-                                                            :eventid,
-                                                            :eventtitle,
-                                                            :eventownerid,
-                                                            :scheduledlikelihood,
-                                                            :scheduledtechnical,
-                                                            :scheduledschedule,
-                                                            :scheduledcost
-                                                        where riskid = :riskid and eventid = :eventid
-                                                        having count(*) = 0");
-                
+                   
                     $statement->execute();
                 }    
                 $this->db->commit();

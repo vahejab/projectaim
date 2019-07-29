@@ -7,6 +7,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         
         ctrl.DOMops = DOMops;
         ctrl.ValidationService = ValidationService;
+        ctrl.CommonService = CommonService;
         
         ctrl.initDone = false;
         ctrl.userDone = false;
@@ -20,22 +21,31 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
 
         ctrl.enabledItem = [false, true, false, false, false, false];
         ctrl.evt = [];
-        ctrl.event = [];
-        
-        
-            
-        for(var e = 1; e <= 5; e++)
-        {
-            ctrl.event[e] = {
+        ctrl.event = [{
+                eventid: 0,
                 eventtitle: '',
-                owner: '',
+                ownerid: '',
                 actualdate: '',
                 scheduledate: '',
-                likelihood: '',
-                technical: '',
-                schedule: '',
-                cost: ''
-            }
+                scheduledlikelihood: '',
+                scheduledtechnical: '',
+                scheduledschedule: '',
+                scheduledcost: ''
+        }];
+        
+        for(var e = 1; e <= 5; e++)
+        { 
+            ctrl.event[e] = {
+                eventid: e,
+                eventtitle: '',
+                ownerid: '',
+                actualdate: '',
+                scheduledate: '',
+                scheduledlikelihood: '',
+                scheduledtechnical: '',
+                scheduledschedule: '',
+                scheduledcost: ''
+            };                  
             ctrl.evt[e]= {valid: false};
         }
         
@@ -66,6 +76,8 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             }
         } 
         
+        
+        
         ctrl.getItemValueAndValidate = function(obj, model, field){
             CommonService.getItemValue(obj, model, 'risk', field);         
             DOMops.clearValidation(field);   
@@ -73,6 +85,9 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             
         ctrl.users = [];
                              
+        $scope.clearValidation = function(id){
+            (document.querySelector('#'+id+' > div.webix_control')).classList.remove("webix_invalid");
+        } 
          
         $scope.$on("$destroy", function(){                                      
             angular.element(document.querySelector('link[href="/app/tool/risk/EditRisk.css"]')).remove();    
@@ -103,9 +118,13 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             $scope.clearValidation(field);
         }
         
-        $scope.clearValidation = function(id){
-            (document.querySelector('#'+id+' > div.webix_control')).classList.remove("webix_invalid");
-        } 
+        
+        
+        ctrl.getDateValue = function(field, evt){
+            elem = document.querySelector("#"+evt + " > div.webix_view > div.webix_el_box > div.webix_inp_static");
+            alert (elem.textContent);
+            ctrl.event[evt][field] = elem.textContent; 
+        }
         
         ctrl.clear = function(evt){
             ids = document.querySelectorAll("div.evt"+evt);
@@ -119,7 +138,6 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                 {
                     elem = document.querySelector("#" + id.replace("{{event}}", id) + " > div.webix_view > div.webix_el_box > div.webix_inp_static");
                     elem.setAttribute("id", viewid);
-                    elem.innerHTML = '';
                     elem.innerText = '';
                     elem.outerText = '';
                     elem.textContent = '';
@@ -164,10 +182,23 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         
         
         ctrl.add = function(evt){
+            ctrl.event.push({
+                eventtitle: '',
+                ownerid: '',
+                actualdate: '',
+                scheduledate: '',
+                scheduledlikelihood: '',
+                scheduledtechnical: '',
+                scheduledschedule: '',
+                scheduledcost: ''
+            });
             ctrl.enable(evt+1); 
             ctrl.disable(evt); 
+            angular.element(document.getElementById("add"+evt)).css("display", "none");
+            if (evt < 5)
+                angular.element(document.getElementById("remove"+evt)).css("display", "none");
             ctrl.setDateLimits(evt);
-            ctrl.lastEventIdSaved = evt;
+            ctrl.lastEventIdSaved = evt+1;
             
             if (ctrl.clicked == false)
             {
@@ -186,10 +217,15 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         }
         
         ctrl.remove = function(evt){
+        
             ctrl.enable(evt-1); 
-            ctrl.disable(evt); 
-            ctrl.clear(evt);
+            ctrl.disable(evt);
+            angular.element(document.getElementById("add"+evt)).css("display", "none");
+            angular.element(document.getElementById("remove"+evt)).css("display", "none");
+            ctrl.clear(evt);    
+            ctrl.lastEventIdSaved--;
             ctrl.clicked = true;
+            ctrl.event.pop();
         }
         ctrl.setDateLimits = function(evt){
 
@@ -235,8 +271,6 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                 document.querySelector("#" + id.replace("{{event}}", id) + " > div.webix_view > *").setAttribute("id", viewid);
                 $$(viewid).disable();
             });
-            angular.element(document.getElementById("add"+evt)).css("display", "none");
-            angular.element(document.getElementById("remove"+evt)).css("display", "none");
         }
         
         ctrl.enable = function(evt){ 
@@ -248,7 +282,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                 viewid = view_id.replace('$', '');
                 document.querySelector("#" + id.replace("{{event}}", id) + " > div.webix_view > *").setAttribute("id", viewid);
                 $$(viewid).enable();
-            });
+            }); 
             angular.element(document.getElementById("add"+evt)).css("display", "none"); 
             angular.element(document.getElementById("remove"+evt)).css("display", "block");
         }
@@ -270,19 +304,28 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             return ValidationService.evtValid(evt);
         }
         
-        ctrl.saveEvents = function(){
-            ctrl.event[0] = {
-                eventtitle : ctrl.risk.eventtitle,
-                owner : ctrl.risk.owner,
-                actualdate : ctrl.risk.actualdate,
-                scheduledate : ctrl.risk.scheduledate,
-                lilelihood : ctrl.risk.likelihood,
-                technical : ctrl.risk.technical,
-                schedule : ctrl.risk.schedule,
-                cost : ctrl.risk.cost
+        ctrl.saveEvents = function(){   
+            evts= [];
+            evts[0] = {
+                eventid : 0,
+                eventtitle : 'Risk Identified',
+                ownerid : ctrl.risk.owner,
+                actualdate : ctrl.risk.assessmentdate,
+                scheduledate : ctrl.risk.assessmentdate,
+                scheduledlikelihood : ctrl.risk.likelihood,
+                scheduledtechnical : ctrl.risk.technical,
+                scheduledschedule : ctrl.risk.schedule,
+                scheduledcost : ctrl.risk.cost
             }
+                
+            for (var idx = 1; idx < ctrl.lastEventIdSaved; idx++)
+            {
+                evts.push(ctrl.event[idx]);    
+            }
+
+            payload = {riskid: ctrl.risk.riskid, events: evts}
         
-            $http.post('/api/risks/'+ ctrl.risk.riskid + '/events', ctrl.event).then(function(response){
+            $http.put('/api/risks/'+ ctrl.risk.riskid + '/events', payload).then(function(response){
                     if (response.data.Succeeded){
                         $scope.msg = response.data.Result;
                         return response.data.Result;

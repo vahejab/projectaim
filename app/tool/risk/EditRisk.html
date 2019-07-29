@@ -19,7 +19,7 @@
                                 Owner
                             </td>
                             <td class="locked">
-                               <div  ng-show="ctrl.config.owner.done" ng-model="ctrl.risk.owner" config="owner" webix-ui="owner" id="owner" width="200" height="30" name="owner" options="users" type="richselect" />
+                               <div ng-show="ctrl.config.owner.done" ng-model="ctrl.risk.owner" config="owner" webix-ui="owner" id="owner" width="200" height="30" name="owner" options="users" type="richselect" />
                             </td>
                             <td class="label">
                                 Risk State
@@ -264,25 +264,25 @@
                             Event Title
                         </td>
                         <td class="value">
-                            <div class="evt{{event}}" ng-model="ctrl.event[event].eventtitle" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.eventtitle{{event}}.done"  config="eventtitle{{event}}" webix-ui="eventtitle{{event}}" width="200" height="30" type="text" id="eventtitle{{event}}" name="eventtitle[{{event}}]"></div>
+                            <div input="eventtitle" class="evt{{event}}"  enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.eventtitle{{event}}.done"  config="eventtitle{{event}}" webix-ui="eventtitle{{event}}" width="200" height="30" type="text" id="eventtitle{{event}}" name="eventtitle[{{event}}]"></div>
                         </td>
                         <td class="header">
                             Owner
                         </td>
                         <td class="value">
-                            <div class="evt{{event}}" ng-model="ctrl.event[event].owner" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.owner{{event}}.done" ng-model="ctrl.risk.owner[event]" config="owner{{event}}" webix-ui="owner{{event}}" id="owner{{event}}" width="200" height="30" name="owner[{{event}}]" options="users" type="richselect" />
+                            <div input="ownerid" class="evt{{event}}" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.owner{{event}}.done" ng-model="ctrl.risk.owner[event]" config="owner{{event}}" webix-ui="owner{{event}}" id="owner{{event}}" width="200" height="30" name="owner[{{event}}]" options="users" type="richselect" />
                         </td>
                         <td class="header">
                             Actual Date
                         </td>
                         <td class="value">
-                            <div class="evt{{event}}"  ng-model="ctrl.event[event].actualdate" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.actualdate{{event}}.done" config="actualdate{{event}}" webix-ui="actualdate{{event}}" id="actualdate{{event}}" width="200" height="30" name="actualate[{{event}}]" type="datepicker" category="actual" />
+                            <div input="actualdate" class="evt{{event}}"  enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.actualdate{{event}}.done" config="actualdate{{event}}" webix-ui="actualdate{{event}}" id="actualdate{{event}}" width="200" height="30" name="actualate[{{event}}]" type="datepicker" category="actual" />
                         </td>
                         <td class="header">
                             Schedule Date
                         </td>
                         <td class="value">
-                            <div class="evt{{event}}" ng-model="ctrl.event[event].scheduledate" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.scheduledate{{event}}.done" config="scheduledate{{event}}" webix-ui="scheduledate{{event}}" id="scheduledate{{event}}" width="200" height="30" name="scheduledate[{{event}}]" type="datepicker" category="schedule" />
+                            <div input="scheduledate"  class="evt{{event}}" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.scheduledate{{event}}.done" config="scheduledate{{event}}" webix-ui="scheduledate{{event}}" id="scheduledate{{event}}" width="200" height="30" name="scheduledate[{{event}}]" type="datepicker" category="schedule" />
                         </td>
                         <td class="header">
                             Level
@@ -294,31 +294,31 @@
                             Likelihood
                         </td>
                         <td class="value center">
-                            <div maxlength="1" ng-model="ctrl.event[event].likelihood" evt="{{event}}" class="evt{{event}}" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.likelihood{{event}}.done" type="level" category="event" config="likelihood{{event}}" webix-ui="likelihood{{event}}" width="30" height="30" type="text" id="likelihood{{event}}" name="likelihood[{{event}}]"></div>
+                            <div input="scheduledlikelihood" maxlength="1" evt="{{event}}" class="evt{{event}}" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.likelihood{{event}}.done" type="level" category="event" config="likelihood{{event}}" webix-ui="likelihood{{event}}" width="30" height="30" type="text" id="likelihood{{event}}" name="likelihood[{{event}}]"></div>
                         </td>         
                         <td class="header ">
                             Technical
                         </td>                                                                                                                
                         <td class="value center">
-                            <div maxlength="1" ng-model="ctrl.event[event].technical"  evt="{{event}}" class="evt{{event}}" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.technical{{event}}.done"  type="level" category="event" config="technical{{event}}" webix-ui="technical{{event}}" width="30" height="30" type="text" id="technical{{event}}" name="technical[{{event}}]"></div>
+                            <div  input="scheduledtechnical" maxlength="1" evt="{{event}}" class="evt{{event}}" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.technical{{event}}.done"  type="level" category="event" config="technical{{event}}" webix-ui="technical{{event}}" width="30" height="30" type="text" id="technical{{event}}" name="technical[{{event}}]"></div>
                         </td>
                         <td class="header">
                             Schedule
                         </td>
                         <td class="value center">
-                            <div maxlength="1" ng-model="ctrl.event[event].schedule" evt="{{event}}" class="evt{{event}}" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.schedule{{event}}.done"  type="level" category="event" config="schedule{{event}}" webix-ui="schedule{{event}}" width="30" height="30" type="text" id="schedule{{event}}" name="schedule[{{event}}]"></div>
+                            <div  input="scheduledschedule"  maxlength="1" evt="{{event}}" class="evt{{event}}" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.schedule{{event}}.done"  type="level" category="event" config="schedule{{event}}" webix-ui="schedule{{event}}" width="30" height="30" type="text" id="schedule{{event}}" name="schedule[{{event}}]"></div>
                         </td>
                         <td class="header">
                             Cost
                         </td>
                         <td class="value center">
-                            <div maxlength="1" ng-model="ctrl.event[event].cost"  evt="{{event}}" class="evt{{event}}" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.cost{{event}}.done"  type="level" category="event" config="cost{{event}}" webix-ui="cost{{event}}" width="30" height="30" type="text" id="cost{{event}}" name="cost[{{event}}]"></div>
+                            <div input="scheduledcost" maxlength="1"  evt="{{event}}" class="evt{{event}}" enabled="{{ctrl.enabledItem[event]}}" ng-show="ctrl.config.cost{{event}}.done"  type="level" category="event" config="cost{{event}}" webix-ui="cost{{event}}" width="30" height="30" type="text" id="cost{{event}}" name="cost[{{event}}]"></div>
                         </td>
                         <td class="header">
                             Save
                         </td>
                         <td class="value">
-                            <input class="addEvent" type="button" id="add{{event}}" ng-if="event != 5" style="display:none" ng-click="ctrl.add(event);" ng-keydown="$event.keyCode === 13 && ctrl.add(event)" value="Save">
+                            <input class="addEvent" type="button" id="add{{event}}" style="display:none" ng-click="ctrl.add(event);" ng-keydown="$event.keyCode === 13 && ctrl.add(event)" value="Save">
                         </td>
                         <td class="header">
                             Remove

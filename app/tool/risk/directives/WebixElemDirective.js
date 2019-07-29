@@ -48,7 +48,7 @@ function ConfigElement($timeout){
                 disabled: disabled,
                 id: attrs.id
             };
-            
+               
             if (view == "text" || view == "textarea")
             {
                 config.on = {
@@ -61,8 +61,13 @@ function ConfigElement($timeout){
                             scope.ctrl.DOMops.evt[attrs.config] = code;
                             scope.ctrl.DOMops.assignRiskLevel(obj, attrs.evt);
                         }
-                        if (evt != null)
-                            scope.ctrl.evt[evt].valid = scope.ctrl.ValidationService.evtValid(evt);  
+                        if (evt != null) {
+                            scope.ctrl.evt[evt].valid = scope.ctrl.ValidationService.evtValid(evt);
+                            if (attrs.input && !isNaN(code))
+                                scope.ctrl.event[evt][attrs.input] = parseInt(code);
+                            else if (attrs.input && isNaN(code))
+                                scope.ctrl.event[evt][attrs.input] = code;
+                        }
                     }
                 }
                 
@@ -82,8 +87,13 @@ function ConfigElement($timeout){
                         scope.ctrl.getItemValueAndValidate(obj, scope.ctrl, attr);
                         config.value = obj.getValue(); 
                         if (evt != null)
+                        {
                             scope.ctrl.evt[evt].valid = scope.ctrl.ValidationService.evtValid(evt); 
+                            if (attrs.input)  
+                                scope.ctrl.event[evt][attrs.input] =  config.value;
+                        }
                     }
+                    
                 }
             }
             else if (view = "datepicker")
@@ -93,14 +103,31 @@ function ConfigElement($timeout){
                     body:{
                         minDate:(new Date()).setDate(new Date())
                     }
-                }      
+                } 
                 config.on = {
-                    "onChange": function(){                                                         
+                    "onChange": function(){
                         var obj = this.eventSource || this; 
                         scope.ctrl.getDateValueAndValidate(obj, scope.ctrl, attr);
-                        config.value = obj.getValue(); 
+                        config.value = obj.getValue();
                         if (evt != null)
+                        {
                             scope.ctrl.evt[evt].valid = scope.ctrl.ValidationService.evtValid(evt); 
+                            if (attrs.input)
+                               scope.ctrl.event[evt][attrs.input] = scope.ctrl.CommonService.dateValue(obj.data.value || new Date(obj.$view.textContent));
+                        } 
+                    },
+                    "onKeyPress": function(code, e){
+                        if (code == 9){
+                              var obj = this.eventSource || this; 
+                              scope.ctrl.getDateValueAndValidate(obj, scope.ctrl, attr);
+                              config.value = obj.getValue();
+                              if (evt != null)
+                              {
+                                    scope.ctrl.evt[evt].valid = scope.ctrl.ValidationService.evtValid(evt); 
+                                    if (attrs.input)
+                                       scope.ctrl.event[evt][attrs.input] = scope.ctrl.CommonService.dateValue(obj.data.value || new Date(obj.$view.textContent));
+                              }
+                        }   
                      }
                 }   
             }
@@ -114,7 +141,7 @@ function ConfigElement($timeout){
       return directive;     
 }
                     
-
+ 
 function ConfigController($scope, $element, $attrs){
     $scope.ctrl.config[$attrs.config] = {done: false};
 }       
