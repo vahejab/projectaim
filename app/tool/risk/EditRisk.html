@@ -318,21 +318,19 @@
                             Save
                         </td>
                         <td class="value">
-                            <input class="addEvent" type="button" id="add{{event}}" ng-click="ctrl.add(event);" ng-keydown="$event.keyCode === 13 && ctrl.add(event)" value="Save">
+                            <input class="addEvent" type="button" id="add{{event}}" ng-hide="!ctrl.ValidationService.evtValid(evt) && ctrl.lastEventIdSaved != event" ng-click="ctrl.add(event);" ng-keydown="$event.keyCode === 13 && ctrl.add(event)" value="Save">
                         </td>
                         <td class="header">
                             Remove
                         </td>
                         <td class="value">
-                            <input class="removeEvent" type="button" id="remove{{event}}" ng-show="ctrl.enabledItem[event] || ctrl.ValidationService.evtValid(event)" ng-click="ctrl.remove(event)" ng-keydown="$event.keyCode === 13 && ctrl.remove(event)"  value="Remove">
+                            <input class="removeEvent" type="button" id="remove{{event}}" ng-show="ctrl.enabledEvent[event] || ctrl.lastEventIdSaved == event" ng-click="ctrl.remove(event)" ng-keydown="$event.keyCode === 13 && ctrl.remove(event)"  value="Remove">
                         </td>
                     </tr>
                 </tbody>
-            </table>
-            
-           {{ctrl.enabledItem}}
+            </table>  
              <button id="submit" type="submit">Save Events</button>
-           </form>                  
+           </form>               
          </div> 
          <divider></divider>
           <div class="msg" layout-align="center">

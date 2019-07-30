@@ -51,7 +51,7 @@ function ConfigElement($timeout){
                 config.on = {
                     "onTimedKeyPress": function(){  
                         var obj = this.eventSource || this; 
-                        if (obj.data.value == "")
+                        if (obj.data.value == "" && obj.getValue() == "")
                             return;
                         code = this.getValue();                                                 
                         scope.ctrl.ValidationService.getTextValueAndValidate(code, scope.ctrl, obj, attr);  
@@ -70,7 +70,7 @@ function ConfigElement($timeout){
                     },
                     "onAfterRender": function(){
                         var obj = this.eventSource || this; 
-                        if (obj.data.value == "")
+                        if (obj.data.value == "" && obj.getValue() == "")
                             return;
                         code = this.getValue();                                                 
                         if (attrs.type == "level")
