@@ -86,7 +86,7 @@
                     $method = strtolower($this->method); 
                     if (method_exists($class, $method)){
                         $args = $this->args;
-                        $id = $this->id;
+                        $id = $this->id; 
                         if ($endpointCount == 1)
                             $endpoint2 =  $this->endpoint[1] ?? null;
                         else if ($endpointCount  == 2)

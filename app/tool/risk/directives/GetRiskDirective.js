@@ -99,6 +99,7 @@ function getRisk(){
                                 $scope.ctrl.event[key].scheduledschedule = event.scheduledschedule;
                                 $scope.ctrl.event[key].scheduledcost = event.scheduledcost;
                              }
+                             $scope.ctrl.lastEventIdSaved = response.data.Result.length-1;
                              $scope.ctrl.eventsdone = true;
                         } 
                    });

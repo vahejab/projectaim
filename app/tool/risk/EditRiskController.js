@@ -118,18 +118,19 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             $scope.clearValidation(field);
         }
         
-        
+        ctrl.showAdd = function(evt){
+            return angular.element(document.getElementById("add"+evt)).css("display") == "block";
+        }
         
         ctrl.getDateValue = function(field, evt){
             elem = document.querySelector("#"+evt + " > div.webix_view > div.webix_el_box > div.webix_inp_static");
-            alert (elem.textContent);
             ctrl.event[evt][field] = elem.textContent; 
         }
         
         ctrl.clear = function(evt){
             ids = document.querySelectorAll("div.evt"+evt);
             angular.forEach(ids, function(elem, key){
-                id = elem.getAttribute("id");
+                id = elem.getAttribute("id"); 
                 view_id = document.querySelector("#" + id.replace("{{event}}", id) + " > div.webix_view").getAttribute("view_id");
                 viewid = view_id.replace('$', '');
 
@@ -137,20 +138,33 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                 if (el && el.getAttribute('type') == 'datepicker')
                 {
                     elem = document.querySelector("#" + id.replace("{{event}}", id) + " > div.webix_view > div.webix_el_box > div.webix_inp_static");
-                    elem.setAttribute("id", viewid);
-                    elem.innerText = '';
-                    elem.outerText = '';
-                    elem.textContent = '';
                     $$(viewid).setValue('');
                 }
-                else
+                else if (el && el.getAttribute('type') == 'richselect')
                 {
                     document.querySelector("#" + id.replace("{{event}}", id) + " > div.webix_view > *").setAttribute("id", viewid);
-                    $$(viewid).setValue('');
+                    $$(viewid).setValue(''); 
+                }   
+                else if (el && (el.getAttribute('type') == 'level' || el.getAttribute('type') == 'text'))
+                {   
+                    document.querySelector("#" + id + " > div.webix_view > *").setAttribute("id", viewid);               
+                    $$(viewid).setValue(''); 
+                    (function(id){
+                        $timeout(function(){
+                            elem = document.querySelector("#" + id + " > div.webix_view > div.webix_el_box > input");
+                            elem.value = "";
+                            elem.textContent = "";  
+                        }, 0); 
+                    })(id);
                 }
             });
-            ValidationService.evtValid(evt-1);
-            DOMops.clearEvtLevel(evt);
+            
+            $timeout(function(){
+                ValidationService.evtValid(evt-1);
+                DOMops.clearLevel(evt);
+            }, 5); 
+            
+            
         }
         
         ctrl.getDate = function(field, evt){
@@ -192,40 +206,29 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                 scheduledschedule: '',
                 scheduledcost: ''
             });
+            ctrl.enabledItem[evt] = false;
             ctrl.enable(evt+1); 
             ctrl.disable(evt); 
             angular.element(document.getElementById("add"+evt)).css("display", "none");
             if (evt < 5)
                 angular.element(document.getElementById("remove"+evt)).css("display", "none");
             ctrl.setDateLimits(evt);
-            ctrl.lastEventIdSaved = evt+1;
-            
-            if (ctrl.clicked == false)
-            {
-                $timeout(function(){
-                    angular.element(document.querySelector("#remove"+(evt+1))).triggerHandler('click');
-                }, 5);
-                
-                $timeout(function(){
-                    angular.element(document.querySelector("#add"+(evt))).triggerHandler('click');
-                }, 10)
-               
-                $timeout(function(){
-                    ctrl.clicked = false;
-                }, 15) 
-            }                              
+            ctrl.lastEventIdSaved++;                        
         }
-        
+     
         ctrl.remove = function(evt){
-        
-            ctrl.enable(evt-1); 
-            ctrl.disable(evt);
+            ctrl.enabledItem[evt] = false;
+            if (evt != 1)
+                ctrl.disable(evt);
             angular.element(document.getElementById("add"+evt)).css("display", "none");
-            angular.element(document.getElementById("remove"+evt)).css("display", "none");
+            if (evt != 1)
+                angular.element(document.getElementById("remove"+evt)).css("display", "none");
             ctrl.clear(evt);    
             ctrl.lastEventIdSaved--;
-            ctrl.clicked = true;
             ctrl.event.pop();
+            if (evt == 1)
+                return;
+            ctrl.enable(evt - 1); 
         }
         ctrl.setDateLimits = function(evt){
 
@@ -283,7 +286,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                 document.querySelector("#" + id.replace("{{event}}", id) + " > div.webix_view > *").setAttribute("id", viewid);
                 $$(viewid).enable();
             }); 
-            angular.element(document.getElementById("add"+evt)).css("display", "none"); 
+            ctrl.ValidationService.evtValid(evt);
             angular.element(document.getElementById("remove"+evt)).css("display", "block");
         }
         

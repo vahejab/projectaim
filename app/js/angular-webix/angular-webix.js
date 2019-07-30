@@ -108,6 +108,7 @@ angular.module("webix", [])
               watcher(); 
             });              
           }
+                  
           $scope.$digest();
         });
       }

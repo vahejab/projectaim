@@ -32,17 +32,8 @@
             return $event;               
         }
         
-        public function findAllByRisk($params = [])
-        {
-            $whereStrings = [];
-            $whereParams = [];
-            
-            if (isset($params['riskid']))
-            {
-                $whereStrings[] = 'riskid = ?';
-                $whereParams[] = $params['riskid'];   
-            }
- 
+        public function findAllByRisk($riskid)
+        {      
             $sql = "select
                         EventID,
                         RiskID,
@@ -64,20 +55,14 @@
                         BaselineSchedule,
                         BaselineCost    
                     from riskevents
-                    ";
- 
-            if (!empty($whereStrings))
-            {
-                $sql .= " where " . implode(' AND ' , $whereStrings);
-            }
-                       
-            $sql .= " order by eventid asc";
-            
+                    where riskid = :riskid
+                    order by eventid asc";
             try
             {
                 $statement  = $this->db->prepare($sql);
-                $statement->execute($whereParams);
-                $results = $statement->fetchAll();
+                $statement->bindParam(':riskid' , $riskid);
+                $statement->execute();
+                $results = $statement->fetchAll(); 
                 return(["Succeeded" => true, "Result" => $this->_populateFromCollection($results)]);
             }
             catch(PDOException $e)

@@ -22,8 +22,7 @@ angular.module('Risk').service("DOMops", function() {
         leveldiv = document.querySelector(".level"+evt);
         leveldiv.innerHTML = '';
         leveldiv.setAttribute('class', '');
-    }     
-
+    }
     commonFunctions.assignRiskLevel = function(obj, evt){
         var l,t,s,c;
         if (!evt)
@@ -113,7 +112,7 @@ angular.module('Risk').service("DOMops", function() {
     }
     
     commonFunctions.clearLevel = function(evt){
-        element =  document.querySelector(".level"+evt);
+        element =  document.querySelector("[name='level'][evt='"+evt+"']");
         if (element){
             element.innerHTML = '';
             element.classList.remove('high');
@@ -135,7 +134,6 @@ angular.module('Risk').service("DOMops", function() {
    
     
     commonFunctions.displayLevel = function(level, l, c, evt){
-    
        var leveldiv;
        
        if (evt)

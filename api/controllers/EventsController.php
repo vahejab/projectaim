@@ -13,8 +13,8 @@
         
         public function get($id = null)
         {   
-            $service = new \data\service\eventservice();
-            return $service->findAllByRisk($this->payload['riskid']);
+            $service = new \data\service\eventservice();  
+            return $service->findAllByRisk($id);
         }
 
         public function post($id = null)

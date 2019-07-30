@@ -15,6 +15,10 @@ angular.module('Risk').service("ValidationService", function() {
     }
     
     commonFunctions.validLevel = function(obj){
+        if (obj == null)
+            return true;
+        if (!isNaN(obj.getValue()))
+           return obj.getValue() >= 1 && obj.getValue() <= 5;
         return obj.getValue().charCodeAt(0) - '0'.charCodeAt(0) >= 1 
             && obj.getValue().charCodeAt(0) - '0'.charCodeAt(0) <= 5;    
     }

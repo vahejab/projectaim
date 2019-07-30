@@ -19,8 +19,7 @@
         public function findAllByRisk($id)
         {
             $mapper = $this->_getMapper();
-            $params = array('riskid' => $id);
-            return $mapper->findAllByRisk($params);   
+            return $mapper->findAllByRisk($id);   
         }
         
         public function updateAllByRisk($params)

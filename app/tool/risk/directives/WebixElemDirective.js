@@ -12,11 +12,9 @@ function ConfigElement($timeout){
             var type = attrs.type;
             var width = attrs.width;
             var height = attrs.height;   
-            if (attrs.hasOwnProperty('class'))
-            {
-                evt = parseInt(attrs.class[3]);
-            }   
-           
+            
+            var evt = attrs.event;
+
             var disabled = false;
             if (attrs.hasOwnProperty('enabled') && attrs.enabled == 'false')
                 disabled = true;
@@ -53,6 +51,8 @@ function ConfigElement($timeout){
                 config.on = {
                     "onTimedKeyPress": function(){  
                         var obj = this.eventSource || this; 
+                        if (obj.data.value == "")
+                            return;
                         code = this.getValue();                                                 
                         scope.ctrl.ValidationService.getTextValueAndValidate(code, scope.ctrl, obj, attr);  
                         if (attrs.type == "level")
@@ -67,9 +67,19 @@ function ConfigElement($timeout){
                             else if (attrs.input && isNaN(code))
                                 scope.ctrl.event[evt][attrs.input] = code;
                         }
+                    },
+                    "onAfterRender": function(){
+                        var obj = this.eventSource || this; 
+                        if (obj.data.value == "")
+                            return;
+                        code = this.getValue();                                                 
+                        if (attrs.type == "level")
+                        {
+                            scope.ctrl.DOMops.evt[attrs.config] = code;
+                            scope.ctrl.DOMops.assignRiskLevel(obj, attrs.evt);
+                        } 
                     }
                 }
-                
                 if (attrs.type == "level" && attrs.category == "event")
                     config.value = scope.ctrl.evt[attr];
                 else
@@ -82,7 +92,7 @@ function ConfigElement($timeout){
                 config.editable = true;
                 config.on =  {
                     "onChange": function(){    
-                        var obj = this.eventSource || this; 
+                        var obj = this.eventSource || this;   
                         scope.ctrl.getItemValueAndValidate(obj, scope.ctrl, attr);
                         config.value = obj.getValue(); 
                         if (evt != null)
@@ -108,6 +118,8 @@ function ConfigElement($timeout){
                         var obj = this.eventSource || this; 
                         scope.ctrl.getDateValueAndValidate(obj, scope.ctrl, attr);
                         config.value = obj.getValue();
+                        if (config.value == null)
+                              return;
                         if (evt != null)
                         {
                             scope.ctrl.evt[evt].valid = scope.ctrl.ValidationService.evtValid(evt); 
@@ -131,7 +143,7 @@ function ConfigElement($timeout){
                 }   
             }
             if (attrs.hasOwnProperty('event'))
-                config.value = scope.ctrl.event[attrs.event][attrs.input];  
+                config.value = scope.ctrl.event[attrs.event][attrs.input];
             if (maxlength)
                 config.attributes = {maxlength : maxlength};
             config.done = true;
