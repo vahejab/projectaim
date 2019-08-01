@@ -3,7 +3,7 @@ angular.module('Risk').directive('getRisk', getRisk);
 function getRisk(){
      return {
             restrict: 'E',
-            controller: function ($scope, $element, $attrs, $http, $sce, $stateParams){
+            controller: function ($scope, $element, $attrs, $http, $sce, $stateParams, $timeout){
               return $http.get('/api/riskconfig').then(function(response){
                    if (response.data.Succeeded){
                         $scope.ctrl.risklevels.riskmaximum = response.data.Result.Levels[0].riskmaximum;
@@ -100,7 +100,10 @@ function getRisk(){
                                 $scope.ctrl.event[key].scheduledcost = event.scheduledcost;
                              }
                              $scope.ctrl.lastEventIdSaved = response.data.Result.length-1;
-                             $scope.ctrl.enabledItem[$scope.ctrl.lastEventIdSaved] = true;   
+                             if ($scope.ctrl.lastEventIdSaved < 5)
+                                $scope.ctrl.enabledItem[$scope.ctrl.lastEventIdSaved+1] = true;  
+                             else
+                                $scope.ctrl.enabledItem[$scope.ctrl.lastEventIdSaved] = true; 
                              $scope.ctrl.eventsdone = true;
                         } 
                    });

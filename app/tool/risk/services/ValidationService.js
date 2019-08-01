@@ -95,11 +95,6 @@ angular.module('Risk').service("ValidationService", function() {
          && !commonFunctions.invalidLevel(document.querySelector("#schedule"+evt+ " input[type=text]").value)
          && document.querySelector("#cost"+evt+ " input[type=text]") != null
          && !commonFunctions.invalidLevel(document.querySelector("#cost"+evt+ " input[type=text]").value));
-         
-         if (valid)
-            angular.element(document.getElementById("add"+evt)).css("display", "block");
-         else
-            angular.element(document.getElementById("add"+evt)).css("display", "none");
          return valid;   
     }
                

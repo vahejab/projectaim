@@ -62,9 +62,14 @@ function ConfigElement($timeout){
                         }
                         if (evt != null) {
                             scope.ctrl.evt[evt].valid = scope.ctrl.ValidationService.evtValid(evt);
-                            if (attrs.input && !isNaN(code))
+                            if (scope.ctrl.evt[evt].valid == true)
+                            {
+                                scope.ctrl.showAddButton.value = true;
+                                scope.$digest();
+                            }
+                            if (attrs.input && isNaN(code) && attrs.type == "level")
                                 scope.ctrl.event[evt][attrs.input] = parseInt(code);
-                            else if (attrs.input && isNaN(code))
+                            else if (attrs.input && !isNaN(code) || attrs.type != "level")
                                 scope.ctrl.event[evt][attrs.input] = code;
                         }
                     },
@@ -97,7 +102,12 @@ function ConfigElement($timeout){
                         config.value = obj.getValue(); 
                         if (evt != null)
                         {
-                            scope.ctrl.evt[evt].valid = scope.ctrl.ValidationService.evtValid(evt); 
+                            scope.ctrl.evt[evt].valid = scope.ctrl.ValidationService.evtValid(evt);
+                            if (scope.ctrl.evt[evt].valid == true)
+                            {
+                                scope.ctrl.showAddButton = {value: true};
+                                scope.$apply();
+                            }
                             if (attrs.input)  
                                 scope.ctrl.event[evt][attrs.input] =  config.value;
                         }
@@ -108,11 +118,15 @@ function ConfigElement($timeout){
             else if (view = "datepicker")
             {                                                                                  
                 config.suggest = {   
-                    type:"calendar", 
-                    body:{
-                        minDate:(new Date()).setDate(new Date())
+                    type:"calendar",
+                    body: {
+                         minDate: null
                     }
                 } 
+                
+                if (evt == 1)
+                    config.suggest.body.minDate = scope.ctrl.event[evt-1][attrs.input];
+                 
                 config.on = {
                     "onChange": function(){
                         var obj = this.eventSource || this; 
@@ -122,7 +136,12 @@ function ConfigElement($timeout){
                               return;
                         if (evt != null)
                         {
-                            scope.ctrl.evt[evt].valid = scope.ctrl.ValidationService.evtValid(evt); 
+                            scope.ctrl.evt[evt].valid = scope.ctrl.ValidationService.evtValid(evt);
+                            if (scope.ctrl.evt[evt].valid == true)
+                            {
+                                scope.ctrl.showAddButton = {value: true};
+                                scope.$digest();
+                            }
                             if (attrs.input)
                                scope.ctrl.event[evt][attrs.input] = scope.ctrl.CommonService.dateValue(obj.data.value || new Date(obj.$view.textContent));
                         } 
@@ -134,7 +153,12 @@ function ConfigElement($timeout){
                               config.value = obj.getValue();
                               if (evt != null)
                               {
-                                    scope.ctrl.evt[evt].valid = scope.ctrl.ValidationService.evtValid(evt); 
+                                    scope.ctrl.evt[evt].valid = scope.ctrl.ValidationService.evtValid(evt);
+                                    if (scope.ctrl.evt[evt].valid == true)
+                                    {
+                                        scope.ctrl.showAddButton = {value: true};
+                                        scope.$digest();
+                                    }
                                     if (attrs.input)
                                        scope.ctrl.event[evt][attrs.input] = scope.ctrl.CommonService.dateValue(obj.data.value || new Date(obj.$view.textContent));
                               }

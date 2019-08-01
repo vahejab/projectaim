@@ -118,6 +118,12 @@
             { 
                 $riskid = $params['riskid'];
                 $this->db->beginTransaction(); 
+             
+                $statement = $this->db->prepare("delete from riskevents where riskid = :riskid and eventid > :lasteventid");
+                $statement->bindValue(':riskid' , $params['riskid']);
+                $statement->bindValue(':lasteventid' , $params['events'][count($params['events'])-1]['eventid']);
+                $statement->execute();
+                
                 foreach ($params['events'] as $event) 
                 {  
                     $statement = $this->db->prepare("update riskevents set

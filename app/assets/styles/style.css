@@ -33,9 +33,9 @@ img#logo{
 }
 
 body{
-    /*font-family: arial !important;*/
+    /* font-family: arial !important; */
     font-family: Roboto, sans-serif !important;
-    /* font-size: 14px; */
+    font-size: 14px;
 }
 
 body *{
