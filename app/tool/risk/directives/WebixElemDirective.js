@@ -50,11 +50,11 @@ function ConfigElement($timeout){
             {
                 config.on = {
                     "onTimedKeyPress": function(){  
-                        var obj = this.eventSource || this; 
-                        if (obj.data.value == "" && obj.getValue() == "")
-                            return;
+                        var obj = this.eventSource || this;
                         code = this.getValue();                                                 
                         scope.ctrl.ValidationService.getTextValueAndValidate(code, scope.ctrl, obj, attr);  
+                        if (obj.data.value == "" && obj.getValue() == "")
+                            return;
                         if (attrs.type == "level")
                         {
                             scope.ctrl.DOMops.evt[attrs.config] = code;
@@ -62,6 +62,8 @@ function ConfigElement($timeout){
                         }
                         if (evt != null) {
                             scope.ctrl.evt[evt].valid = scope.ctrl.ValidationService.evtValid(evt);
+                            scope.ctrl.complete = [{value: false},{value: false},{value: false},{value: false},{value: false},{value: false}];
+                            scope.ctrl.complete[evt].value = scope.ctrl.evt[evt].valid;
                             if (scope.ctrl.evt[evt].valid == true)
                             {
                                 scope.ctrl.showAddButton.value = true;
@@ -103,6 +105,8 @@ function ConfigElement($timeout){
                         if (evt != null)
                         {
                             scope.ctrl.evt[evt].valid = scope.ctrl.ValidationService.evtValid(evt);
+                            scope.ctrl.complete = [{value: false},{value: false},{value: false},{value: false},{value: false},{value: false}];
+                            scope.ctrl.complete[evt].value = scope.ctrl.evt[evt].valid;
                             if (scope.ctrl.evt[evt].valid == true)
                             {
                                 scope.ctrl.showAddButton = {value: true};
@@ -124,9 +128,8 @@ function ConfigElement($timeout){
                     }
                 } 
                 
-                if (evt == 1)
+                if (evt <= 5 && scope.ctrl.event[evt-1][attrs.input] != null)
                     config.suggest.body.minDate = scope.ctrl.event[evt-1][attrs.input];
-                 
                 config.on = {
                     "onChange": function(){
                         var obj = this.eventSource || this; 
@@ -137,6 +140,8 @@ function ConfigElement($timeout){
                         if (evt != null)
                         {
                             scope.ctrl.evt[evt].valid = scope.ctrl.ValidationService.evtValid(evt);
+                            scope.ctrl.complete = [{value: false},{value: false},{value: false},{value: false},{value: false},{value: false}];
+                            scope.ctrl.complete[evt].value = scope.ctrl.evt[evt].valid;
                             if (scope.ctrl.evt[evt].valid == true)
                             {
                                 scope.ctrl.showAddButton = {value: true};
@@ -154,6 +159,8 @@ function ConfigElement($timeout){
                               if (evt != null)
                               {
                                     scope.ctrl.evt[evt].valid = scope.ctrl.ValidationService.evtValid(evt);
+                                    scope.ctrl.complete = [{value: false},{value: false},{value: false},{value: false},{value: false},{value: false}];
+                                    scope.ctrl.complete[evt].value = scope.ctrl.evt[evt].valid;
                                     if (scope.ctrl.evt[evt].valid == true)
                                     {
                                         scope.ctrl.showAddButton = {value: true};

@@ -86,7 +86,7 @@ function getRisk(){
                    return $http.get('api/risks/'+$stateParams.id+'/events').then(function(response){
                         if (response.data.Succeeded){
                               
-                             for (var key = 0; key < response.data.Result.length; key++){
+                             for (var key = 0; key <= response.data.Result.length-1; key++){
                                 event = response.data.Result[key];
                                 $scope.ctrl.event[key].eventid = key;
                                 $scope.ctrl.event[key].eventtitle = event.eventtitle;
@@ -99,12 +99,40 @@ function getRisk(){
                                 $scope.ctrl.event[key].scheduledschedule = event.scheduledschedule;
                                 $scope.ctrl.event[key].scheduledcost = event.scheduledcost;
                              }
-                             $scope.ctrl.lastEventIdSaved = response.data.Result.length-1;
-                             if ($scope.ctrl.lastEventIdSaved < 5)
-                                $scope.ctrl.enabledItem[$scope.ctrl.lastEventIdSaved+1] = true;  
+                             if (response.data.Result.length)
+                                $scope.ctrl.lastEventIdSaved = response.data.Result.length-1;
                              else
-                                $scope.ctrl.enabledItem[$scope.ctrl.lastEventIdSaved] = true; 
-                             $scope.ctrl.eventsdone = true;
+                                $scope.ctrl.lastEventIdSaved = 0;
+                             $scope.ctrl.eventsdone = true;      
+                             
+                             if ($scope.ctrl.lastEventIdSaved < 5){
+                                $scope.ctrl.enabledItem[$scope.ctrl.lastEventIdSaved+1] = true;
+                                //Cascase Remove Add Auto Date Calculation Bug Fix
+                                $timeout(function(){
+                                    document.getElementById("remove"+($scope.ctrl.lastEventIdSaved+1)).click();
+                                }, 35);
+                                $timeout(function(){
+                                     document.getElementById("add"+($scope.ctrl.lastEventIdSaved)).click();
+                                }, 45); 
+                               // $scope.ctrl.doRemoveAdd[$scope.ctrl.lastEventIdSaved+1] = true;
+                               // $scope.ctrl.removeAdd($scope.ctrl.lastEventIdSaved+1);  
+                             }
+                             else
+                             { 
+                               $scope.ctrl.enabledItem[$scope.ctrl.lastEventIdSaved] = true;
+                               //Cascase Remove Add Auto Date Calculation Bug Fix
+                                   
+                               $timeout(function(){
+                                    document.getElementById("remove"+($scope.ctrl.lastEventIdSaved-1)).click();
+                               }, 35);
+                               $timeout(function(){
+                                     document.getElementById("add"+($scope.ctrl.lastEventIdSaved-2)).click();
+                               }, 45); 
+                              // $scope.ctrl.doRemoveAdd[$scope.ctrl.lastEventIdSaved] = true;
+                              // $scope.ctrl.removeAdd($scope.ctrl.lastEventIdSaved);   
+                             }
+                             
+                             
                         } 
                    });
                 });

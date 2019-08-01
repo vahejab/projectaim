@@ -318,13 +318,13 @@
                             Save
                         </td>
                         <td class="value">
-                           <input class="addEvent" type="button" id="add{{event}}" ng-model="ctrl.showAddButton" ng-show="(event == ctrl.lastEventIdSaved+1) && ctrl.showAddButton.value == true" ng-click="ctrl.add(event); ctrl.doRemoveAdd[event+1] && ctrl.removeAdd(event+1)" ng-keydown="$event.keyCode === 13 && ctrl.add(event); $event.keyCode === 13 && ctrl.doRemoveAdd[event+1] && ctrl.removeAdd(event+1)" value="Save">
+                         <input class="addEvent" type="button" id="add{{event}}" ng-model="ctrl.showAddButton" ng-show="(event != 5 || ctrl.hideButton == false) && ((ctrl.complete[event].value && event == (ctrl.lastEventIdSaved+1)) || (event == 5 && ctrl.lastEventIdSaved == event && ctrl.showAddButton.value == true))" ng-click="ctrl.add(event); ctrl.doRemoveAdd[event+1] == true && ctrl.removeAdd(event+1)" ng-keyup="$event.keyCode === 13 && ctrl.add(event); $event.keyCode === 13 && ctrl.doRemoveAdd[event+1] == true && ctrl.removeAdd(event+1)" value="Save">
                         </td>                                                                                                                                                                                                                                                                                                                             
                         <td class="header">
                             Remove
                         </td>
                         <td class="value">
-                            <input class="removeEvent" type="button" id="remove{{event}}" ng-show="event == ctrl.lastEventIdSaved+1 || (event == 5 && ctrl.lastEventIdSaved == 5)" ng-click="ctrl.remove(event); ctrl.showAddButton.value = true" ng-keydown="$event.keyCode === 13 && ctrl.remove(event)"  value="Remove">
+                           <input class="removeEvent" type="button" id="remove{{event}}" ng-show="event == ctrl.lastEventIdSaved+1 || (event == ctrl.lastEventIdSaved && event == 5 && ctrl.complete[event].value)" ng-click="ctrl.remove(event); ctrl.showAddButton.value = true" ng-keyup="$event.keyCode === 13 && ctrl.remove(event)"  value="Remove">
                         </td>  
                     </tr> 
                 </tbody>

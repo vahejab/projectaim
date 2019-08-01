@@ -94,7 +94,7 @@ angular.module('Risk').service("ValidationService", function() {
          && document.querySelector("#schedule"+evt+ " input[type=text]") != null
          && !commonFunctions.invalidLevel(document.querySelector("#schedule"+evt+ " input[type=text]").value)
          && document.querySelector("#cost"+evt+ " input[type=text]") != null
-         && !commonFunctions.invalidLevel(document.querySelector("#cost"+evt+ " input[type=text]").value));
+         && !commonFunctions.invalidLevel(document.querySelector("#cost"+evt+ " input[type=text]").value)); 
          return valid;   
     }
                

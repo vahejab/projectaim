@@ -3,15 +3,17 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         var ctrl = this;
         ctrl.clicked = false;
         ctrl.config = {}
-        ctrl.lastEventIdSaved  = 0;        
+        ctrl.lastEventIdSaved  = 1;        
         ctrl.DOMops = DOMops;
         ctrl.ValidationService = ValidationService;
         ctrl.CommonService = CommonService;
         ctrl.showAddButton =  {value: false } 
         ctrl.doRemoveAdd = [true, true, true, true, true, true];
+        ctrl.complete = [{value: false},{value: false},{value: false},{value: false},{value: false},{value: false}];
         ctrl.initDone = false;
         ctrl.userDone = false;
         ctrl.eventsdone = false;
+        ctrl.hideButton = false;
         ctrl.setup = {
             done: false
         }
@@ -223,29 +225,35 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             if (evt < 5)
                 ctrl.enable(evt+1); 
             ctrl.showAddButton = {value: false }
-            if (evt < 5)
-                angular.element(document.getElementById("remove"+evt)).css("display", "none");
+            //if (evt < 5)
+            //    angular.element(document.getElementById("remove"+evt)).css("display", "none");
             if (evt < 5)
                 ctrl.setDateLimits(evt);
             if (evt < 5)
                 ctrl.lastEventIdSaved++;
             ctrl.disable(evt);
+            if (evt == 5)
+                ctrl.hideButton = true;
         }                           
      
-        ctrl.remove = function(evt){    
-            if (evt != 1)
+        ctrl.remove = function(evt){
+            if (evt != 1)            
                 ctrl.disable(evt);
-            //angular.element(document.getElementById("add"+evt)).css("display", "none");
-            if (evt != 1)
-                angular.element(document.getElementById("remove"+evt)).css("display", "none");
+            //if (evt != 1)
+            //    angular.element(document.getElementById("remove"+evt)).css("display", "none");
             ctrl.clear(evt);   
-            if (ctrl.lastEventIdSaved > 0) 
-                ctrl.lastEventIdSaved--;
             ctrl.event.pop();
       
             if (evt == 1)
-                return;
-            ctrl.enable(evt - 1); 
+                return; 
+            ctrl.enable(evt - 1);
+            if (evt > 1)
+                ctrl.showAddButton = {value: true }
+                                      
+            if (ctrl.lastEventIdSaved != 0) 
+            {
+                ctrl.complete[ctrl.lastEventIdSaved--] = {value: true}
+            }
         }
         ctrl.setDateLimits = function(evt){
 
