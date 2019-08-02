@@ -1,4 +1,4 @@
-angular.module('Risk').directive('initRiskTable', initRiskTable);
+//angular.module('Risk').directive('initRiskTable', initRiskTable);
 
 function initRiskTable(){
     return {

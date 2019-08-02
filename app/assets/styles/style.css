@@ -337,7 +337,8 @@ table.nested td{
 
 
 table.grid{
-    width: 100% !important;
+    /* overflow-x:  scroll; */
+    /* overflow-y:  scroll; */
 }
 
 table.grid td{
@@ -354,7 +355,7 @@ table.grid thead th {
     text-align: left !important;
 }
 
-
+     
 div.header-fixed {
     width: 100% !important; 
 }

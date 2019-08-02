@@ -6,14 +6,15 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>ProjectAIM Suite</title>
- <link rel="stylesheet" href="/app/css/bootstrap/bootstrap.min.css "/>
- <!--link rel="stylesheet" href="/app/js/bootstrap-sortable/Contents/bootstrap-sortable.css" /-->
- <script src="/app/js/webix-6.3.2/codebase/webix.js" type="text/javascript"></script>
- <link rel="stylesheet" href="/app/js/webix-6.3.2/codebase/webix.css" type="text/css" /> 
- <!--link rel="stylesheet" href="/app/js/kendoui-2019.1.220/styles/kendo.common.min.css"  />
- <link rel="stylesheet" href="/app/js/kendoui-2019.1.220/styles/kendo.material.min.css"  />
- <link rel="stylesheet" href="/app/css/kendo-ui/kendo/custom.css" /--> 
- <link rel="stylesheet" href="/app/css/animate-css/animate.css" /> 
+<link rel="stylesheet" href="/app/css/bootstrap/bootstrap.min.css" />                
+<link rel="stylesheet" href="/app/css/animate-css/animate.css" />
+<!-- Light package of effect.css It is optional -->
+<link rel="stylesheet" href="/app/js/quantumui-1.0.0/css/addon/effect-light.min.css">
+<!-- Latest compiled and minified CSS on head of your page -->
+<link rel="stylesheet" href="/app/js/quantumui-1.0.0/css/quantumui.min.css">
+<!-- VENDORS -->
+<!-- Required for Datepicker Component -->
+<script src="/app/js/moment-2.3.1/moment.min.js"></script> 
  <link rel="stylesheet" href="/app/assets/styles/style.css" />
   <style>
     .ui-view > div.webix_view{
@@ -57,15 +58,14 @@
     <script src="/app/js/angularjs-1.7.8/angular-animate.js"></script>
     <script src="/app/js/angularjs-1.7.8/angular-messages.js"></script>
     <script src="/app/js/angularjs-1.7.8/angular-sanitize.js"></script> 
-    <script src="/app/js/angular-webix/angular-webix.js"></script>
     <script src="/app/js/popper-1.12.9/popper.min.js"></script>
     <!--script src="/app/js/bootstrap-4.0.0/bootstrap.js"></script-->
-    <script src="/app/js/bootstrap-sortable/Scripts/moment.min.js"></script>
     <script src="/app/js/angularjs-1.7.8/angular-route.min.js"></script>
     <script src="/app/js/angularjs-1.7.8/angular-ui-router.js"></script>
     <script src="/app/js/angularjs-1.7.8/statehelper.js"></script>
     <script src="/app/js/ocLazyLoad/ocLazyLoad.js"></script>
     <script src="/app/route-config.js"></script> 
+    <script src="/app/js/quantumui-1.0.0/js/quantumui.js"></script>
     <script src="/app/app.js"></script>
    </body>
 </html>

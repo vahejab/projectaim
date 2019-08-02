@@ -89,10 +89,10 @@ common.service("CommonService", function() {
 });
 
 angular.module('Home', []);
-angular.module('Action', ['webix', 'ngResource', 'Common']);
+angular.module('Action', ['ngResource', 'Common']);
 angular.module('Risk',   ['ngResource', 'ngAnimate', 'Common']);
 
-var app = angular.module('Main', ['ui.router', 'oc.lazyLoad', 'ngResource', 'ngSanitize', 'webix', 'Common', 'Home', 'Action', 'Risk']);
+var app = angular.module('Main', ['ui.router', 'oc.lazyLoad', 'ngResource', 'ngSanitize', 'Common', 'Home', 'Action', 'Risk']);
   
 app.controller('MainController',  ['CommonService', '$scope', '$window', '$state', function(CommonService, $scope, $window, $state){
 }]);
