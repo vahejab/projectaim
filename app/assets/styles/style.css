@@ -38,10 +38,11 @@ body{
     font-size: 14px;
 }
 
-body *{
-    margin: 0 auto;
-}
    
+body *{
+    margin: 0px;
+}
+
 h2, div{
     text-align: center;
 }
@@ -302,7 +303,7 @@ table.events{
 .table td, .table th {
     padding: .75rem;
     vertical-align: top;
-    border-top: 1px solid black; 
+    border-top: 1px solid black;
 }
 textarea, input[type=text]
 {

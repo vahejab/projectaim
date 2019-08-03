@@ -90,7 +90,8 @@ common.service("CommonService", function() {
 
 angular.module('Home', []);
 angular.module('Action', ['ngResource', 'Common']);
-angular.module('Risk',   ['ngResource', 'ngAnimate', 'Common']);
+agGrid.initialiseAgGridWithAngular1(angular);
+angular.module('Risk',   ['ngResource', 'ngAnimate', 'Common', 'agGrid']);
 
 var app = angular.module('Main', ['ui.router', 'oc.lazyLoad', 'ngResource', 'ngSanitize', 'Common', 'Home', 'Action', 'Risk']);
   

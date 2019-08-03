@@ -8,10 +8,9 @@
 <title>ProjectAIM Suite</title>
 <link rel="stylesheet" href="/app/css/bootstrap/bootstrap.min.css" />                
 <link rel="stylesheet" href="/app/css/animate-css/animate.css" />
-<!-- Light package of effect.css It is optional -->
-<link rel="stylesheet" href="/app/js/quantumui-1.0.0/css/addon/effect-light.min.css">
-<!-- Latest compiled and minified CSS on head of your page -->
-<link rel="stylesheet" href="/app/js/quantumui-1.0.0/css/quantumui.min.css">
+<link rel="stylesheet" href="/app/js/ag-grid/dist/styles/ag-grid.css">
+<link rel="styleSheet" href="/app/js/ag-grid/dist/styles/ag-theme-blue.css"/>
+<!-- Light package of effect.css It is optional --><!-- Latest compiled and minified CSS on head of your page -->
 <!-- VENDORS -->
 <!-- Required for Datepicker Component -->
 <script src="/app/js/moment-2.3.1/moment.min.js"></script> 
@@ -62,10 +61,11 @@
     <!--script src="/app/js/bootstrap-4.0.0/bootstrap.js"></script-->
     <script src="/app/js/angularjs-1.7.8/angular-route.min.js"></script>
     <script src="/app/js/angularjs-1.7.8/angular-ui-router.js"></script>
+    
+    <script src="/app/js/ag-grid/dist/ag-grid-community.js"></script>
     <script src="/app/js/angularjs-1.7.8/statehelper.js"></script>
     <script src="/app/js/ocLazyLoad/ocLazyLoad.js"></script>
-    <script src="/app/route-config.js"></script> 
-    <script src="/app/js/quantumui-1.0.0/js/quantumui.js"></script>
+    <script src="/app/route-config.js"></script>
     <script src="/app/app.js"></script>
    </body>
 </html>
