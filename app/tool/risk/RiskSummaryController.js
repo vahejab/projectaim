@@ -186,7 +186,7 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
                 var height = 150 - margin.top - margin.bottom;
                                    
   
-            ctrl.riskwaterfall = [];
+            ctrl.riskwaterfall = {};
           
             var xVal, yVal;
             ctrl.focus = [];
@@ -280,27 +280,28 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
 
         
         function riskWaterfallRenderer(params){
-            
             var eDivWaterfall = document.createElement('div');
-            eDivWaterfall.className = 'div-risk-waterfall-'+params.data.id;
+            eDivWaterfall.id = 'div-risk-waterfall-'+params.data.riskid;
         
-        
-            ctrl.riskwaterfall[params.data.riskid] = (d3.select('.div-risk-waterfall-'+params.data.id).append('svg')
-                                      .attr('width', width + margin.left + margin.right)
-                                      .attr('height', height + margin.top + margin.bottom)
-                                      .append('g')
-                                      .attr('transform', 'translate('+margin.left+','+margin.top+')'));
-                                      
-                                      
-          ctrl.drawGrid(maxLow, minHigh, maxLikelihood, maxConsequence);
-          if (ctrl.initialized == false)   
-          {  
-                ctrl.initEvents();
-                ctrl.datapoints =  [...ctrl.actual.concat( ctrl.baseline,  ctrl.schedule)];
-                ctrl.initialized = true;
-          }
-          ctrl.drawWaterfall(params.data.riskid);
-          ctrl.drawToolTip(params.data.riskid);          
+            $timeout(function(){
+                    ctrl.riskwaterfall[params.data.riskid] = (d3.select('#div-risk-waterfall-'+params.data.riskid).append('svg')
+                                              .attr('width', width + margin.left + margin.right)
+                                              .attr('height', height + margin.top + margin.bottom)
+                                              .append('g')
+                                              .attr('transform', 'translate('+margin.left+','+margin.top+')'));
+                                 
+                 // ctrl.drawGrid(maxLow, minHigh, maxLikelihood, maxConsequence);
+                  if (ctrl.initialized == false)   
+                  {  
+                        ctrl.initEvents();
+                        ctrl.datapoints =  [...ctrl.actual.concat( ctrl.baseline,  ctrl.schedule)];
+                        ctrl.initialized = true;
+                  }
+ 
+                  ctrl.drawWaterfall(params.data.riskid);
+                  ctrl.drawToolTip(params.data.riskid);                      
+            }, );
+            
           return eDivWaterfall;
         }
         
