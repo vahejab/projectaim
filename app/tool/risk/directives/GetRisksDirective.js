@@ -182,6 +182,8 @@ function getRisks(){
                             $scope.ctrl.risks[key].creationdate = response.data.Result[key].assessmentdate;
                         });
                         $scope.ctrl.risksloaded = true;
+                        
+                        
                         // lookup the container we want the Grid to use
                         var eGridDiv = document.querySelector('#myGrid');
 

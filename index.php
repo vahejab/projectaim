@@ -51,6 +51,7 @@
     <!--script src="/app/js/kendoui-2019.1.220/js/kendo.datepicker.min.js"></script>
     <script src="/app/js/kendoui-2019.1.220/js/kendo.ui.core.min.js"></script-->
     <!--script src="/app/js/jquery-latest/jquery-latest.js"></script-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
     <script src="/app/js/angularjs-1.7.8/angular.js"></script>
     <script src="/app/js/angularjs-1.7.8/angular-resource.js"></script>
     <script src="/app/js/angularjs-1.7.8/angular-aria.js"></script>
@@ -61,11 +62,13 @@
     <!--script src="/app/js/bootstrap-4.0.0/bootstrap.js"></script-->
     <script src="/app/js/angularjs-1.7.8/angular-route.min.js"></script>
     <script src="/app/js/angularjs-1.7.8/angular-ui-router.js"></script>
-    
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js"></script>
     <script src="/app/js/ag-grid/dist/ag-grid-community.js"></script>
     <script src="/app/js/angularjs-1.7.8/statehelper.js"></script>
     <script src="/app/js/ocLazyLoad/ocLazyLoad.js"></script>
     <script src="/app/route-config.js"></script>
+
     <script src="/app/app.js"></script>
    </body>
 </html>

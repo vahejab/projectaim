@@ -1,3 +1,39 @@
 .ag-cell, .div-percent-bar{
     text-align: left;
 }
+
+path {
+  fill: none; 
+} 
+
+[class^='overlay']{
+    fill: none;
+    pointer-events: all;
+}
+
+.focus{
+    position: unset;
+}
+
+.focus circle {
+    fill: steelblue;
+}
+
+.focus text {
+    font-size: 12px;
+    font-family: arial;
+}
+
+.tooltip {
+    fill: white;
+    stroke: #000;
+    opacity: 0.75;
+}
+
+.tooltip-date, .tooltip-eventtitle {
+    font-weight: bold;
+}
+
+svg .focus{
+    overflow: visible;
+}
