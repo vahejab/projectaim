@@ -4,6 +4,22 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.DOMops = DOMops;
         ctrl.ValidationService = ValidationService;
         ctrl.CommonService = CommonService;
+        ctrl.risklevels = {};
+        ctrl.riskMatrix = new Array(6);
+        ctrl.users = [];
+        ctrl.risk = {};
+        ctrl.event = [{}];
+        
+        for (l = 1; l <= 5; l++)
+        {
+            ctrl.riskMatrix[l] = new Array(6);
+            for (c = 1; c <= 5; c++)
+                ctrl.riskMatrix[l][c] = 0;
+        }
+        
+        ctrl.getRisk = function(l, t, s, c){
+            return ctrl.riskMatrix[l][Math.max(Math.max(t, s), c)];
+        }
         
         ctrl.getLevel = function(risk, l, t, s, c, cons){
            if (risk >= ctrl.risklevels.riskhigh)                                                                                      

@@ -9,7 +9,13 @@
 <link rel="stylesheet" href="/app/css/bootstrap/bootstrap.min.css" />                
 <link rel="stylesheet" href="/app/css/animate-css/animate.css" />
 <link rel="stylesheet" href="/app/js/ag-grid/dist/styles/ag-grid.css">
-<link rel="styleSheet" href="/app/js/ag-grid/dist/styles/ag-theme-blue.css"/>
+<link rel="stylesheet" href="/app/js/ag-grid/dist/styles/ag-theme-blue.css"/>
+<link rel="stylesheet" href="/app/js/ui-select/dist/select.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+<link rel="stylesheet" href="/app/js/air-datepicker-2.2.3/dist/css/datepicker.css" />
+ <script src="/app/js/air-datepicker-2.2.3/dist/js/datepicker.js"></script>
+    <script src="/app/js/air-datepicker-2.2.3/dist/js/i18n/datepicker.en.js"></script>
+    </script>
 <!-- Light package of effect.css It is optional --><!-- Latest compiled and minified CSS on head of your page -->
 <!-- VENDORS -->
 <!-- Required for Datepicker Component -->
@@ -24,7 +30,7 @@
     } 
   </style>
 </head>
-<body ng-app="Main">
+<body ng-app="Main"> 
         <a class="nav-link">
             <img id="logo" src="/app/assets/images/ProjectAIM.png" />
         </a>      
@@ -51,7 +57,6 @@
     <!--script src="/app/js/kendoui-2019.1.220/js/kendo.datepicker.min.js"></script>
     <script src="/app/js/kendoui-2019.1.220/js/kendo.ui.core.min.js"></script-->
     <!--script src="/app/js/jquery-latest/jquery-latest.js"></script-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
     <script src="/app/js/angularjs-1.7.8/angular.js"></script>
     <script src="/app/js/angularjs-1.7.8/angular-resource.js"></script>
     <script src="/app/js/angularjs-1.7.8/angular-aria.js"></script>
@@ -62,6 +67,7 @@
     <!--script src="/app/js/bootstrap-4.0.0/bootstrap.js"></script-->
     <script src="/app/js/angularjs-1.7.8/angular-route.min.js"></script>
     <script src="/app/js/angularjs-1.7.8/angular-ui-router.js"></script>
+    <script src="/app/js/ui-select/dist/select.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js"></script>
     <script src="/app/js/ag-grid/dist/ag-grid-community.js"></script>

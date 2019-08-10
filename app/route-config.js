@@ -115,6 +115,8 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
                     '/app/tool/risk/EditRisk.css',
                     '/app/tool/risk/services/DOMService.js',
                     '/app/tool/risk/services/ValidationService.js',
+                    '/app/tool/risk/directives/RepeatEventsDone.js',
+                    '/app/tool/risk/directives/GetRiskDirective.js',
                     '/app/tool/risk/directives/RiskDirective.js',
                     '/app/tool/risk/EditRiskController.js'
             ]
