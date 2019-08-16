@@ -1,334 +1,357 @@
-<div id="formcontainer"  ng-app="Risk" ng-controller="EditRiskController as ctrl">
+<div id="formcontainer" ng-app="Risk" ng-controller="EditRiskController as ctrl">
 <get-risk></get-risk/>
     <div ng-if="ctrl.initDone && ctrl.userDone" id="myeditform" type="space" layout-padding="" ng-cloak="">   
         <form id="form" name="EditRisk" role="form" ng-submit="ctrl.valid() && ctrl.submit()" novalidate>
             <div class="layout">
-                    <table id="summary" class="layout" border="1">
-                        <tr>
-                            <td class="label">Risk #</td>
-                            <td class="locked">{{ctrl.risk.riskid}}</td>
-                            <td class="label">
+                    <div id="summary" class="tbl layout" border="1">
+                        <div class="tr">
+                            <div class="td label">Risk #</div>
+                            <div class="td locked">{{ctrl.risk.riskid}}</div>
+                            <div class="td label">
                                 Current Risk Level
-                            </td>
-                            <td  class="locked {{ctrl.risk.risklevel.cls}}">
+                            </div>
+                            <div class="td locked {{ctrl.risk.risklevel.cls}}">
                                 {{ctrl.risk.risklevel.level}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label">
+                            </div>
+                        </div>
+                        <div class="tr">
+                            <div class="td label">
                                 Owner
-                            </td>
-                            <td class="locked">
+                            </div>
+                            <div class="td locked">
                             
-                            </td>
-                            <td class="label">
+                            </div>
+                            <div class="td label">
                                 Risk State
-                            </td>
-                            <td class="locked">
+                            </div>
+                            <div class="td locked">
                                Open
-                            </td>
-                        </tr>
-                         <tr>
-                            <td class="label">
+                            </div>
+                        </div>
+                         <div>
+                            <div class="td label">
                                 Creator
-                            </td>
-                            <td class="locked">
+                            </div>
+                            <div class="td locked">
                                 Admin
-                            </td>
-                            <td class="label">
+                            </div>
+                            <div class="td label">
                                 Risk Approver
-                            </td>
-                            <td class="locked">
+                            </div>
+                            <div class="td locked">
                             
-                            </td>
-                        </tr>
-                    </table>
+                            </div>
+                        </div>
+                    </div>
                     <br />
                     
                     <h2>Risk Information</h2>
-                    <table id="details" class="layout" border="1">
-                        <tr>
-                            <td class="label" style="vertical-align: top">
+                    <div id="details" class="tbl layout" border="1">
+                        <div class="tr">
+                            <div class="td label" style="vertical-align: top">
                                 Title
-                            </td>
-                            <td class="locked">
+                            </div>
+                            <div class="td locked">
                             
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label" style="vertical-align: top">
+                            </div>
+                        </div>
+                        <div class="tr">
+                            <div class="td label" style="vertical-align: top">
                                 Risk Statement
-                            </td>
-                            <td  class="locked" style="vertical-align: top">
+                            </div>
+                            <div class="td locked" style="vertical-align: top">
                             
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label" style="vertical-align: top">
+                            </div>
+                        </div>
+                        <div class="tr">
+                            <div class="td label" style="vertical-align: top">
                                 Context
-                            </td>
-                            <td  class="locked" style="vertical-align: top">
+                            </div>
+                            <div class="td locked" style="vertical-align: top">
                             
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label" style="vertical-align: top">
+                            </div>
+                        </div>
+                        <div class="tr">
+                            <div class="td label" style="vertical-align: top">
                                 Closure Criteria
-                            </td>
-                            <td  class="locked" style=" vertical-align: top">
+                            </div>
+                            <div class="td locked" style=" vertical-align: top">
                             
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label" style="vertical-align: top">
+                            </div>
+                        </div>
+                        <div class="tr">
+                            <div class="td label" style="vertical-align: top">
                                 Owner Notes
-                            </td>
-                            <td  class="locked" style=" vertical-align: top">
+                            </div>
+                            <div class="td locked" style=" vertical-align: top">
                                  <!--div ng-show="ctrl.config.ownernotes.done" config="ownernotes" webix-ui="ownernotes" width="500" height="97" type="textarea" id="ownernotes" name="ownernotes"></div-->
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label" style="vertical-align: top">
+                            </div>
+                        </div>
+                        <div class="tr">
+                            <div class="td label" style="vertical-align: top">
                                 Approver Comments
-                            </td>
-                            <td  class="locked" style=" vertical-align: top">
+                            </div>
+                            <div  class="td locked" style=" vertical-align: top">
                                 <!--div ng-show="ctrl.config.approvercomments.done" config="approvercomments" webix-ui="approvercomments" width="500" height="97" type="textarea" id="approvercomments" name="approvercomments"></div-->
-                            </td>
-                        </tr>
-                    </table>
+                            </div>
+                        </div>
+                    </div>
                    <div>
                    <button id="submit" type="submit">Edit Risk</button>
             </div>       
         </form>
             <br />
          <form id="formEvt" name="EditEvents" role="form" ng-submit="ctrl.saveEvents()" novalidate>  
-            <table cellpadding='0' cellspacing='0' class="events table-condensed" border=1>
-                <thead>
-                    <tr>
-                            <th class="placeholder">
+            <div cellpadding='0' cellspacing='0' class="tbl events tbl-condensed" border=1>
+                <div class="tbl">
+                    <div class="tr">
+                            <div class="th placeholder">
                             
-                            </th>
-                            <th>
+                            </div>
+                            <div class="th header">
                                 #
-                            </th>
-                            <th class="placeholder">
+                            </div>
+                            <div class="th placeholder">
                             
-                            </th>
-                            <th>
+                            </div>
+                            <div class="th header">
                                 Event Title
-                            </th>
-                            <th class="placeholder">
+                            </div>
+                            <div class="th placeholder">
                             
-                            </th>
-                            <th>
+                            </div>
+                            <div class="th header">
                                 Event Owner
-                            </th>
-                            <th class="placeholder">
+                            </div>
+                            <div class="th placeholder">
                             
-                            </th>
-                            <th>
+                            </div>
+                            <div class="th header">
                                 Actual Date
-                            </th>
-                            <th class="placeholder">
+                            </div>
+                            <div class="th placeholder">
                             
-                            </th>
-                            <th>
+                            </div>
+                            <div class="th header">
                                 Schedule Date
-                            </th>
-                            <th class="placeholder">
+                            </div>
+                            <div class="th placeholder">
                             
-                            </th>
-                            <th>
+                            </div>
+                            <div class="th header">
                                 Risk
-                            </th>
-                            <th class="placeholder">
+                            </div>
+                            <div class="th placeholder">
                             
-                            </th>
-                            <th>
+                            </div>
+                            <div class="th header">
                                 Like
-                            </th>
-                            <th class="placeholder">
-                            </th> 
-                            <th>
+                            </div>
+                            <div class="th placeholder">
+                            </div> 
+                            <div class="th header">
                                 Tech
-                            </th>
-                            <th class="placeholder">
+                            </div>
+                            <div class="th placeholder">
                             
-                            </th>
-                            <th>
+                            </div>
+                            <div class="th header">
                                 Schd
-                            </th>
-                            <th class="placeholder">
+                            </div>
+                            <div class="th placeholder">
                             
-                            </th>
-                            <th>
+                            </div>
+                            <div class="th header">
                                 Cost
-                            </th>
-                            <th class="placeholder">
+                            </div>
+                            <div class="th placeholder">
                             
-                            </th>
-                            <th>
-                                 &nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;
-                            </th>
-                            <th class="placeholder">
+                            </div>
+                            <div class="th header">
+                                Save
+                            </div>
+                            <div class="th placeholder">
                             
-                            </th>
-                            <th>
-                                 &nbsp;Remove&nbsp;&nbsp;
-                            </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="event in [0]">
-                        <td class="header">
-                            <div class="width200">ID</div>
-                        </td>
-                        <td class="left value">
-                            <div class="left width200">{{event}}</div>
-                        </td> 
-                        <td class="header">
-                            <div class="left width200">Event Title</div>
-                        </td>
-                        <td class="left value">
-                            <div class="width200">Risk Identified</div>
-                        </td>
-                        <td class="header">
-                            <div class="width200">Owner</div>
-                        </td>
-                        <td class="left value">
-                            <div class="width200">{{ctrl.risk.ownername}}</div>
-                        </td>
-                        <td class="left header">
-                            <div class="width200">Actual Date</div>
-                        </td>
-                        <td class="left value">
-                            <div class="width200">{{ctrl.risk.assessmentdate | date: "M/d/y"}}</div>
-                        </td>
-                        <td class="header">
-                            <div class="width200">Schedule Date</div>
-                        </td>
-                        <td class="left value">
-                            <div class="width200">{{ctrl.risk.assessmentdate | date: "M/d/y"}}</div>
-                        </td>
-                        <td class="header">
-                            <div class="width200">Risk Level</div>
-                        </td>
-                        <td class="center level value {{ctrl.risk.risklevel.cls}}">
-                            <div class="width200"><nobr>{{ctrl.risk.risklevel.level}}</nobr></div> 
-                        </td>
-                        <td class="header">
-                            <div class="width200">Likelihood</div>
-                        </td>
-                        <td class="value center">
-                            <div class="width200">{{ctrl.risk.risklevel.likelihood}}</div>
-                        </td>
-                        <td class="header">
-                            <div class="width200">Technical</div>
-                        </td>
-                        <td class="value center" style="text-align: center">
-                            <div class="width200">{{ctrl.risk.risklevel.technical}}</div>
-                        </td>
-                        <td class="header">
-                            <div class="width200">Schedule</div>
-                        </td>
-                        <td class="value center" style="text-align: center"></div>
-                           <div class="width200">{{ctrl.risk.risklevel.schedule}}
-                        </td>
-                        <td class="header">
-                            <div class="width200">Cost</div>
-                        </td>
-                        <td class="value center">
-                           <div class="width200">{{ctrl.risk.risklevel.cost}}</div>
-                        </td>
-                        <td class="header">
-                           <div class="width200">Save</div>
-                        </td>
-                        <td class="value">
-                            <div class="width200"></div>
-                        </td>
-                        <td class="header">
-                           <div class="width200">Remove</div>
-                        </td>
-                        <td class="value">
-                            <div class="width200"></div>
-                        </td>
-                    </tr>
-                    <tr ng-repeat="event in [1,2,3,4,5]" ng-if="ctrl.eventsdone" ng-repeat-events-done>
-                        <td class="header">
+                            </div>
+                            <div class="th header">
+                                 Remove
+                            </div>
+                    </div>
+                    <div class="tr" ng-repeat="event in [0]">
+                        <div class="td header">
+                            <div class="widthAuto">ID</div>
+                        </div>
+                        <div class="td left value">
+                            <div class="left widthAuto">{{event}}</div>
+                        </div> 
+                        <div class="td header">
+                            <div class="left widthAuto">Event Title</div>
+                        </div>
+                        <div class="td left value">
+                            <div class="widthAuto">Risk Identified</div>
+                        </div>
+                        <div class="td header">
+                            <div class="widthAuto">Owner</div>
+                        </div>
+                        <div class="td left value">
+                            <div class="widthAuto">{{ctrl.risk.ownername}}</div>
+                        </div>
+                        <div class="td left header">
+                            <div class="widthAuto">Actual Date</div>
+                        </div>
+                        <div class="td left value">
+                            <div class="widthAuto">{{ctrl.risk.assessmentdate | date: "M/d/y"}}</div>
+                        </div>
+                        <div class="td header">
+                            <div class="widthAuto">Schedule Date</div>
+                        </div>
+                        <div class="td left value">
+                            <div class="widthAuto">{{ctrl.risk.assessmentdate | date: "M/d/y"}}</div>
+                        </div>
+                        <div class="td header">
+                            <div class="width50">Risk Level</div>
+                        </div>
+                        <div class="td center level value {{ctrl.risk.risklevel.cls}}">
+                            <div class="widthAuto"><nobr>{{ctrl.risk.risklevel.level}}</nobr></div> 
+                        </div>
+                        <div class="td header">
+                            <div class="widthAuto">Likelihood</div>
+                        </div>
+                        <div class="td value center">
+                            <div class="widthAuto">{{ctrl.risk.risklevel.likelihood}}</div>
+                        </div>
+                        <div class="td header">
+                            <div class="widthAuto">Technical</div>
+                        </div>
+                        <div class="td value center" style="text-align: center">
+                            <div class="widthAuto">{{ctrl.risk.risklevel.technical}}</div>
+                        </div>
+                        <div class="td header">
+                            <div class="widthAuto">Schedule</div>
+                        </div>      
+                        <div class="td value center" style="text-align: center">
+                           <div class="widthAuto">{{ctrl.risk.risklevel.schedule}}</div>
+                        </div>
+                        <div class="td header">
+                            <div class="widthAuto">Cost</div>
+                        </div>
+                        <div class="td value center">
+                           <div class="widthAuto">{{ctrl.risk.risklevel.cost}}</div>
+                        </div>
+                        <div class="td header">
+                           <div class="widthAuto">Save</div>
+                        </div>
+                        <div class="td value">
+                            <div></div>
+                        </div>
+                        <div class="td header">
+                           <div>Remove</div>
+                        </div>
+                        <div class="td value">
+                            <div></div>
+                        </div>
+                    </div>
+                    <div class="tr" ng-repeat="event in [1,2,3,4,5]" ng-if="ctrl.eventsdone">
+                        <div class="td header">
                             ID
-                        </td>
-                        <td class="value">
+                        </div>
+                        <div class="td value">
                             {{event}}
-                        </td>
-                        <td class="header">
+                        </div>
+                        <div class="td header">
                             Event Title
-                        </td>
-                        <td class="value">
-                      
-                        </td>
-                        <td class="header">
+                        </div>
+                        <div class="td value">
+                            <input type="text" class="title" />
+                        </div>
+                        <div class="td header">
                             Owner
-                        </td>
-                        <td class="value">
-        
-                        </td>
-                        <td class="header">
+                        </div>
+                        <div class="td value">
+                                 <ui-select ng-model="ctrl.evts[event].ownwerid" theme="select2" ng-disabled="ctrl.disabled" style="min-width: 200px;" title="Choose a person">
+                                    <ui-select-match placeholder="Select/Search User">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="user in ctrl.users | propsFilter: {name: $select.search}">
+                                      <div ng-bind-html="user.name | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                        </div>
+                        <div class="td header">
                             Actual Date
-                        </td>
-                        <td class="value">
-                           <input type='text' id="actual{{event}}"  class="datepicker-here" data-language='en' /> 
-                        </td>
-                        <td class="header">
+                        </div>
+                        <div class="td value">
+                           <!--input type='text' id="actual{{event}}"  class="datepicker-here" data-language='en' /--> 
+                                <p class="input-group">
+                                  <input type="text" class="actual date-input" uib-datepicker-popup="MM/dd/yyyy" ng-model="ctrl.event[event].actualdate" is-open="ctrl.actual[event].opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                  <span class="input-group-btn">
+                                    <button type="button" class="btn btn-secondary" ng-click="ctrl.openActual(event)">
+                                      <i class="fa-svg-icon">
+                                        <svg style="left: -5px; top: -7px" width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M192 1664h288v-288h-288v288zm352 0h320v-288h-320v288zm-352-352h288v-320h-288v320zm352 0h320v-320h-320v320zm-352-384h288v-288h-288v288zm736 736h320v-288h-320v288zm-384-736h320v-288h-320v288zm768 736h288v-288h-288v288zm-384-352h320v-320h-320v320zm-352-864v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm736 864h288v-320h-288v320zm-384-384h320v-288h-320v288zm384 0h288v-288h-288v288zm32-480v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm384-64v1280q0 52-38 90t-90 38h-1408q-52 0-90-38t-38-90v-1280q0-52 38-90t90-38h128v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h384v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h128q52 0 90 38t38 90z"/></svg>
+                                      </i>
+                                    </button>
+                                  </span>
+                                </p> 
+                        </div>
+                        <div class="td header">
                             Schedule Date
-                        </td>
-                        <td class="value">
-                         <input type='text' id="schedule{event}}" class="datepicker-here" data-language='en' /> 
-                        </td>
-                        <td class="header">
+                        </div>
+                        <div class="td value">
+                         <!--input type='text' id="schedule{event}}" class="datepicker-here" data-language='en' /-->                    
+                                <p class="input-group">
+                                  <input type="text" class="schedule date-input" uib-datepicker-popup="M/dd/yyyy" ng-model="ctrl.event[event].scheduledate" is-open="ctrl.schedule[event].opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                  <span class="input-group-btn">
+                                    <button type="button" class="btn btn-secondary" ng-click="ctrl.openSchedule(event)">
+                                      <i class="fa-svg-icon">
+                                        <svg style="left: -5px; top: -7px" width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M192 1664h288v-288h-288v288zm352 0h320v-288h-320v288zm-352-352h288v-320h-288v320zm352 0h320v-320h-320v320zm-352-384h288v-288h-288v288zm736 736h320v-288h-320v288zm-384-736h320v-288h-320v288zm768 736h288v-288h-288v288zm-384-352h320v-320h-320v320zm-352-864v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm736 864h288v-320h-288v320zm-384-384h320v-288h-320v288zm384 0h288v-288h-288v288zm32-480v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm384-64v1280q0 52-38 90t-90 38h-1408q-52 0-90-38t-38-90v-1280q0-52 38-90t90-38h128v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h384v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h128q52 0 90 38t38 90z"/></svg>
+                                      </i>
+                                    </button>
+                                  </span>
+                                </p>
+                        </div>
+                        <div class="td header">
                             Level
-                        </td>
-                        <td name="level" evt="{{event}}" class="level{{event}}">
+                        </div>
+                        <div name="level" evt="{{event}}" class="td level{{event}}">
                         
-                        </td>
-                        <td class="header">
+                        </div>
+                        <div class="td header">
                             Likelihood
-                        </td>
-                        <td class="value center">
-                           
-                        </td>         
-                        <td class="header ">
+                        </div>
+                        <div class="td value center">
+                            <input class="level" type="text"></input>
+                        </div>         
+                        <div class="td header">
                             Technical
-                        </td>                                                                                                                
-                        <td class="value center">
-                           
-                        </td>
-                        <td class="header">
+                        </div>                                                                                                                
+                        <div class="td value center">
+                           <input class="level" type="text"></input>
+                        </div>
+                        <div class="td header">
                             Schedule
-                        </td>
-                        <td class="value center">
-                       
-                        </td>
-                        <td class="header">
+                        </div>
+                        <div class="td value center">
+                             <input class="level" type="text"></input>
+                        </div>
+                        <div class="td header">
                             Cost
-                        </td>
-                        <td class="value center">
-                           
-                        </td>
-                        <td class="header">
+                        </div>
+                        <div class="td value center">
+                             <input class="level" type="text"></input>
+                        </div>
+                        <div class="td header">
                             Save
-                        </td>
-                        <td class="value">
+                        </div>
+                        <div class="td value">
                          <input class="addEvent" type="button" id="add{{event}}" ng-model="ctrl.showAddButton" ng-show="(event != 5 || ctrl.hideButton == false) && ((ctrl.complete[event].value && event == (ctrl.lastEventIdSaved+1)) || (event == 5 && ctrl.lastEventIdSaved == event && ctrl.showAddButton.value == true))" ng-click="ctrl.add(event); ctrl.doRemoveAdd[event+1] == true && ctrl.removeAdd(event+1)" ng-keyup="$event.keyCode === 13 && ctrl.add(event); $event.keyCode === 13 && ctrl.doRemoveAdd[event+1] == true && ctrl.removeAdd(event+1)" value="Save">
-                        </td>                                                                                                                                                                                                                                                                                                                             
-                        <td class="header">
+                        </div>                                                                                                                                                                                                                                                                                                                             
+                        <div class="td header">
                             Remove
-                        </td>
-                        <td class="value">
+                        </div>
+                        <div class="td value">
                            <input class="removeEvent" type="button" id="remove{{event}}" ng-show="event == ctrl.lastEventIdSaved+1 || (event == ctrl.lastEventIdSaved && event == 5 && ctrl.complete[event].value)" ng-click="ctrl.remove(event); ctrl.showAddButton.value = true" ng-keyup="$event.keyCode === 13 && ctrl.remove(event)"  value="Remove">
-                        </td>  
-                    </tr> 
-                </tbody>
-            </table>  
+                        </div>  
+                    </div> 
+                </div>
+            </div>  
              <button id="submit" type="submit">Save Events</button>
            </form>               
          </div> 

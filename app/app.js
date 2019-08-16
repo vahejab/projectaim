@@ -1,7 +1,6 @@
 var common = angular.module('Common', []);
 var refresh = false;
 var formcheck = false;
-
 common.service("CommonService", function() {
     var commonFunctions = {};
     
@@ -91,14 +90,14 @@ common.service("CommonService", function() {
 angular.module('Home', []);
 angular.module('Action', ['ngResource', 'Common']);
 agGrid.initialiseAgGridWithAngular1(angular);
-angular.module('Risk',   ['ngResource', 'ngAnimate', 'Common', 'agGrid']);
+angular.module('Risk', ['ngResource', 'ngAnimate', 'Common', 'agGrid', 'ui.select', 'ui.bootstrap']);
 
 var app = angular.module('Main', ['ui.router', 'oc.lazyLoad', 'ngResource', 'ngSanitize', 'Common', 'Home', 'Action', 'Risk']);
   
 app.controller('MainController',  ['CommonService', '$scope', '$window', '$state', function(CommonService, $scope, $window, $state){
 }]);
 
-app.config(['$ocLazyLoadProvider', '$stateProvider', '$urlRouterProvider', /*'$mdThemingProvider', */function($ocLazyLoadProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider) {
+app.config(['$ocLazyLoadProvider', '$stateProvider', '$urlRouterProvider', /*'$mdThemingProvider', */function($ocLazyLoadProvider, $stateProvider, $urlRouterProvider/*, $mdThemingProvider*/) {
    /* $mdThemingProvider.theme('custom')
                       .primaryPalette('blue')
                       .accentPalette('blue-grey');
@@ -108,3 +107,41 @@ app.config(['$ocLazyLoadProvider', '$stateProvider', '$urlRouterProvider', /*'$m
     configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider);
     
 }]);
+
+/**
+ * AngularJS default filter with the following expression:
+ * "person in people | filter: {name: $select.search, age: $select.search}"
+ * performs an AND between 'name: $select.search' and 'age: $select.search'.
+ * We want to perform an OR.
+ */
+app.filter('propsFilter', function() {
+  return function(items, props) {
+    var out = [];
+
+    if (angular.isArray(items)) {
+      var keys = Object.keys(props);
+
+      items.forEach(function(item) {
+        var itemMatches = false;
+
+        for (var i = 0; i < keys.length; i++) {
+          var prop = keys[i];
+          var text = props[prop].toLowerCase();
+          if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+            itemMatches = true;
+            break;
+          }
+        }
+
+        if (itemMatches) {
+          out.push(item);
+        }
+      });
+    } else {
+      // Let the output be the input untouched
+      out = items;
+    }
+
+    return out;
+  };
+});

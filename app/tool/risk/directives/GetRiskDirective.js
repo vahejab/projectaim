@@ -32,7 +32,7 @@ function getRisk(){
                                //$scope.ctrl.users.push({id: 0, value: ''});
                                for (var key = 0; key < response.data.Result.length; key++){
                                     user = response.data.Result[key];     
-                                    $scope.ctrl.users.push({id: user.id, value: user.name});
+                                    $scope.ctrl.users[user.id] = {name: user.name};
                                }
                                $scope.ctrl.userDone = true;
                                return response.data.Result;

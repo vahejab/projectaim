@@ -11,11 +11,12 @@
 <link rel="stylesheet" href="/app/js/ag-grid/dist/styles/ag-grid.css">
 <link rel="stylesheet" href="/app/js/ag-grid/dist/styles/ag-theme-blue.css"/>
 <link rel="stylesheet" href="/app/js/ui-select/dist/select.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
-<link rel="stylesheet" href="/app/js/air-datepicker-2.2.3/dist/css/datepicker.css" />
- <script src="/app/js/air-datepicker-2.2.3/dist/js/datepicker.js"></script>
-    <script src="/app/js/air-datepicker-2.2.3/dist/js/i18n/datepicker.en.js"></script>
-    </script>
+<!--link rel="stylesheet" href="/app/js/air-datepicker-2.2.3/dist/css/datepicker.css" /-->
+<!--script src="/app/js/air-datepicker-2.2.3/dist/js/datepicker.js"></script-->
+<!--script src="/app/js/air-datepicker-2.2.3/dist/js/i18n/datepicker.en.js"></script-->
 <!-- Light package of effect.css It is optional --><!-- Latest compiled and minified CSS on head of your page -->
 <!-- VENDORS -->
 <!-- Required for Datepicker Component -->
@@ -68,13 +69,13 @@
     <script src="/app/js/angularjs-1.7.8/angular-route.min.js"></script>
     <script src="/app/js/angularjs-1.7.8/angular-ui-router.js"></script>
     <script src="/app/js/ui-select/dist/select.js"></script>
+    <script src="/app/js/ui-bootstrap-3.0.6/ui-bootstrap-tpls-3.0.6.js"></script>    
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js"></script>
     <script src="/app/js/ag-grid/dist/ag-grid-community.js"></script>
     <script src="/app/js/angularjs-1.7.8/statehelper.js"></script>
     <script src="/app/js/ocLazyLoad/ocLazyLoad.js"></script>
     <script src="/app/route-config.js"></script>
-
     <script src="/app/app.js"></script>
    </body>
 </html>

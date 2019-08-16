@@ -37,7 +37,6 @@ body{
     font-family: Roboto, sans-serif !important;
     font-size: 14px;
 }
-
    
 body *{
     margin: 0px;
@@ -45,14 +44,6 @@ body *{
 
 h2, div{
     text-align: center;
-}
-                     
-.webcal_cal_header{  
-    margin: 0 auto;
-}
-
-div.webix-control{
-    margin: 0px !important;
 }
 
 .msg-container{
@@ -107,173 +98,6 @@ th.placeholder{
     display: none;
 }
 
-
-@media only screen and (max-width: 800px) {
-       
-           
-    div.width200{
-        width: 200px !important;  
-    }
-
-    table.events tbody tr td.header,
-    table.events tbody tr td.value,
-    table.events tbody tr td[name="level"]{
-        width: 200px !important;
-        height: 32px;
-    }
-    
-    div.nested table#details tr:not(:nth-child(2)) td:first-child{
-        width: 400px;
-    }
-    
-    div.nested div.info{
-        margin-left: 0;
-    }
-      
-    div.nested table#details,
-    div.nested div#level{
-        width: 151px !important;
-        margin-left: 35px;
-    }
-    
-    div#level{
-        height: 24px;
-        margin-bottom: 10px;
-    }
-
-    table#summary td.label,
-    table#details td.label,
-    table.events td.header{
-        background-color: #0038a8 !important;
-        font-weight: bold !important;
-        font-style: italic !important;
-        color: white !important;
-        text-align: left !important;
-    }    
-
-    /* Force table to not be like tables anymore */    
-    table.layout,
-    table.layout thead,
-    table.layout tbody,
-    table.layout tr,
-    table.layout th,
-    table.layout td,
-    table.layout td .webix_view,
-    table.layout td .webix_el_box,
-    table.layout td .webix_inp_static{
-        display: block !important;
-        width: 100% !important;
-    }
-
-    table.events th{
-        display: none !important;
-    }
-    
-    table.events{
-        width: 150px;
-    }
-    
-    table.events td.header,
-    table.events td{
-        display: table-row;
-        /* width: 100px; */
-    }
-    
-    
-    div.ui-view form {
-        width: 95% !important;
-        padding: 0px !important;
-        /* padding-right: 5vw; */
-    }
-    
-    input, textarea{
-        width: 100% !important;
-    }                           
-     
-    table#details tr:not(:first-child) td.label{
-        height: 23px !important;
-    }
-} 
-@media only screen and (min-width: 801px){
-
-    div.width200{
-        width: auto !important;     
-    }
-    
-    table.events tbody tr td.header{
-        display: none !important;
-    }   
-
-    table#summary td.label,
-    table#details td.label {
-        background-color: #0038a8 !important;
-        font-weight: bold !important;
-        font-style: italic !important;
-        color: white !important;
-        text-align: left !important;
-    }
-
-    div.ui-view,
-    div.ui-view table:not(.grid){
-        text-align: center;
-        margin: 0 auto;
-    }
-    
-    table.layout#details tr:not(:first-child):not(.text) td.read > div
-    {
-        height: 97px !important;
-        max-height: 97px !important;
-        overflow-y: scroll !important;
-        overflow-x: hidden !important;
-    }
- 
-    table.layout#details tr:not(:first-child):not(.text) td.label
-    {
-        padding: 1px;
-        height: 97px;
-        width: 200px;
-    }
-
-
-    table.layout#details td:nth-child(1){
-        width: 150px;
-    }
-
-    table.layout#information tr td
-    {
-        height:  23px !important;
-    }
-    table.layout#categories tr td
-    {
-        height: 23px !important;
-    }
-                      
-    table.layout#summary td.locked
-    {
-        vertical-align: middle !important;
-        color: black;
-        width: 140px !important;
-        text-align: left;
-    }
-
-
-    table.layout#details tr:not(:first-child) .webix_el_textarea,
-    table.layout#details tr:not(:first-child):not(.text) td.locked > div{
-        height: 97px !important;
-    }
-                                             
-    table.layout#details{
-        width: 650px;
-        max-width: 650px !important;
-    }
-
-    table.layout#summary{
-        width: 650px;
-        max-width: 750px !important;
-    } 
-}     
-
-
 body{
     background-color: rgb(250, 253, 252) !important;  
 }
@@ -295,12 +119,9 @@ table.events{
     width: auto;
 }
 /*Edit Page*/
-
-.webix_list_item:hover{
-    background-color: rgb(244, 245, 249);
-}
+ 
   
-.table td, .table th {
+.table  > td, .table >  th {
     padding: .75rem;
     vertical-align: top;
     border-top: 1px solid black;
@@ -308,30 +129,26 @@ table.events{
 textarea, input[type=text]
 {
     padding: 4px !important;
-    width: 100%;
+    /* width: 100% !important; */
     max-width: auto !important;
     resize: none !important;
     font-family: inherit !important;
-}
-
-.webix_cal_day_disabled {
-    background-color: #cbcbcd !important;
 }
 
 .label{
     vertical-align: top !important;
 }
 
-table.nested{
+.table.nested{
     margin: 0 auto;
 }
 
 
-table.nested table.layout{
+.table.nested  > .table.layout{
     width: 125px !important; 
 }
 
-table.nested td{
+.table.nested >  .td{
     vertical-align: top;
 }
 
@@ -341,14 +158,14 @@ table.grid{
     /* overflow-x:  scroll; */
     /* overflow-y:  scroll; */
 }
-
-table.grid td{
+    
+table.grid  > td{
     text-align: left;
 }
 
 
 
-table.grid thead th {
+table.grid  > thead >  th {
     background-color: #0038a8 !important;
     font-weight: bold !important;
     font-style: italic !important;
@@ -375,151 +192,15 @@ div.tablebody{
     /* margin-right: 17px !important; */
 }
 
-table.grid thead th,
-table.table-condensed thead th {
+table.grid  > thead >  th,
+table.table-condensed > thead > th {
     background-color: #0038a8 !important;
     font-weight: bold !important;
     font-style: italic !important;
     color: white !important;
     text-align: left !important;
 }
-   
-table.grid thead tr th:nth-child(1),
-table.grid tbody tr td:nth-child(1){
-    /* max-width: 51px !important; */
-    max-width:  51px !important;
-    min-width:  51px !important;
-}
 
-table.grid thead tr th:nth-child(2),
-table.grid tbody tr td:nth-child(2){
-    /* max-width: 51px !important; */
-    max-width:  51px !important;
-    min-width:  51px !important;
-}
-
-table.grid thead tr th:nth-child(3),
-table.grid tbody tr td:nth-child(3){
-    max-width: 596px !important;
-    min-width:  596px !important;
-}
-
-table.actionitems thead tr th:nth-child(4),
-table.actionitems tbody tr td:nth-child(4){
-    max-width: 120px !important;
-    min-width: 120px !important;
-
-}
-
-
-table.risks thead tr th:nth-child(4),
-table.risks tbody tr td:nth-child(4){
-    max-width: 75px !important;
-    min-width: 75px !important;
-
-}
-
-
-
-table.actionitems thead tr th:nth-child(5),
-table.actionitems tbody tr td:nth-child(5){
-    max-width: 100px !important;
-    min-width: 100px !important;
-}
-
-table.risks thead tr th:nth-child(5),
-table.risks tbody tr td:nth-child(5){
-    max-width: 185px !important;
-    min-width: 185px !important;
-}
-
-table.grid thead tr th:nth-child(6),
-table.grid tbody tr td:nth-child(6){
-    max-width: 185px !important;
-    min-width: 185px !important;
-  
-}
-
-table.grid thead tr th:nth-child(7),
-table.grid tbody tr td:nth-child(7){
-    max-width: 185px !important;
-    min-width: 185px !important;
-
-}
-
-
-table.actionitems thead tr th:nth-child(8),
-table.actionitems tbody tr td:nth-child(8){
-    max-width: 185px !important;
-    min-width: 185px !important;
-}
-
-table.risks thead tr th:nth-child(8),
-table.risks tbody tr td:nth-child(8){
-    max-width: 185px !important;
-    min-width: 185px !important;
-}
-
-
-table.grid thead tr th:nth-child(9),
-table.grid tbody tr td:nth-child(9){
-    max-width: 185px !important;
-    min-width: 185px !important;
-
-}
-
-table.risks thead tr th:nth-child(9),
-table.risks tbody tr td:nth-child(9){
-    max-width: 60px !important;
-    min-width: 60px !important;
-}
-
-
-table.grid thead tr th:nth-child(10),
-table.grid tbody tr td:nth-child(10){
-    max-width: 130px !important;
-    min-width: 130px !important;
-  
-}
-
-table.risks thead tr th:nth-child(10),
-table.risks tbody tr td:nth-child(10){
-    max-width: 60px !important;
-    min-width: 60px !important;
-}
-                             
-
-table.grid thead tr th:nth-child(11),
-table.grid tbody tr td:nth-child(11){
-    max-width: 130px !important;
-    min-width: 130px !important;
-}
-
-table.risks thead tr th:nth-child(11),
-table.risks tbody tr td:nth-child(11){
-    max-width: 60px !important;
-    min-width: 60px !important;
-}
-
-table.grid thead tr th:nth-child(12),
-table.grid tbody tr td:nth-child(12){
-    max-width: 130px !important;
-    min-width: 130px !important;
-
-}
-
-table.grid thead tr th:nth-child(13),
-table.grid tbody tr td:nth-child(13){
-    max-width: 130px !important;
-    min-width: 130px !important;
-
-}
-
-table.grid thead tr th:nth-child(14),
-table.grid tbody tr td:nth-child(14){
-    max-width: 130px !important;
-    min-width: 130px !important;
-}
 
 
 .vlabelconfig {
@@ -566,11 +247,7 @@ div.nested > table{
 
 .margin-left{
     padding-left: 20px !important;
-}
-
-.webix_el_counter input.webix_inp_counter_value{
-    width: 36px !important;
-}
+} 
 
 
 td.low{
@@ -587,24 +264,33 @@ div.center{
     margin: 0 auto;
 }
 
-
-.custom .webix_hcell{
+.text-info{ 
+    border-color: #0038a8 !important;
     background-color: #0038a8 !important;
-    font-family: arial !important;
-    font-weight: bold !important;
-    font-style: italic !important;
     color: white !important;
-    /* text-align: left !important; */
-    border-bottom: black;
 }
 
-.custom .webix_column > div{
-    border-color: black;
-}
-.webix_dtable .webix_ss_header td.webix_last_row{
-    border-bottom: 1px solid black;
+input[type='search']{
+    width: 184px;
 }
 
-.webix-view{
-    border-color: black;
+.input-group{
+    display: flex !important;
+}
+
+.input-group-btn{
+    height: 35px;
+}
+       
+input.date-input{
+    height: 29px !important;
+    font-size: 12px !important;
+    font-family: Roboto, sans-serif !important;
+    width: 95px !important;
+    margin-top:  2px;
+}
+
+span.input-group-btn button{
+    height: 33px !important;
+    width: 45px !important;
 }

@@ -1,81 +1,357 @@
-td[name=level]{
+.td[name=level]{
     text-align: center !important;
+    width:  50px;
 }
 
-table.events tbody td{
+.tbl.events  .tbody td.cell{
     text-align: left !important;
 }
      
-table.events thead th{
+.th.header{
     background-color: #0038a8 !important;
     font-weight: bold !important;
     font-style: italic !important;
     color: white !important;
     text-align: left !important;
-} 
+}
+
+@media only screen and (min-width: 801px){
+     
+    div.widthAuto{
+        width: 100% !important;
+    }
+    
+    div.width50{
+        width: 50px !important;
+        display: inline-block;
+    }
+    
+    .td.header{
+        display: none !important;
+        width: 0px;
+        border: none;
+    }
+    
+    input.level{
+        width: 35px;
+        height:  30px;
+        text-align: center;
+    }   
+
+    input.title{
+        width: 160px;
+        height: 30px;
+        margin-top: 3px;
+    }
+    
+    .tbl#summary > .td.label,
+    .tbl#details > .td.label {
+        background-color: #0038a8 !important;
+        font-weight: bold !important;
+        font-style: italic !important;
+        color: white !important;
+        text-align: left !important;
+    }
+
+    .tbl.layout#details > .tr:not(:first-child):not(.text) > .td.read > div
+    {
+        height: 97px !important;
+        max-height: 97px !important;
+        overflow-y: scroll !important;
+        overflow-x: hidden !important;
+    }
+ 
+    .tbl.layout#details > .tr:not(:first-child):not(.text) > .td.label
+    {
+        padding: 1px;
+        height: 97px;
+        width: 200px;
+    }
+
+
+    .tbl.layout#details > .td:nth-child(1){
+        width: 150px;
+    }
+
+    .tbl.layout#information > .tr  > .td
+    {
+        height:  23px !important;
+    }
+    .tbl.layout#categories >  .tr >  .td
+    {
+        height: 23px !important;
+    }
+                      
+    .tbl.layout#summary >  .td.locked
+    {
+        vertical-align: middle !important;
+        color: black;
+        width: 140px !important;
+        text-align: left;
+    }
+
+
+    .tbl.layout#details   .tr:not(:first-child):not(.text)   .td.locked  div{
+        height: 97px !important;
+    }
+                                             
+    .tbl.layout#details{
+        width: 650px;
+        max-width: 650px !important;
+    }
+
+    .tbl.layout#summary{
+        width: 650px;
+        max-width: 750px !important;
+    }
+   
+ 
+    .tbl.events .tr .th:nth-child(2), 
+    .tbl.events .tr .td:nth-child(2){
+        max-width: 10px !importnat;
+        min-width: 10px !important;
+    }
+    
+     .tbl.events   .tr   .th:nth-child(4),
+    .tbl.events     .tr   .td:nth-child(4){
+        max-width: 112px !important;
+        min-width: 112px !important;
+    }
+
+    .tbl.events   .tr   .th:nth-child(6),
+    .tbl.events     .tr   .td:nth-child(6){
+        max-width: 137px !important;
+        min-width: 137px !important;
+    }
+
+
+    .tbl.events .tr   .th:nth-child(8),
+    .tbl.events   .tr  .td:nth-child(8){
+        max-width: 100px !important;
+        min-width: 100px !important;
+    }
+
+    .tbl.events   .tr   .th:nth-child(10),
+    .tbl.events     .tr   .td:nth-child(10){
+        max-width: 100px !important;
+        min-width: 100px !important;
+    }
+
+    .tbl.events   .tr   .th:nth-child(12),
+    .tbl.events     .tr   .td:nth-child(12){
+        max-width: 47.5px !important;
+        min-width: 47.5px !important;
+        text-align: center;
+    }
+
+    .tbl.events   .tr   .th:nth-child(14),
+    .tbl.events     .tr   .td:nth-child(14){
+        max-width: 27.5px !important;
+        min-width: 27.5px !important;
+    }
+
+
+    .tbl.events   .tr   .th:nth-child(16),
+    .tbl.events     .tr   .td:nth-child(16){
+        max-width: 27.5px !important;
+        min-width: 27.5px !important;
+    }
+
+    .tbl.events   .tr   .th:nth-child(18),
+    .tbl.events     .tr   .td:nth-child(18){
+        max-width: 27.5px !important;
+        min-width: 27.5px !important;
+    }       
+    .tbl.events   .tr   .th:nth-child(20),
+    .tbl.events     .tr   .td:nth-child(20){
+        max-width: 27.5px !important;
+        min-width: 27.5px !important;
+    }
+    
+    .tbl.events   .tr   .th:nth-child(24),
+    .tbl.events     .tr   .td:nth-child(24){
+        max-width: 50.5px !important;
+        min-width: 50.5px !important;
+    }
+
+
+    .tbl{
+        display: table !important;
+        width: 1035px !important;
+        margin: 0 auto !important;
+    }
+    
+    .tr {
+        display: table-row !important;
+        width: 100%;
+    }
+    
+    .td, .th{
+        display: table-cell !important;
+        text-align: left !important;
+        border: 0.5px solid black;
+        padding-left: 3px;
+    }
+    
+    .td div{
+        text-align: left;
+    }
+    
+    p.input-group{
+        width: 74px !important;
+    }
+    
+    .th.placeholder{
+        border:  none !important;
+        display: none !important;
+    }
+ 
+}     
+
 
    
-table.events thead tr th:not(.placeholder):nth-child(1),
-table.events tbody tr td:not(.header):nth-child(1){
-    /* max-width: 51px !important; */
-    max-width:  25px !important;
-    min-width:  25px !important;
+
+@media only screen and (max-width: 800px) {
+       
+           
+    div.width200{
+        width: 200px !important;  
+    }
+
+    .tbl.events   .tr  .td.header,
+    .tbl.events   .tr  .td.value,
+    .tbl.events   .tr  .td[name="level"]{
+        width: 200px !important;
+        height: 32px;
+    }
+    
+    div.nested table#details > tr:not(:nth-child(2)) > td:first-child{
+        width: 400px;
+    }
+    
+    div.nested div.info{
+        margin-left: 0;
+    }
+      
+    div.nested table#details,
+    div.nested div#level{
+        width: 151px !important;
+        margin-left: 35px;
+    }
+    
+    div#level{
+        height: 24px;
+        margin-bottom: 10px;
+    }
+
+    .tbl#summary > .td.label,
+    .tbl#details > .td.label,
+    .tbl.events > .td.header{
+        background-color: #0038a8 !important;
+        font-weight: bold !important;
+        font-style: italic !important;
+        color: white !important;
+        text-align: left !important;
+    }    
+
+    /* Force table to not be like tables anymore */    
+    .tbl.layout,
+    .tbl.layout > .tr,
+    .tbl.layout > .th,
+    .tbl.layout > .td{
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .tbl.events > .th{
+        display: none !important;
+    }
+    
+    .tbl.events{
+        width: 150px;
+    }
+    
+    .tbl.events > .td.header,
+    .tbl.events > .td{
+        display: table-row;
+        /* width: 100px; */
+    }
+    
+    
+    div.ui-view form {
+        width: 95% !important;
+        padding: 0px !important;
+        /* padding-right: 5vw; */
+    }
+    
+    input, textarea{
+        width: 100% !important;
+    }                           
+     
+    .tbl#details >  .tr:not(:first-child) > .td.label{
+        height: 23px !important;
+    }
+} 
+
+
+.select2 div{
+    max-width: 196px;
 }
 
-table.events thead tr th:not(.placeholder):nth-child(2),
-table.events tbody tr td:not(.header):nth-child(2){
-    max-width: 10px;
-    min-width: 10px !important;
+.select2-result-label > div{
+    text-align: left;
 }
 
-table.events thead tr th:not(.placeholder):nth-child(3),
-table.events tbody tr td:not(.header):nth-child(3){
-    max-width: 200px !important;
-    min-width: 200px !important;
+.select2-chosen{
+    text-align: left;
 }
 
-
-table.events thead tr th:not(.placeholder):nth-child(4),
-table.events tbody tr td:not(.header):nth-child(4){
-    max-width: 200px !important;
-    min-width: 200px !important;
+.select2-search{
+    width: 193px;
 }
 
-table.events thead tr th:not(.placeholder):nth-child(5),
-table.events tbody tr td:not(.header):nth-child(5){
-    max-width: 200px !important;
-    min-width: 200px !important;
+.select2 > .select2-choice.ui-select-match {
+    /* Because of the inclusion of Bootstrap */
+    height: 29px;
+    width: 196px;
 }
 
-table.events thead tr th:not(.placeholder):nth-child(6),
-table.events tbody tr td:not(.header):nth-child(6){
-    max-width: 200px !important;
-    min-width: 200px !important;
-    text-align: center;
+.selectize-control > .selectize-dropdown {
+    top: 36px;
+}
+/* Some additional styling to demonstrate that append-to-body helps achieve the proper z-index layering. */
+.select-box {
+  background: #fff;
+  position: relative;
+  z-index: 1;
+}
+.alert-info.positioned {
+  margin-top: 1em;
+  position: relative;
+  z-index: 10000; /* The select2 dropdown has a z-index of 9999 */
 }
 
-table.events thead tr th:not(.placeholder):nth-child(7),
-table.events tbody tr td:not(.header):nth-child(7){
-    max-width: 50px !important;
-    min-width: 50px !important;
+     
+.full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+  }
+  .partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+  }
+  
 
+.fa-svg-icon > svg {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 26px;
+    height: 26px;
 }
 
-
-table.events thead tr th:not(.placeholder):nth-child(8),
-table.evetns tbody tr td:not(.header):nth-child(8){
-    max-width: 50px !important;
-    min-width: 50px !important;
-}
-
-table.events thead tr th:not(.placeholder):nth-child(9),
-table.events tbody tr td:not(.header):nth-child(9){
-    max-width: 50px !important;
-    min-width: 50px !important;
-
-}       
-table.events thead tr th:not(.placeholder):nth-child(10),
-table.events tbody tr td:not(.header):nth-child(10){
-    max-width: 200px !important;
-    min-width: 200px !important;
+p.input-group{
+    text-align: left;
 }
