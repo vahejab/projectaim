@@ -268,7 +268,7 @@
                             Owner
                         </div>
                         <div class="td value">
-                                 <ui-select ng-model="ctrl.evts[event].ownwerid" theme="select2" ng-disabled="ctrl.disabled" style="min-width: 200px;" title="Choose a person">
+                                 <ui-select ng-model="ctrl.evts[event].ownwerid" theme="select2" ng-disabled="ctrl.disabled" title="Choose a person">
                                     <ui-select-match placeholder="Select/Search User">{{$select.selected.name}}</ui-select-match>
                                     <ui-select-choices repeat="user in ctrl.users | propsFilter: {name: $select.search}">
                                       <div ng-bind-html="user.name | highlight: $select.search"></div>

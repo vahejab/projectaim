@@ -271,7 +271,7 @@ div.center{
 }
 
 input[type='search']{
-    width: 186px !important;
+    width: 100% !important;
 }
 
 .input-group{

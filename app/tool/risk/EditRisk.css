@@ -17,8 +17,8 @@
 
 @media only screen and (min-width: 801px){
     
-    div.select2{    
-        width : 192px !important;
+    div.select2{
+        width: 196px !important;
     }
      
     div.widthAuto{
@@ -286,9 +286,8 @@
         width: 100%;
     }
     
-    .tbl .td input{
-    /* min-width: 85% !important; */
-    border-radius:  2px;
+    .tbl .td input[type='search']{
+        width: 100%;
     }
     
     .tbl.events .td.header,
@@ -318,17 +317,16 @@
     }
 
     
-    .select2 > .select2-choice.ui-select-match {
-        /* Because of the inclusion of Bootstrap */
-        min-width: 40vw;
-    }
 
+    
+    .select2-container,
+    .select2-drop,
+    .select2-search,
+    .select2-search input{
+        width: 100%;
+    }
 } 
 
-
-.select2 div{
-    max-width: 196px;
-}
 
 .select2-result-label > div{
     text-align: left;
@@ -339,7 +337,7 @@
 }
 
 .select2-search{
-    width: 193px;
+    width: 100%;
 }
 
 .select2 > .select2-choice.ui-select-match {
