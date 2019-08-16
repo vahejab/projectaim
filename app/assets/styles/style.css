@@ -271,7 +271,7 @@ div.center{
 }
 
 input[type='search']{
-    width: 184px;
+    width: 186px !important;
 }
 
 .input-group{
@@ -286,11 +286,24 @@ input.date-input{
     height: 29px !important;
     font-size: 12px !important;
     font-family: Roboto, sans-serif !important;
-    width: 95px !important;
-    margin-top:  2px;
 }
 
 span.input-group-btn button{
-    height: 33px !important;
-    width: 45px !important;
+    height: 32px !important;
+    width: 30px !important;
 }
+
+
+input{
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-left-width: 1px;
+    border-bottom-width: 1px;
+    border-color: black !important;
+    border-radius: 3px !important;
+}
+
+input:focus{
+    border-radius: 3px !important;
+}
+   

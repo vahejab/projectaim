@@ -16,6 +16,10 @@
 }
 
 @media only screen and (min-width: 801px){
+    
+    div.select2{    
+        width : 192px !important;
+    }
      
     div.widthAuto{
         width: 100% !important;
@@ -30,6 +34,10 @@
         display: none !important;
         width: 0px;
         border: none;
+    }
+    
+    input.date-input{
+        width: 111px;
     }
     
     input.level{
@@ -223,6 +231,7 @@
     .tbl.events   .tr  .td[name="level"]{
         width: 200px !important;
         height: 32px;
+        text-align:  left;
     }
     
     div.nested table#details > tr:not(:nth-child(2)) > td:first-child{
@@ -255,26 +264,38 @@
     }    
 
     /* Force table to not be like tables anymore */    
-    .tbl.layout,
-    .tbl.layout > .tr,
-    .tbl.layout > .th,
-    .tbl.layout > .td{
+    .tbl.layout{
         display: block !important;
         width: 100% !important;
     }
 
-    .tbl.events > .th{
+    
+    .tbl.events .td.header{
+        background-color: #0038a8 !important;
+        font-weight: bold !important;
+        font-style: italic !important;
+        color: white !important;
+        text-align: right !important;
+    }
+    
+    .th.header{
         display: none !important;
     }
     
     .tbl.events{
-        width: 150px;
+        width: 100%;
     }
     
-    .tbl.events > .td.header,
-    .tbl.events > .td{
-        display: table-row;
-        /* width: 100px; */
+    .tbl .td input{
+    /* min-width: 85% !important; */
+    border-radius:  2px;
+    }
+    
+    .tbl.events .td.header,
+    .tbl.events .td.value{
+        display: inline-block;
+        min-width: 40vw !important;
+        width: 100px;
     }
     
     
@@ -291,6 +312,17 @@
     .tbl#details >  .tr:not(:first-child) > .td.label{
         height: 23px !important;
     }
+    
+    input.date-input{
+        width: 190px;
+    }
+
+    
+    .select2 > .select2-choice.ui-select-match {
+        /* Because of the inclusion of Bootstrap */
+        min-width: 40vw;
+    }
+
 } 
 
 
@@ -313,7 +345,6 @@
 .select2 > .select2-choice.ui-select-match {
     /* Because of the inclusion of Bootstrap */
     height: 29px;
-    width: 196px;
 }
 
 .selectize-control > .selectize-dropdown {
