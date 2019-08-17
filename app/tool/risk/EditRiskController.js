@@ -9,7 +9,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.users = [];
         ctrl.risk = {};
         ctrl.event = [{}];
-        
+        ctrl.initDone = false;
         
         
         
@@ -137,14 +137,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
 
             return '';
           }
-                
-                
-                
-        
-        
-        
-        
-        
+          
         for (l = 1; l <= 5; l++)
         {
             ctrl.riskMatrix[l] = new Array(6);
@@ -158,11 +151,11 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         
         ctrl.getLevel = function(risk, l, t, s, c, cons){
            if (risk >= ctrl.risklevels.riskhigh)                                                                                      
-               return  {level: 'H ' + l + '-' + cons, likelihood: l, technical: t, schedule: s, cost: c, cls: 'high', threshold: level};
+               return  {level: 'H ' + l + '-' + cons, likelihood: l, technical: t, schedule: s, cost: c, cls: 'high', threshold: risk};
            else if (risk < ctrl.risklevels.riskhigh  && risk >= ctrl.risklevels.riskmedium)
-                return {level: 'M ' + l + '-' + cons, likelihood: l, technical: t, schedule: s, cost: c, cls: 'med', threshold: level};
+                return {level: 'M ' + l + '-' + cons, likelihood: l, technical: t, schedule: s, cost: c, cls: 'med', threshold: risk};
            else if (risk < ctrl.risklevels.riskmedium)
-                return {level: 'L ' + l + '-' + cons, likelihood: l, technical: t, schedule: s, cost: c, cls: 'low', threshold: level}
+                return {level: 'L ' + l + '-' + cons, likelihood: l, technical: t, schedule: s, cost: c, cls: 'low', threshold: risk};
         }
         
         ctrl.saveEvents = function(){   
@@ -195,6 +188,10 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                          $scope.msg = $sce.trustAsHtml(response.data);
                     }
             });
+        }
+        
+        ctrl.valid = function(){
+            return true;    
         }
 
         ctrl.submit = function(){

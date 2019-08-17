@@ -57,32 +57,36 @@ h2, div{
     background:linear-gradient(to right,#042a7e 0%,#126cfa 100%);
 }
 
-td.red{
+.td.green, 
+.td.low{
     background-color: #00b050;
 }
 
-td.yellow{
+.td.yellow,
+.td.med{
     background-color: #eeee00;
 }
 
-td.green{
+.td.red,
+.td.high{
     background-color: #ee0000;
 }
 
-td.Late{
+.td.Late{
     color: red;
 }
 
-.grid th{
+.grid .th{
     white-space: nowrap !important;
 }
 
-.grid td{
+.grid .td{
     white-space: nowrap !important;
 }
 
-td.label{
+.td.label{
     white-space: nowrap !important;
+    /* max-width: 250px !important; */
 }
 
 div.nested{
@@ -90,11 +94,11 @@ div.nested{
     margin-right:  20px;
 } 
 
-.grid th:hover{
+.grid .th:hover{
     cursor: pointer;
 } 
 
-th.placeholder{
+.th.placeholder{
     display: none;
 }
 
@@ -107,21 +111,21 @@ label, span{
 }
 
 
-table.xdebug-error *{
+.tbl.xdebug-error *{
     font-size: 12pt !important;
 }
 
-table:not(#riskmatrix){
+.tbl:not(#riskmatrix){
     text-align: left;
 }
 
-table.events{
+.tbl.events{
     width: auto;
 }
 /*Edit Page*/
  
   
-.table  > td, .table >  th {
+..tbl  > td, ..tbl >  th {
     padding: .75rem;
     vertical-align: top;
     border-top: 1px solid black;
@@ -139,33 +143,33 @@ textarea, input[type=text]
     vertical-align: top !important;
 }
 
-.table.nested{
+..tbl.nested{
     margin: 0 auto;
 }
 
 
-.table.nested  > .table.layout{
+..tbl.nested  > ..tbl.layout{
     width: 125px !important; 
 }
 
-.table.nested >  .td{
+..tbl.nested >  .td{
     vertical-align: top;
 }
 
 
 
-table.grid{
+.tbl.grid{
     /* overflow-x:  scroll; */
     /* overflow-y:  scroll; */
 }
     
-table.grid  > td{
+.tbl.grid  .td{
     text-align: left;
 }
 
 
 
-table.grid  > thead >  th {
+.tbl.grid  .thead .th {
     background-color: #0038a8 !important;
     font-weight: bold !important;
     font-style: italic !important;
@@ -179,21 +183,21 @@ div.header-fixed {
 }
 
 
-div.tableheader{
+div..tblheader{
     overflow-y: hidden !important;
     overflow-x: hidden !important;
 }
 
 
-div.tablebody{
+div..tblbody{
     overflow-y: scroll;
     overflow-x: scroll;
     max-height: 450px !important;
     /* margin-right: 17px !important; */
 }
 
-table.grid  > thead >  th,
-table.table-condensed > thead > th {
+.tbl.grid  > thead >  th,
+.tbl.tbl-condensed > thead > th {
     background-color: #0038a8 !important;
     font-weight: bold !important;
     font-style: italic !important;
@@ -237,7 +241,7 @@ table.table-condensed > thead > th {
 
                     
 div.nested > div.info,
-div.nested > table{
+div.nested > .tbl{
     display: inline-block !important;
     vertical-align: top;
     /* margin: 0 auto !important; */

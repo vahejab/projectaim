@@ -8,18 +8,23 @@
                             <div class="td label">Risk #</div>
                             <div class="td locked">{{ctrl.risk.riskid}}</div>
                             <div class="td label">
-                                Current Risk Level
+                                Current Risk
                             </div>
-                            <div class="td locked {{ctrl.risk.risklevel.cls}}">
-                                {{ctrl.risk.risklevel.level}}
+                            <div class="td locked {{ctrl.risk.level.cls}}">
+                                {{ctrl.risk.level.level}}
                             </div>
-                        </div>
+                        </div>               
                         <div class="tr">
                             <div class="td label">
                                 Owner
                             </div>
                             <div class="td locked">
-                            
+                                 <ui-select ng-model="ctrl.risk.owner" theme="select2" ng-disabled="ctrl.disabled" style="max-width: 150px" title="Choose a person">
+                                    <ui-select-match placeholder="Select/Search User">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="user.id as user in ctrl.users | propsFilter: {name: $select.search}">
+                                      <div ng-bind-html="user.name | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
                             </div>
                             <div class="td label">
                                 Risk State
@@ -28,7 +33,7 @@
                                Open
                             </div>
                         </div>
-                         <div>
+                         <div class="tr">
                             <div class="td label">
                                 Creator
                             </div>
@@ -39,7 +44,12 @@
                                 Risk Approver
                             </div>
                             <div class="td locked">
-                            
+                                <ui-select ng-model="ctrl.risk.approver" theme="select2" ng-disabled="ctrl.disabled" style="max-width: 150px" title="Choose a person">
+                                    <ui-select-match placeholder="Select/Search User">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="user.id as user in ctrl.users | propsFilter: {name: $select.search}">
+                                      <div ng-bind-html="user.name | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
                             </div>
                         </div>
                     </div>
@@ -133,7 +143,7 @@
                             
                             </div>
                             <div class="th header">
-                                Schedule Date
+                                Sched Date
                             </div>
                             <div class="th placeholder">
                             
@@ -203,7 +213,7 @@
                             <div class="widthAuto">{{ctrl.risk.assessmentdate | date: "M/d/y"}}</div>
                         </div>
                         <div class="td header">
-                            <div class="widthAuto">Schedule Date</div>
+                            <div class="widthAuto">Sched Date</div>
                         </div>
                         <div class="td left value">
                             <div class="widthAuto">{{ctrl.risk.assessmentdate | date: "M/d/y"}}</div>
@@ -270,7 +280,7 @@
                         <div class="td value">
                                  <ui-select ng-model="ctrl.evts[event].ownwerid" theme="select2" ng-disabled="ctrl.disabled" title="Choose a person">
                                     <ui-select-match placeholder="Select/Search User">{{$select.selected.name}}</ui-select-match>
-                                    <ui-select-choices repeat="user in ctrl.users | propsFilter: {name: $select.search}">
+                                    <ui-select-choices repeat="user.id as user in ctrl.users | propsFilter: {name: $select.search}">
                                       <div ng-bind-html="user.name | highlight: $select.search"></div>
                                     </ui-select-choices>
                                 </ui-select>
@@ -292,7 +302,7 @@
                                 </p> 
                         </div>
                         <div class="td header">
-                            Schedule Date
+                            Sched Date
                         </div>
                         <div class="td value">
                          <!--input type='text' id="schedule{event}}" class="datepicker-here" data-language='en' /-->                    

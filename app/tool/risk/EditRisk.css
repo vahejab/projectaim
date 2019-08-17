@@ -52,8 +52,12 @@
         margin-top: 3px;
     }
     
-    .tbl#summary > .td.label,
-    .tbl#details > .td.label {
+    .tbl#summary .td.label, .td.locked{
+        width: 25%;
+    }
+    
+    .tbl#summary .td.label,
+    .tbl#details .td.label {
         background-color: #0038a8 !important;
         font-weight: bold !important;
         font-style: italic !important;
@@ -108,9 +112,13 @@
         max-width: 650px !important;
     }
 
+    .tbl.layout#details .td.label{
+        width: 10%;   
+    }
+
     .tbl.layout#summary{
         width: 650px;
-        max-width: 750px !important;
+        max-width: 555px !important;
     }
    
  
@@ -264,13 +272,13 @@
     }    
 
     /* Force table to not be like tables anymore */    
-    .tbl.layout{
+    .tbl{
         display: block !important;
         width: 100% !important;
     }
 
     
-    .tbl.events .td.header{
+    .tbl.events .td.header, td.label{
         background-color: #0038a8 !important;
         font-weight: bold !important;
         font-style: italic !important;

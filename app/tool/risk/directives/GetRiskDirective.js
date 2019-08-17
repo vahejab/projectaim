@@ -32,7 +32,7 @@ function getRisk(){
                                //$scope.ctrl.users.push({id: 0, value: ''});
                                for (var key = 0; key < response.data.Result.length; key++){
                                     user = response.data.Result[key];     
-                                    $scope.ctrl.users[user.id] = {name: user.name};
+                                    $scope.ctrl.users[user.id] = {id: user.id, name: user.name};
                                }
                                $scope.ctrl.userDone = true;
                                return response.data.Result;
@@ -50,11 +50,11 @@ function getRisk(){
                             
                             likelihood = response.data.Results.likelihood;
                             technical = response.data.Results.technical;
-                            scheudle = response.data.Results.schedule;
+                            schedule = response.data.Results.schedule;
                             cost = response.data.Results.cost;
                             
-                            $scope.ctrl.risk.risklevel = $scope.ctrl.getRisk(likelihood, technical, scheudle, cost);
-                           
+                            $scope.ctrl.risk.risklevel = $scope.ctrl.getRisk(likelihood, technical, schedule, cost);
+                            $scope.ctrl.risk.level = $scope.ctrl.getLevel($scope.ctrl.risk.risklevel, likelihood, technical, schedule, cost, Math.max(Math.max(technical, schedule), cost));
                             $scope.ctrl.risk.assignorname = response.data.Results.assignor;
                             $scope.ctrl.risk.ownername = response.data.Results.owner;
                             $scope.ctrl.risk.creatorname = response.data.Results.creator;
@@ -76,7 +76,6 @@ function getRisk(){
                             $scope.ctrl.risk.closurecriteria = response.data.Results.closurecriteria;
                             $scope.ctrl.risk.approvernotes = response.data.Results.approvernotes;
                             $scope.ctrl.risk.ownercomments = response.data.Results.ownercomments;
-                            $scope.ctrl.initDone = true;
                             return response.data.Results;
                       }
                       else{
@@ -103,7 +102,8 @@ function getRisk(){
                                 $scope.ctrl.lastEventIdSaved = response.data.Result.length-1;
                              else
                                 $scope.ctrl.lastEventIdSaved = 0;
-                             $scope.ctrl.eventsdone = true;      
+                             $scope.ctrl.eventsdone = true;   
+                             $scope.ctrl.initDone  = true;   
                         } 
                    });
                 });
