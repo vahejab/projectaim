@@ -13,7 +13,23 @@
                             <div class="td locked {{ctrl.risk.level.cls}}">
                                 {{ctrl.risk.level.level}}
                             </div>
-                        </div>               
+                        </div>   
+                         <div class="tr">
+                            <div class="td label">
+                                Creator
+                            </div>
+                            <div class="td locked">
+                                Admin
+                            </div>
+                           
+                             <div class="td label">
+                                Risk State
+                            </div>
+                            <div class="td locked">
+                               Open
+                            </div>
+                           
+                        </div>            
                         <div class="tr">
                             <div class="td label">
                                 Owner
@@ -26,21 +42,7 @@
                                     </ui-select-choices>
                                 </ui-select>
                             </div>
-                            <div class="td label">
-                                Risk State
-                            </div>
-                            <div class="td locked">
-                               Open
-                            </div>
-                        </div>
-                         <div class="tr">
-                            <div class="td label">
-                                Creator
-                            </div>
-                            <div class="td locked">
-                                Admin
-                            </div>
-                            <div class="td label">
+                             <div class="td label">
                                 Risk Approver
                             </div>
                             <div class="td locked">
@@ -54,7 +56,7 @@
                         </div>
                     </div>
                     <br />
-                    
+                    <br />
                     <h2>Risk Information</h2>
                     <div id="details" class="tbl layout" border="1">
                         <div class="tr">
@@ -62,7 +64,7 @@
                                 Title
                             </div>
                             <div class="td locked">
-                            
+                                <input type="text" value="{{ctrl.risk.title}}" ng-model="ctrl.risk.title" />
                             </div>
                         </div>
                         <div class="tr">
@@ -70,7 +72,7 @@
                                 Risk Statement
                             </div>
                             <div class="td locked" style="vertical-align: top">
-                            
+                                <textarea value="{{ctrl.risk.statement}}" ng-model="ctrl.risk.statement" />
                             </div>
                         </div>
                         <div class="tr">
@@ -78,7 +80,7 @@
                                 Context
                             </div>
                             <div class="td locked" style="vertical-align: top">
-                            
+                                <textarea value="{{ctrl.risk.context}}" ng-model="ctrl.risk.context" />
                             </div>
                         </div>
                         <div class="tr">
@@ -86,7 +88,7 @@
                                 Closure Criteria
                             </div>
                             <div class="td locked" style=" vertical-align: top">
-                            
+                                <textarea value="{{ctrl.risk.closurecriteria}}" ng-model="ctrl.risk.closurecriteria" />
                             </div>
                         </div>
                         <div class="tr">
@@ -95,14 +97,16 @@
                             </div>
                             <div class="td locked" style=" vertical-align: top">
                                  <!--div ng-show="ctrl.config.ownernotes.done" config="ownernotes" webix-ui="ownernotes" width="500" height="97" type="textarea" id="ownernotes" name="ownernotes"></div-->
+                                 <textarea value="{{ctrl.risk.ownernotes}}" ng-model="ctrl.risk.ownernotes" />
                             </div>
                         </div>
                         <div class="tr">
                             <div class="td label" style="vertical-align: top">
                                 Approver Comments
                             </div>
-                            <div  class="td locked" style=" vertical-align: top">
+                            <div class="td locked" style=" vertical-align: top">
                                 <!--div ng-show="ctrl.config.approvercomments.done" config="approvercomments" webix-ui="approvercomments" width="500" height="97" type="textarea" id="approvercomments" name="approvercomments"></div-->
+                                 <textarea value="{{ctrl.risk.approvercomments}}" ng-model="ctrl.risk.approvercomments" />
                             </div>
                         </div>
                     </div>
