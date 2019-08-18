@@ -2,7 +2,7 @@ html{
     overflow-y: overlay;
 }
    
-
+ /*
 *.ng-leave {
    -webkit-animation: fadeOut 0s;
    -moz-animation: fadeOut 0s;
@@ -17,7 +17,7 @@ html{
    -ms-animation: fadeIn 0.5s;
    animation: fadeIn 0.5s;          
    -webkit-transform-style: preserve-3d;
-}
+}  */
 
 td.left *{
     text-align: left;

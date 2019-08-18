@@ -3,6 +3,14 @@
     <div ng-if="ctrl.initDone && ctrl.userDone" id="myeditform" type="space" layout-padding="" ng-cloak="">   
         <form id="form" name="EditRisk" role="form" ng-submit="ctrl.valid() && ctrl.submit()" novalidate>
             <div class="layout">
+                    <center>
+                        <input type="button" value="First" ng-click="ctrl.view('first')"/>&nbsp;
+                        <input type="button" value="Prev"  ng-click="ctrl.view('prev')"/>&nbsp;
+                        <input type="button" value="Next" ng-click="ctrl.view('next')">&nbsp;
+                        <input type="button" value="Last" ng-click="ctrl.view('last')">
+                    </center>
+                    <br />
+                    <h2>Edit Risk Details</h2>
                     <div id="summary" class="tbl layout" border="1">
                         <div class="tr">
                             <div class="td label">Risk #</div>
@@ -55,9 +63,9 @@
                             </div>
                         </div>
                     </div>
+                    <br /> 
                     <br />
-                    <br />
-                    <h2>Risk Information</h2>
+                    <h2>Edit Risk Information</h2>
                     <div id="details" class="tbl layout" border="1">
                         <div class="tr">
                             <div class="td label" style="vertical-align: top">
@@ -96,8 +104,7 @@
                                 Owner Notes
                             </div>
                             <div class="td locked" style=" vertical-align: top">
-                                 <!--div ng-show="ctrl.config.ownernotes.done" config="ownernotes" webix-ui="ownernotes" width="500" height="97" type="textarea" id="ownernotes" name="ownernotes"></div-->
-                                 <textarea value="{{ctrl.risk.ownernotes}}" ng-model="ctrl.risk.ownernotes" />
+                                <textarea value="{{ctrl.risk.ownernotes}}" ng-model="ctrl.risk.ownernotes" />
                             </div>
                         </div>
                         <div class="tr">
@@ -115,6 +122,7 @@
                    </div>       
         </form>
             <br />
+                <h2>Create Mitigation Events</h2>
          <form id="formEvt" name="EditEvents" role="form" ng-submit="ctrl.saveEvents()" novalidate>  
             <div cellpadding='0' cellspacing='0' class="tbl events tbl-condensed" border=1>
                 <div class="tbl">

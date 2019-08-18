@@ -9,9 +9,19 @@
             return new \data\mapper\risks($db);
         } 
         
-        public function findOne($id)
+        public function findOne($id, $goto = null)
         {
-            $mapper = $this->_getMapper();
+            $mapper = $this->_getMapper();         
+            
+            if (strtolower($goto) == 'first')
+                return $mapper->first();
+            if (strtolower($goto) == 'prev')
+                return $mapper->prev($id);
+            if (strtolower($goto) == 'next')
+                return $mapper->next($id);
+            if (strtolower($goto) == 'last')
+                return $mapper->last();
+                
             $params = array('riskid' => $id);
             return $mapper->findOne($params);   
         } 

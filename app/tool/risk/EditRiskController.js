@@ -1,4 +1,5 @@
-angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '$stateParams', '$scope', '$state', '$timeout', '$sce', 'CommonService', 'DOMops', 'ValidationService',/*'DTOptionsBuilder',*/ function($http, $resource, $stateParams, $scope, $state, $timeout, $sce, CommonService, DOMops, ValidationService/*, DTOptionsBuilder*/){
+angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '$stateParams', '$location', '$scope', '$state', '$timeout', '$sce', 'CommonService', 'DOMops', 'ValidationService',/*'DTOptionsBuilder',*/ 
+    function($http, $resource, $stateParams, $location, $scope, $state, $timeout, $sce, CommonService, DOMops, ValidationService/*, DTOptionsBuilder*/){
         var ctrl = this;
               
         ctrl.DOMops = DOMops;
@@ -207,6 +208,13 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                          $scope.msg = $sce.trustAsHtml(response.data);
                     }
                 });
+        }
+        
+        
+        ctrl.view = function(page){
+            return $http.get('/api/risks/'+ctrl.risk.riskid+'/'+page).then(function(response){
+                $location.path('/risk/edit/'+response.data.Result.RiskID);
+            })
         }
                
 }]).filter('unquote', function () {

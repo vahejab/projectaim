@@ -23,9 +23,10 @@
                 $first = $keys[0];
                 $validKey = array_key_exists($first, $this->args);
                 $isNumeric =  $validKey && is_numeric($this->args[$first]);
+                $isNavigationKey = !$isNumeric && in_array(strtolower($this->args[$first]), ['first', 'prev', 'next', 'last']);
                 switch(count($this->args)){
                     case 1:
-                        if ($isNumeric)
+                        if ($isNumeric || $isNavigationKey)
                             $this->id = $this->args[$first];
                         break; 
                     case 2: 
@@ -77,22 +78,36 @@
         public function processRequest() {
             $endpointCount = count($this->endpoint);
             if($endpointCount <= 2){
+                $isDestination = $endpointCount == 2 && in_array($this->endpoint[1], ['first', 'prev', 'next', 'last']);
+            
                 if ($endpointCount == 1)
                     $class = "\\controllers\\{$this->endpoint[0]}Controller";
-                else if ($endpointCount == 2)
+                else if ($endpointCount == 2 && !$isDestination)
                     $class = "\\controllers\\{$this->endpoint[1]}Controller";  
+                else if ($endpointCount == 2 && $isDestination)
+                    $class = "\\controllers\\{$this->endpoint[0]}Controller";
+                       
                 if (class_exists($class, true))
                 {
                     $method = strtolower($this->method); 
                     if (method_exists($class, $method)){
                         $args = $this->args;
-                        $id = $this->id; 
-                        if ($endpointCount == 1)
+                        $id = $this->id;
+                        if ($isDestination)
+                            $endpoint2 = $this->endpoint[1] ?? null;
+                        else if ($endpointCount == 1)
                             $endpoint2 =  $this->endpoint[1] ?? null;
                         else if ($endpointCount  == 2)
                             $endpoint2 =  $this->endpoint[0] ?? null;
                         $payload = $this->payload;
-                        $response = (new $class($args,$endpoint2,$payload))->{$method}($id);
+                        
+                        if ($isDestination){
+                            $goto = $endpoint2;
+                            $response = (new $class($args,$endpoint2,$payload))->{$method}($id, $goto);
+                        }
+                        else
+                            $response = (new $class($args,$endpoint2,$payload))->{$method}($id);
+                        
                         if ($response['Succeeded']==true){    
                             header("Content-Type: application/json");
                             return $this->_response($response);
@@ -103,6 +118,8 @@
                         }
                     }
                 }
+                if ($isDestination)
+                    return $this->_response("No Endpoint: ", $this->endpoint[0]);
                 return $this->_response("No Endpoint: " . $this->endpoint[1] ?? $this->endpoint[0]);
             }
         }
