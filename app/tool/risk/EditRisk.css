@@ -3,7 +3,7 @@
     width:  50px;
 }
 
-.tbl.events  .tbody td.cell{
+.tbl.events td.cell{
     text-align: left !important;
 }
      
@@ -16,6 +16,8 @@
 }
 
 @media only screen and (min-width: 801px){
+    
+
     
     div.select2{
         width: 196px !important;
@@ -228,7 +230,10 @@
    
 
 @media only screen and (max-width: 800px) {
-       
+
+    .td.locked{
+        text-align: left !important;
+    }  
            
     div.width200{
         width: 200px !important;  
@@ -236,10 +241,10 @@
 
     .tbl.events   .tr  .td.header,
     .tbl.events   .tr  .td.value,
-    .tbl.events   .tr  .td[name="level"]{
+    .tbl.events   .tr  .td[name="level"],
+    .tbl.events   .tr  .td.left{
         width: 200px !important;
         height: 32px;
-        text-align:  left;
     }
     
     div.nested table#details > tr:not(:nth-child(2)) > td:first-child{
@@ -316,6 +321,7 @@
         width: 95% !important;
         padding: 0px !important;
         /* padding-right: 5vw; */
+        margin:  0 auto;
     }
     
     input, textarea{

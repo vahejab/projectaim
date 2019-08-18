@@ -35,7 +35,7 @@
                                 Owner
                             </div>
                             <div class="td locked">
-                                 <ui-select ng-model="ctrl.risk.owner" theme="select2" ng-disabled="ctrl.disabled" style="max-width: 150px" title="Choose a person">
+                                 <ui-select ng-model="ctrl.risk.owner" theme="select2" ng-disabled="ctrl.disabled" style="max-width: 100%" title="Choose a person">
                                     <ui-select-match placeholder="Select/Search User">{{$select.selected.name}}</ui-select-match>
                                     <ui-select-choices repeat="user.id as user in ctrl.users | propsFilter: {name: $select.search}">
                                       <div ng-bind-html="user.name | highlight: $select.search"></div>
@@ -46,7 +46,7 @@
                                 Risk Approver
                             </div>
                             <div class="td locked">
-                                <ui-select ng-model="ctrl.risk.approver" theme="select2" ng-disabled="ctrl.disabled" style="max-width: 150px" title="Choose a person">
+                                <ui-select ng-model="ctrl.risk.approver" theme="select2" ng-disabled="ctrl.disabled" style="max-width: 100%" title="Choose a person">
                                     <ui-select-match placeholder="Select/Search User">{{$select.selected.name}}</ui-select-match>
                                     <ui-select-choices repeat="user.id as user in ctrl.users | propsFilter: {name: $select.search}">
                                       <div ng-bind-html="user.name | highlight: $select.search"></div>
@@ -64,7 +64,7 @@
                                 Title
                             </div>
                             <div class="td locked">
-                                <input type="text" value="{{ctrl.risk.title}}" ng-model="ctrl.risk.title" />
+                                <input type="text" value="{{ctrl.risk.risktitle}}" ng-model="ctrl.risk.risktitle" />
                             </div>
                         </div>
                         <div class="tr">
@@ -72,7 +72,7 @@
                                 Risk Statement
                             </div>
                             <div class="td locked" style="vertical-align: top">
-                                <textarea value="{{ctrl.risk.statement}}" ng-model="ctrl.risk.statement" />
+                                <textarea value="{{ctrl.risk.riskstatement}}" ng-model="ctrl.risk.riskstatement" />
                             </div>
                         </div>
                         <div class="tr">
@@ -110,9 +110,9 @@
                             </div>
                         </div>
                     </div>
-                   <div>
-                   <button id="submit" type="submit">Edit Risk</button>
-            </div>       
+                   <div class="center">
+                        <button id="submit" type="submit">Edit Risk</button>
+                   </div>       
         </form>
             <br />
          <form id="formEvt" name="EditEvents" role="form" ng-submit="ctrl.saveEvents()" novalidate>  
@@ -366,8 +366,10 @@
                     </div>
                     <br /> 
                 </div>
-            </div>  
+            </div>
+            <div class="center">  
              <button id="submit" type="submit">Save Events</button>
+            </div>
            </form>               
          </div> 
          <divider></divider>
