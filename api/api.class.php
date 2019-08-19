@@ -30,7 +30,7 @@
                             $this->id = $this->args[$first];
                         break; 
                     case 2: 
-                        if ($isNumeric){
+                        if ($isNumeric || $isNavigationKey){
                             $this->id = $this->args[$first];   
                             array_shift($this->args);
                         }
@@ -100,13 +100,18 @@
                         else if ($endpointCount  == 2)
                             $endpoint2 =  $this->endpoint[0] ?? null;
                         $payload = $this->payload;
-                        
-                        if ($isDestination){
+  
+                        if ($endpoint2 == 'first' || $endpoint2 == 'last'){
+                            $goto = $endpoint2;
+                            $response = (new $class($args,$endpoint2,$payload))->{$method}($goto);
+                        }
+                        else if ($endpoint2 == 'prev' || $endpoint2 == 'next'){
                             $goto = $endpoint2;
                             $response = (new $class($args,$endpoint2,$payload))->{$method}($id, $goto);
                         }
-                        else
-                            $response = (new $class($args,$endpoint2,$payload))->{$method}($id);
+                        else {        
+                            $response = (new $class($args,$endpoint2,$payload))->{$method}($id);   //here id can be numeric or 'first', or 'last' possibly
+                        }
                         
                         if ($response['Succeeded']==true){    
                             header("Content-Type: application/json");

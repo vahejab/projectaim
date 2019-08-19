@@ -13,6 +13,10 @@
         {
             $mapper = $this->_getMapper();         
             
+            if (strtolower($id) == 'first')
+                return $mapper->first();
+            if (strtolower($id) == 'last')
+                return $mapper->last();
             if (strtolower($goto) == 'first')
                 return $mapper->first();
             if (strtolower($goto) == 'prev')

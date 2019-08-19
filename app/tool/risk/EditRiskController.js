@@ -210,11 +210,132 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                 });
         }
         
+        ctrl.getEvents = function(riskid){
+             return $http.get('api/risks/'+riskid+'/events').then(function(response){
+                    if (response.data.Succeeded){
+                        for (var key = 0; key <= response.data.Result.length-1; key++){
+                            event = response.data.Result[key];
+                            $scope.ctrl.event.push({});
+                            $scope.ctrl.event[key].eventid = key;
+                            $scope.ctrl.event[key].eventtitle = event.eventtitle;
+                            $scope.ctrl.event[key].riskid = event.riskid;
+                            $scope.ctrl.event[key].ownerid = event.ownerid;
+                            $scope.ctrl.event[key].actualdate = event.actualdate;
+                            $scope.ctrl.event[key].scheduledate = event.scheduledate;
+                            $scope.ctrl.event[key].scheduledlikelihood = event.scheduledlikelihood;
+                            $scope.ctrl.event[key].scheduledtechnical = event.scheduledtechnical;
+                            $scope.ctrl.event[key].scheduledschedule = event.scheduledschedule;
+                            $scope.ctrl.event[key].scheduledcost = event.scheduledcost;
+                         }
+                         if (response.data.Result.length)
+                            $scope.ctrl.lastEventIdSaved = response.data.Result.length-1;
+                         else
+                            $scope.ctrl.lastEventIdSaved = 0;
+                         $scope.ctrl.eventsdone = true;   
+                         $scope.ctrl.initDone  = true;   
+                    } 
+               });
+        }
+       
+        ctrl.getRiskDetails = function(nav){
+              if (!isNaN(nav))
+                id = nav;
+              else
+                id = $scope.ctrl.risk.riskid + '/' + nav;     
+              return $http.get('api/risks/'+id).then(function(response){
+                  if (response.data.Succeeded){  
+                        $scope.ctrl.risk.riskid = response.data.Result.riskid;
+                        $scope.ctrl.risk.risktitle = response.data.Result.risktitle;
+                        $scope.ctrl.risk.status = response.data.Result.status;
+                        
+                        likelihood = response.data.Result.likelihood;
+                        technical = response.data.Result.technical;
+                        schedule = response.data.Result.schedule;
+                        cost = response.data.Result.cost;
+                        
+                        $scope.ctrl.risk.risklevel = $scope.ctrl.getRisk(likelihood, technical, schedule, cost);
+                        $scope.ctrl.risk.level = $scope.ctrl.getLevel($scope.ctrl.risk.risklevel, likelihood, technical, schedule, cost, Math.max(Math.max(technical, schedule), cost));
+                        $scope.ctrl.risk.assignorname = response.data.Result.assignor;
+                        $scope.ctrl.risk.ownername = response.data.Result.owner;
+                        $scope.ctrl.risk.creatorname = response.data.Result.creator;
+                        $scope.ctrl.risk.approvername = response.data.Result.approver;
+                   
+                        $scope.ctrl.risk.assignor = response.data.Result.assignorid;
+                        $scope.ctrl.risk.owner = response.data.Result.ownerid;
+                        $scope.ctrl.risk.creator = response.data.Result.creatorid;
+                        $scope.ctrl.risk.approver = response.data.Result.approverid;
+  
+                        $scope.ctrl.risk.likelihood = response.data.Result.likelihood;
+                        $scope.ctrl.risk.technical = response.data.Result.technical;
+                        $scope.ctrl.risk.schedule = response.data.Result.schedule;
+                        $scope.ctrl.risk.cost = response.data.Result.cost;
+                        $scope.ctrl.risk.assessmentdate = response.data.Result.assessmentdate;
+                        $scope.ctrl.risk.risktitle = response.data.Result.risktitle;
+                        $scope.ctrl.risk.riskstatement = response.data.Result.riskstatement;
+                        $scope.ctrl.risk.context = response.data.Result.context;
+                        $scope.ctrl.risk.closurecriteria = response.data.Result.closurecriteria;
+                        $scope.ctrl.risk.approvernotes = response.data.Result.approvernotes;
+                        $scope.ctrl.risk.ownercomments = response.data.Result.ownercomments;
+                        return response.data.Result;
+                  }
+                  else{
+                     $scope.ctrl.msg += "<br />"+$sce.trustAsHtml(response.data);
+                  }
+            });
+        }
+           
         
-        ctrl.view = function(page){
-            return $http.get('/api/risks/'+ctrl.risk.riskid+'/'+page).then(function(response){
-                $location.path('/risk/edit/'+response.data.Result.RiskID);
-            })
+        ctrl.getUsers = function(){
+            return $http.get('api/users').then(function(response){
+                    if (response.data.Succeeded){
+                       //$scope.ctrl.users.push({id: 0, value: ''});
+                       for (var key = 0; key < response.data.Result.length; key++){
+                            user = response.data.Result[key];     
+                            $scope.ctrl.users[user.id] = {id: user.id, name: user.name};
+                       }
+                       $scope.ctrl.userDone = true;
+                       return response.data.Result;
+                    }
+                    else{
+                         $scope.ctrl.msg += "<br />"+ $sce.trustAsHtml(response.data);
+                    }
+           }); 
+        }
+        
+        ctrl.getRiskConfig = function(){
+            return $http.get('/api/riskconfig').then(function(response){
+                   if (response.data.Succeeded){
+                        $scope.ctrl.risklevels.riskmaximum = response.data.Result.Levels[0].riskmaximum;
+                        $scope.ctrl.risklevels.riskhigh = response.data.Result.Levels[0].riskhigh;
+                        $scope.ctrl.risklevels.riskmedium = response.data.Result.Levels[0].riskmedium;
+                        $scope.ctrl.risklevels.riskminimum = response.data.Result.Levels[0].riskminimum; 
+                    
+                     
+                        for (var idx = 0; idx < response.data.Result.Thresholds.length; idx++)
+                        {
+                            var l = response.data.Result.Thresholds[idx].likelihood;
+                            var c = response.data.Result.Thresholds[idx].consequence;
+                            v = response.data.Result.Thresholds[idx].level;
+                            $scope.ctrl.riskMatrix[l][c] = v;
+                        }
+                     
+                        return response.data.Result;
+                        
+                   }
+                   else{
+                        $scope.ctrl.msg = $sce.trustAsHtml(response.data);
+                   }
+               });
+        }
+        
+        ctrl.fetchRisk = function(page){
+            return ctrl.getRiskConfig()
+                        .then(()=>{ctrl.getUsers()
+                            .then(()=>{ctrl.getRiskDetails(page)
+                                .then(()=>{ctrl.getEvents(ctrl.risk.riskid)
+                                })
+                            })  
+                        });
         }
                
 }]).filter('unquote', function () {

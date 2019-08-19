@@ -33,34 +33,41 @@
         }
         
         public function findAllByRisk($riskid)
-        {      
-            $sql = "select
-                        EventID,
-                        RiskID,
-                        EventTitle,
-                        EventOwnerID,
-                        ActualDate,
-                        ScheduleDate,
-                        BaselineDate,
-                        ActualLikelihood,
-                        ActualTechnical,
-                        ActualSchedule,
-                        ActualCost,
-                        ScheduledLikelihood,
-                        ScheduledTechnical,
-                        ScheduledSchedule,
-                        ScheduledCost,
-                        BaselineLikelihood,
-                        BaselineTechnical,
-                        BaselineSchedule,
-                        BaselineCost    
-                    from riskevents
-                    where riskid = :riskid
-                    order by eventid asc";
+        {    
+             if ($riskid == 'first')
+                $whereStr = "where riskid = (select min(riskid) from risks)";
+             else if ($riskid == 'last')
+                $whereStr = "where riskid = (select max(riskid) from risks)";
+             else
+                $whereStr = "where riskid = :riskid";
+                
+             $sql = "select
+                            EventID,
+                            RiskID,
+                            EventTitle,
+                            EventOwnerID,
+                            ActualDate,
+                            ScheduleDate,
+                            BaselineDate,
+                            ActualLikelihood,
+                            ActualTechnical,
+                            ActualSchedule,
+                            ActualCost,
+                            ScheduledLikelihood,
+                            ScheduledTechnical,
+                            ScheduledSchedule,
+                            ScheduledCost,
+                            BaselineLikelihood,
+                            BaselineTechnical,
+                            BaselineSchedule,
+                            BaselineCost    
+                        from riskevents " . $whereStr . " order by eventid asc";
+           
             try
             {
                 $statement  = $this->db->prepare($sql);
-                $statement->bindParam(':riskid' , $riskid);
+                if ($riskid != 'first' && $riskid != 'last')
+                     $statement->bindParam(':riskid' , $riskid);
                 $statement->execute();
                 $results = $statement->fetchAll(); 
                 return(["Succeeded" => true, "Result" => $this->_populateFromCollection($results)]);

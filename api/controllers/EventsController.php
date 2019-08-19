@@ -13,7 +13,7 @@
         
         public function get($id = null)
         {   
-            $service = new \data\service\eventservice();  
+            $service = new \data\service\eventservice();
             return $service->findAllByRisk($id);
         }
 

@@ -46,14 +46,39 @@
         
         public function first()
         {       
-            $sql = "select riskid as 'RiskID' from risks order by riskid asc limit 1";
+            $sql = "select riskid as 'RiskID',
+                        creator.userid as 'CreatorID',
+                        owner.userid as 'OwnerID',  
+                        approver.userid as 'ApproverID', 
+                        creator.lastname as 'creator.lastname',
+                        creator.firstname as 'creator.firstname',
+                        owner.lastname as 'owner.lastname',
+                        owner.firstname as 'owner.firstname',
+                        approver.lastname as 'approver.lastname',
+                        approver.firstname as 'approver.firstname',    
+                        r.likelihood as 'Likelihood',
+                        r.technical as 'Technical', 
+                        r.schedule as 'Schedule',
+                        r.cost as 'Cost',
+                        r.AssessmentDate as 'AssessmentDate',
+                        r.risktitle as 'RiskTitle', 
+                        r.riskstatement as 'RiskStatement',
+                        r.context as 'Context',
+                        r.closurecriteria as 'ClosureCriteria'
+                    from risks r
+                    left join users creator
+                        ON r.creatorid = creator.userid
+                    left join users owner
+                        ON r.ownerid = owner.userid
+                    left join users approver
+                        ON r.approverid = approver.userid order by r.riskid asc limit 1";
             
             try
             {
                 $statement  = $this->db->prepare($sql);
                 $statement->execute();
                 $result = $statement->fetchAll();
-                return(["Succeeded" => true, "Result" => ['RiskID' => $this->_populateFromCollection($result)[0]->riskid]]);
+                return(["Succeeded" => true, "Result" => $this->_populateFromCollection($result)[0]]);
             }
             catch(PDOException $e)
             {
@@ -63,14 +88,40 @@
         
         public function prev($id)
         {      
-            $sql = "select max(riskid) as 'RiskID' from risks where riskid < ? order by riskid asc limit 1";
+            $sql = "SELECT riskid AS 'RiskID',
+                        creator.userid AS 'CreatorID',
+                        owner.userid AS 'OwnerID',  
+                        approver.userid AS 'ApproverID', 
+                        creator.lastname AS 'creator.lastname',
+                        creator.firstname AS 'creator.firstname',
+                        owner.lastname AS 'owner.lastname',
+                        owner.firstname AS 'owner.firstname',
+                        approver.lastname AS 'approver.lastname',
+                        approver.firstname AS 'approver.firstname',    
+                        r.likelihood AS 'Likelihood',
+                        r.technical AS 'Technical', 
+                        r.schedule AS 'Schedule',
+                        r.cost AS 'Cost',
+                        r.AssessmentDate AS 'AssessmentDate',
+                        r.risktitle AS 'RiskTitle', 
+                        r.riskstatement AS 'RiskStatement',
+                        r.context AS 'Context',
+                        r.closurecriteria AS 'ClosureCriteria'
+                    FROM risks r
+                    LEFT JOIN users creator
+                        ON r.creatorid = creator.userid
+                    LEFT JOIN users OWNER
+                        ON r.ownerid = owner.userid
+                    LEFT JOIN users approver
+                        ON r.approverid = approver.userid
+                  WHERE riskid = (SELECT COALESCE(MAX(riskid), 1) FROM risks WHERE riskid < ? ORDER BY riskid ASC LIMIT 1)";
             $whereParams[] = $id; 
             try
             {
                 $statement  = $this->db->prepare($sql);
                 $statement->execute($whereParams);
                 $result = $statement->fetchAll();
-                return(["Succeeded" => true, "Result" => ['RiskID' => $this->_populateFromCollection($result)[0]->riskid ?? $id]]);
+                 return(["Succeeded" => true, "Result" => $this->_populateFromCollection($result)[0]]);
             }
             catch(PDOException $e)
             {
@@ -80,14 +131,40 @@
         
         public function next($id)
         {      
-            $sql = "select min(riskid) as 'RiskID' from risks where riskid > ? order by riskid asc limit 1";
+            $sql = "SELECT riskid AS 'RiskID',
+                        creator.userid AS 'CreatorID',
+                        owner.userid AS 'OwnerID',  
+                        approver.userid AS 'ApproverID', 
+                        creator.lastname AS 'creator.lastname',
+                        creator.firstname AS 'creator.firstname',
+                        owner.lastname AS 'owner.lastname',
+                        owner.firstname AS 'owner.firstname',
+                        approver.lastname AS 'approver.lastname',
+                        approver.firstname AS 'approver.firstname',    
+                        r.likelihood AS 'Likelihood',
+                        r.technical AS 'Technical', 
+                        r.schedule AS 'Schedule',
+                        r.cost AS 'Cost',
+                        r.AssessmentDate AS 'AssessmentDate',
+                        r.risktitle AS 'RiskTitle', 
+                        r.riskstatement AS 'RiskStatement',
+                        r.context AS 'Context',
+                        r.closurecriteria AS 'ClosureCriteria'
+                    FROM risks r
+                    LEFT JOIN users creator
+                        ON r.creatorid = creator.userid
+                    LEFT JOIN users OWNER
+                        ON r.ownerid = owner.userid
+                    LEFT JOIN users approver
+                        ON r.approverid = approver.userid
+                  WHERE riskid = (SELECT COALESCE(MIN(riskid), (SELECT MAX(riskid) FROM risks)) FROM risks WHERE riskid > ?) ORDER BY riskid ASC LIMIT 1";
             $whereParams[] = $id; 
             try
             {
                 $statement  = $this->db->prepare($sql);
                 $statement->execute($whereParams);
                 $result = $statement->fetchAll();
-                return(["Succeeded" => true, "Result" => ['RiskID' => $this->_populateFromCollection($result)[0]->riskid ?? $id]]);
+                return(["Succeeded" => true, "Result" => $this->_populateFromCollection($result)[0]]);
             }
             catch(PDOException $e)
             {
@@ -97,14 +174,40 @@
         
         public function last()
         {       
-            $sql = "select riskid as 'RiskID' from risks order by riskid desc limit 1";
-            
+            $sql = "select riskid as 'RiskID',
+                        creator.userid as 'CreatorID',
+                        owner.userid as 'OwnerID',  
+                        approver.userid as 'ApproverID', 
+                        creator.lastname as 'creator.lastname',
+                        creator.firstname as 'creator.firstname',
+                        owner.lastname as 'owner.lastname',
+                        owner.firstname as 'owner.firstname',
+                        approver.lastname as 'approver.lastname',
+                        approver.firstname as 'approver.firstname',    
+                        r.likelihood as 'Likelihood',
+                        r.technical as 'Technical', 
+                        r.schedule as 'Schedule',
+                        r.cost as 'Cost',
+                        r.AssessmentDate as 'AssessmentDate',
+                        r.risktitle as 'RiskTitle', 
+                        r.riskstatement as 'RiskStatement',
+                        r.context as 'Context',
+                        r.closurecriteria as 'ClosureCriteria'
+                    from risks r
+                    left join users creator
+                        ON r.creatorid = creator.userid
+                    left join users owner
+                        ON r.ownerid = owner.userid
+                    left join users approver
+                        ON r.approverid = approver.userid
+                    order by r.riskid desc limit 1";
+                    
             try
             {
                 $statement  = $this->db->prepare($sql);
                 $statement->execute();
                 $result = $statement->fetchAll();
-                return(["Succeeded" => true, "Result" => ['RiskID' => $this->_populateFromCollection($result)[0]->riskid]]);
+                return(["Succeeded" => true, "Result" => $this->_populateFromCollection($result)[0]]);
             }
             catch(PDOException $e)
             {

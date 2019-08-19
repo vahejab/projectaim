@@ -1,13 +1,12 @@
-<div id="formcontainer" ng-app="Risk" ng-controller="EditRiskController as ctrl">
-<get-risk></get-risk/>
+<div id="formcontainer" ng-app="Risk" ng-controller="EditRiskController as ctrl" ng-init="ctrl.fetchRisk('first')">
     <div ng-if="ctrl.initDone && ctrl.userDone" id="myeditform" type="space" layout-padding="" ng-cloak="">   
         <form id="form" name="EditRisk" role="form" ng-submit="ctrl.valid() && ctrl.submit()" novalidate>
             <div class="layout">
                     <center>
-                        <input type="button" value="First" ng-click="ctrl.view('first')"/>&nbsp;
-                        <input type="button" value="Prev"  ng-click="ctrl.view('prev')"/>&nbsp;
-                        <input type="button" value="Next" ng-click="ctrl.view('next')">&nbsp;
-                        <input type="button" value="Last" ng-click="ctrl.view('last')">
+                        <input type="button" value="First" ng-click="ctrl.fetchRisk('first')"/>&nbsp;
+                        <input type="button" value="Prev"  ng-click="ctrl.fetchRisk('prev')"/>&nbsp;
+                        <input type="button" value="Next" ng-click="ctrl.fetchRisk('next')">&nbsp;
+                        <input type="button" value="Last" ng-click="ctrl.fetchRisk('last')">
                     </center>
                     <br />
                     <h2>Edit Risk Details</h2>
