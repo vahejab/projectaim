@@ -78,10 +78,24 @@ angular.module('Risk').service("ValidationService", function() {
                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].scheduledtechnical) &&
                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].scheduledschedule) &&
                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].scheduledcost));
+                      
+         commonFunctions.hasData(evt, scope);         
          scope.ctrl.event[evt].valid = valid;
          return valid;   
-    }
-               
+    } 
+     
+    commonFunctions.hasData = function(evt, scope){
+         var hasData = !(scope.ctrl.event[evt] == {}) || ((scope.ctrl.event[evt].eventtitle || "") != ""   ||
+                      (scope.ctrl.event[evt].ownerid || "") != "" || 
+                      (scope.ctrl.event[evt].actualdate || "") != "" ||
+                      (scope.ctrl.event[evt].scheduledate || "") != ""  ||
+                      (scope.ctrl.event[evt].scheduledlikelihood ||  "") != ""  ||
+                      (scope.ctrl.event[evt].scheduledtechnical ||  "") != ""  ||
+                      (scope.ctrl.event[evt].scheduledschedule ||  "") != ""  ||
+                      (scope.ctrl.event[evt].scheduledcost ||  "") != "");
+         scope.ctrl.event[evt].hasData = hasData;
+    } 
+              
     commonFunctions.validCharacter = function(c){
         return (c >= 32 && c <= 126);
     }
