@@ -9,7 +9,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.riskMatrix = new Array(6);
         ctrl.users = [];
         ctrl.risk = {};
-        ctrl.event = [{}];
+        ctrl.event = [{valid: true}];
         ctrl.initDone = false;
         
         
@@ -190,10 +190,6 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                     }
             });
         }
-        
-        ctrl.valid = function(){
-            return true;    
-        }
 
         ctrl.submit = function(){
             if (!ctrl.valid())
@@ -208,6 +204,75 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                          $scope.msg = $sce.trustAsHtml(response.data);
                     }
                 });
+        }
+        
+        ctrl.validateEvent = function(evt){
+            ValidationService.evtValid(evt, $scope);
+        }
+        
+        
+         ctrl.disable = function(evt){
+            elems = document.querySelectorAll(".evt"+evt);
+            for(var idx = 0; idx < elems.length; idx++)
+            {
+                elem = elems[idx];
+                id = elem.getAttribute("id");
+            }
+        }
+        
+        ctrl.enable = function(evt){ 
+           ctrl.enabledItem[evt] = true;
+           elems = document.querySelectorAll(".evt"+evt);
+            for(var idx = 0; idx < elems.length; idx++)                    
+            {
+                elem = elems[idx];
+                id = elem.getAttribute("id");
+            } 
+        }
+        
+         ctrl.add = function(evt){
+            ctrl.event.push({
+                eventtitle: '',
+                ownerid: '',
+                actualdate: '',
+                scheduledate: '',
+                scheduledlikelihood: '',
+                scheduledtechnical: '',
+                scheduledschedule: '',
+                scheduledcost: ''
+            });
+            if (evt < 5)
+                ctrl.enable(evt+1); 
+            ctrl.showAddButton = {value: false }
+            //if (evt < 5)
+            //    angular.element(document.getElementById("remove"+evt)).css("display", "none");
+            if (evt < 5)
+                ctrl.setDateLimits(evt);
+            if (evt < 5)
+                ctrl.lastEventIdSaved++;
+            ctrl.disable(evt);
+            if (evt == 5)
+                ctrl.hideButton = true;
+        }                           
+     
+        ctrl.remove = function(evt){
+            if (evt != 1)            
+                ctrl.disable(evt);
+            //if (evt != 1)
+            //    angular.element(document.getElementById("remove"+evt)).css("display", "none");
+            ctrl.clear(evt);   
+            ctrl.event.pop();
+      
+            if (evt == 1)
+                return; 
+            ctrl.enable(evt - 1);
+            if (evt > 1)
+                ctrl.showAddButton = {value: true }
+                                      
+            if (ctrl.lastEventIdSaved != 0) 
+            {
+                ctrl.complete[ctrl.lastEventIdSaved--] = {value: true}
+            }
         }
         
         ctrl.getEvents = function(riskid){

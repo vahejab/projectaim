@@ -63,38 +63,22 @@ angular.module('Risk').service("ValidationService", function() {
         return elem.getValue() == '' || elem.getValue().trim() == '';
     }
     
-    commonFunctions.validate = function(elem, scope, id){
-        if (commonFunctions.isLevelField(id) && (!commonFunctions.validLevel(elem) || commonFunctions.fieldEmpty(elem))){
-            DOMops.makeInvalid(id);
-            DOMops.clearDot();                                                     
-       }        
-       else if (typeof elem !== 'undefined' && (elem.getValue() == 0 || commonFunctions.fieldEmpty(elem)))
-            DOMops.makeInvalid(id);
-
-       if (commonFunctions.valid(scope, scope.fields))
-          DOMops.enableElement("#submit");
-       else
-          DOMops.disableElement("#submit");
-    }
     
-    commonFunctions.evtValid = function(evt){
-         var valid = (
-            document.querySelector("#eventtitle"+evt+ " input[type=text]") != null
-         && document.querySelector("#eventtitle"+evt+ " input[type=text]").value != ''
-         && document.querySelector("#owner"+evt+ " div.webix_el_box div.webix_inp_static")  != null
-         && document.querySelector("#owner"+evt+ " div.webix_el_box div.webix_inp_static").outerText != ''
-         && document.querySelector("#actualdate"+evt + " div.webix_el_box div.webix_inp_static") != null
-         && document.querySelector("#actualdate"+evt + " div.webix_el_box div.webix_inp_static").innerHTML != ''
-         && document.querySelector("#scheduledate"+evt+ " div.webix_el_box div.webix_inp_static") != null
-         && document.querySelector("#scheduledate"+evt+ " div.webix_el_box div.webix_inp_static").innerHTML != ''
-         && document.querySelector("#likelihood"+evt+ " input[type=text]") != null
-         && !commonFunctions.invalidLevel(document.querySelector("#likelihood"+evt+ " input[type=text]").value)
-         && document.querySelector("#technical"+evt+ " input[type=text]") != null
-         && !commonFunctions.invalidLevel(document.querySelector("#technical"+evt+ " input[type=text]").value)
-         && document.querySelector("#schedule"+evt+ " input[type=text]") != null
-         && !commonFunctions.invalidLevel(document.querySelector("#schedule"+evt+ " input[type=text]").value)
-         && document.querySelector("#cost"+evt+ " input[type=text]") != null
-         && !commonFunctions.invalidLevel(document.querySelector("#cost"+evt+ " input[type=text]").value)); 
+    commonFunctions.evtValid = function(evt, scope){
+         var valid = !(scope.ctrl.event[evt] == {}) && ((scope.ctrl.event[evt].eventtitle || "") != ""   &&
+                      (scope.ctrl.event[evt].ownerid || "") != "" && 
+                      (scope.ctrl.event[evt].actualdate || "") != "" &&
+                      (scope.ctrl.event[evt].scheduledate || "") != ""  &&
+                      (scope.ctrl.event[evt].scheduledlikelihood ||  "") != ""  &&
+                      (scope.ctrl.event[evt].scheduledtechnical ||  "") != ""  &&
+                      (scope.ctrl.event[evt].scheduledschedule ||  "") != ""  &&
+                      (scope.ctrl.event[evt].scheduledcost ||  "") != ""  &&
+                      
+                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].scheduledlikelihood) &&
+                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].scheduledtechnical) &&
+                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].scheduledschedule) &&
+                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].scheduledcost));
+         scope.ctrl.event[evt].valid = valid;
          return valid;   
     }
                

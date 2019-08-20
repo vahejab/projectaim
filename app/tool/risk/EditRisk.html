@@ -45,7 +45,7 @@
                                  <ui-select ng-model="ctrl.risk.owner" theme="select2" ng-disabled="ctrl.disabled" style="max-width: 100%" title="Choose a person">
                                     <ui-select-match placeholder="Select/Search User">{{$select.selected.name}}</ui-select-match>
                                     <ui-select-choices repeat="user.id as user in ctrl.users | propsFilter: {name: $select.search}">
-                                      <div ng-bind-html="user.name | highlight: $select.search"></div>
+                                      <div ng-bind -html="user.name | highlight: $select.search"></div>
                                     </ui-select-choices>
                                 </ui-select>
                             </div>
@@ -283,13 +283,13 @@
                             Event Title
                         </div>
                         <div class="td value">
-                            <input type="text" class="title" />
+                            <input ng-change="ctrl.validateEvent(event)"  type="text" class="title" ng-model="ctrl.event[event].eventtitle" />
                         </div>
                         <div class="td header">
                             Owner
                         </div>
                         <div class="td value">
-                                 <ui-select ng-model="ctrl.evts[event].ownwerid" theme="select2" ng-disabled="ctrl.disabled" title="Choose a person">
+                                 <ui-select  ng-change="ctrl.validateEvent(event)"  ng-model="ctrl.event[event].ownwerid" theme="select2" ng-disabled="ctrl.disabled" title="Choose a person">
                                     <ui-select-match placeholder="Select/Search User">{{$select.selected.name}}</ui-select-match>
                                     <ui-select-choices repeat="user.id as user in ctrl.users | propsFilter: {name: $select.search}">
                                       <div ng-bind-html="user.name | highlight: $select.search"></div>
@@ -302,7 +302,7 @@
                         <div class="td value">
                            <!--input type='text' id="actual{{event}}"  class="datepicker-here" data-language='en' /--> 
                                 <p class="input-group">
-                                  <input type="text" class="actual date-input" uib-datepicker-popup="MM/dd/yyyy" ng-model="ctrl.event[event].actualdate" is-open="ctrl.actual[event].opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                  <input ng-change="ctrl.validateEvent(event)"  ng-model="ctrl.event[event].actualdate" type="text" class="actual date-input" uib-datepicker-popup="MM/dd/yyyy" is-open="ctrl.actual[event].opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                                   <span class="input-group-btn">
                                     <button type="button" class="btn btn-secondary" ng-click="ctrl.openActual(event)">
                                       <i class="fa-svg-icon">
@@ -318,7 +318,7 @@
                         <div class="td value">
                          <!--input type='text' id="schedule{event}}" class="datepicker-here" data-language='en' /-->                    
                                 <p class="input-group">
-                                  <input type="text" class="schedule date-input" uib-datepicker-popup="M/dd/yyyy" ng-model="ctrl.event[event].scheduledate" is-open="ctrl.schedule[event].opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                  <input ng-change="ctrl.validateEvent(event)"  ng-model="ctrl.event[event].scheduledate" type="text" class="schedule date-input" uib-datepicker-popup="M/dd/yyyy" is-open="ctrl.schedule[event].opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                                   <span class="input-group-btn">
                                     <button type="button" class="btn btn-secondary" ng-click="ctrl.openSchedule(event)">
                                       <i class="fa-svg-icon">
@@ -338,42 +338,44 @@
                             Likelihood
                         </div>
                         <div class="td value center">
-                            <input class="level" type="text"></input>
+                            <input class="level" type="text" maxlength="1"  ng-change="ctrl.validateEvent(event)" ng-model="ctrl.event[event].scheduledlikelihoood" />
                         </div>         
                         <div class="td header">
                             Technical
                         </div>                                                                                                                
                         <div class="td value center">
-                           <input class="level" type="text"></input>
+                           <input class="level" type="text" maxlength="1"   ng-change="ctrl.validateEvent(event)" ng-model="ctrl.event[event].scheduledtechnical" />
                         </div>
                         <div class="td header">
                             Schedule
                         </div>
                         <div class="td value center">
-                             <input class="level" type="text"></input>
+                             <input class="level" type="text" maxlength="1"  ng-change="ctrl.validateEvent(event)" ng-model="ctrl.event[event].scheduledschedule" />
                         </div>
                         <div class="td header">
                             Cost
                         </div>
                         <div class="td value center">
-                             <input class="level" type="text"></input>
+                             <input class="level" type="text" maxlength="1" ng-change="ctrl.validateEvent(event)" ng-model="ctrl.event[event].scheduledcost" />
                         </div>
                         <div class="td header">
                             Save
                         </div>
                         <div class="td value">
-                         <input class="addEvent" type="button" id="add{{event}}" ng-model="ctrl.showAddButton" ng-show="(event != 5 || ctrl.hideButton == false) && ((ctrl.complete[event].value && event == (ctrl.lastEventIdSaved+1)) || (event == 5 && ctrl.lastEventIdSaved == event && ctrl.showAddButton.value == true))" ng-click="ctrl.add(event); ctrl.doRemoveAdd[event+1] == true && ctrl.removeAdd(event+1)" ng-keyup="$event.keyCode === 13 && ctrl.add(event); $event.keyCode === 13 && ctrl.doRemoveAdd[event+1] == true && ctrl.removeAdd(event+1)" value="Save">
-                        </div>                                                                                                                                                                                                                                                                                                                             
+                         <input class="addEvent" type="button" id="add{{event}}"  ng-show="ctrl.event[event] && ctrl.event[event].valid" ng-click="ctrl.add(event)" ng-keyup="$event.keyCode === 13 && ctrl.add(event)" value="Save">
+                        </div>                                                                                                                                                                                                                                                                                                                           
                         <div class="td header">
                             Remove
                         </div>
                         <div class="td value">
-                           <input class="removeEvent" type="button" id="remove{{event}}" ng-show="event == ctrl.lastEventIdSaved+1 || (event == ctrl.lastEventIdSaved && event == 5 && ctrl.complete[event].value)" ng-click="ctrl.remove(event); ctrl.showAddButton.value = true" ng-keyup="$event.keyCode === 13 && ctrl.remove(event)"  value="Remove">
+                           <input class="removeEvent" type="button" id="remove{{event}}" ng-show="ctrl.event[event] && ctrl.event[event].valid" ng-click="ctrl.remove(event)" ng-keyup="$event.keyCode === 13 && ctrl.remove(event)"  value="Remove">
                         </div>  
                     </div>
                     <br /> 
                 </div>
             </div>
+            {{ctrl.lastEventIdSaved}}
+            {{ctrl.event}}      
             <div class="center">  
              <button id="submit" type="submit">Save Events</button>
             </div>
