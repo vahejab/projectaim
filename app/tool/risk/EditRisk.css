@@ -126,7 +126,7 @@
  
     .tbl.events .tr .th:nth-child(2), 
     .tbl.events .tr .td:nth-child(2){
-        max-width: 10px !importnat;
+        max-width: 10px !i;
         min-width: 10px !important;
     }
     
@@ -202,6 +202,7 @@
     .tr {
         display: table-row !important;
         width: 100%;
+        height:  39px !important;
     }
     
     .td, .th{
@@ -209,10 +210,11 @@
         text-align: left !important;
         border: 0.5px solid black;
         padding-left: 3px;
+        vertical-align: middle;
     }
     
     .td div{
-        text-align: left;
+        /* text-align: left; */
     }
     
     p.input-group{

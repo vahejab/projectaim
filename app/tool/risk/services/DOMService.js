@@ -112,12 +112,12 @@ angular.module('Risk').service("DOMops", function() {
     }
     
     commonFunctions.clearLevel = function(evt){
-        element =  document.querySelector("[name='level'][evt='"+evt+"']");
+        element =  document.querySelector("[name='level'][evt='"+evt+"'] div");
         if (element){
             element.innerHTML = '';
-            element.classList.remove('high');
-            element.classList.remove('med');
-            element.classList.remove('low');
+            element.parentNode.classList.remove('high');
+            element.parentNode.classList.remove('med');
+            element.parentNode.classList.remove('low');
         }
     }
     
@@ -136,25 +136,23 @@ angular.module('Risk').service("DOMops", function() {
     commonFunctions.displayLevel = function(level, l, c, evt, scope){
        var leveldiv;
        commonFunctions.clearLevel(evt);
-       if (evt)
-           leveldiv = document.querySelector("[name='level'][evt='"+evt+"']");
-       else
-           leveldiv = document.querySelector("div[name='level']");
-    
+       if (evt >= 0)
+           leveldiv = document.querySelector("[name='level'][evt='"+evt+"'] div");
+      
        if (level >= scope.ctrl.risklevels.riskhigh)
        {
            leveldiv.innerHTML = 'H ' + l + '-' + c;
-            leveldiv.classList.add('high'); 
+            leveldiv.parentNode.classList.add('high'); 
        }
        else if (level < scope.ctrl.risklevels.riskhigh  && level >= scope.ctrl.risklevels.riskmedium)
        {
             leveldiv.innerHTML = 'M ' + l + '-' + c;
-            leveldiv.classList.add('med'); 
+            leveldiv.parentNode.classList.add('med'); 
        }
        else if (level < scope.ctrl.risklevels.riskmedium)
        {
             leveldiv.innerHTML = 'L ' + l + '-' + c;
-             leveldiv.classList.add('low');
+            leveldiv.parentNode.classList.add('low');
        }
     }
     
