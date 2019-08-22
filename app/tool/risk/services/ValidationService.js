@@ -36,9 +36,9 @@ angular.module('Risk').service("ValidationService", function() {
     commonFunctions.valid = function(scope, fields){
           for (var idx = 0; idx < fields.length; idx++){
             field = fields[idx];
-            if (commonFunctions.isLevelField(field) && commonFunctions.invalidLevel(scope.risk[field]))
+            if (commonFunctions.isLevelField(field) && commonFunctions.invalidLevel(scope.ctrl.risk[field]))
                 return false;
-            else if (scope.risk[field] == '')
+            else if (scope.ctrl.risk[field] == '')
                 return false;
           }
           return true; 

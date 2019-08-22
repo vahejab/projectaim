@@ -48,6 +48,6 @@
             {
                 $returnOne = array_shift($collection['Result']);
             }
-            return ['Succeeded'=>true, 'Results' => $returnOne];
+            return ['Succeeded'=>true, 'Result' => $returnOne];
         }
   }

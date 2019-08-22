@@ -8,11 +8,11 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.risklevels = {};
         ctrl.riskMatrix = new Array(6);
         ctrl.users = [];
-        ctrl.risk = {};
         ctrl.lastEventIdSaved = 0;
         ctrl.event = [];
         ctrl.evts = [];
-            
+        ctrl.risk = {};
+        
         ctrl.initDone = false;
         ctrl.disabled = [{value: true},{value: false},{value: true},{value: true},{value: true},{value: true}];
         
@@ -253,7 +253,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         }
         
          ctrl.add = function(evt){
-                if (evt < 5)
+                if (evt < 5 && ctrl.event.length > 0)
                 {
                       ctrl.event.push({
                         eventid: evt+1,
@@ -325,6 +325,9 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         }
         
         ctrl.getEvents = function(riskid){
+             ctrl.event = [];
+             for (evt = 0; evt <= 5; evt++)
+                DOMops.clearLevel(evt);
              return $http.get('api/risks/'+riskid+'/events').then(function(response){
                     if (response.data.Succeeded){
                         for (var key = 0; key <= response.data.Result.length-1; key++){
@@ -355,13 +358,18 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         }
        
         ctrl.getRiskDetails = function(nav){
-              if (!isNaN(nav))
-                id = nav;
-              else
-                id = ctrl.risk.riskid + '/' + nav;     
-              return $http.get('api/risks/'+id).then(function(response){
+             if (nav && isNaN(nav))
+                route = ($stateParams.id || localStorage.riskid) + '/' + nav;     
+              else if (!nav)
+                route = localStorage.riskid || $stateParams.id || 'first';
+                
+            return $http.get('api/risks/'+route).then(function(response){
                   if (response.data.Succeeded){  
                         ctrl.risk.riskid = response.data.Result.riskid;
+                        ctrl.riskid = ctrl.risk.riskid;
+                        
+                        localStorage.setItem('riskid', ctrl.riskid);
+           
                         ctrl.risk.risktitle = response.data.Result.risktitle;
                         ctrl.risk.status = response.data.Result.status;
                         
