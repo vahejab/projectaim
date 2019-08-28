@@ -201,6 +201,10 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                 ctrl.event[e].scheduledate = new Date(y,m-1,d);                  
           }        
         }
+        
+        ctrl.valid = function(){
+            return !(ctrl.risk.risktitle.trim() == '' && ctrl.risk.riskstatement.trim() == '' && ctrl.risk.context.trim() == '');
+        }
        
         ctrl.submit = function(){
             if (!ctrl.valid())
@@ -234,9 +238,11 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         
         ctrl.validateEvent = function(evt){
             ValidationService.evtValid(evt, $scope);
-            ctrl.displayLevel(evt);
         }
         
+        ctrl.validateLevel = function(evt){
+             ctrl.displayLevel(evt);
+        }
         
          ctrl.disable = function(evt){
             ctrl.disabled[evt].value = true;
@@ -351,18 +357,23 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                          ctrl.add(ctrl.lastEventIdSaved);
                          ctrl.eventsdone = true;   
                          ctrl.initDone  = true;
-                    } 
-               }).then(function(){          
-                        ctrl.rebindDates();
-               });
+                    }
+                    return response.data.Result;
+               }).then(() => {ctrl.rebindDates();});
         }
        
         ctrl.getRiskDetails = function(nav){
-             if (nav && isNaN(nav))
-                route = ($stateParams.id || localStorage.riskid) + '/' + nav;     
-              else if (!nav)
+             if ($stateParams.id != null){
+                route = $stateParams.id;
+                $stateParams.id = null;
+             }
+             else if (!isNaN(nav))
+                route = nav;
+             else if (nav && isNaN(nav))
+                route = (localStorage.riskid || $stateParams.id) + '/' + nav;     
+             else if (!nav)
                 route = localStorage.riskid || $stateParams.id || 'first';
-                
+    
             return $http.get('api/risks/'+route).then(function(response){
                   if (response.data.Succeeded){  
                         ctrl.risk.riskid = response.data.Result.riskid;
@@ -453,14 +464,21 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                });
         }
         
+        ctrl.displayLevels = function(){
+            ctrl.levelsready = false;
+            for (e = 1; e < ctrl.event.length; e++)
+                ctrl.displayLevel(e);
+            ctrl.levelsready = true;
+        }
+        
         ctrl.fetchRisk = function(page){
-            return ctrl.getRiskConfig()
-                        .then(()=>{ctrl.getUsers()
-                            .then(()=>{ctrl.getRiskDetails(page)
-                                .then(()=>{ctrl.getEvents(ctrl.risk.riskid)
-                                })
-                            })  
+                return ctrl.getRiskConfig()
+                        .then(()=> {return ctrl.getUsers()
+                            .then(()=>{return ctrl.getRiskDetails(page)
+                                .then(()=>{return ctrl.getEvents(ctrl.risk.riskid);
+                            });  
                         });
+                   }).then(()=>{ctrl.displayLevels();});
         }
                
 }]).filter('unquote', function () {

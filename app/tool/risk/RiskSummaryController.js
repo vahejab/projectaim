@@ -22,7 +22,8 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
         ctrl.risksloaded = false;
         ctrl.propertyName = 'riskid';
         ctrl.reverse = false;
-         ctrl.datapoints = null;
+        ctrl.datapoints = {};
+        
         ctrl.initialized = false;
         
          var maxLikelihood = 5;
@@ -33,131 +34,16 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
         var overlay = [];
         var svg = [];   
           
-            events = [{
-                "id": 0,
-                "title": "Risk Identification",
-                "owner": "Jabagchourian, Vahe",
-                "baseline-date": "2019-07-01",
-                "baseline-likelihood": 5,
-                "baseline-consequence-T": 4,
-                "baseline-consequence-S": 5,
-                "baseline-consequence-C": 5,
-                "actual-date": "2019-07-01",
-                "actual-likelihood": 5,
-                "actual-consequence-T": 5,
-                "actual-consequence-S": 5,
-                "actual-consequence-C": 5,
-                "schedule-date": null,
-                "schedule-likelihood": -1,
-                "schedule-consequence-T": -1,
-                "schedule-consequence-S": -1,
-                "schedule-consequence-C": -1
-            }, {
-                "id": 1,
-                "title": "Test Procedure",
-                "owner": "Jabagchourian, Harry",
-                "baseline-date": "2019-07-02",
-                "baseline-likelihood": 4,
-                "baseline-consequence-T": 3,
-                "baseline-consequence-S": 5,
-                "baseline-consequence-C": 5,
-                "actual-date": "2019-07-02",
-                "actual-likelihood": 4,
-                "actual-consequence-T": 4,
-                "actual-consequence-S": 5,
-                "actual-consequence-C": 3,
-                "schedule-date": null,
-                "schedule-likelihood": -1,
-                "schedule-consequence-T": -1,
-                "schedule-consequence-S": -1,
-                "schedule-consequence-C": -1
-            }, {
-                "id": 2,
-                "title": "Publish Report",
-                "owner": "Jabagchourian, Vahe",
-                "baseline-date": "2019-07-10",
-                "baseline-likelihood": 4,
-                "baseline-consequence-T": 3,
-                "baseline-consequence-S": 4,
-                "baseline-consequence-C": 4,
-                "actual-date": "2019-07-10",
-                "actual-likelihood": 4,
-                "actual-consequence-T": 4,
-                "actual-consequence-S": 3,
-                "actual-consequence-C": 3,
-                "schedule-date": null,
-                "schedule-likelihood": -1,
-                "schedule-consequence-T": -1,
-                "schedule-consequence-S": -1,
-                "schedule-consequence-C": -1
-            }, {
-                "id": 3,
-                "title": "Review Report",
-                "owner": "Jabagchourian, Harry",
-                "baseline-date": "2019-07-14",
-                "baseline-likelihood": 4,
-                "baseline-consequence-T": 3,
-                "baseline-consequence-S": 3,
-                "baseline-consequence-C": 3,
-                "actual-date": "2019-07-14",
-                "actual-likelihood": 3,
-                "actual-consequence-T": 2,
-                "actual-consequence-S": 3,
-                "actual-consequence-C": 4,
-                "schedule-date": null,
-                "schedule-likelihood": -1,
-                "schedule-consequence-T": -1,
-                "schedule-consequence-S": -1,
-                "schedule-consequence-C": -1
-            }, {
-                "id": 4,
-                "title": "Adjustments",
-                "owner": "Jabagchourian, Vahe",
-                "baseline-date": "2019-07-15",
-                "baseline-likelihood": 3,
-                "baseline-consequence-T": 3,
-                "baseline-consequence-S": 1,
-                "baseline-consequence-C": 2,
-                "actual-date": null,
-                "actual-likelihood": -1,
-                "actual-consequence-T": -1,
-                "actual-consequence-S": -1,
-                "actual-consequence-C": -1,
-                "schedule-date": "2019-07-18",
-                "schedule-likelihood": 3,
-                "schedule-consequence-T": 3,
-                "schedule-consequence-S": 1,
-                "schedule-consequence-C": 2
-            }, {
-                "id": 5,
-                "title": "Adjustments",
-                "owner": "Jabagchourian, Vahe",
-                "baseline-date": "2019-07-16",
-                "baseline-likelihood": 2,
-                "baseline-consequence-T": 1,
-                "baseline-consequence-S": 2,
-                "baseline-consequence-C": 1,
-                "actual-date": null,
-                "actual-likelihood": -1,
-                "actual-consequence-T": -1,
-                "actual-consequence-S": -1,
-                "actual-consequence-C": -1,
-                "schedule-date": "2019-07-19",
-                "schedule-likelihood": 2,
-                "schedule-consequence-T": 1,
-                "schedule-consequence-S": 2,
-                "schedule-consequence-C": 1
-            }];
-           
-            
+        ctrl.events = {};            
             var cons = [];
             var risk = [];
            
             
-            ctrl.baseline = []; 
-            ctrl.schedule = [];
-            ctrl.actual = [];
-           
+            ctrl.baseline = {}; 
+            ctrl.schedule = {};
+            ctrl.actual = {};
+            
+             ctrl.sched = {};
             
             actualrisk = [];
             schedulerisk = [];
@@ -277,7 +163,6 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
             eOuterDiv.appendChild(eDivPercentBar);
             return eOuterDiv;
         }
-
         
         function riskWaterfallRenderer(params){
             var eDivWaterfall = document.createElement('div');
@@ -291,16 +176,16 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
                                               .attr('transform', 'translate('+margin.left+','+margin.top+')'));
                                  
                  // ctrl.drawGrid(maxLow, minHigh, maxLikelihood, maxConsequence);
-                  if (ctrl.initialized == false)   
-                  {  
-                        ctrl.initEvents();
-                        ctrl.datapoints =  [...ctrl.actual.concat( ctrl.baseline,  ctrl.schedule)];
-                        ctrl.initialized = true;
-                  }
- 
-                  ctrl.drawWaterfall(params.data.riskid);
-                  ctrl.drawToolTip(params.data.riskid);                      
-            }, );
+                  
+                ctrl.initEvents(params.data.riskid);
+                
+                act = Object.keys(ctrl.actual[params.data.riskid]).map(key => ctrl.actual[params.data.riskid][key]);
+                bas = Object.keys(ctrl.baseline[params.data.riskid]).map(key => ctrl.baseline[params.data.riskid][key]);
+                sch = Object.keys(ctrl.schedule[params.data.riskid]).map(key => ctrl.schedule[params.data.riskid][key]);
+                ctrl.datapoints[params.data.riskid] =  [...act.concat(bas, sch)];
+                ctrl.drawWaterfall(params.data.riskid);
+                ctrl.drawToolTip(params.data.riskid);                   
+            },);
             
           return eDivWaterfall;
         }
@@ -367,60 +252,203 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
             level = ctrl.riskMatrix[likelihood][consequence];
             risk = ctrl.getLevel(level, likelihood, consequence);
             return risk;
-        } 
+        }
+        
+        ctrl.getRiskConfig = function(){
+        
+            return $http.get('/api/riskconfig').then(function(response){
+                   if (response.data.Succeeded){
+                        ctrl.risklevels.riskmaximum = response.data.Result.Levels[0].riskmaximum;
+                        ctrl.risklevels.riskhigh = response.data.Result.Levels[0].riskhigh;
+                        ctrl.risklevels.riskmedium = response.data.Result.Levels[0].riskmedium;
+                        ctrl.risklevels.riskminimum = response.data.Result.Levels[0].riskminimum; 
+                     
+                        for (var idx = 0; idx < response.data.Result.Thresholds.length; idx++)
+                        {
+                            var l = response.data.Result.Thresholds[idx].likelihood;
+                            var c = response.data.Result.Thresholds[idx].consequence;
+                            v = response.data.Result.Thresholds[idx].level;
+                            ctrl.riskMatrix[l][c] = v;
+                        }
+                     
+                        return response.data.Result;
+                        
+                   }
+                   else{
+                        ctrl.msg = $sce.trustAsHtml(response.data);
+                   }
+              })
+        }
+        
+        ctrl.getRisks = function(){
+              return $http.get('api/risks').then(function(response){
+                   if (response.data.Succeeded){
+                        ctrl.risks = [];
+                        angular.forEach(response.data.Result, function(risk, key){
+                            response.data.Result[key] =  
+                            { 
+                                riskid: risk.riskid,
+                                risktitle: risk.risktitle,
+                                riskstatement: risk.riskstatement,
+                                context: risk.riskcontext,
+                                closurecriteria: risk.closurecriteria,
+                                likelihood: risk.likelihood,
+                                technical: risk.technical,
+                                schedule: risk.schedule,
+                                cost: risk.cost,
+                                risklevel: ctrl.getRisk(risk.likelihood, risk.technical, risk.schedule, risk.cost),
+                                riskthreshold: 100*ctrl.riskMatrix[risk.likelihood][Math.max(risk.technical, risk.schedule, risk.cost)],
+                                assignor: risk.assignor,
+                                owner: risk.owner,
+                                approver: risk.approver,
+                                assessmentdate: risk.assessmentdate
+                            };
+                            ctrl.risks.push({
+                                riskid: '',
+                                risktitle: '',
+                                risklevel: '',
+                                riskvalue: '',
+                                assignor: '',
+                                owner: '',
+                                altowner: '',
+                                approver: '',
+                                creationdate: ''
+                            });
+                            ctrl.risks[key].riskid =  response.data.Result[key].riskid;
+                            ctrl.risks[key].risktitle = response.data.Result[key].risktitle;
+                            ctrl.risks[key].risklevel = response.data.Result[key].risklevel.level;
+                            ctrl.risks[key].riskvalue = response.data.Result[key].risklevel.threshold; 
+                            ctrl.risks[key].assignor = response.data.Result[key].assignor;
+                            ctrl.risks[key].owner = response.data.Result[key].owner;
+                            ctrl.risks[key].approver = response.data.Result[key].approver;
+                            ctrl.risks[key].creationdate = response.data.Result[key].assessmentdate;
+                            ctrl.events[ctrl.risks[key].riskid] = [];
+                        });
+                        ctrl.risksloaded = true;
+                        return response.data.Result;
+                   }
+                   else{  
+                    ctrl.msg += "<br />" + $sce.trustAsHtml(response.data);
+                   }
+                });
+        }
         
         
+      
+        ctrl.getEvents = function(){
+            
+              return $http.get('api/events').then(function(response){
+                    if (response.data.Succeeded){
+                        for (var key = 0; key <= response.data.Result.length-1; key++){
+                            event = response.data.Result[key];
+                            ctrl.events[event.riskid].push({
+                                                                    'id' : key,
+                                                                    'eventid': event.eventid, 
+                                                                    'title' : event.eventtitle,
+                                                                    'owner' : event.ownername,
+                                                                    'baseline_date' : event.baselinedate,
+                                                                    'baseline_likelihood' : event.baselinelikelihood || -1,
+                                                                    'baseline_consequence_T' : event.baselinetechnical || -1,
+                                                                    'baseline_consequence_S' : event.baselineschedule || -1,
+                                                                    'baseline_consequence_C' : event.baselinecost || -1,
+                                                                    'baseline_consequence': -1,
+                                                                    'actual_date' : event.actualdate,
+                                                                    'actual_likelihood' : event.actuallikelihood || -1,
+                                                                    'actual_consequence_T' : event.actualtechnical || -1,
+                                                                    'actual_consequence_S' : event.actualschedule || -1,
+                                                                    'actual_consequence_C' : event.actualcost || -1,
+                                                                    'actual_consequence' : -1,
+                                                                    'schedule_date' : event.scheduleddate,
+                                                                    'schedule_likelihood' : event.scheduledlikelihood || -1,
+                                                                    'schedule_consequence_T' : event.scheduledtechnical || -1,
+                                                                    'schedule_consequence_S' : event.scheduledschedule || -1,
+                                                                    'schedule_consequence_C' : event.scheduledcost || -1,
+                                                                    'schedule_consequence' : -1
+                                                        });
+                         }
+                         
+                         ctrl.initialized = true; 
+                         $timeout(() => {ctrl.setup()});
+                    } 
+                    return response.data.Result;
+               });
+        }
         
         
-        ctrl.initEvents = function() {
-    for (e = 0; e < events.length; e++) {
-        risk[e] = {};
-        events[e]['baseline-consequence'] = Math.max(Math.max(events[e]['baseline-consequence-T'], events[e]['baseline-consequence-S']), events[e]['baseline-consequence-C']);
+        ctrl.initEvents = function(riskid) {
+                
+                       
+                ctrl.actual[riskid] = [];
+                ctrl.schedule[riskid] = [];
+                ctrl.baseline[riskid] = [];
+                ctrl.sched[riskid] = [];
+                
+                for (e = 0; e < Object.keys(ctrl.events).length; e++) {
+                    risk[e] = {};
+                    
+                    ctrl.events[riskid][e].baseline_consequence = Math.max(Math.max(ctrl.events[riskid][e]['baseline_consequence_T'], ctrl.events[riskid][e]['baseline_consequence_S']), ctrl.events[riskid][e]['baseline_consequence_C']);
 
-        events[e]['actual-consequence'] = Math.max(Math.max(events[e]['actual-consequence-T'], events[e]['actual-consequence-S']), events[e]['actual-consequence-C']);
+                    ctrl.events[riskid][e].actual_consequence = Math.max(Math.max(ctrl.events[riskid][e]['actual_consequence_T'], ctrl.events[riskid][e]['actual_consequence_S']), ctrl.events[riskid][e]['actual_consequence_C']);
 
-        events[e]['schedule-consequence'] = Math.max(Math.max(events[e]['schedule-consequence-T'], events[e]['schedule-consequence-S']), events[e]['schedule-consequence-C']);
+                    ctrl.events[riskid][e].schedule_consequence = Math.max(Math.max(ctrl.events[riskid][e]['schedule_consequence_T'], ctrl.events[riskid][e]['schedule_consequence_S']), ctrl.events[riskid][e]['schedule_consequence_C']);
 
-        schedulerisk[e] = {
-            id: events[e].id,
-            type: "Schedule",
-            date: events[e]['schedule-date'],
-            eventtitle: events[e].title,
-            owner: events[e].owner,
-            risk: events[e]['schedule-likelihood'] * events[e]['schedule-consequence']
-        };
-        baselinerisk[e] = {
-            id: events[e].id,
-            type: "Baseline",
-            date: events[e]['baseline-date'],
-            eventtitle: events[e].title,
-            owner: events[e].owner,
-            risk: events[e]['baseline-likelihood'] * events[e]['baseline-consequence']
-        };
-        actualrisk[e] = {
-            id: events[e].id,
-            type: "Actual",
-            date: events[e]['actual-date'],
-            eventtitle: events[e].title,
-            owner: events[e].owner,
-            risk: events[e]['actual-likelihood'] * events[e]['actual-consequence']
-        };
+                    schedulerisk[e] = {
+                        id: ctrl.events[riskid][e].id,
+                        type: "Schedule",
+                        date: ctrl.events[riskid][e]['schedule_date'],
+                        eventtitle: ctrl.events[riskid][e].title,
+                        owner: ctrl.events[riskid][e].owner,
+                        risk: ctrl.events[riskid][e]['schedule_likelihood'] * ctrl.events[riskid][e]['schedule_consequence']
+                    };
+                    baselinerisk[e] = {
+                        id: ctrl.events[riskid][e].id,
+                        type: "Baseline",
+                        date: ctrl.events[riskid][e]['baseline_date'],
+                        eventtitle: ctrl.events[riskid][e].title,
+                        owner: ctrl.events[riskid][e].owner,
+                        risk: ctrl.events[riskid][e]['baseline_likelihood'] * ctrl.events[riskid][e]['baseline_consequence']
+                    };
+                    actualrisk[e] = {
+                        id: ctrl.events[riskid][e].id,
+                        type: "Actual",
+                        date: ctrl.events[riskid][e]['actual_date'],
+                        eventtitle: ctrl.events[riskid][e].title,
+                        owner: ctrl.events[riskid][e].owner,
+                        risk: ctrl.events[riskid][e]['actual_likelihood'] * ctrl.events[riskid][e]['actual_consequence']
+                    };
 
-        schedulerisk[e].level = risklevels(schedulerisk[e].risk) + " " + events[e]['schedule-likelihood'] + "-" + events[e]['schedule-likelihood'];
-        actualrisk[e].level = risklevels(actualrisk[e].risk) + " " + events[e]['actual-likelihood'] + "-" + events[e]['actual-likelihood'];
-        baselinerisk[e].level = risklevels(baselinerisk[e].risk) + " " + events[e]['baseline-likelihood'] + "-" + events[e]['baseline-likelihood'];
+                    schedulerisk[e].level = (ctrl.events[riskid][e]['schedule_likelihood'] != -1)? risklevels(schedulerisk[e].risk) + " " + ctrl.events[riskid][e]['schedule_likelihood'] + "-" + ctrl.events[riskid][e]['schedule_likelihood'] : 0;
+                    actualrisk[e].level = (ctrl.events[riskid][e]['actual_likelihood'] != -1)? risklevels(actualrisk[e].risk) + " " + ctrl.events[riskid][e]['actual_likelihood'] + "-" + ctrl.events[riskid][e]['actual_likelihood'] : 0;
+                    baselinerisk[e].level = (ctrl.events[riskid][e]['baseline_likelihood'] != -1)? risklevels(baselinerisk[e].risk) + " " + ctrl.events[riskid][e]['baseline_likelihood'] + "-" + ctrl.events[riskid][e]['baseline_likelihood'] : 0;
+       
+                    if (schedulerisk[e].date != null)
+                        ctrl.schedule[riskid].push(schedulerisk[e]);
+                    if (baselinerisk[e].date != null)
+                        ctrl.baseline[riskid].push(baselinerisk[e]);
+                    if (actualrisk[e].date != null)
+                        ctrl.actual[riskid].push(actualrisk[e]);
+                }
+        }
 
-        if (schedulerisk[e].date != null)
-            ctrl.schedule.push(schedulerisk[e]);
-        if (baselinerisk[e].date != null)
-            ctrl.baseline.push(baselinerisk[e]);
-        if (actualrisk[e].date != null)
-            ctrl.actual.push(actualrisk[e]);
-    }
-    
-  
-}
-
+        
+        ctrl.initialize = function(){
+            return ctrl.getRiskConfig().then(() => {
+                 return ctrl.getRisks().then(() => {
+                    return ctrl.getEvents();
+                 });
+            });   
+        }
+        
+        ctrl.setup = function(){
+              
+             // lookup the container we want the Grid to use
+            var eGridDiv = document.querySelector('#myGrid');
+            // create the grid passing in the div to use together with the columns & data we want to use
+            new agGrid.Grid(eGridDiv, ctrl.gridOptions);
+            ctrl.gridOptions.api.setRowData(ctrl.risks);
+        }
+        
+        
 ctrl.drawMatrixPath = function() {
     series = ['actual', 'schedule', 'baseline'];
     for (g = 0; g < series.length; g++) {
@@ -431,33 +459,33 @@ ctrl.drawMatrixPath = function() {
             var e2 = {};
 
 
-            if (events[e + 1]['actual-date'] != null) {
-                e1.likelihood = events[e]['actual-likelihood'];
-                e1.consequence = events[e]['actual-consequence'];
+            if (ctrl.events[e + 1]['actual_date'] != null) {
+                e1.likelihood = ctrl.events[riskid][e]['actual_likelihood'];
+                e1.consequence = ctrl.events[riskid][e]['actual_consequence'];
 
-                e2.likelihood = events[e + 1]['actual-likelihood'];
-                e2.consequence = events[e + 1]['actual-consequence'];
-            } else if (events[e]['actual-date'] == null && events[e + 1]['actual-date'] == null) {
-                e1.likelihood = events[e]['schedule-likelihood'];
-                e1.consequence = events[e]['schedule-consequence'];
+                e2.likelihood = ctrl.events[riskid][e + 1]['actual_likelihood'];
+                e2.consequence = ctrl.events[riskid][e + 1]['actual_consequence'];
+            } else if (ctrl.events[e]['actual_date'] == null && ctrl.events[riskid][e + 1]['actual_date'] == null) {
+                e1.likelihood = ctrl.events[riskid][e]['schedule_likelihood'];
+                e1.consequence = ctrl.events[riskid][e]['schedule_consequence'];
 
-                e2.likelihood = events[e + 1]['schedule-likelihood'];
-                e2.consequence = events[e + 1]['schedule-consequence'];
-            } else if (events[e + 1]['actual-date'] == null && events[e + 1]['schedule-date'] != null) {
-                e1.likelihood = events[e]['actual-likelihood'];
-                e1.consequence = events[e]['actual-consequence'];
+                e2.likelihood = ctrl.events[riskid][e + 1]['schedule_likelihood'];
+                e2.consequence = ctrl.events[riskid][e + 1]['schedule_consequence'];
+            } else if (ctrl.events[e + 1]['actual_date'] == null && ctrl.events[riskid][e + 1]['schedule_date'] != null) {
+                e1.likelihood = ctrl.events[riskid][e]['actual_likelihood'];
+                e1.consequence = ctrl.events[riskid][e]['actual_consequence'];
 
-                e2.likelihood = events[e + 1]['schedule-likelihood'];
-                e2.consequence = events[e + 1]['schedule-consequence'];
+                e2.likelihood = ctrl.events[riskid][e + 1]['schedule_likelihood'];
+                e2.consequence = ctrl.events[riskid][e + 1]['schedule_consequence'];
             }
 
             if (graph == 'baseline') {
 
-                e1.likelihood = events[e]['baseline-likelihood'];
-                e1.consequence = events[e]['baseline-consequence'];
+                e1.likelihood = ctrl.events[riskid][e]['baseline_likelihood'];
+                e1.consequence = ctrl.events[riskid][e]['baseline_consequence'];
 
-                e2.likelihood = events[e + 1]['baseline-likelihood'];
-                e2.consequence = events[e + 1]['baseline-consequence'];
+                e2.likelihood = ctrl.events[riskid][e + 1]['baseline_likelihood'];
+                e2.consequence = ctrl.events[riskid][e + 1]['baseline_consequence'];
             }
 
             e1y = (maxLikelihood - e1.likelihood - 1) * cellHeight + cellHeight / 2;
@@ -723,75 +751,85 @@ ctrl.drawWaterfall = function(id) {
             return yVal(d.risk);
         });
 
-    line('step-after');
-    sched = [];
-    for (idx = -1; idx <  ctrl.schedule.length; idx++) {
+    //line('step-after');
+  
+    for (idx = -1; idx <  ctrl.schedule[id].length; idx++) {
         if (idx == -1) {
-            act =  ctrl.actual[ ctrl.actual.length - 1];
-            sched.push({
-                date: act.date,
-                risk: act.risk
-            });
+            act =  ctrl.actual[id][ ctrl.actual[id].length - 1];
+            if (act && act.risk != -1 && act.date != null)
+                ctrl.sched[id].push({
+                    date: act.date,
+                    risk: act.risk
+                });
         } else
-            sched.push(ctrl.schedule[idx]);
+            ctrl.sched[id].push(ctrl.schedule[id][idx]);
     }
 
-     ctrl.actual.forEach(function(d) {
+     ctrl.actual[id].forEach(function(d) {
         d.parsedate = parseDate(d.date);
         d.risk = +d.risk;
     });
 
 
-    sched.forEach(function(d) {
+    ctrl.sched[id].forEach(function(d) {
         d.parsedate = parseDate(d.date);
         d.risk = +d.risk;
     });
 
-    ctrl.baseline.forEach(function(d) {
+    ctrl.baseline[id].forEach(function(d) {
         d.parsedate = parseDate(d.date);
         d.risk = +d.risk;
     });
+    
+    
+    if (ctrl.actual[id].length > 0) {
+        xVal.domain(d3.extent([d3.min( ctrl.actual[id], function(d) {
+            return d.parsedate;
+        }), dt,  ctrl.actual[id][Object.keys(ctrl.actual[id]).length - 1].parsedate])).nice();
+        yVal.domain(d3.extent( ctrl.actual[id], function(d) {
+            return d.risk / 1.11 - 1.35;
+        }));
+    }
+    
+    if (ctrl.sched[id].length > 0)
+    {
+        xVal.domain(d3.extent([d3.min(ctrl.sched[id], function(d) {
+            return d.date;
+        }), dt, ctrl.sched[id][Object.keys(ctrl.sched[id]).length - 1].parsedate])).nice();
+        yVal.domain(d3.extent(ctrl.sched[id], function(d) {
+            return d.risk / 1.11 - 1.35;
+        }));
+    }
 
-    xVal.domain(d3.extent([d3.min( ctrl.actual, function(d) {
-        return d.parsedate;
-    }), dt,  ctrl.actual[ ctrl.actual.length - 1].parsedate])).nice();
-    yVal.domain(d3.extent( ctrl.actual, function(d) {
-        return d.risk / 1.11 - 1.35;
-    }));
+    if (ctrl.baseline[id].length > 0)
+    {
+        xVal.domain(d3.extent([d3.min( ctrl.baseline[id], function(d) {
+            return d.parsedate;
+        }), dt,  ctrl.baseline[id][Object.keys(ctrl.baseline[id]).length - 1].parsedate])).nice();
+        yVal.domain(d3.extent( ctrl.baseline[id], function(d) {
+            return d.risk * 1.11 - 1.35;
+        }));
+    }
 
-    xVal.domain(d3.extent([d3.min(sched, function(d) {
-        return d.date;
-    }), dt, sched[sched.length - 1].parsedate])).nice();
-    yVal.domain(d3.extent(sched, function(d) {
-        return d.risk / 1.11 - 1.35;
-    }));
+    if (ctrl.baseline[id].length)
+        ctrl.riskwaterfall[id].append('path')
+            .datum(ctrl.baseline[id])
+            .attr('d', line(ctrl.baseline[id]))
+            .attr('stroke', 'blue');
 
-    xVal.domain(d3.extent([d3.min( ctrl.baseline, function(d) {
-        return d.parsedate;
-    }), dt,  ctrl.baseline[ ctrl.baseline.length - 1].parsedate])).nice();
-    yVal.domain(d3.extent( ctrl.baseline, function(d) {
-        return d.risk * 1.11 - 1.35;
-    }));
+    if (ctrl.actual[id].length)
+        ctrl.riskwaterfall[id].append('path')
+            .datum(ctrl.actual[id])
+            .attr('d', line(ctrl.actual[id]))
+            .attr('stroke', 'black')
+            .attr("stroke-width", "1px");
 
-
-    ctrl.riskwaterfall[id].append('path')
-        .datum(ctrl.baseline)
-        .attr('d', line(ctrl.baseline))
-        .attr('stroke', 'blue');
-
-
-    ctrl.riskwaterfall[id].append('path')
-        .datum(ctrl.actual)
-        .attr('d', line(ctrl.actual))
-        .attr('stroke', 'black')
-        .attr("stroke-width", "1px");
-
-
-    ctrl.riskwaterfall[id].append('path')
-        .datum(sched)
-        .attr('d', line(sched))
-        .attr('stroke', 'grey')
-        .attr("stroke-width", "1px");
+    if (ctrl.sched[id].length)
+        ctrl.riskwaterfall[id].append('path')
+            .datum(ctrl.sched[id])
+            .attr('d', line(ctrl.sched[id]))
+            .attr('stroke', 'grey')
+            .attr("stroke-width", "1px");
 
 
     for (var i = 0; i <  ctrl.actual.length; i++) {
@@ -830,7 +868,7 @@ ctrl.drawWaterfall = function(id) {
             .attr("r", 5);
     }
 
-    for (var i = 0; i < sched.length; i++) {
+    for (var i = 0; i < ctrl.sched.length; i++) {
         ctrl.riskwaterfall[id].append('rect')
             .datum(sched[i])
             .attr("x", function(d) {
@@ -987,9 +1025,9 @@ ctrl.renderToolTip = function(id){
           var overlay = d3.select('.overlay'+id);
                 
                 var x0 = xVal.invert(d3.mouse(overlay.node())[0]),
-                    i = bisectDate(ctrl.datapoints, x0, 1),
-                    d0 = ctrl.datapoints[i - 1],
-                    d1 = ctrl.datapoints[i];
+                    i = bisectDate(ctrl.datapoints[id], x0, 1),
+                    d0 = ctrl.datapoints[id][i - 1],
+                    d1 = ctrl.datapoints[id][i];
                 if (d0 && d1) {
 
                     d = (x0 - d0.parsedate > d1.parsedate - x0) ? d1 : d0;

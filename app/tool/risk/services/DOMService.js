@@ -134,26 +134,28 @@ angular.module('Risk').service("DOMops", function() {
    
     
     commonFunctions.displayLevel = function(level, l, c, evt, scope){
-       var leveldiv;
+       var leveldiv = {};
        commonFunctions.clearLevel(evt);
-       if (evt >= 0)
-           leveldiv = document.querySelector("[name='level'][evt='"+evt+"'] div");
-      
+       //if (evt >= 0)
+       //    leveldiv = document.querySelector("div[name='level'][evt='"+evt+"'] div");
+           
        if (level >= scope.ctrl.risklevels.riskhigh)
        {
-           leveldiv.innerHTML = 'H ' + l + '-' + c;
-            leveldiv.parentNode.classList.add('high'); 
+           leveldiv.html = {value: 'H ' + l + '-' + c};
+            leveldiv.cls = 'high';
        }
        else if (level < scope.ctrl.risklevels.riskhigh  && level >= scope.ctrl.risklevels.riskmedium)
        {
-            leveldiv.innerHTML = 'M ' + l + '-' + c;
-            leveldiv.parentNode.classList.add('med'); 
+            leveldiv.html = {value: 'M ' + l + '-' + c};
+            leveldiv.cls = 'med';
        }
        else if (level < scope.ctrl.risklevels.riskmedium)
        {
-            leveldiv.innerHTML = 'L ' + l + '-' + c;
-            leveldiv.parentNode.classList.add('low');
-       }
+            leveldiv.html = {value: 'L ' + l + '-' + c};
+            leveldiv.cls = 'low';
+       } 
+       scope.ctrl.event[evt].levelhtml = leveldiv.html;
+       scope.ctrl.event[evt].cls = leveldiv.cls;
     }
     
     return commonFunctions;            

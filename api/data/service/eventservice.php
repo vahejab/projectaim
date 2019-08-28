@@ -19,6 +19,8 @@
         public function findAllByRisk($id)
         {
             $mapper = $this->_getMapper();
+            if ($id == null)
+                return $mapper->findAll();
             return $mapper->findAllByRisk($id);   
         }
         

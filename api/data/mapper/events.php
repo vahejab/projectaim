@@ -109,7 +109,7 @@
             try
             {
                 $statement  = $this->db->prepare($sql);
-                $statement->execute($whereParams);
+                $statement->execute();
                 $results = $statement->fetchAll();
                 return(["Succeeded" => true, "Result" => $this->_populateFromCollection($results)]);
             }
