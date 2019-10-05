@@ -10,7 +10,7 @@
             if (!is_null($array['EventID'])) $event->eventid = $array['EventID'];     
             if (!is_null($array['EventOwnerID'])) $event->ownerid = $array['EventOwnerID'];   
             if (!is_null($array['EventTitle'])) $event->eventtitle = $array['EventTitle'];
-
+            
             if (!is_null($array['ActualDate'])) $event->actualdate = $array['ActualDate'];
             if (!is_null($array['ScheduleDate'])) $event->scheduledate = $array['ScheduleDate'];
             if (!is_null($array['BaselineDate'])) $event->baselinedate = $array['BaselineDate'];
@@ -136,7 +136,19 @@
                     $statement = $this->db->prepare("update riskevents set
                                                             eventtitle =:eventtitle,
                                                             eventownerid = :eventownerid,
+                                                            
                                                             actualdate = :actualdate,
+                                                            actuallikelihood = :actuallikelihood,
+                                                            actualtechnical = :actualtechnical,
+                                                            actualschedule = :actualschedule,
+                                                            actualcost = :actualcost,
+                                                            
+                                                            baselinedate = :baselinedate,
+                                                            baselinelikelihood = :baselinelikelihood,
+                                                            baselinetechnical = :baselinetechnical,
+                                                            baselineschedule = :baselineschedule,
+                                                            baselinecost = :baselinecost,
+                                                            
                                                             scheduledate = :scheduledate,
                                                             scheduledlikelihood = :scheduledlikelihood,
                                                             scheduledtechnical = :scheduledtechnical,
@@ -149,25 +161,28 @@
                     $statement->bindValue(':eventtitle' , $event['eventtitle']);
                     $statement->bindValue(':eventownerid' , $event['ownerid']);
                    
-                   /* $statement->bindValue(':actuallikelihood' , $event['actuallikelihood']);
+                    
+                    $statement->bindValue(':actualdate', $event['actualdate']);
+                    $statement->bindValue(':baselinedate', $event['baselinedate']);
+                    $statement->bindValue(':scheduledate', $event['scheduledate']);
+                    
+                    $statement->bindValue(':actuallikelihood' , $event['actuallikelihood']);
                     $statement->bindValue(':actualtechnical', $event['actualtechnical']);
                     $statement->bindValue(':actualschedule', $event['actualschedule']); 
                     $statement->bindValue(':actualcost', $event['actualcost']);                 
-                     */
                     
-                    $statement->bindValue(':actualdate', $event['actualdate']);
-                    $statement->bindValue(':scheduledate', $event['scheduledate']);
-                    
+                    $statement->bindValue(':baselinelikelihood' , $event['baselinelikelihood']);
+                    $statement->bindValue(':baselinetechnical', $event['baselinetechnical']);
+                    $statement->bindValue(':baselineschedule', $event['baselineschedule']); 
+                    $statement->bindValue(':baselinecost', $event['baselinecost']);                 
+                        
                     $statement->bindValue(':scheduledlikelihood' , $event['scheduledlikelihood']);
                     $statement->bindValue(':scheduledtechnical', $event['scheduledtechnical']);
                     $statement->bindValue(':scheduledschedule', $event['scheduledschedule']); 
-                    $statement->bindValue(':scheduledcost', $event['scheduledcost']);                 
-                    /*
-                    $statement->bindValue(':baselinelikelihood' , $event['baselinelikelihood']);
-                    $statement->bindValue(':baselinetechnical', $params['baselinetechnical']);
-                    $statement->bindValue(':baselineschedule', $params['baselineschedule']); 
-                    $statement->bindValue(':baselinecost', $params['baselinecost']);                 
-                      */
+                    $statement->bindValue(':scheduledcost', $event['scheduledcost']);     
+                    
+                    
+                    
                     $statement->execute();
                    
 
@@ -177,6 +192,14 @@
                                                         eventtitle,
                                                         eventownerid,
                                                         actualdate,
+                                                        actuallikelihood,
+                                                        actualtechnical,
+                                                        actualschedule,
+                                                        actualcost,
+                                                        baselinedate,
+                                                        baselinetechnical,
+                                                        baselineschedule,
+                                                        baselinecost,
                                                         scheduledate,  
                                                         scheduledlikelihood,
                                                         scheduledtechnical,
@@ -189,6 +212,14 @@
                                                             :eventtitle,
                                                             :eventownerid,
                                                             :actualdate,
+                                                            :actuallikelihood,
+                                                            :actualtechnical,
+                                                            :actualschedule,
+                                                            :actualcost,
+                                                            :baselinedate,
+                                                            :baselinetechnical,
+                                                            :baselineschedule,
+                                                            :baselinecost,
                                                             :scheduledate,
                                                             :scheduledlikelihood,
                                                             :scheduledtechnical,
@@ -204,24 +235,26 @@
                    
                          
                     $statement->bindValue(':actualdate', $event['actualdate']);
+                    
+                    $statement->bindValue(':baselinedate', $event['baselinedate']);
+           
                     $statement->bindValue(':scheduledate', $event['scheduledate']);
                     
-                   /* $statement->bindValue(':actuallikelihood' , $event['actuallikelihood']);
+                    $statement->bindValue(':actuallikelihood' , $event['actuallikelihood']);
                     $statement->bindValue(':actualtechnical', $event['actualtechnical']);
                     $statement->bindValue(':actualschedule', $event['actualschedule']); 
                     $statement->bindValue(':actualcost', $event['actualcost']);                 
-                     */
+             
+                    $statement->bindValue(':baselinelikelihood' , $event['baselinelikelihood']);
+                    $statement->bindValue(':baselinetechnical', $event['baselinetechnical']);
+                    $statement->bindValue(':baselineschedule', $event['baselineschedule']); 
+                    $statement->bindValue(':baselinecost', $event['baselinecost']);                 
+                    
                     $statement->bindValue(':scheduledlikelihood' , $event['scheduledlikelihood']);
                     $statement->bindValue(':scheduledtechnical', $event['scheduledtechnical']);
                     $statement->bindValue(':scheduledschedule', $event['scheduledschedule']); 
                     $statement->bindValue(':scheduledcost', $event['scheduledcost']);                 
-                    /*
-                    $statement->bindValue(':baselinelikelihood' , $event['baselinelikelihood']);
-                    $statement->bindValue(':baselinetechnical', $params['baselinetechnical']);
-                    $statement->bindValue(':baselineschedule', $params['baselineschedule']); 
-                    $statement->bindValue(':baselinecost', $params['baselinecost']);                 
-                      */
-                   
+                  
                     $statement->execute();
                 }    
                 $this->db->commit();

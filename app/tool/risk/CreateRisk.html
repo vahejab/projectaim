@@ -1,85 +1,90 @@
 <div id="formcontainer" ng-app="Risk" ng-controller="CreateRiskController as ctrl" ng-cloak>
     <get-risk-config></get-risk-config>
     <div id="mycreateform" class="container" type="space" layout-padding="">     
+        <center>
         <form id="form" name="CreateRisk" role="form" ng-submit="ctrl.valid() && ctrl.submit()" novalidate>
-            <table id="details" class="layout" border="1">
-                <tr>
-                    <td class="label">
-                        Title
-                    </td>
-                    <td class="locked">
-                        <div ng-show="ctrl.config.risktitle.done" config="risktitle" webix-ui="risktitle" width="500" height="30" type="text" id="risktitle" name="risktitle"></div>
-                    </td>
-                </tr>
-                <tr>    
-                    <td class="label">
-                        Risk Statement
-                    </td>
-                    <td class="locked">
-                        <div ng-show="ctrl.config.riskstatement.done" config="riskstatement" webix-ui="riskstatement" width="500" height="97" type="textarea" id="riskstatement" name="riskstatement"></div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label">
-                        Context
-                    </td>
-                    <td class="locked">
-                        <div ng-show="ctrl.config.context.done" config="context" webix-ui="context" width="500" height="97" type="textarea" id="context" name="context"></div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label">
-                        Closure Criteria
-                    </td>
-                    <td class="locked">
-                        <div ng-show="ctrl.config.closurecriteria.done" config="closurecriteria" webix-ui="closurecriteria" width="500" height="97" type="textarea" id="closurecriteria" name="closurecriteria"></div>
-                    </td>
-                </tr>
-            </table>
-            <div class="center"><h2>Initial Risk Assessment</h2></div>
-            <div class="nested">
-                <div class="info">
-                    <table id="details" border="1">
-                        <tr>
-                            <td class="label">
-                                Likelihood
-                            </td>
-                            <td class="locked">
-                               <div ng-show="ctrl.config.likelihood.done" config="likelihood"  webix-ui="likelihood" width="30" height="30" type="level" id="likelihood" name="likelihood" maxlength="1"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label" colspan="2">
-                                Consequence
-                            </td>
-                        </tr>
-                         <tr>
-                            <td class="label margin-left">
-                                Technical
-                            </td>
-                            <td class="locked">
-                                <div ng-show="ctrl.config.technical.done" config="technical" webix-ui="technical" width="30" height="30" type="level" id="technical" name="technical" maxlength="1"></div>
-                            </td>
-                        </tr>
-                         <tr>
-                            <td class="label margin-left">
-                                Schedule
-                            </td>
-                            <td class="locked">
-                                <div ng-show="ctrl.config.schedule.done" config="schedule" webix-ui="schedule" width="30" height="30" type="level" id="schedule" name="schedule" maxlength="1"></div>
-                            </td>
-                        </tr>
-                         <tr>
-                            <td class="label margin-left">
-                                Cost
-                            </td>
-                            <td class="locked">
-                               <div ng-show="ctrl.config.cost.done" config="cost" webix-ui="cost" width="30" height="30" type="level" id="cost" name="cost" maxlength="1"></div>
-                            </td>
-                        </tr>
-                    </table>
-                    <div id="level" name="level"></div>
-                </div> 
+                <table class="layout" border="1">
+                    <tr>
+                        <td class="label" bgcolor="#0038a8" style="text-align: left">
+                            Title
+                        </td>
+                        <td class="locked">
+                            <!--div ng-show="ctrl.config.risktitle.done" config="risktitle" webix-ui="risktitle" width="500" height="30" type="text" id="risktitle" name="risktitle"></div-->
+                            <input type="text" value="{{ctrl.risk.risktitle}}" ng-model="ctrl.risk.risktitle" width="500" height="30" id="risktitle" name="risktitle" />
+                        </td>
+                    </tr>
+                    <tr>    
+                        <td class="label" bgcolor="#0038a8" style="text-align: left">
+                            Risk Statement
+                        </td>
+                        <td class="locked">
+                            <!--div ng-show="ctrl.config.riskstatement.done" config="riskstatement" webix-ui="riskstatement" width="500" height="97" type="textarea" id="riskstatement" name="riskstatement"></div-->
+                            <input type="textarea" value="{{ctrl.risk.riskstatement}}" width="500" height="97" id="riskstatement" name="riskstatement" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label" bgcolor="#0038a8" style="text-align: left">
+                            Context
+                        </td>
+                        <td class="locked">
+                            <!--div ng-show="ctrl.config.context.done" config="context" webix-ui="context" width="500" height="97" type="textarea" id="context" name="context"></div-->
+                            <input type="textarea"  value="{{ctrl.risk.context}}" id="context" name="context" width="500" height="97" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label" bgcolor="#0038a8" style="text-align: left">
+                            Closure Criteria
+                        </td>
+                        <td class="locked">
+                            <!--div ng-show="ctrl.config.closurecriteria.done" config="closurecriteria" webix-ui="closurecriteria" width="500" height="97" type="textarea" id="closurecriteria" name="closurecriteria"></div-->
+                            <input type="text" value="{{ctrl.risk.closurecriteria}}" id="closurecriteria" name="context" width="500" height="97" />
+                    </tr>
+                </table>                                                                              
+                <div class="center"><h2>Initial Risk Assessment</h2></div>
+                <table id="details" border="1">
+                    <tr>
+                        <td  bgcolor="#0038a8" class="label">
+                            Likelihood
+                        </td>
+                        <td class="locked">
+                           <!--div ng-show="ctrl.config.likelihood.done" config="likelihood"  webix-ui="likelihood" width="30" height="30" type="level" id="likelihood" name="likelihood" maxlength="1"></div-->
+                           <input type="text" value="{{ctrl.risk.likelihood}}" id="likelihood" name="likelihood" width="30" height="30" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td  bgcolor="#0038a8" class="label" colspan="2">
+                            Consequence
+                        </td>
+                    </tr>
+                     <tr>
+                        <td  bgcolor="#0038a8" class="label margin-left">
+                            Technical
+                        </td>
+                        <td class="locked">
+                            <!--div ng-show="ctrl.config.technical.done" config="technical" webix-ui="technical" width="30" height="30" type="level" id="technical" name="technical" maxlength="1"></div-->
+                            <input type="text" value="{{ctrl.risk.technical}}" id="technical" name="technical" width="30" height="30" />
+                        </td>
+                    </tr>
+                     <tr>
+                        <td  bgcolor="#0038a8" class="label margin-left">
+                            Schedule
+                        </td>
+                        <td class="locked">
+                            <!--div ng-show="ctrl.config.schedule.done" config="schedule" webix-ui="schedule" width="30" height="30" type="level" id="schedule" name="schedule" maxlength="1"></div-->
+                            <input type="text" value="{{ctrl.risk.schedule}}" id="schedule" name="schedule" width="30" height="30" />
+                        </td>
+                    </tr>
+                     <tr>
+                        <td  bgcolor="#0038a8" class="label margin-left">
+                            Cost
+                        </td>
+                        <td class="locked">
+                           <!--div ng-show="ctrl.config.cost.done" config="cost" webix-ui="cost" width="30" height="30" type="level" id="cost" name="cost" maxlength="1"></div-->
+                           <input type="text" value="{{ctrl.risk.cost}}" id="cost" name="cost" width="30px" height="30" />
+                        </td>
+                    </tr>
+                </table>
+                <div id="level" name="level"></div>
                 &nbsp;&nbsp;  
                 <div class="info" ng-if="ctrl.setup.done">
                     <table class="matrix" id="riskmatrix">
@@ -101,13 +106,12 @@
                     </tbody></table>
                 </div>
                  &nbsp;&nbsp;   
+            <br />
+            <div class="center">
+                <button id="submit" type="submit" disabled="disabled" class="raised primary">Create Risk</button>
+                </br />
+                <span ng-bind-html="msg">{{msg}}</span>
             </div>
-        <br />
-        <div class="center">
-            <button id="submit" type="submit" disabled="disabled" class="raised primary">Create Risk</button>
-            </br />
-            <span ng-bind-html="msg">{{msg}}</span>
-        </div>
-        </form>
+    </form>
     </div>
 </div>

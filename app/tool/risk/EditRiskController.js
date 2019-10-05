@@ -11,8 +11,12 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.lastEventIdSaved = 0;
         ctrl.event = [];
         ctrl.evts = [];
+        ctrl.evtCopy = [];
         ctrl.risk = {};
-        
+        ctrl.oldlikelihood=0;
+        ctrl.oldtechnical=0;
+        ctrl.oldschedule=0;
+        ctrl.oldcost=0;
         ctrl.initDone = false;
         ctrl.disabled = [{value: true},{value: false},{value: true},{value: true},{value: true},{value: true}];
         
@@ -50,7 +54,22 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                 4:{opened: false},
                 5:{opened: false}  
               }
-          }
+              
+              ctrl.baseline = {
+                1:{opened: false},
+                2:{opened: false},
+                3:{opened: false},
+                4:{opened: false},
+                5:{opened: false}  
+              }
+               
+          }  
+          
+          ctrl.openBaseline = function(evt) {
+            ctrl.hidepopups();
+            ctrl.baseline[evt].opened = true;
+          };
+
           
           ctrl.openActual = function(evt) {
             ctrl.hidepopups();
@@ -141,42 +160,92 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                 return {level: 'L ' + l + '-' + cons, likelihood: l, technical: t, schedule: s, cost: c, cls: 'low', threshold: risk};
         }
         
-        ctrl.saveEvents = function(){ 
+        ctrl.copyEvent = function(){
             ctrl.evts = [];  
             ctrl.evts[0] = {
                 eventid : 0,
                 eventtitle : 'Risk Identified',
                 ownerid : ctrl.risk.owner,
-                actualdate : ctrl.risk.assessmentdate,
+                
+                actualdate: ctrl.risk.assessmentdate,
+                actuallikelihood : ctrl.risk.likelihood,
+                actualtechnical : ctrl.risk.technical,
+                actualschedule : ctrl.risk.schedule,
+                actualcost : ctrl.risk.cost,
+      
+                
                 scheduledate : ctrl.risk.assessmentdate,
                 scheduledlikelihood : ctrl.risk.likelihood,
                 scheduledtechnical : ctrl.risk.technical,
                 scheduledschedule : ctrl.risk.schedule,
-                scheduledcost : ctrl.risk.cost
-            }
-            evtCopy = ctrl.event.concat();                                    
-            for (var idx = 1; idx <= ctrl.lastEventIdSaved; idx++)
-            {
-                ctrl.evts.push(evtCopy[idx]);
-                ctrl.evts[idx].eventid = idx;
-                act = new Date(evtCopy[idx].actualdate);
-                y = act.getFullYear();
-                m = act.getMonth()+1;
-                d = act.getDate();
-                ctrl.evts[idx].actualdate = y+((m<10)?'-0'+m:'-'+m)+((d<10)?'-0'+d:'-'+d);                
+                scheduledcost : ctrl.risk.cost,
                 
-                sch = new Date(evtCopy[idx].scheduledate);
-                y = sch.getFullYear();
-                m = sch.getMonth()+1;
-                d = sch.getDate();
-                ctrl.evts[idx].scheduledate = y+((m<10)?'-0'+m:'-'+m)+((d<10)?'-0'+d:'-'+d);
+                baselinedate : ctrl.risk.assessmentdate,
+                baselinelikelihood : ctrl.risk.likelihood,
+                baselinetechnical : ctrl.risk.technical,
+                baselineschedule : ctrl.risk.schedule,
+                baselinecost : ctrl.risk.cost
+            }
+
+
+            ctrl.evtCopy[0] = JSON.parse(JSON.stringify(ctrl.evts[0]));                             
+            for (var idx = 1; idx <= ctrl.lastEventIdSaved; idx++)
+            {            
+                ctrl.evtCopy[idx] = JSON.parse(JSON.stringify(ctrl.event[idx]));
+            }
+        }
+                    
+        ctrl.saveEvents = function(){ 
+        
+            ctrl.copyEvent();
+            for (var idx = 1; idx <= ctrl.lastEventIdSaved; idx++)
+            {            
+                ctrl.evtCopy[idx].baselinedate = ctrl.evtCopy[idx].scheduledate || null;
+                ctrl.evtCopy[idx].baselinelikelihood = ctrl.evtCopy[idx].scheduledlikelihood;
+                ctrl.evtCopy[idx].baselinetechnical = ctrl.evtCopy[idx].scheduledtechnical;
+                ctrl.evtCopy[idx].baselineschedule = ctrl.evtCopy[idx].scheduledschedule;
+                ctrl.evtCopy[idx].baselinecost = ctrl.evtCopy[idx].scheduledcost;
+        
+                ctrl.evtCopy[idx].actualdate = ctrl.evtCopy[idx].scheduledate || null;
+                ctrl.evtCopy[idx].actuallikelihood = ctrl.evtCopy[idx].scheduledlikelihood;
+                ctrl.evtCopy[idx].actualtechnical = ctrl.evtCopy[idx].scheduledtechnical;
+                ctrl.evtCopy[idx].actualschedule = ctrl.evtCopy[idx].scheduledschedule;
+                ctrl.evtCopy[idx].actualcost = ctrl.evtCopy[idx].scheduledcost;
+   
+                ctrl.evts.push(ctrl.evtCopy[idx]);
+                ctrl.evts[idx].eventid = idx;
+                if (ctrl.evtCopy[idx].actualdate != null)
+                {  
+                    act = new Date(ctrl.evtCopy[idx].actualdate);
+                    y = act.getFullYear();
+                    m = act.getMonth()+1;
+                    d = act.getDate();
+                    ctrl.evts[idx].actualdate = y+((m<10)?'-0'+m:'-'+m)+((d<10)?'-0'+d:'-'+d);              
+                }
+                
+                if (ctrl.evtCopy[idx].baselinedate != null)
+                {  
+                    act = new Date(ctrl.evtCopy[idx].baselinedate);
+                    y = act.getFullYear();
+                    m = act.getMonth()+1;
+                    d = act.getDate();
+                    ctrl.evts[idx].baselinedate = y+((m<10)?'-0'+m:'-'+m)+((d<10)?'-0'+d:'-'+d);                
+                }
+                
+                if (ctrl.evtCopy[idx].scheduledate != null)
+                {
+                    sch = new Date(ctrl.evtCopy[idx].scheduledate);
+                    y = sch.getFullYear();
+                    m = sch.getMonth()+1;
+                    d = sch.getDate();
+                    ctrl.evts[idx].scheduledate = y+((m<10)?'-0'+m:'-'+m)+((d<10)?'-0'+d:'-'+d);
+                }
             }   
             payload = {riskid: ctrl.risk.riskid, events: ctrl.evts}
-        
+
             return $http.put('/api/risks/'+ ctrl.risk.riskid + '/events', payload).then(function(response){
                     if (response.data.Succeeded){
                         ctrl.msg = response.data.Result;
-                        return response.data.Result;
                     }
                     else{
                          ctrl.msg = $sce.trustAsHtml(response.data);
@@ -188,20 +257,60 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         
         ctrl.rebindDates = function(){
           for(e = 1; e <= ctrl.lastEventIdSaved; e++){
-                ymd = ctrl.event[e].actualdate.split('-');
-                y = ymd[0];
-                m = ymd[1];
-                d = ymd[2];
-                ctrl.event[e].actualdate = new Date(y,m-1,d);
-                
-                ymd = ctrl.event[e].scheduledate.split('-');
-                y = ymd[0];
-                m = ymd[1];
-                d = ymd[2];
-                ctrl.event[e].scheduledate = new Date(y,m-1,d);                  
+            ctrl.rebindDate(e);                    
           }        
+        } 
+   
+        ctrl.rebindbaseline = function(e){
+            if (ctrl.evtCopy[e] && ctrl.evtCopy[e].baselinedate != null)
+            {
+                    ymd = ctrl.evtCopy[e].baselinedate.split('-');
+                    y = ymd[0];
+                    m = ymd[1];
+                    d = ymd[2];
+                    ctrl.event[e].baselinedate = new Date(y,m-1,d);      
+            }          
         }
         
+        ctrl.rebindschedule = function(e){
+            if (ctrl.evtCopy[e] && ctrl.evtCopy[e].scheduledate != null)
+            {
+                    ymd = ctrl.evtCopy[e].scheduledate.split('-');
+                    y = ymd[0];
+                    m = ymd[1];
+                    d = ymd[2];
+                    ctrl.event[e].scheduledate = new Date(y,m-1,d);          
+            }
+        }
+        
+        ctrl.rebindactual = function(e){
+            if (ctrl.evtCopy[e] && ctrl.evtCopy[e].actualdate != null)
+            {
+                    ymd = ctrl.evtCopy[e].actualdate.split('-');
+                    y = ymd[0];
+                    m = ymd[1];
+                    d = ymd[2];
+                    ctrl.event[e].actualdate = new Date(y,m-1,d);          
+            }
+        }    
+        
+        ctrl.rebindDate = function(e){
+            ctrl.rebindschedule(e);
+            ctrl.rebindactual(e);
+            ctrl.rebindbaseline(e);
+        }        
+        
+
+        ctrl.setBaselineDate = function(evt){
+            if (typeof ctrl.event[evt].baselinedate === 'undefined')
+            {
+                dt = ctrl.event[evt].scheduledate;
+                y = dt.getFullYear();
+                m = dt.getMonth();
+                d = dt.getDate();
+                ctrl.event[evt].baselinedate = new Date(y,m,d); 
+            } 
+        }
         ctrl.valid = function(){
             return !(ctrl.risk.risktitle.trim() == '' && ctrl.risk.riskstatement.trim() == '' && ctrl.risk.context.trim() == '');
         }
@@ -234,6 +343,11 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                     if (ValidationService.riskIsValid(l, t, s, c))
                         DOMops.displayLevel(ctrl.riskMatrix[l][cons], l, c, evt, $scope);
             }
+        }
+        
+        ctrl.validateDisplayLevel = function(evt){
+            ctrl.validateEvent(evt); 
+            ctrl.displayLevel(evt);
         }
         
         ctrl.validateEvent = function(evt){
@@ -330,8 +444,11 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             ctrl.validateEvent(evt-1);
         }
         
+        
         ctrl.getEvents = function(riskid){
+             ctrl.evts = [];
              ctrl.event = [];
+             ctrl.evtCopy = [];
              for (evt = 0; evt <= 5; evt++)
                 DOMops.clearLevel(evt);
              return $http.get('api/risks/'+riskid+'/events').then(function(response){
@@ -355,11 +472,14 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                          else
                             ctrl.lastEventIdSaved = 0;
                          ctrl.add(ctrl.lastEventIdSaved);
+                         
+                         ctrl.copyEvent();
+                         
                          ctrl.eventsdone = true;   
                          ctrl.initDone  = true;
                     }
                     return response.data.Result;
-               }).then(() => {ctrl.rebindDates();});
+               });//then(() => {ctrl.rebindDates();});
         }
        
         ctrl.getRiskDetails = function(nav){
