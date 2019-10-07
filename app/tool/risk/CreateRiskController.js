@@ -71,7 +71,7 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
 
              
     ctrl.valid = function(){          
-        return ValidationService.valid(ctrl, ctrl.fields);
+        return ValidationService.valid($scope, ctrl.fields);
     }
     
     ctrl.getTextValue = function(obj, type, field){

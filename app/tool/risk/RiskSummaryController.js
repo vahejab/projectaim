@@ -4,6 +4,7 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
         ctrl.CommonService = CommonService;
         ctrl.risks = [];                          
         ctrl.risk = {
+                editriskid: '',
                 riskid: 0,
                 risktitletitle: '',
                 riskstatement: '',
@@ -77,14 +78,16 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
             var xVal, yVal;
             ctrl.focus = [];
         
+        
+        
+        
                 
         ctrl.gridOptions = {
           columnDefs: [
-                            {headerName: "Edit", field: ""},
-                            {headerName: "ID", field: "riskid"},
+                            {headerName: "Risk ID", field: "riskid", cellRenderer: editRisk},
                             {headerName: "Risk Title", field: "risktitle"},
-                            {headerName: "Risk", field: "riskvalue", width: 200, height: 500,  filter: 'agNumberColumnFilter', cellRenderer: percentCellRenderer},
-                            {
+                            {headerName: "Risk", field: "riskvalue",  filter: 'agNumberColumnFilter', cellRenderer: percentCellRenderer},
+                            /*{
                                 headerName: 'Line Chart',
                                 field: 'CloseTrends',
                                 width: 115,
@@ -99,14 +102,13 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
                                 resizable: false,
                                 suppressSizeToFit: true,
                                 cellRenderer: riskWaterfallRenderer
-                            },
+                            }, */
                             {headerName: "Creation Date", field: "assessmentdate"},
                             {headerName: "Creator", field: "creator"},
                             {headerName: "Owner", field: "owner"},
                             {headerName: "Approver", field: "approver"}
           ],
           rowSelection: 'multiple',
-          rowHeight: 150,
           suppressRowClickSelection: false,
           defaultColDef: {
                 sortable: true,
@@ -119,8 +121,9 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
           }
         };
         
-        
-        
+        function editRisk(params){
+            return '<a href=#!/risk/edit/'+params.data.riskid+'>'+ params.data.riskid +'</a>'
+        }
         
         function lineChartLineRenderer() {
         }
