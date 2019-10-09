@@ -319,6 +319,17 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                 });
         }
         
+               
+        
+        
+        ctrl.riskValid = function(evt, field){       
+                l = ctrl.event[evt][field+'likelihood'];
+                t = ctrl.event[evt][field+'technical'];
+                s = ctrl.event[evt][field+'schedule'];
+                c = ctrl.event[evt][field+'cost'];
+                return ValidationService.riskIsValid(l,t,s,c);
+        }       
+        
         ctrl.displayLevel = function(evt, field){
             if (ctrl.event[evt] && ctrl.event[evt].hasOwnProperty(field+'likelihood') && ctrl.event[evt].hasOwnProperty(field+'technical') && ctrl.event[evt].hasOwnProperty(field+'schedule') && ctrl.event[evt].hasOwnProperty(field+'cost') && evt <= ctrl.lastEventIdSaved +1 /*|| ValidationService.evtValid(evt, $scope)*/){
                 l = ctrl.event[evt][field+'likelihood'];
