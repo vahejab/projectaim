@@ -79,14 +79,18 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
             ctrl.focus = [];
         
         
-        
-        
-                
+         angular.element($window).on('resize', function(){
+          if (ctrl.gridOptions.api)
+            ctrl.gridOptions.api.sizeColumnsToFit();
+         });             
         ctrl.gridOptions = {
+         defaultColDef: {
+            resizable: true
+         },
           columnDefs: [
-                            {headerName: "Risk ID", field: "riskid", cellRenderer: editRisk},
-                            {headerName: "Risk Title", field: "risktitle"},
-                            {headerName: "Risk", field: "riskvalue",  filter: 'agNumberColumnFilter', cellRenderer: percentCellRenderer},
+                            {resizable: true, headerName: "Risk ID", field: "riskid", cellRenderer: editRisk},
+                            {resizable: true, headerName: "Risk Title", field: "risktitle"},
+                            {resizable: true, headerName: "Risk", field: "riskvalue",  filter: 'agNumberColumnFilter', cellRenderer: percentCellRenderer},
                             /*{
                                 headerName: 'Line Chart',
                                 field: 'CloseTrends',
@@ -103,21 +107,24 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
                                 suppressSizeToFit: true,
                                 cellRenderer: riskWaterfallRenderer
                             }, */
-                            {headerName: "Creation Date", field: "assessmentdate"},
-                            {headerName: "Creator", field: "creator"},
-                            {headerName: "Owner", field: "owner"},
-                            {headerName: "Approver", field: "approver"}
+                            {resizable: true, headerName: "Creation Date", field: "assessmentdate"},
+                            {resizable: true, headerName: "Creator", field: "creator"},
+                            {resizable: true, headerName: "Owner", field: "owner"},
+                            {resizable: true, headerName: "Approver", field: "approver"}
           ],
           rowSelection: 'multiple',
           suppressRowClickSelection: false,
           defaultColDef: {
                 sortable: true,
-                filter: true,
+                filter: true,      
                 resize: true
           },
           rowData: ctrl.risks,
           components:{
             lineChartLineRenderer: lineChartLineRenderer,
+          },
+          onFirstDataRendered: function(params) {
+                params.api.sizeColumnsToFit();
           }
         };
         

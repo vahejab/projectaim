@@ -446,32 +446,32 @@
                         <div class="td header">
                             Level
                         </div>
-                        <div name="level" evt="{{event}}" class="td value level{{event}} {{ctrl.event[event].cls}}">
+                        <div name="actuallevel" evt="{{event}}" class="td value level{{event}} {{ctrl.event[event].cls}}">
                             <div ng-init="ctrl.displayLevel(event)" ng-bind-html="ctrl.event[event].levelhtml.value"></div>
                         </div>
                         <div class="td header">
                             Likelihood
                         </div>
                         <div class="td value center nopadding">
-                            <input class="level" type="text" maxlength="1" ng-disabled="event != ctrl.lastEventIdSaved+1"  ng-change="ctrl.validateDisplayLevel(event)" ng-model="ctrl.event[event].actuallikelihood" />
+                            <input class="level" type="text" maxlength="1" ng-disabled="event != ctrl.lastEventIdSaved+1"  ng-change="ctrl.validateDisplayLevel(event, 'actual')" ng-model="ctrl.event[event].actuallikelihood" />
                         </div>                                                                                              
                         <div class="td header">
                             Technical
                         </div>                                                                                                                
                         <div class="td value center nopadding">
-                           <input class="level" type="text" maxlength="1" ng-disabled="event != ctrl.lastEventIdSaved+1"  ng-change="ctrl.validateDisplayLevel(event)" ng-model="ctrl.event[event].actualtechnical" />
+                           <input class="level" type="text" maxlength="1" ng-disabled="event != ctrl.lastEventIdSaved+1"  ng-change="ctrl.validateDisplayLevel(event, 'actual')" ng-model="ctrl.event[event].actualtechnical" />
                         </div>
                         <div class="td header">
                             Schedule
                         </div>
                         <div class="td value center nopadding">
-                             <input class="level" type="text" maxlength="1" ng-disabled="event != ctrl.lastEventIdSaved+1" ng-change="ctrl.validateDisplayLevel(event)" ng-model="ctrl.event[event].actualschedule" />
+                             <input class="level" type="text" maxlength="1" ng-disabled="event != ctrl.lastEventIdSaved+1" ng-change="ctrl.validateDisplayLevel(event, 'actual')" ng-model="ctrl.event[event].actualschedule" />
                         </div>
                         <div class="td header">
                             Cost
                         </div>
                         <div class="td value center nopadding">
-                             <input class="level" type="text" maxlength="1" ng-disabled="event != ctrl.lastEventIdSaved+1" ng-change="ctrl.validateDisplayLevel(event)" ng-model="ctrl.event[event].actualcost" />
+                             <input class="level" type="text" maxlength="1" ng-disabled="event != ctrl.lastEventIdSaved+1" ng-change="ctrl.validateDisplayLevel(event, 'actual')" ng-model="ctrl.event[event].actualcost" />
                         </div>
                         <div class="td header">
                             Schedule
@@ -480,7 +480,7 @@
                          <!--input type='text' id="schedule{event}}" class="datepicker-here" data-language='en' /-->         
                             <p class="input-group">           
                                 <input ng-if="!(ctrl.lastEventIdSaved >= event - 1)" class="date-input" ng-disabled="event != ctrl.lastEventIdSaved+1" />
-                                  <input ng-change="ctrl.validateEvent(event); ctrl.setBaselineDate(event)"  ng-if="ctrl.lastEventIdSaved >= event - 1"  ng-disabled="event != ctrl.lastEventIdSaved+1" ng-model="ctrl.event[event].scheduledate" type="text" class="evt{{event}} schedule date-input" uib-datepicker-popup="M/dd/yyyy" is-open="ctrl.schedule[event].opened" datepicker-options="ctrl.event[event].scheduledateOptions" ng-required="true" close-text="Close" />
+                                  <input ng-change="ctrl.validateEvent(event);"  ng-if="ctrl.lastEventIdSaved >= event - 1"  ng-disabled="event != ctrl.lastEventIdSaved+1" ng-model="ctrl.event[event].scheduledate" type="text" class="evt{{event}} schedule date-input" uib-datepicker-popup="M/dd/yyyy" is-open="ctrl.schedule[event].opened" datepicker-options="ctrl.event[event].scheduledateOptions" ng-required="true" close-text="Close" />
                                   <span class="input-group-btn">
                                     <button type="button" class="btn btn-secondary" ng-disabled="event != ctrl.lastEventIdSaved+1" ng-click="ctrl.openSchedule(event)">
                                       <i class="fa-svg-icon">
@@ -493,32 +493,32 @@
                         <div class="td header">
                             Level
                         </div>
-                        <div name="level" evt="{{event}}" class="td value level{{event}} {{ctrl.event[event].cls}}">
+                        <div name="scheduledlevel" evt="{{event}}" class="td value level{{event}} {{ctrl.event[event].cls}}">
                             <div ng-init="ctrl.displayLevel(event)" ng-bind-html="ctrl.event[event].levelhtml.value"></div>
                         </div>
                         <div class="td header">
                             Likelihood
                         </div>
                         <div class="td value center nopadding" >
-                            <input class="level" type="text" maxlength="1" ng-disabled="event != ctrl.lastEventIdSaved+1"  ng-change="ctrl.validateDisplayLevel(event); ctrl.setBaselineLikelihood(event)" ng-model="ctrl.event[event].scheduledlikelihood" />
+                            <input class="level" type="text" maxlength="1" ng-disabled="event != ctrl.lastEventIdSaved+1"  ng-change="ctrl.validateDisplayLevel(event, 'scheduled'); ctrl.setBaselineLikelihood(event)" ng-model="ctrl.event[event].scheduledlikelihood" />
                         </div>                                                                                              
                         <div class="td header">
                             Technical
                         </div>                                                                                                                
                         <div class="td value center nopadding">
-                           <input class="level" type="text" maxlength="1" ng-disabled="event != ctrl.lastEventIdSaved+1"  ng-change="ctrl.validateDisplayLevel(event); ctrl.setBaselineTechnical(event)" ng-model="ctrl.event[event].scheduledtechnical" />
+                           <input class="level" type="text" maxlength="1" ng-disabled="event != ctrl.lastEventIdSaved+1"  ng-change="ctrl.validateDisplayLevel(event, 'scheduledd'); ctrl.setBaselineTechnical(event)" ng-model="ctrl.event[event].scheduledtechnical" />
                         </div>
                         <div class="td header">
                             Schedule
                         </div>
                         <div class="td value center nopadding">
-                             <input class="level" type="text" maxlength="1" ng-disabled="event != ctrl.lastEventIdSaved+1" ng-change="ctrl.validateDisplayLevel(event); ctrl.setBaselineSchedule(event)" ng-model="ctrl.event[event].scheduledschedule" />
+                             <input class="level" type="text" maxlength="1" ng-disabled="event != ctrl.lastEventIdSaved+1" ng-change="ctrl.validateDisplayLevel(event, 'scheduled'); ctrl.setBaselineSchedule(event)" ng-model="ctrl.event[event].scheduledschedule" />
                         </div>
                         <div class="td header">
                             Cost
                         </div>
                         <div class="td value center nopadding">
-                             <input class="level" type="text" maxlength="1" ng-disabled="event != ctrl.lastEventIdSaved+1" ng-change="ctrl.validateDisplayLevel(event); ctrl.setBaselineCost(event)" ng-model="ctrl.event[event].scheduledcost" />
+                             <input class="level" type="text" maxlength="1" ng-disabled="event != ctrl.lastEventIdSaved+1" ng-change="ctrl.validateDisplayLevel(event, 'scheduled'); ctrl.setBaselineCost(event)" ng-model="ctrl.event[event].scheduledcost" />
                         </div>
                         <div class="td header">
                             Baseline
@@ -527,7 +527,7 @@
                          <!--input type='text' id="schedule{event}}" class="datepicker-here" data-language='en' /-->         
                             <p class="input-group">           
                                 <input ng-if="!(ctrl.lastEventIdSaved >= event - 1)" ng-disabled="event != ctrl.lastEventIdSaved+1"  class="date-input" />
-                                  <input ng-change="ctrl.validateEvent(event)"  ng-disabled="event != ctrl.lastEventIdSaved+1"  ng-if="ctrl.lastEventIdSaved >= event - 1" ng-model="ctrl.event[event].baselinedate" type="text" class="evt{{event}} baseline date-input" uib-datepicker-popup="M/dd/yyyy" is-open="ctrl.baseline[event].opened" datepicker-options="ctrl.event[event].baselinedateOptions" ng-required="true" close-text="Close" />
+                                  <input ng-change="ctrl.validateEvent(event); ctrl.setScheduleDate(event)"  ng-disabled="event != ctrl.lastEventIdSaved+1"  ng-if="ctrl.lastEventIdSaved >= event - 1" ng-model="ctrl.event[event].baselinedate" type="text" class="evt{{event}} baseline date-input" uib-datepicker-popup="M/dd/yyyy" is-open="ctrl.baseline[event].opened" datepicker-options="ctrl.event[event].baselinedateOptions" ng-required="true" close-text="Close" />
                                   <span class="input-group-btn">
                                     <button type="button" class="btn btn-secondary" ng-disabled="event != ctrl.lastEventIdSaved+1"  ng-click="ctrl.openBaseline(event)">
                                       <i class="fa-svg-icon">
@@ -540,32 +540,32 @@
                         <div class="td header">
                             Level
                         </div>
-                        <div name="level" evt="{{event}}" class="td value level{{event}} {{ctrl.event[event].cls}}">
+                        <div name="baselinelevel" evt="{{event}}" class="td value level{{event}} {{ctrl.event[event].cls}}">
                             <div ng-init="ctrl.displayLevel(event)" ng-bind-html="ctrl.event[event].levelhtml.value"></div>
                         </div>
                         <div class="td header">
                             Likelihood
                         </div>
                         <div class="td value center nopadding">
-                            <input class="level" type="text" maxlength="1" ng-disabled="event != ctrl.lastEventIdSaved+1"   ng-change="ctrl.validateDisplayLevel(event); (!ctrl.oldlikelihood) && (ctrl.event[event].scheduledlikelihood = ctrl.event[event].baselinelikelihood)" ng-init="ctrl.oldlikelihood=0" ng-focus="ctrl.oldlikelihood = ctrl.event[event].baselinelikelihood" ng-model="ctrl.event[event].baselinelikelihood" />
+                            <input class="level" type="text" maxlength="1" ng-disabled="event != ctrl.lastEventIdSaved+1"   ng-change="ctrl.validateDisplayLevel(event, 'baseline'); (!ctrl.oldlikelihood) && (ctrl.event[event].scheduledlikelihood = ctrl.event[event].baselinelikelihood)" ng-init="ctrl.oldlikelihood=0" ng-focus="ctrl.oldlikelihood = ctrl.event[event].baselinelikelihood" ng-model="ctrl.event[event].baselinelikelihood" />
                         </div>                                                                                              
                         <div class="td header">
                             Technical
                         </div>                                                                                                                
                         <div class="td value center nopadding"> 
-                           <input class="level" type="text" maxlength="1"  ng-disabled="event != ctrl.lastEventIdSaved+1"  ng-change="ctrl.validateDisplayLevel(event); (!ctrl.oldtechnical)  && (ctrl.event[event].scheduledtechnical = ctrl.event[event].baselinetechnical)"  ng-init="ctrl.oldtechnical=0" ng-focus="ctrl.oldtechnical = ctrl.event[event].baselinetechnical" ng-model="ctrl.event[event].baselinetechnical" />
+                           <input class="level" type="text" maxlength="1"  ng-disabled="event != ctrl.lastEventIdSaved+1"  ng-change="ctrl.validateDisplayLevel(event, 'baseline'); (!ctrl.oldtechnical)  && (ctrl.event[event].scheduledtechnical = ctrl.event[event].baselinetechnical)"  ng-init="ctrl.oldtechnical=0" ng-focus="ctrl.oldtechnical = ctrl.event[event].baselinetechnical" ng-model="ctrl.event[event].baselinetechnical" />
                         </div>
                         <div class="td header">
                             Schedule
                         </div>
                         <div class="td value center nopadding">                                                                                                           
-                             <input class="level" type="text" maxlength="1" ng-disabled="event != ctrl.lastEventIdSaved+1" ng-change="ctrl.validateDisplayLevel(event); (!ctrl.oldschedule) && (ctrl.event[event].scheduledschedule = ctrl.event[event].baselineschedule)" ng-init="ctrl.oldschedule=0" ng-focus="ctrl.oldschedule = ctrl.event[event].baselineschedule" ng-model="ctrl.event[event].baselineschedule" />
+                             <input class="level" type="text" maxlength="1" ng-disabled="event != ctrl.lastEventIdSaved+1" ng-change="ctrl.validateDisplayLevel(event, 'baseline'); (!ctrl.oldschedule) && (ctrl.event[event].scheduledschedule = ctrl.event[event].baselineschedule)" ng-init="ctrl.oldschedule=0" ng-focus="ctrl.oldschedule = ctrl.event[event].baselineschedule" ng-model="ctrl.event[event].baselineschedule" />
                         </div>
                         <div class="td header">
                             Cost
                         </div>
                         <div class="td value center nopadding">
-                             <input class="level" type="text" maxlength="1" ng-disabled="event != ctrl.lastEventIdSaved+1"  ng-change="ctrl.validateDisplayLevel(event); (!ctrl.oldcost) && (ctrl.event[event].scheduledcost = ctrl.event[event].baselinecost)" ng-init="ctrl.oldcost=0" ng-focus="ctrl.oldcost = ctrl.event[event].baselinecost" ng-model="ctrl.event[event].baselinecost" />
+                             <input class="level" type="text" maxlength="1" ng-disabled="event != ctrl.lastEventIdSaved+1"  ng-change="ctrl.validateDisplayLevel(event, 'baseline'); (!ctrl.oldcost) && (ctrl.event[event].scheduledcost = ctrl.event[event].baselinecost)" ng-init="ctrl.oldcost=0" ng-focus="ctrl.oldcost = ctrl.event[event].baselinecost" ng-model="ctrl.event[event].baselinecost" />
                         </div>
                         <div class="td header" style="min-width: 30px">
                             Save

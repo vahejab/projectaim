@@ -65,19 +65,43 @@ angular.module('Risk').service("ValidationService", function() {
     
     
     commonFunctions.evtValid = function(evt, scope){
-         var valid = !(scope.ctrl.event[evt] == {}) && ((scope.ctrl.event[evt].eventtitle || "") != ""   &&
+         var valid = (!(scope.ctrl.event[evt] == {}) && ((scope.ctrl.event[evt].eventtitle || "") != ""   &&
                       (scope.ctrl.event[evt].ownerid || "") != "" && 
-                      ((scope.ctrl.event[evt].actualdate || "") != "" ||
+                      ((scope.ctrl.event[evt].actualdate || "") != "" &&
                       (scope.ctrl.event[evt].scheduledate || "") != "") &&
+                      (scope.ctrl.event[evt].baselinedate || "") != "") && 
+                      
                       (scope.ctrl.event[evt].scheduledlikelihood ||  "") != ""  &&
                       (scope.ctrl.event[evt].scheduledtechnical ||  "") != ""  &&
                       (scope.ctrl.event[evt].scheduledschedule ||  "") != ""  &&
                       (scope.ctrl.event[evt].scheduledcost ||  "") != ""  &&
                       
+                      (scope.ctrl.event[evt].baselinelikelihood ||  "") != ""  &&
+                      (scope.ctrl.event[evt].baselinetechnical ||  "") != ""  &&
+                      (scope.ctrl.event[evt].baselineschedule ||  "") != ""  &&
+                      (scope.ctrl.event[evt].baselinecost ||  "") != ""  &&
+                      
+                      (scope.ctrl.event[evt].actuallikelihood ||  "") != ""  &&
+                      (scope.ctrl.event[evt].actualtechnical ||  "") != ""  &&
+                      (scope.ctrl.event[evt].actualschedule ||  "") != ""  &&
+                      (scope.ctrl.event[evt].actualcost ||  "") != ""  &&
+                      
                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].scheduledlikelihood) &&
                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].scheduledtechnical) &&
                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].scheduledschedule) &&
-                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].scheduledcost));
+                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].scheduledcost) &&
+                      
+                      
+                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].baselinelikelihood) &&
+                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].baselinetechnical) &&
+                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].baselineschedule) &&
+                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].baselinecost) &&
+                      
+                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].actuallikelihood) &&
+                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].actualtechnical) &&
+                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].actualschedule) &&
+                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].actualcost)
+         );
                       
          commonFunctions.hasData(evt, scope);         
          scope.ctrl.event[evt].valid = valid;

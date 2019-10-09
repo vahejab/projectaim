@@ -133,11 +133,11 @@ angular.module('Risk').service("DOMops", function() {
     }
    
     
-    commonFunctions.displayLevel = function(level, l, c, evt, scope){
-       var leveldiv = {};
+    commonFunctions.displayLevel = function(level, l, c, evt, scope, field = null){
+       var leveldiv = {};                               
        commonFunctions.clearLevel(evt);
-       //if (evt >= 0)
-       //    leveldiv = document.querySelector("div[name='level'][evt='"+evt+"'] div");
+       if (evt >= 0 && field != null)
+           leveldiv = document.querySelector("div[name='"+field+"level'][evt='"+evt+"'] div");
            
        if (level >= scope.ctrl.risklevels.riskhigh)
        {

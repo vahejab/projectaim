@@ -1,6 +1,6 @@
-.td[name=level]{
+.td[name=actuallevel], .td[name=schdeduledlevel], .td[name=baselinelevel]{
     text-align: center !important;
-    width:  50px;
+    width:  25px;
 }
 
 .tbl.events td.cell{
@@ -156,8 +156,8 @@ div.nopadding{
     
       .tbl.events   .tr   .th:nth-child(10),
     .tbl.events     .tr   .td:nth-child(10){
-        max-width: 47.5px !important;
-        min-width: 47.5px !important;
+        max-width: 40px !important;
+        min-width: 40px !important;
         text-align: center;
     }
 
@@ -194,8 +194,8 @@ div.nopadding{
         
       .tbl.events   .tr   .th:nth-child(22),
     .tbl.events     .tr   .td:nth-child(22){
-        max-width: 47.5px !important;
-        min-width: 47.5px !important;
+        /* max-width: 40px !important; */
+        min-width: 40px !important;
         text-align: center;
     }
 
@@ -231,8 +231,8 @@ div.nopadding{
     
           .tbl.events   .tr   .th:nth-child(34),
     .tbl.events     .tr   .td:nth-child(34){
-        max-width: 47.5px !important;
-        min-width: 47.5px !important;
+        max-width: 40px !important;
+        min-width: 40px !important;
         text-align: center;
     }
 
@@ -318,7 +318,9 @@ div.nopadding{
 
     .tbl.events   .tr  .td.header,
     .tbl.events   .tr  .td.value,
-    .tbl.events   .tr  .td[name="level"],
+    .tbl.events   .tr  .td[name="actuallevel"],
+    .tbl.events   .tr  .td[name="baselinelevel"],
+    .tbl.events   .tr  .td[name="scheduledlevel"],
     .tbl.events   .tr  .td.left{
         width: 200px !important;
         height: 32px;

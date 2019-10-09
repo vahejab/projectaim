@@ -13,6 +13,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.evts = [];
         ctrl.evtCopy = [];
         ctrl.risk = {};
+        ctrl.oldbaselinedate=0;
         ctrl.oldlikelihood=0;
         ctrl.oldtechnical=0;
         ctrl.oldschedule=0;
@@ -301,14 +302,14 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         }        
         
 
-        ctrl.setBaselineDate = function(evt){
-            if (typeof ctrl.event[evt].baselinedate === 'undefined')
+        ctrl.setScheduleDate = function(evt){
+            if (ctrl.event[evt].scheduledate == '')
             {
-                dt = ctrl.event[evt].scheduledate;
+                dt = ctrl.event[evt].baselinedate;
                 y = dt.getFullYear();
                 m = dt.getMonth();
                 d = dt.getDate();
-                ctrl.event[evt].baselinedate = new Date(y,m,d); 
+                ctrl.event[evt].scheduledate = new Date(y,m,d); 
             } 
         }
         ctrl.valid = function(){
@@ -330,24 +331,22 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                 });
         }
         
-        ctrl.displayLevel = function(evt){
-       
-            if (ctrl.event[evt] && (evt <= ctrl.lastEventIdSaved || ValidationService.evtValid(evt, $scope))){
-                l = ctrl.event[evt].scheduledlikelihood;
-                t = ctrl.event[evt].scheduledtechnical;
-                s = ctrl.event[evt].scheduledschedule;
-                c = ctrl.event[evt].scheduledcost;
-                cons = Math.max(t, Math.max(s, c));
-                
-                if (l && t && s && c)
+        ctrl.displayLevel = function(evt, field){
+            if (ctrl.event[evt] && ctrl.event[evt].hasOwnProperty(field+'likelihood') && ctrl.event[evt].hasOwnProperty(field+'technical') && ctrl.event[evt].hasOwnProperty(field+'schedule') && ctrl.event[evt].hasOwnProperty(field+'cost') && evt <= ctrl.lastEventIdSaved +1 /*|| ValidationService.evtValid(evt, $scope)*/){
+                l = ctrl.event[evt][field+'likelihood'];
+                t = ctrl.event[evt][field+'technical'];
+                s = ctrl.event[evt][field+'schedule'];
+                c = ctrl.event[evt][field+'cost'];
+                cons = Math.max(t, Math.max(s, c));   
+                if (l!='' && t!='' && s!='' && c!='')
                     if (ValidationService.riskIsValid(l, t, s, c))
-                        DOMops.displayLevel(ctrl.riskMatrix[l][cons], l, c, evt, $scope);
+                        DOMops.displayLevel(ctrl.riskMatrix[l][cons], l, c, evt, $scope, field);
             }
         }
         
-        ctrl.validateDisplayLevel = function(evt){
+        ctrl.validateDisplayLevel = function(evt, field){
             ctrl.validateEvent(evt); 
-            ctrl.displayLevel(evt);
+            ctrl.displayLevel(evt, field);
         }
         
         ctrl.validateEvent = function(evt){
