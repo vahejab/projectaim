@@ -1,6 +1,6 @@
-.td[name=actuallevel], .td[name=schdeduledlevel], .td[name=baselinelevel]{
+.td[name='actuallevel'], .td[name='scheduledlevel'], .td[name='baselinelevel']{
     text-align: center !important;
-    width:  25px;
+    width:  25px !important;
 }
 
 .tbl.events td.cell{

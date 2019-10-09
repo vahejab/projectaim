@@ -135,27 +135,37 @@ angular.module('Risk').service("DOMops", function() {
     
     commonFunctions.displayLevel = function(level, l, c, evt, scope, field = null){
        var leveldiv = {};                               
-       commonFunctions.clearLevel(evt);
+       commonFunctions.clearLevel(evt);   
+      
        if (evt >= 0 && field != null)
            leveldiv = document.querySelector("div[name='"+field+"level'][evt='"+evt+"'] div");
+
+        if (level)
+       {    
+           if (level >= scope.ctrl.risklevels.riskhigh)
+           {
+               leveldiv.html = {value: 'H ' + l + '-' + c};
+                leveldiv.cls = 'high';
+           }
+           else if (level < scope.ctrl.risklevels.riskhigh  && level >= scope.ctrl.risklevels.riskmedium)
+           {
+                leveldiv.html = {value: 'M ' + l + '-' + c};
+                leveldiv.cls = 'med';
+           }
+           else if (level < scope.ctrl.risklevels.riskmedium)
+           {
+                leveldiv.html = {value: 'L ' + l + '-' + c};
+                leveldiv.cls = 'low';
+           } 
+           scope.ctrl.event[evt][field+"level"] = {levelhtml : leveldiv.html, cls : leveldiv.cls};
            
-       if (level >= scope.ctrl.risklevels.riskhigh)
-       {
-           leveldiv.html = {value: 'H ' + l + '-' + c};
-            leveldiv.cls = 'high';
+           return leveldiv.html;
        }
-       else if (level < scope.ctrl.risklevels.riskhigh  && level >= scope.ctrl.risklevels.riskmedium)
-       {
-            leveldiv.html = {value: 'M ' + l + '-' + c};
-            leveldiv.cls = 'med';
-       }
-       else if (level < scope.ctrl.risklevels.riskmedium)
-       {
-            leveldiv.html = {value: 'L ' + l + '-' + c};
-            leveldiv.cls = 'low';
-       } 
-       scope.ctrl.event[evt].levelhtml = leveldiv.html;
-       scope.ctrl.event[evt].cls = leveldiv.cls;
+
+       else{
+            scope.ctrl.event[evt][field+"level"] = {levelhtml: '', cls: ''};
+            return '';
+        }
     }
     
     return commonFunctions;            

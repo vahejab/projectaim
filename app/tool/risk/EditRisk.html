@@ -446,8 +446,9 @@
                         <div class="td header">
                             Level
                         </div>
-                        <div name="actuallevel" evt="{{event}}" class="td value level{{event}} {{ctrl.event[event].cls}}">
-                            <div ng-init="ctrl.displayLevel(event)" ng-bind-html="ctrl.event[event].levelhtml.value"></div>
+                        <div name="actuallevel" evt="{{event}}" class="td value level{{event}} {{ctrl.event[event].actuallevel.cls}}">
+                            <!--div ng-init="ctrl.displayLevel(event, 'actual')" ng-bind-html="ctrl.event[event].actuallevel.levelhtml.value"-->
+                               <div>{{ctrl.displayLevel(event, 'actual').value}}</div>
                         </div>
                         <div class="td header">
                             Likelihood
@@ -493,8 +494,9 @@
                         <div class="td header">
                             Level
                         </div>
-                        <div name="scheduledlevel" evt="{{event}}" class="td value level{{event}} {{ctrl.event[event].cls}}">
-                            <div ng-init="ctrl.displayLevel(event)" ng-bind-html="ctrl.event[event].levelhtml.value"></div>
+                        <div name="scheduledlevel" evt="{{event}}" class="td value level{{event}} {{(scope.ctrl.event[evt]['scheduledlevel'].levelhtml.trim() != '') ? ctrl.event[event].scheduledlevel.cls  : ''}}">
+                            <!--div ng-init="ctrl.displayLevel(event, 'schedule')" ng-bind-html="ctrl.event[event].scheduledlevel.levelhtml.value"-->
+                            <div>{{ctrl.displayLevel(event, 'scheduled').value}}</div>
                         </div>
                         <div class="td header">
                             Likelihood
@@ -506,7 +508,7 @@
                             Technical
                         </div>                                                                                                                
                         <div class="td value center nopadding">
-                           <input class="level" type="text" maxlength="1" ng-disabled="event != ctrl.lastEventIdSaved+1"  ng-change="ctrl.validateDisplayLevel(event, 'scheduledd'); ctrl.setBaselineTechnical(event)" ng-model="ctrl.event[event].scheduledtechnical" />
+                           <input class="level" type="text" maxlength="1" ng-disabled="event != ctrl.lastEventIdSaved+1"  ng-change="ctrl.validateDisplayLevel(event, 'scheduled'); ctrl.setBaselineTechnical(event)" ng-model="ctrl.event[event].scheduledtechnical" />
                         </div>
                         <div class="td header">
                             Schedule
@@ -540,8 +542,9 @@
                         <div class="td header">
                             Level
                         </div>
-                        <div name="baselinelevel" evt="{{event}}" class="td value level{{event}} {{ctrl.event[event].cls}}">
-                            <div ng-init="ctrl.displayLevel(event)" ng-bind-html="ctrl.event[event].levelhtml.value"></div>
+                        <div name="baselinelevel" evt="{{event}}" class="td value level{{event}} {{ctrl.event[event].baselinelevel.cls}}">
+                            <!--div ng-init="ctrl.displayLevel(event, baseline); " ng-bind-html="ctrl.event[event].baselinelevel.levelhtml.value"-->
+                               <div>{{ctrl.displayLevel(event, 'baseline').value}}</div>
                         </div>
                         <div class="td header">
                             Likelihood
