@@ -193,6 +193,39 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             for (var idx = 1; idx <= ctrl.lastEventIdSaved; idx++)
             {            
                 ctrl.evtCopy[idx] = JSON.parse(JSON.stringify(ctrl.event[idx]));
+                if (!ctrl.evtCopy[idx].hasOwnProperty('actualdate') || ctrl.evtCopy[idx].actualdate == '')
+                    ctrl.evtCopy[idx].actualdate = '';
+                if (!ctrl.evtCopy[idx].hasOwnProperty('actuallikelihood') || ctrl.evtCopy[idx].actuallikelihood == '')
+                    ctrl.evtCopy[idx].actuallikelihood = null;
+                if (!ctrl.evtCopy[idx].hasOwnProperty('actualtechnical')|| ctrl.evtCopy[idx].actualtechnical == '')
+                    ctrl.evtCopy[idx].actualtechnical = null;
+                if (!ctrl.evtCopy[idx].hasOwnProperty('actualschedule')|| ctrl.evtCopy[idx].actualschedule == '')
+                    ctrl.evtCopy[idx].actualschedule = null;
+                if (!ctrl.evtCopy[idx].hasOwnProperty('actualcost')|| ctrl.evtCopy[idx].actualcost == '')
+                    ctrl.evtCopy[idx].actualcost = null;
+            
+                if (!ctrl.evtCopy[idx].hasOwnProperty('scheduleddate')|| ctrl.evtCopy[idx].scheduleddate == '')
+                    ctrl.evtCopy[idx].scheduleddate = '';
+                if (!ctrl.evtCopy[idx].hasOwnProperty('scheduledlikelihood')|| ctrl.evtCopy[idx].scheduledlikelihood == '')
+                    ctrl.evtCopy[idx].scheduledlikelihood = null;
+                if (!ctrl.evtCopy[idx].hasOwnProperty('scheduledtechnical')|| ctrl.evtCopy[idx].scheduledtechnical == '')
+                    ctrl.evtCopy[idx].scheduledtechnical = null;
+                if (!ctrl.evtCopy[idx].hasOwnProperty('scheduledschedule')|| ctrl.evtCopy[idx].scheduledschedule == '')
+                    ctrl.evtCopy[idx].scheduledschedule = null;
+                if (!ctrl.evtCopy[idx].hasOwnProperty('scheduledcost')|| ctrl.evtCopy[idx].scheduledcost == '')
+                    ctrl.evtCopy[idx].scheduledcost = null;
+            
+                if (!ctrl.evtCopy[idx].hasOwnProperty('baselinedate')|| ctrl.evtCopy[idx].baselinedate == '')
+                    ctrl.evtCopy[idx].baselinedate = '';
+                if (!ctrl.evtCopy[idx].hasOwnProperty('baselinelikelihood')|| ctrl.evtCopy[idx].baselinelikelihood == '')
+                    ctrl.evtCopy[idx].baselinelikelihood = null;
+                if (!ctrl.evtCopy[idx].hasOwnProperty('baselinetechnical')|| ctrl.evtCopy[idx].baselinetechnical == '')
+                    ctrl.evtCopy[idx].baselinetechnical = null;
+                if (!ctrl.evtCopy[idx].hasOwnProperty('baselineschedule')|| ctrl.evtCopy[idx].baselineschedule == '')
+                    ctrl.evtCopy[idx].baselineschedule = null;
+                if (!ctrl.evtCopy[idx].hasOwnProperty('baselinecost')|| ctrl.evtCopy[idx].baselinecost == '')
+                    ctrl.evtCopy[idx].baselinecost = null;
+            
             }
         }
                     
@@ -203,16 +236,18 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             {            
                 ctrl.evts.push(ctrl.evtCopy[idx]);
                 ctrl.evts[idx].eventid = idx;
-                if (ctrl.evtCopy[idx].actualdate != null)
+                if (ctrl.evtCopy[idx].hasOwnProperty('actualdate') && ctrl.evtCopy[idx].actualdate != null && ctrl.evtCopy[idx].actualdate != '')
                 {  
                     act = new Date(ctrl.evtCopy[idx].actualdate);
                     y = act.getFullYear();
                     m = act.getMonth()+1;
                     d = act.getDate();
-                    ctrl.evts[idx].actualdate = y+((m<10)?'-0'+m:'-'+m)+((d<10)?'-0'+d:'-'+d);              
+                    ctrl.evtCopy[idx].actualdate = y+((m<10)?'-0'+m:'-'+m)+((d<10)?'-0'+d:'-'+d);              
                 }
+                else
+                    ctrl.evts[idx].actualdate = null;
                 
-                if (ctrl.evtCopy[idx].baselinedate != null)
+                if (ctrl.evtCopy[idx].hasOwnProperty('baselinedate') && ctrl.evtCopy[idx].baselinedate != null && ctrl.evtCopy[idx].baselinedate != '')
                 {  
                     act = new Date(ctrl.evtCopy[idx].baselinedate);
                     y = act.getFullYear();
@@ -220,8 +255,10 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                     d = act.getDate();
                     ctrl.evts[idx].baselinedate = y+((m<10)?'-0'+m:'-'+m)+((d<10)?'-0'+d:'-'+d);                
                 }
+                else
+                    ctrl.evtCopy[idx].baselinedate = null;
                 
-                if (ctrl.evtCopy[idx].scheduledate != null)
+                if (ctrl.evtCopy[idx].hasOwnProperty('scheduledate') && ctrl.evtCopy[idx].scheduledate != null && ctrl.evtCopy[idx].scheduledate != '')
                 {
                     sch = new Date(ctrl.evtCopy[idx].scheduledate);
                     y = sch.getFullYear();
@@ -229,9 +266,11 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                     d = sch.getDate();
                     ctrl.evts[idx].scheduledate = y+((m<10)?'-0'+m:'-'+m)+((d<10)?'-0'+d:'-'+d);
                 }
+                else
+                    ctrl.evtCopy[idx].scheduledate = null;
             }   
             payload = {riskid: ctrl.risk.riskid, events: ctrl.evts}
-
+            
             return $http.put('/api/risks/'+ ctrl.risk.riskid + '/events', payload).then(function(response){
                     if (response.data.Succeeded){
                         ctrl.msg = response.data.Result;
@@ -240,7 +279,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                          ctrl.msg = $sce.trustAsHtml(response.data);
                     }
             }).then(function(){
-                ctrl.rebindDates();   
+                ctrl.rebindDates(); 
             });
         }
         
@@ -322,12 +361,15 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                
         
         
-        ctrl.riskValid = function(evt, field){       
+        ctrl.riskValid = function(evt, field){
+             if (ctrl.event[evt]){
                 l = ctrl.event[evt][field+'likelihood'];
                 t = ctrl.event[evt][field+'technical'];
                 s = ctrl.event[evt][field+'schedule'];
                 c = ctrl.event[evt][field+'cost'];
                 return ValidationService.riskIsValid(l,t,s,c);
+              }
+              return false;
         }       
         
         ctrl.displayLevel = function(evt, field){

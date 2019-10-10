@@ -14,7 +14,7 @@
             if (!is_null($array['ActualDate'])) $event->actualdate = $array['ActualDate'];
             if (!is_null($array['ScheduleDate'])) $event->scheduledate = $array['ScheduleDate'];
             if (!is_null($array['BaselineDate'])) $event->baselinedate = $array['BaselineDate'];
-
+            
             if (!is_null($array['ActualLikelihood'])) $event->actuallikelihood = $array['ActualLikelihood'];
             if (!is_null($array['ActualTechnical'])) $event->actualtechnical = $array['ActualTechnical'];
             if (!is_null($array['ActualSchedule'])) $event->actualschedule = $array['ActualSchedule'];
@@ -227,13 +227,11 @@
                                                             :scheduledcost
                                                         having (select count(*) from riskevents where riskid = :riskid and eventid = :eventid) = 0");
                 
-                   
                     $statement->bindValue(':riskid' , $riskid);
                     $statement->bindValue(':eventid' , $event['eventid']);
                     $statement->bindValue(':eventtitle' , $event['eventtitle']);
                     $statement->bindValue(':eventownerid' , $event['ownerid']);
-                   
-                         
+             
                     $statement->bindValue(':actualdate', $event['actualdate']);
                     
                     $statement->bindValue(':baselinedate', $event['baselinedate']);

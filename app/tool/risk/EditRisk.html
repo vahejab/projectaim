@@ -448,7 +448,7 @@
                         </div>
                         <div name="actuallevel" evt="{{event}}" class="td value level{{event}} {{ctrl.riskValid(event, 'actual') ? ctrl.event[event].actuallevel.cls  : ''}}">
                             <!--div ng-init="ctrl.displayLevel(event, 'actual')" ng-bind-html="ctrl.event[event].actuallevel.levelhtml.value"-->
-                               <div>{{ctrl.displayLevel(event, 'actual').value}}</div>
+                               <div ng-bind-html="ctrl.displayLevel(event, 'actual').value"></div>
                         </div>
                         <div class="td header">
                             Likelihood
@@ -496,7 +496,7 @@
                         </div>
                         <div name="scheduledlevel" evt="{{event}}" class="td value level{{event}} {{ctrl.riskValid(event, 'scheduled') ? ctrl.event[event].scheduledlevel.cls  : ''}}">
                             <!--div ng-init="ctrl.displayLevel(event, 'schedule')" ng-bind-html="ctrl.event[event].scheduledlevel.levelhtml.value"-->
-                            <div>{{ctrl.displayLevel(event, 'scheduled').value}}</div>
+                            <div ng-bind-html="ctrl.displayLevel(event, 'scheduled').value"></div>
                         </div>
                         <div class="td header">
                             Likelihood
@@ -542,9 +542,9 @@
                         <div class="td header">
                             Level
                         </div>
-                        <div name="baselinelevel" evt="{{event}}" class="td value level{{event}} {{ctrl.riskValid(event, 'baseline') ? ctrl.event[event].baselinelevel.cls  : ''}}"">
+                        <div name="baselinelevel" evt="{{event}}" class="td value level{{event}} {{ctrl.riskValid(event, 'baseline') ? ctrl.event[event].baselinelevel.cls  : ''}}">
                             <!--div ng-init="ctrl.displayLevel(event, baseline); " ng-bind-html="ctrl.event[event].baselinelevel.levelhtml.value"-->
-                               <div>{{ctrl.displayLevel(event, 'baseline').value}}</div>
+                            <div ng-bind-html="ctrl.displayLevel(event, 'baseline').value"></div>
                         </div>
                         <div class="td header">
                             Likelihood
