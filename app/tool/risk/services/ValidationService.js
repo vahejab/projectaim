@@ -30,7 +30,7 @@ angular.module('Risk').service("ValidationService", function() {
     commonFunctions.invalidLevel = function(lvl){
         if (typeof lvl === "number") 
             return (lvl < 1 || lvl > 5)
-            return (typeof lvl === "undefined") || (lvl == '') || (lvl.charCodeAt(0) - '0'.charCodeAt(0) < 1) || (lvl.charCodeAt(0) - '0'.charCodeAt(0) > 5);
+            return (typeof lvl === "undefined") || (lvl == '') || (lvl == null) || (lvl.charCodeAt(0) - '0'.charCodeAt(0) < 1) || (lvl.charCodeAt(0) - '0'.charCodeAt(0) > 5);
     }
     
     commonFunctions.valid = function(scope, fields){
@@ -61,6 +61,22 @@ angular.module('Risk').service("ValidationService", function() {
     
     commonFunctions.fieldEmpty = function(elem){
         return elem.getValue() == '' || elem.getValue().trim() == '';
+    }
+    
+    commonFunctions.actualValid = function(evt, scope){
+        var valid = scope.ctrl.event[evt] &&
+                    !(scope.ctrl.event[evt] == {}) &&
+                       (scope.ctrl.event[evt].hasOwnProperty('actualdate') && scope.ctrl.event[evt].actualdate || "") != "" &&  
+                       (scope.ctrl.event[evt].hasOwnProperty('actuallikelihood') && scope.ctrl.event[evt].actuallikelihood ||  "") != ""  &&
+                       (scope.ctrl.event[evt].hasOwnProperty('actualtechnical') && scope.ctrl.event[evt].actualtechnical ||  "") != ""  &&
+                       (scope.ctrl.event[evt].hasOwnProperty('actualschedule') && scope.ctrl.event[evt].actualschedule ||  "") != ""  &&
+                       (scope.ctrl.event[evt].hasOwnProperty('actualcost') && scope.ctrl.event[evt].actualcost ||  "") != ""  &&
+                      
+                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].actuallikelihood) &&
+                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].actualtechnical) &&
+                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].actualschedule) &&
+                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].actualcost);
+                    
     }
     
     
@@ -113,7 +129,39 @@ angular.module('Risk').service("ValidationService", function() {
          commonFunctions.hasData(evt, scope);         
          scope.ctrl.event[evt].valid = valid;
          return valid;   
-    } 
+    }
+    
+    commonFunctions.evtDirty = function(evt, scope){
+         var dirty = !(scope.ctrl.event[evt] == {}) && ((scope.ctrl.event[evt].eventtitle || "") != "")   ||
+                      (scope.ctrl.event[evt].ownerid || "") != "" || 
+                      (scope.ctrl.event[evt].baselinedate || "") != "" ||
+                      
+                      (scope.ctrl.event[evt].baselinelikelihood ||  "") != "" ||
+                      (scope.ctrl.event[evt].baselinetechnical ||  "") != "" ||
+                      (scope.ctrl.event[evt].baselinecost ||  "") != ""  ||
+                      (scope.ctrl.event[evt].baselineschedule ||  "") != ""  ||
+                     
+                      (
+                      ( 
+                      (scope.ctrl.event[evt].scheduledate || "") != "" ||  
+                      (scope.ctrl.event[evt].scheduledlikelihood ||  "") != ""  ||
+                      (scope.ctrl.event[evt].scheduledtechnical ||  "") != ""  ||
+                      (scope.ctrl.event[evt].scheduledschedule ||  "") != ""  ||
+                      (scope.ctrl.event[evt].scheduledcost ||  "") != ""
+                      
+                       )
+                       ||
+                       (
+                       (scope.ctrl.event[evt].actualdate || "") != "" ||  
+                       (scope.ctrl.event[evt].actuallikelihood ||  "") != ""  ||
+                       (scope.ctrl.event[evt].actualtechnical ||  "") != ""  ||
+                       (scope.ctrl.event[evt].actualschedule ||  "") != "" ||
+                       (scope.ctrl.event[evt].actualcost ||  "") != ""
+                      )
+                      );            
+         scope.ctrl.event[evt].dirty = dirty;
+         return dirty;   
+    }  
      
     commonFunctions.hasData = function(evt, scope){
          var hasData = !(scope.ctrl.event[evt] == {}) || ((scope.ctrl.event[evt].eventtitle || "") != ""   ||

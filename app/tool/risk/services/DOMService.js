@@ -140,7 +140,7 @@ angular.module('Risk').service("DOMops", function() {
        if (evt >= 0 && field != null)
            leveldiv = document.querySelector("div[name='"+field+"level'][evt='"+evt+"'] div");
 
-        if (level)
+       if (level && leveldiv)
        {    
            if (level >= scope.ctrl.risklevels.riskhigh)
            {
@@ -156,16 +156,16 @@ angular.module('Risk').service("DOMops", function() {
            {
                 leveldiv.html = {value: 'L ' + l + '-' + c};
                 leveldiv.cls = 'low';
-           } 
-           scope.ctrl.event[evt][field+"level"] = {levelhtml : leveldiv.html, cls : leveldiv.cls};
-           
-           return leveldiv.html;
+           }
        }
-
-       else{
+       else
+       {
             scope.ctrl.event[evt][field+"level"] = {levelhtml: '', cls: ''};
-            return '';
-        }
+            return '';   
+       }
+       
+       scope.ctrl.event[evt][field+"level"] = {levelhtml : leveldiv.html, cls : leveldiv.cls};
+       return leveldiv.html;
     }
     
     return commonFunctions;            

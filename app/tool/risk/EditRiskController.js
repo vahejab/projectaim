@@ -374,10 +374,10 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         
         ctrl.displayLevel = function(evt, field){
             if (ctrl.event[evt] && ctrl.event[evt].hasOwnProperty(field+'likelihood') && ctrl.event[evt].hasOwnProperty(field+'technical') && ctrl.event[evt].hasOwnProperty(field+'schedule') && ctrl.event[evt].hasOwnProperty(field+'cost') && evt <= ctrl.lastEventIdSaved +1 /*|| ValidationService.evtValid(evt, $scope)*/){
-                l = ctrl.event[evt][field+'likelihood'];
-                t = ctrl.event[evt][field+'technical'];
-                s = ctrl.event[evt][field+'schedule'];
-                c = ctrl.event[evt][field+'cost'];
+                l = ctrl.event[evt][field+'likelihood'] || '';
+                t = ctrl.event[evt][field+'technical'] || '';
+                s = ctrl.event[evt][field+'schedule'] || '';
+                c = ctrl.event[evt][field+'cost'] || '';
                 cons = Math.max(t, Math.max(s, c));   
                 if (l!='' && t!='' && s!='' && c!='')
                     if (ValidationService.riskIsValid(l, t, s, c)) {
@@ -396,6 +396,10 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             ValidationService.evtValid(evt, $scope);
         }
         
+        ctrl.eventDirty = function(evt){
+            return ValidationService.evtDirty(evt, $scope);
+        }
+        
         ctrl.validateLevel = function(evt){
              ctrl.displayLevel(evt);
         }
@@ -407,11 +411,10 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.enable = function(evt){ 
            ctrl.disabled[evt].value = false;
            elems = document.querySelectorAll(".evt"+evt);
-            for(var idx = 0; idx < elems.length; idx++)                    
-            {
-                elem = elems[idx];
-                id = elem.getAttribute("id");
-            } 
+        }
+        
+        ctrl.actualComplete = function(evt){
+            return {value:  ValidationService.actualValid(evt, $scope)};
         }
         
          ctrl.add = function(evt){
@@ -474,17 +477,26 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.remove = function(evt){
             if (evt != 1)            
                 ctrl.disable(evt);
-            
+           
+     
             ctrl.clearEvent(evt);   
             DOMops.clearLevel(evt);
             ctrl.event.pop();
-                                                  
-            ctrl.lastEventIdSaved--;
+             
             if (evt == 1)
-                return; 
+                return;                                         
+            
+            ctrl.lastEventIdSaved--;
+     
             ctrl.enable(evt - 1);
             ctrl.validateEvent(evt-1);
         }
+        
+        
+         ctrl.edit = function(evt){
+            ctrl.enable(evt);
+        }
+        
         
         
         ctrl.getEvents = function(riskid){

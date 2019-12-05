@@ -24,7 +24,7 @@ div.nopadding{
 
     
     div.select2{
-        width: 196px !important;
+        width: 175px !important;
     }
      
     div.widthAuto{
@@ -43,18 +43,18 @@ div.nopadding{
     }
     
     input.date-input{
-        width: 111px;
+        width: 96px;
         margin-top: 3px !important;
     }
     
     input.level{
-        width: 35px;
+        width: 31px;
         height:  30px;
         text-align: center;
     }   
 
     input.title{
-        width: 160px;
+        width: 143px;
         height: 30px;
         margin-top: 3px;
     }
