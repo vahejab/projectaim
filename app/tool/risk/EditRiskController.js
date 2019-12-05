@@ -392,6 +392,10 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             ctrl.displayLevel(evt, field);
         }
         
+        ctrl.evtValid = function(evt){
+            return ValidationService.evtValid(evt, $scope);
+        }
+        
         ctrl.validateEvent = function(evt){
             ValidationService.evtValid(evt, $scope);
         }
@@ -495,9 +499,13 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         
          ctrl.edit = function(evt){
             ctrl.enable(evt);
+            ctrl.event[evt].edit = true;
         }
         
-        
+         ctrl.update = function(evt){
+            ctrl.disable(evt);
+            ctrl.event[evt].edit = false;
+         }
         
         ctrl.getEvents = function(riskid){
              ctrl.evts = [];
