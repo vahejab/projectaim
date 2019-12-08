@@ -3,6 +3,12 @@
     width:  25px !important;
 }
 
+
+.invalid{
+    outline: solid 1px darkred;
+    background-color: pink;
+}
+
 .tbl.events td.cell{
     text-align: left !important;
 }

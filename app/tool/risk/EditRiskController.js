@@ -371,23 +371,46 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
               }
               return false;
         }       
-        
-        ctrl.displayLevel = function(evt, field){
+
+        ctrl.validRiskLevel = function(evt, field){
             if (ctrl.event[evt] && ctrl.event[evt].hasOwnProperty(field+'likelihood') && ctrl.event[evt].hasOwnProperty(field+'technical') && ctrl.event[evt].hasOwnProperty(field+'schedule') && ctrl.event[evt].hasOwnProperty(field+'cost') && evt <= ctrl.lastEventIdSaved +1 /*|| ValidationService.evtValid(evt, $scope)*/){
                 l = ctrl.event[evt][field+'likelihood'] || '';
                 t = ctrl.event[evt][field+'technical'] || '';
                 s = ctrl.event[evt][field+'schedule'] || '';
                 c = ctrl.event[evt][field+'cost'] || '';
                 cons = Math.max(t, Math.max(s, c));   
-                if (l!='' && t!='' && s!='' && c!='')
-                    if (ValidationService.riskIsValid(l, t, s, c)) {
-                        return DOMops.displayLevel(ctrl.riskMatrix[l][cons], l, cons, evt, $scope, field);
-                    }
-                    
+                return {l: l, cons: cons, valid: ValidationService.riskIsValid(l, t, s, c)};
             }
+            return {valid: false};
         }
         
-        ctrl.validateDisplayLevel = function(evt, field){
+        ctrl.displayLevel = function(evt, field){
+            if (ctrl.validRiskLevel(evt, field).valid)
+                return DOMops.displayLevel(ctrl.riskMatrix[l][cons], l, cons, evt, $scope, field);  
+        }  
+        
+        ctrl.invalidRiskLevel = function(evt, field, attr){
+                validLevelEvt = ctrl.validRiskLevel(evt, field);
+                validLevelLastEvt = ctrl.validRiskLevel(evt-1, field);
+                likelihoodEvt = validLevelEvt.l;
+                consequenceEvt = validLevelEvt.cons;
+
+                likelihoodLastEvt = validLevelLastEvt.l
+                consequenceLastEvt = validLevelLastEvt.cons;
+
+                if (ctrl.riskMatrix[likelihoodEvt][consequenceEvt] >= 
+                    ctrl.riskMatrix[likelihoodLastEvt][consequenceLastEvt]){
+                    ctrl.event[evt][field  + 'invalid'] = true;
+                    return {invalid: true};
+                }
+                ctrl.event[evt][field + 'invalid'] = false;
+                return {invalid: false};
+         }                 
+        
+        
+        ctrl.validateDisplayLevel = function(evt, field, attr){
+            if (ctrl.invalidRiskLevel(evt, field, attr).invalid)
+                return false;
             ctrl.validateEvent(evt); 
             ctrl.displayLevel(evt, field);
         }
@@ -402,7 +425,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         
         ctrl.eventDirty = function(evt){
             return ValidationService.evtDirty(evt, $scope);
-        }
+        }                                                  
         
         ctrl.validateLevel = function(evt){
              ctrl.displayLevel(evt);
@@ -681,4 +704,4 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         }  
         return value.replace(/^['"]+$/g, ''); // you could use .trim, but it's not going to work in IE<9
     };
-});;
+});

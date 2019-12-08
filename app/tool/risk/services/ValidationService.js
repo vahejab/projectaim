@@ -92,7 +92,7 @@ angular.module('Risk').service("ValidationService", function() {
                       (scope.ctrl.event[evt].baselinecost ||  "") != ""  &&
                       (scope.ctrl.event[evt].baselineschedule ||  "") != ""  &&
                        
-                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].baselinelikelihood) &&
+                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].baselinelikelihood) &&
                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].baselinetechnical) &&
                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].baselineschedule) &&
                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].baselinecost) 
