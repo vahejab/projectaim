@@ -19,7 +19,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.oldschedule=0;
         ctrl.oldcost=0;
         ctrl.initDone = false;
-        ctrl.disabled = [{value: false},{value: true},{value: true},{value: true},{value: true},{value: true}];
+        ctrl.disabled = [{value: true},{value: false},{value: true},{value: true},{value: true},{value: true}];
         
         
           ctrl.today = function() {
@@ -391,7 +391,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         
         ctrl.invalidRiskLevel = function(evt, field, attr){
                 validLevelEvt = ctrl.validRiskLevel(evt, field);
-                validLevelLastEvt = ctrl.validRiskLevel(evt-1, field);
+                        validLevelLastEvt = ctrl.validRiskLevel(evt-1, field);
                 likelihoodEvt = validLevelEvt.l;
                 consequenceEvt = validLevelEvt.cons;
                 if (validLevelEvt.valid && validLevelLastEvt.valid)
@@ -447,7 +447,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         }
         
          ctrl.add = function(evt){
-                if (evt < 5 && ctrl.event.length >= 1)
+                if (evt < 5 && ctrl.event.length >= 0)
                 {
                       ctrl.event.push({
                         eventid: evt+1,
@@ -455,6 +455,16 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                         ownerid: '',
                         actualdate: '',
                         scheduledate: '',
+                        baselinedate: '',
+                        
+                        actuallikelhiood: '',
+                        actualtechnical: '',
+                        actualschedule: '',
+                        actualcost: '',
+                        baselinelikelihood: '',
+                        baselinetechnical: '',
+                        baselineschedule: '',
+                        baselinecost: '',
                         scheduledlikelihood: '',
                         scheduledtechnical: '',
                         scheduledschedule: '',
@@ -468,6 +478,11 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                         customClass: getDayClass,
                         minDate: ctrl.event[evt].scheduledate,
                         showWeeks: true
+                      },  
+                       inlineBaselineOptions: {
+                        customClass: getDayClass,
+                        minDate: ctrl.event[evt].baselinedate,
+                        showWeeks: true
                       },
                       actualdateOptions:{
                         dateDisabled: disabled,
@@ -478,7 +493,13 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                       scheduledateOptions:{
                         dateDisabled: disabled,
                         formatYear: 'yy',
-                        minDate: ctrl.event[evt].scheduledate,             
+                        minDate: ctrl.event[evt].scheduledate,          
+                        startingDay: 1
+                    },
+                    baselinedateOptions:{
+                        dateDisabled: disabled,
+                        formatYear: 'yy',
+                        minDate: ctrl.event[evt].baselinedate,          
                         startingDay: 1
                     }
                });   
@@ -508,12 +529,12 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             ctrl.clearEvent(evt);   
             DOMops.clearLevel(evt);
             ctrl.event.pop();
-             
-            ctrl.lastEventIdSaved--;
-            ctrl.enable(evt - 1);
-            if (evt != 1)
-               ctrl.validateEvent(evt-1);
-               
+
+            if (evt > 0){                            
+                ctrl.enable(evt - 1);
+                ctrl.lastEventIdSaved--;
+                ctrl.validateEvent(evt-1);
+            }   
         }
      
         ctrl.edit = function(evt){
@@ -557,11 +578,14 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                             ctrl.event[key].baselineschedule = event.baselineschedule;
                             ctrl.event[key].baselinecost = event.baselinecost;
                          }
+                         
                          if (response.data.Result.length)
                             ctrl.lastEventIdSaved = response.data.Result.length-1;
                          else
                             ctrl.lastEventIdSaved = 0;
-                        
+                            
+                         ctrl.add(ctrl.lastEventIdSaved);
+                         
                          ctrl.copyEvent();
                          
                          ctrl.eventsdone = true;   
