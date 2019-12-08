@@ -8,7 +8,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.risklevels = {};
         ctrl.riskMatrix = new Array(6);
         ctrl.users = [];
-        ctrl.lastEventIdSaved = 0;
+        ctrl.lastEventIdSaved = -1;
         ctrl.event = [];
         ctrl.evts = [];
         ctrl.evtCopy = [];
@@ -19,7 +19,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.oldschedule=0;
         ctrl.oldcost=0;
         ctrl.initDone = false;
-        ctrl.disabled = [{value: true},{value: false},{value: true},{value: true},{value: true},{value: true}];
+        ctrl.disabled = [{value: false},{value: true},{value: true},{value: true},{value: true},{value: true}];
         
         
           ctrl.today = function() {
@@ -394,14 +394,16 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                 validLevelLastEvt = ctrl.validRiskLevel(evt-1, field);
                 likelihoodEvt = validLevelEvt.l;
                 consequenceEvt = validLevelEvt.cons;
+                if (validLevelEvt.valid && validLevelLastEvt.valid)
+                {
+                   likelihoodLastEvt = validLevelLastEvt.l
+                   consequenceLastEvt = validLevelLastEvt.cons;
 
-                likelihoodLastEvt = validLevelLastEvt.l
-                consequenceLastEvt = validLevelLastEvt.cons;
-
-                if (ctrl.riskMatrix[likelihoodEvt][consequenceEvt] >= 
-                    ctrl.riskMatrix[likelihoodLastEvt][consequenceLastEvt]){
-                    ctrl.event[evt][field  + 'invalid'] = true;
-                    return {invalid: true};
+                    if (ctrl.riskMatrix[likelihoodEvt][consequenceEvt] >= 
+                        ctrl.riskMatrix[likelihoodLastEvt][consequenceLastEvt]){
+                        ctrl.event[evt][field  + 'invalid'] = true;
+                        return {invalid: true};
+                    }
                 }
                 ctrl.event[evt][field + 'invalid'] = false;
                 return {invalid: false};
@@ -445,7 +447,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         }
         
          ctrl.add = function(evt){
-                if (evt < 5 && ctrl.event.length > 0)
+                if (evt < 5 && ctrl.event.length >= 1)
                 {
                       ctrl.event.push({
                         eventid: evt+1,
@@ -502,25 +504,19 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         }
         
         ctrl.remove = function(evt){
-            if (evt != 1)            
-                ctrl.disable(evt);
-           
-     
+            ctrl.disable(evt);
             ctrl.clearEvent(evt);   
             DOMops.clearLevel(evt);
             ctrl.event.pop();
              
-            if (evt == 1)
-                return;                                         
-            
             ctrl.lastEventIdSaved--;
-     
             ctrl.enable(evt - 1);
-            ctrl.validateEvent(evt-1);
+            if (evt != 1)
+               ctrl.validateEvent(evt-1);
+               
         }
-        
-        
-         ctrl.edit = function(evt){
+     
+        ctrl.edit = function(evt){
             ctrl.enable(evt);
             ctrl.event[evt].edit = true;
         }
@@ -565,8 +561,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                             ctrl.lastEventIdSaved = response.data.Result.length-1;
                          else
                             ctrl.lastEventIdSaved = 0;
-                         ctrl.add(ctrl.lastEventIdSaved);
-                         
+                        
                          ctrl.copyEvent();
                          
                          ctrl.eventsdone = true;   
