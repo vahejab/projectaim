@@ -19,7 +19,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.oldschedule=0;
         ctrl.oldcost=0;
         ctrl.initDone = false;
-        ctrl.disabled = [{value: true},{value: false},{value: true},{value: true},{value: true},{value: true}];
+        ctrl.disabled = [{value: true},{value: true},{value: true},{value: true},{value: true},{value: true}];
         
         
           ctrl.today = function() {
@@ -503,12 +503,15 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                         startingDay: 1
                     }
                });   
+             } 
                 ctrl.disable(evt);
-                ctrl.enable(evt+1);
                 
-                if (ctrl.event[evt].valid)
-                    ctrl.lastEventIdSaved++;
-             }  
+                if (evt < 5){
+                    ctrl.enable(evt+1); 
+                    if (ctrl.event[evt].valid)
+                      ctrl.lastEventIdSaved++;
+                }
+                
         } 
         
         
