@@ -81,7 +81,7 @@ angular.module('Risk').service("ValidationService", function() {
     
     
     commonFunctions.evtValid = function(evt, scope){
-         var valid = !(scope.ctrl.event[evt] == {}) && ((scope.ctrl.event[evt].eventtitle || "") != "")   &&
+         var valid = !(scope.ctrl.event[evt] == {}) && (scope.ctrl.event[evt]) && ((scope.ctrl.event[evt].eventtitle || "") != "")   &&
                       (scope.ctrl.event[evt].ownerid || "") != "" && 
                       (scope.ctrl.event[evt].baselinedate || "") != "" &&
                       

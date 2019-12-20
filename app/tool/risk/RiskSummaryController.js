@@ -351,7 +351,8 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
                     if (response.data.Succeeded){
                         for (var key = 0; key <= response.data.Result.length-1; key++){
                             event = response.data.Result[key];
-                            ctrl.events[event.riskid].push({
+                            if (ctrl.events[event.riskid])
+                                ctrl.events[event.riskid].push({
                                                                     'id' : key,
                                                                     'eventid': event.eventid, 
                                                                     'title' : event.eventtitle,

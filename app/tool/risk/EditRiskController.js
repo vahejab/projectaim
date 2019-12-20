@@ -391,7 +391,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         
         ctrl.invalidRiskLevel = function(evt, field, attr){
                 validLevelEvt = ctrl.validRiskLevel(evt, field);
-                        validLevelLastEvt = ctrl.validRiskLevel(evt-1, field);
+                validLevelLastEvt = ctrl.validRiskLevel(evt-1, field);
                 likelihoodEvt = validLevelEvt.l;
                 consequenceEvt = validLevelEvt.cons;
                 if (validLevelEvt.valid && validLevelLastEvt.valid)
@@ -447,7 +447,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         }
         
          ctrl.add = function(evt){
-                if (evt < 5 && ctrl.event.length >= 0)
+                if (evt < 5 && ctrl.event.length > 0)
                 {
                       ctrl.event.push({
                         eventid: evt+1,
@@ -502,15 +502,17 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                         minDate: ctrl.event[evt].baselinedate,          
                         startingDay: 1
                     }
-               });   
-             } 
-                ctrl.disable(evt);
+               });
+               
+               ctrl.disable(evt);
                 
                 if (evt < 5){
                     ctrl.enable(evt+1); 
                     if (ctrl.event[evt].valid)
                       ctrl.lastEventIdSaved++;
                 }
+                   
+             } 
                 
         } 
         
@@ -554,6 +556,8 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
              ctrl.evts = [];
              ctrl.event = [];
              ctrl.evtCopy = [];
+             ctrl.disabled = [{value: true},{value: true},{value: true},{value: true},{value: true},{value: true}];
+        
              for (evt = 0; evt <= 5; evt++)
                 DOMops.clearLevel(evt);
              return $http.get('api/risks/'+riskid+'/events').then(function(response){

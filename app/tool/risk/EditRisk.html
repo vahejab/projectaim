@@ -122,7 +122,7 @@
                    </div>       
         </form>
             <br />
-            <h2>Risk #{{ctrl.risk.riskid}}</h2>
+            <h2>Risk #{{ctrl.risk.riskid}}</h2> {{ctrl.lastEventIdSaved}}
             <center>
                 <input type="button" value="First" ng-click="ctrl.fetchRisk('first')"/>&nbsp;
                 <input type="button" value="Prev"  ng-click="ctrl.fetchRisk('prev')"/>&nbsp;
@@ -414,13 +414,13 @@
                             Save
                         </div>
                         <div class="td value" style="min-width: 50px">
-                         <input class="addEvent" type="button" id="add{{event}}" ng-disabled="((event-1) != ctrl.lastEventIdSaved) && (event != 0)" ng-show="((event) != ctrl.lastEventIdSaved-1) && (!ctrl.disabled[event].value)" ng-click="ctrl.add(event)" ng-keyup="$event.keyCode === 13 && ctrl.add(event)" value="Save" />
+                         <input class="addEvent" type="button" id="add{{event}}" ng-disabled="((event-1) != ctrl.lastEventIdSaved) && (event != 0)" ng-show="(event == (ctrl.lastEventIdSaved+1)) && (ctrl.lastEventIdSaved <= 0)" ng-click="ctrl.add(event)" ng-keyup="$event.keyCode === 13 && ctrl.add(event)" value="Save" />
                         </div>                                                                                                                                                                                                                                                                                                                           
                         <div class="td header">                                                                                                                                          
                             Remove
                         </div>
                         <div class="td value">
-                           <input class="removeEvent" type="button" id="remove{{event}}" ng-show="((event-1) != ctrl.lastEventIdSaved) && (event != 0) && (ctrl.disabled[event].value)"  ng-click="ctrl.remove(event)" ng-keyup="$event.keyCode === 13 && ctrl.remove(event)"  value="Remove" />
+                           <input class="removeEvent" type="button" id="remove{{event}}" ng-show="((event-1) == ctrl.lastEventIdSaved) && (event != 0) && (ctrl.disabled[event].value)"  ng-click="ctrl.remove(event)" ng-keyup="$event.keyCode === 13 && ctrl.remove(event)"  value="Remove" />
                         </div>
                         <div class="td header" style="min-width: 50px">
                             Edit
@@ -607,19 +607,19 @@
                             Save
                         </div>
                         <div class="td value" style="min-width: 50px">
-                         <input class="addEvent" type="button" id="add{{event}}" ng-show="!ctrl.disabled[event].value && ((event >= ctrl.lastEventIdSaved) && ctrl.event[event] && ctrl.event[event].valid)" ng-click="ctrl.add(event)" ng-keyup="$event.keyCode === 13 && ctrl.add(event)" value="Save" />
+                         <input class="addEvent" type="button" id="add{{event}}" ng-show="(!ctrl.disabled[event].value && ((event == ctrl.lastEventIdSaved+1) && ctrl.event[event].valid))" ng-click="ctrl.add(event)" ng-keyup="$event.keyCode === 13 && ctrl.add(event)" value="Save" />
                         </div>                                                                                                                                                                                                                                                                                                                           
                         <div class="td header">
                             Remove
                         </div>
                         <div class="td value">
-                           <input class="removeEvent" type="button" id="remove{{event}}" ng-show="(event == ctrl.lastEventIdSaved+1)" ng-click="ctrl.remove(event)" ng-keyup="$event.keyCode === 13 && ctrl.remove(event)"  value="Remove" />
+                           <input class="removeEvent" type="button" id="remove{{event}}" ng-show="(!ctrl.disabled[event].value && (ctrl.lastEventIdSaved+1) == event) || (event == 5 && ctrl.lastEventIdSaved == 5)" ng-click="ctrl.remove(event)" ng-keyup="$event.keyCode === 13 && ctrl.remove(event)"  value="Remove" />
                         </div>
                         <div class="td header" style="min-width: 50px">
                             Edit
                         </div>
                         <div class="td value" style="min-width: 50px">
-                            <input class="editEvent" type="button" id="edit{{event}}" ng-show="(event <= ctrl.lastEventIdSaved+1) && !ctrl.event[event].edit && ctrl.evtValid(event)"  ng-click="ctrl.edit(event);" ng-keyup="$event.keyCode === 13 && ctrl.edit(event)" value="Edit" />
+                            <input class="editEvent" type="button" id="edit{{event}}" ng-show="(event <= ctrl.lastEventIdSaved) && !ctrl.event[event].edit"  ng-click="ctrl.edit(event);" ng-keyup="$event.keyCode === 13 && ctrl.edit(event)" value="Edit" />
                             <input class="updateEvent" type="button" id="update{{event}}"  ng-show="ctrl.event[event].edit" ng-hide="!ctrl.event[event].edit" ng-click="ctrl.update(event)" ng-keyup="$event.keyCode === 13 && ctrl.add(event)" value="Update" />         
                         </div>                                                                                                                                                                                                                                                                                                                           
                         <div class="td header">

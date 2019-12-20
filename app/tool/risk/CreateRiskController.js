@@ -120,7 +120,43 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
                 else{
                     $scope.msg = $sce.trustAsHtml(response.data);
                 }
+            }).then(function(){
+                    payload = {riskid: ctrl.risk.riskid, events: {
+                        eventid : 0,
+                        eventtitle : 'Risk Identified',
+                        ownerid : 0,
+                        
+                        actualdate: ctrl.risk.assessmentdate,
+                        actuallikelihood : ctrl.risk.likelihood,
+                        actualtechnical : ctrl.risk.technical,
+                        actualschedule : ctrl.risk.schedule,
+                        actualcost : ctrl.risk.cost,
+              
+                        
+                        scheduledate : ctrl.risk.assessmentdate,
+                        scheduledlikelihood : ctrl.risk.likelihood,
+                        scheduledtechnical : ctrl.risk.technical,
+                        scheduledschedule : ctrl.risk.schedule,
+                        scheduledcost : ctrl.risk.cost,
+                        
+                        baselinedate : ctrl.risk.assessmentdate,
+                        baselinelikelihood : ctrl.risk.likelihood,
+                        baselinetechnical : ctrl.risk.technical,
+                        baselineschedule : ctrl.risk.schedule,
+                        baselinecost : ctrl.risk.cost
+                    }
+                };
+            
+                return $http.put('/api/risks/'+ ctrl.risk.riskid + '/events', payload).then(function(response){
+                        if (response.data.Succeeded){
+                            ctrl.msg = response.data.Result;
+                            return response.data.Result;
+                        }
+                        else{
+                             ctrl.msg = $sce.trustAsHtml(response.data);
+                        }
             });
-        } 
+        });
+    }
     }
 }]); 
