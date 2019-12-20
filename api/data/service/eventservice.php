@@ -24,6 +24,13 @@
             return $mapper->findAllByRisk($id);   
         }
         
+        public function createOneByRisk($id, $params)
+        {
+            $mapper = $this->_getMapper();
+            $events = array('riskid' => $params['riskid'], 'events' => $params['events']);
+            return $mapper->createOneByRisk($events);
+        }
+        
         public function updateAllByRisk($params)
         {
             $mapper = $this->_getMapper();

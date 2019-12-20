@@ -11,6 +11,7 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
     ctrl.users = {}
     ctrl.config = {}
     ctrl.model = { elem: true }
+    ctrl.riskid = 0;
     ctrl.risk = {
         risktitle: '',
         riskstatement: '',
@@ -112,8 +113,9 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
              ctrl.msg = "Please complete form and resubmit";
         else{ 
             return $http.post('/api/risks', ctrl.risk).then(function(response){
-                if (response.data.Succeeded){
-                    $scope.msg = response.data.Result;
+                if (response.data.Succeeded){    
+                    ctrl.riskid = response.data.Result.RiskID;
+                    $scope.msg = $sce.trustAsHtml(response.data.Result + "<b><a href='risk/edit/"+response.data.Result.riskid+"'>View Risk " + response.data.Result.riskid + "</a></b>");
                     ctrl.resetForm();
                     return response.data.Result;
                 }
@@ -121,7 +123,7 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
                     $scope.msg = $sce.trustAsHtml(response.data);
                 }
             }).then(function(){
-                    payload = {riskid: ctrl.risk.riskid, events: {
+                    payload = {riskid: ctrl.riskid, events: {
                         eventid : 0,
                         eventtitle : 'Risk Identified',
                         ownerid : 0,
@@ -147,7 +149,7 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
                     }
                 };
             
-                return $http.put('/api/risks/'+ ctrl.risk.riskid + '/events', payload).then(function(response){
+                return $http.post('/api/risks/'+ ctrl.riskid + '/events', payload).then(function(response){
                         if (response.data.Succeeded){
                             ctrl.msg = response.data.Result;
                             return response.data.Result;
@@ -155,8 +157,8 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
                         else{
                              ctrl.msg = $sce.trustAsHtml(response.data);
                         }
+                });
             });
-        });
-    }
+        }
     }
 }]); 

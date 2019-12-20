@@ -80,7 +80,7 @@ angular.module('Risk').service("DOMops", function() {
     }
      
     commonFunctions.clearElement = function(id){
-        (document.querySelector('#'+id+' > div.webix_control > div.webix_el_box > *')).value = '';
+        (document.querySelector('#'+id)).value = '';
     }
     
     

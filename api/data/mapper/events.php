@@ -263,4 +263,96 @@
                 return ["Succeeded" => false, "Result" => $e->getMessage()];
             }
         }
+        
+        public function createOneByRisk($params = [])
+        {                      
+            try
+            { 
+                $riskid = $params['riskid'];
+                $this->db->beginTransaction(); 
+             
+                $statement = $this->db->prepare("delete from riskevents where riskid = :riskid and eventid > :lasteventid");
+                $statement->bindValue(':riskid' , $params['riskid']);
+                $statement->bindValue(':lasteventid' , $params['events'][count($params['events'])-1]['eventid']);
+                $statement->execute();
+                
+                foreach ($params['events'] as $event) 
+                {  
+                    $statement = $this->db->prepare("insert into riskevents( 
+                                                        riskid,
+                                                        eventid,
+                                                        eventtitle,
+                                                        eventownerid,
+                                                        actualdate,
+                                                        actuallikelihood,
+                                                        actualtechnical,
+                                                        actualschedule,
+                                                        actualcost,
+                                                        baselinedate,
+                                                        baselinetechnical,
+                                                        baselineschedule,
+                                                        baselinecost,
+                                                        scheduledate,  
+                                                        scheduledlikelihood,
+                                                        scheduledtechnical,
+                                                        scheduledschedule,
+                                                        scheduledcost
+                                                        )
+                                                        select
+                                                            :riskid,
+                                                            :eventid,
+                                                            :eventtitle,
+                                                            :eventownerid,
+                                                            :actualdate,
+                                                            :actuallikelihood,
+                                                            :actualtechnical,
+                                                            :actualschedule,
+                                                            :actualcost,
+                                                            :baselinedate,
+                                                            :baselinetechnical,
+                                                            :baselineschedule,
+                                                            :baselinecost,
+                                                            :scheduledate,
+                                                            :scheduledlikelihood,
+                                                            :scheduledtechnical,
+                                                            :scheduledschedule,
+                                                            :scheduledcost
+                                                        having (select count(*) from riskevents where riskid = :riskid and eventid = :eventid) = 0");
+                
+                    $statement->bindValue(':riskid' , $riskid);
+                    $statement->bindValue(':eventid' , $event['eventid']);
+                    $statement->bindValue(':eventtitle' , $event['eventtitle']);
+                    $statement->bindValue(':eventownerid' , $event['ownerid']);
+             
+                    $statement->bindValue(':actualdate', $event['actualdate']);
+                    
+                    $statement->bindValue(':baselinedate', $event['baselinedate']);
+           
+                    $statement->bindValue(':scheduledate', $event['scheduledate']);
+                    
+                    $statement->bindValue(':actuallikelihood' , $event['actuallikelihood']);
+                    $statement->bindValue(':actualtechnical', $event['actualtechnical']);
+                    $statement->bindValue(':actualschedule', $event['actualschedule']); 
+                    $statement->bindValue(':actualcost', $event['actualcost']);                 
+             
+                    $statement->bindValue(':baselinelikelihood' , $event['baselinelikelihood']);
+                    $statement->bindValue(':baselinetechnical', $event['baselinetechnical']);
+                    $statement->bindValue(':baselineschedule', $event['baselineschedule']); 
+                    $statement->bindValue(':baselinecost', $event['baselinecost']);                 
+                    
+                    $statement->bindValue(':scheduledlikelihood' , $event['scheduledlikelihood']);
+                    $statement->bindValue(':scheduledtechnical', $event['scheduledtechnical']);
+                    $statement->bindValue(':scheduledschedule', $event['scheduledschedule']); 
+                    $statement->bindValue(':scheduledcost', $event['scheduledcost']);                 
+                  
+                    $statement->execute();
+                }    
+                $this->db->commit();
+                return ["Succeeded" => true, "Result" => "Event Created!"];
+            }
+            catch (\PDOException $e)
+            {
+                return ["Succeeded" => false, "Result" => $e->getMessage()];
+            }
+        }
     }

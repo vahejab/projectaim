@@ -20,7 +20,7 @@
         public function post($id = null)
         {
             $service = new \data\service\eventservice();
-            return $service->createOne($this->payload);
+            return $service->createOneByRisk($id, $this->payload);
         } 
         
         public function put($id = null)

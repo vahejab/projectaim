@@ -348,11 +348,33 @@
                 $statement->bindValue(':technical', $params['technical']); 
                 $statement->bindValue(':schedule', $params['schedule']);
                 $statement->bindValue(':cost', $params['cost']);                       
-                $statement->execute();
-                $statement = $this->db->prepare("update risks set riskid = id where riskid is null");
-                $statement->execute();
-                $this->db->commit();
-                return ["Succeeded" => true, "Result" => "Risk Created!"];
+                $this->db->query("insert
+                    into risks( 
+                            assessmentdate,
+                            risktitle,
+                            riskstatement,
+                            closurecriteria,
+                            context,
+                            likelihood,
+                            technical,
+                            schedule,
+                            cost
+                    )
+                    values(
+                            NOW(),
+                            '{$params['risktitle']}',
+                            '{$params['riskstatement']}',
+                            '{$params['closurecriteria']}',
+                            '{$params['context']}',
+                            {$params['likelihood']},
+                            {$params['technical']},
+                            {$params['schedule']},
+                            {$params['cost']}
+                    )");  
+                $riskid = $this->db->lastInsertId();                          
+                $this->db->query("update risks set riskid = id where riskid is null");
+                $this->db->commit(); 
+                return ["Succeeded" => true, "Result" => "Risk Created!", "RiskID" => $riskid];
             }
             catch (\PDOException $e)
             {
