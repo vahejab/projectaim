@@ -8,7 +8,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.risklevels = {};
         ctrl.riskMatrix = new Array(6);
         ctrl.users = [];
-        ctrl.lastEventIdSaved = -1;
+        ctrl.lastEventIdSaved = 0;
         ctrl.event = [];
         ctrl.evts = [];
         ctrl.evtCopy = [];
