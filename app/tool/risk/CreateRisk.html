@@ -1,9 +1,10 @@
 <div id="formcontainer" ng-app="Risk" ng-controller="CreateRiskController as ctrl" ng-cloak>
     <get-risk-config></get-risk-config>
+    <get-users></get-users>
     <div id="mycreateform" class="container" type="space" layout-padding="">     
         <center>
         <form id="form" name="CreateRisk" role="form" ng-submit="ctrl.valid() && ctrl.submit()" novalidate>
-                <table class="layout" border="1">
+                <table ng-if="ctrl.usersFetched.done" class="layout" border="1">
                     <tr>
                         <td class="label" bgcolor="#0038a8" style="text-align: left">
                             Title
@@ -11,6 +12,19 @@
                         <td class="locked">
                             <!--div ng-show="ctrl.config.risktitle.done" config="risktitle" webix-ui="risktitle" width="500" height="30" type="text" id="risktitle" name="risktitle"></div-->
                             <input type="text" value="{{ctrl.risk.risktitle}}" ng-model="ctrl.risk.risktitle" width="500" height="30" id="risktitle" name="risktitle" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label" bgcolor="#0038a8" style="text-align: left">
+                            Risk Owner
+                        </td>
+                        <td class="locked">
+                             <ui-select ng-model="ctrl.riskownerid" theme="select2" title="Choose a person">
+                                <ui-select-match placeholder="Select/Search User">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="user.id as user in ctrl.users | propsFilter: {name: $select.search}">
+                                  <div ng-bind-html="user.name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
                         </td>
                     </tr>
                     <tr>    

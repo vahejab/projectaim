@@ -5,14 +5,17 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
     ctrl.DOMops = DOMops;
     ctrl.ValidationService = ValidationService;
     ctrl.initDone = false;
+    ctrl.usersFetched = {done: false};
     ctrl.setup = {
         done: false
     }
-    ctrl.users = {}
+    ctrl.users = []
     ctrl.config = {}
     ctrl.model = { elem: true }
     ctrl.riskid = 0;
-    ctrl.risk = {
+    ctrl.riskownerid = 0;
+    ctrl.risk = { 
+        ownerid: '',
         risktitle: '',
         riskstatement: '',
         context: '',
@@ -112,50 +115,52 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
         if (!ctrl.valid())
              ctrl.msg = "Please complete form and resubmit";
         else{ 
+            ctrl.risk.ownerid = ctrl.riskownerid;
             return $http.post('/api/risks', ctrl.risk).then(function(response){
-                if (response.data.Succeeded){    
-                    ctrl.riskid = response.data.Result.RiskID;
-                    $scope.msg = $sce.trustAsHtml(response.data.Result + "<b><a href='risk/edit/"+response.data.Result.riskid+"'>View Risk " + response.data.Result.riskid + "</a></b>");
-                    ctrl.resetForm();
+                if (response.data.Succeeded){     
+                    ctrl.riskid = response.data.RiskID;
+                    $scope.msg = $sce.trustAsHtml(response.data.Result + "<b><a href='/#!/risk/edit/"+ctrl.riskid+"'>View Risk " + ctrl.riskid + "</a></b>");
                     return response.data.Result;
                 }
                 else{
                     $scope.msg = $sce.trustAsHtml(response.data);
                 }
             }).then(function(){
-                    payload = {riskid: ctrl.riskid, events: {
+            
+                    today = new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate();
+                    payload = {riskid: ctrl.riskid, events: [{
                         eventid : 0,
                         eventtitle : 'Risk Identified',
-                        ownerid : 0,
+                        ownerid : ctrl.riskownerid,
                         
-                        actualdate: ctrl.risk.assessmentdate,
+                        actualdate: today,
                         actuallikelihood : ctrl.risk.likelihood,
                         actualtechnical : ctrl.risk.technical,
                         actualschedule : ctrl.risk.schedule,
                         actualcost : ctrl.risk.cost,
               
                         
-                        scheduledate : ctrl.risk.assessmentdate,
+                        scheduledate : today,
                         scheduledlikelihood : ctrl.risk.likelihood,
                         scheduledtechnical : ctrl.risk.technical,
                         scheduledschedule : ctrl.risk.schedule,
                         scheduledcost : ctrl.risk.cost,
                         
-                        baselinedate : ctrl.risk.assessmentdate,
+                        baselinedate : today,
                         baselinelikelihood : ctrl.risk.likelihood,
                         baselinetechnical : ctrl.risk.technical,
                         baselineschedule : ctrl.risk.schedule,
                         baselinecost : ctrl.risk.cost
-                    }
+                    }]
                 };
-            
                 return $http.post('/api/risks/'+ ctrl.riskid + '/events', payload).then(function(response){
                         if (response.data.Succeeded){
                             ctrl.msg = response.data.Result;
+                            //ctrl.resetForm();
                             return response.data.Result;
                         }
                         else{
-                             ctrl.msg = $sce.trustAsHtml(response.data);
+                             $scope.msg = $sce.trustAsHtml(response.data);
                         }
                 });
             });

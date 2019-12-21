@@ -314,6 +314,7 @@
             $sql = "insert
                     into risks( 
                             assessmentdate,
+                            ownerid,
                             risktitle,
                             riskstatement,
                             closurecriteria,
@@ -325,6 +326,7 @@
                     )
                     values(
                             NOW(),
+                            :ownerid,
                             :risktitle,
                             :riskstatement,
                             :closurecriteria,
@@ -339,7 +341,7 @@
                 $this->db->beginTransaction();     
                 $statement = $this->db->prepare($sql);
                 //$statement->bindValue(':creatorid', $params['creator']);
-                //$statement->bindValue(':ownerid' , $params['owner']);
+                $statement->bindValue(':ownerid' , $params['ownerid']);
                 $statement->bindValue(':risktitle' , $params['risktitle']);
                 $statement->bindValue(':riskstatement' , $params['riskstatement']);
                 $statement->bindValue(':closurecriteria' , $params['closurecriteria']);
@@ -351,6 +353,7 @@
                 $this->db->query("insert
                     into risks( 
                             assessmentdate,
+                            ownerid,
                             risktitle,
                             riskstatement,
                             closurecriteria,
@@ -361,7 +364,8 @@
                             cost
                     )
                     values(
-                            NOW(),
+                            NOW(),                     
+                            '{$params['ownerid']}',
                             '{$params['risktitle']}',
                             '{$params['riskstatement']}',
                             '{$params['closurecriteria']}',
