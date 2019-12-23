@@ -9,6 +9,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.riskMatrix = new Array(6);
         ctrl.users = [];
         ctrl.lastEventIdSaved = 0;
+        ctrl.nextActualRiskEventId = 1;
         ctrl.event = [];
         ctrl.evts = [];
         ctrl.evtCopy = [];
@@ -20,8 +21,8 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.oldcost=0;
         ctrl.initDone = false;
         ctrl.disabled = [{value: true},{value: true},{value: true},{value: true},{value: true},{value: true}];
-        
-        
+         ctrl.actual = [{disabled: true},{disabled: false},{disabled: true},{disabled: true},{disabled: true},{disabled: true}];
+       
           ctrl.today = function() {
             ctrl.dt = new Date();
           };
@@ -437,6 +438,10 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             ctrl.disabled[evt].value = true;
         }
         
+          ctrl.disableActual = function(evt){
+            ctrl.actual[evt].disabled = true;
+        }
+        
         ctrl.enable = function(evt){ 
            ctrl.disabled[evt].value = false;
            elems = document.querySelectorAll(".evt"+evt);
@@ -446,9 +451,38 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             return {value:  ValidationService.actualValid(evt, $scope)};
         }
         
+        ctrl.complete = function(evt){
+        
+            if (ValidationService.actualValid(evt, $scope))
+            {
+               ctrl.clearSchedule(evt);    
+               ctrl.disableActual(evt);
+               ctrl.nextActualRiskEventId++;
+            }
+        }
+        
          ctrl.add = function(evt){
                 if (evt < 5 && ctrl.event.length > 0)
                 {
+
+                      scheduledate = new Date(ctrl.event[evt].scheduledate);
+                      baselinedate = new Date(ctrl.event[evt].baselinedate);
+
+                       scheduledate.setDate(scheduledate.getDate() + 2);
+                        baselinedate.setDate(baselinedate.getDate() + 2);
+
+
+                                   y = scheduledate.getFullYear();
+                    m = scheduledate.getMonth()+1;
+                    d = scheduledate.getDate();
+                    schdate = y+((m<10)?'-0'+m:'-'+m)+((d<10)?'-0'+d:'-'+d);   
+
+
+                       y = baselinedate.getFullYear();
+                    m = baselinedate.getMonth()+1;
+                    d = baselinedate.getDate();
+                    basdate = y+((m<10)?'-0'+m:'-'+m)+((d<10)?'-0'+d:'-'+d);   
+
                       ctrl.event.push({
                         eventid: evt+1,
                         eventtitle: '',
@@ -469,60 +503,68 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                         scheduledtechnical: '',
                         scheduledschedule: '',
                         scheduledcost: '',
-                      inlineActualOptions: {
-                        customClass: getDayClass,
-                        minDate: ctrl.event[evt].actualdate,
-                        showWeeks: true
-                      },
+                 
                       inlineScheduleOptions: {
                         customClass: getDayClass,
-                        minDate: ctrl.event[evt].scheduledate,
+                        minDate: schdate,
                         showWeeks: true
                       },  
                        inlineBaselineOptions: {
                         customClass: getDayClass,
-                        minDate: ctrl.event[evt].baselinedate,
+                        minDate: basdate,
                         showWeeks: true
                       },
-                      actualdateOptions:{
-                        dateDisabled: disabled,
-                        formatYear: 'yy',
-                        minDate: ctrl.event[evt].actualdate,  
-                        startingDay: 1
-                      },
+                     
                       scheduledateOptions:{
                         dateDisabled: disabled,
                         formatYear: 'yy',
-                        minDate: ctrl.event[evt].scheduledate,          
+                        minDate: schdate,     
                         startingDay: 1
                     },
                     baselinedateOptions:{
                         dateDisabled: disabled,
                         formatYear: 'yy',
-                        minDate: ctrl.event[evt].baselinedate,          
+                        minDate: basdate,           
                         startingDay: 1
                     }
                });
                
-               ctrl.disable(evt);
+             }
+             ctrl.disable(evt);
                 
                 if (evt < 5){
                     ctrl.enable(evt+1); 
-                    if (ctrl.event[evt].valid)
-                      ctrl.lastEventIdSaved++;
-                }
-                   
-             } 
+                                }
+                
+                if (ctrl.event[evt].valid)
+                      ctrl.lastEventIdSaved++;   
+              
                 
         } 
         
+        ctrl.clearSchedule = function(evt){
+            ctrl.event[evt].scheduledate = '';
+            ctrl.event[evt].scheduledlikelihood = '';
+            ctrl.event[evt].scheduledtechnical = '';
+            ctrl.event[evt].scheduledschedule = '';
+            ctrl.event[evt].scheduledcost = '';
+        }
         
         ctrl.clearEvent = function(evt){
             ctrl.event[evt] = 
                     {eventtitle: '',
                         ownerid: '',
                         actualdate: '',
-                        scheduledate: '',
+                        actuallikelihood: '',
+                        actualtechnical: '',
+                        actualschedule: '',
+                        actualcost: '',
+                        baselinedate: '',
+                        baselinelikelihood: '',
+                        baselinetechnical: '',
+                        baselineschedule: '',
+                        baselinecost: '',
+                        scheduleddate: '',
                         scheduledlikelihood: '',
                         scheduledtechnical: '',
                         scheduledschedule: '',

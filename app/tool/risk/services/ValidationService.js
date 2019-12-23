@@ -77,7 +77,25 @@ angular.module('Risk').service("ValidationService", function() {
                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].actualschedule) &&
                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].actualcost);
                     
+        return valid;
     }
+    
+       commonFunctions.scheduleValid = function(evt, scope){
+        var valid = scope.ctrl.event[evt] &&
+                    !(scope.ctrl.event[evt] == {}) &&
+                       (scope.ctrl.event[evt].hasOwnProperty('scheduledate') && scope.ctrl.event[evt].scheduldate || "") != "" &&  
+                       (scope.ctrl.event[evt].hasOwnProperty('scheduledlikelihood') && scope.ctrl.event[evt].scheduledlikelihood ||  "") != ""  &&
+                       (scope.ctrl.event[evt].hasOwnProperty('scheduledtechnical') && scope.ctrl.event[evt].scheduledtechnical ||  "") != ""  &&
+                       (scope.ctrl.event[evt].hasOwnProperty('scheduledschedule') && scope.ctrl.event[evt].scheduledschedule ||  "") != ""  &&
+                       (scope.ctrl.event[evt].hasOwnProperty('scheduledcost') && scope.ctrl.event[evt].scheduledcost ||  "") != ""  &&
+                      
+                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].scheduledlikelihood) &&
+                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].scheduledtechnical) &&
+                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].scheduledschedule) &&
+                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].scheduledcost);
+                    
+    }
+    
     
     
     commonFunctions.evtValid = function(evt, scope){
