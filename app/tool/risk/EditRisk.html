@@ -306,7 +306,7 @@
                             <div class="widthAuto">Actual</div>
                         </div>
                         <div class="td left value">
-                            <div class="widthAuto">{{ctrl.risk.assessmentdate | date: "M/d/y"}}</div>
+                            <div class="widthAuto">{{ctrl.event[0].actualdate | date: "M/d/y"}}</div>
                         </div>
                           <div class="td header">
                             <div class="width50">Risk Level</div>
@@ -318,25 +318,25 @@
                             <div class="widthAuto">Likelihood</div>
                         </div>
                         <div class="td value center">
-                            <div class="widthAuto center">{{ctrl.risk.level.likelihood}}</div>
+                            <div class="widthAuto center">{{ctrl.event[0].actuallikelihood}}</div>
                         </div>
                         <div class="td header">
                             <div class="widthAuto">Technical</div>
                         </div>
                         <div class="td value center" style="text-align: center">
-                            <div class="widthAuto center">{{ctrl.risk.level.technical}}</div>
+                            <div class="widthAuto center">{{ctrl.event[0].actualtechnical}}</div>
                         </div>
                         <div class="td header">
                             <div class="widthAuto">Schedule</div>
                         </div>      
                         <div class="td value center" style="text-align: center">
-                           <div class="widthAuto center">{{ctrl.risk.level.schedule}}</div>
+                           <div class="widthAuto center">{{ctrl.event[0].actualschedule}}</div>
                         </div>
                         <div class="td header">
                             <div class="widthAuto">Cost</div>
                         </div>
                         <div class="td value center">
-                           <div class="widthAuto center">{{ctrl.risk.level.cost}}</div>
+                           <div class="widthAuto center">{{ctrl.event[0].actualcost}}</div>
                         </div>
                         <div class="td header">
                             <div class="widthAuto">Baseline</div>
@@ -354,61 +354,61 @@
                             <div class="widthAuto">Likelihood</div>
                         </div>
                         <div class="td value center">
-                            <div class="widthAuto center">{{ctrl.risk.level.likelihood}}</div>
+                            <div class="widthAuto center">{{ctrl.event[0].actuallikelihood}}</div>
                         </div>
                         <div class="td header">
                             <div class="widthAuto">Technical</div>
                         </div>
                         <div class="td value center" style="text-align: center">
-                            <div class="widthAuto center">{{ctrl.risk.level.technical}}</div>
+                            <div class="widthAuto center">{{ctrl.event[0].actualtechnical}}</div>
                         </div>
                         <div class="td header">
                             <div class="widthAuto">Schedule</div>
                         </div>      
                         <div class="td value center" style="text-align: center">
-                           <div class="widthAuto center">{{ctrl.risk.level.schedule}}</div>
+                           <div class="widthAuto center">{{ctrl.event[0].actualschedule}}</div>
                         </div>
                         <div class="td header">
                             <div class="widthAuto">Cost</div>
                         </div>
                         <div class="td value center">
-                           <div class="widthAuto center">{{ctrl.risk.level.cost}}</div>
+                           <div class="widthAuto center">{{ctrl.event[0].actualcost}}</div>
                         </div>
                         <div class="td header">
                             <div class="widthAuto">Schedule</div>
                         </div>
                         <div class="td left value">
-                            <div class="widthAuto">{{ctrl.risk.assessmentdate | date: "M/d/y"}}</div>
+                            <div class="widthAuto">{{ctrl.event[0].scheduleddate | date: "M/d/y"}}</div>
                         </div>
                         <div class="td header">
                             <div class="width50">Risk Level</div>
                         </div>
-                        <div class="td center level value {{ctrl.risk.level.cls}}">
-                            <div class="widthAuto center"><nobr>{{ctrl.risk.level.level}}</nobr></div> 
+                        <div class="td center level value">
+                            <div class="widthAuto center"><nobr></nobr></div> 
                         </div>
                         <div class="td header">
                             <div class="widthAuto">Likelihood</div>
                         </div>
                         <div class="td value center">
-                            <div class="widthAuto center">{{ctrl.risk.level.likelihood}}</div>
+                            <div class="widthAuto center"></div>
                         </div>
                         <div class="td header">
                             <div class="widthAuto">Technical</div>
                         </div>
                         <div class="td value center" style="text-align: center">
-                            <div class="widthAuto center">{{ctrl.risk.level.technical}}</div>
+                            <div class="widthAuto center"></div>
                         </div>
                         <div class="td header">
                             <div class="widthAuto">Schedule</div>
                         </div>      
                         <div class="td value center" style="text-align: center">
-                           <div class="widthAuto center">{{ctrl.risk.level.schedule}}</div>
+                           <div class="widthAuto center"></div>
                         </div>
                         <div class="td header">
                             <div class="widthAuto">Cost</div>
                         </div>
                         <div class="td value center">
-                           <div class="widthAuto center">{{ctrl.risk.level.cost}}</div>
+                           <div class="widthAuto center"></div>
                         </div>
                          <div class="td header" style="min-width: 50px">
                             Save

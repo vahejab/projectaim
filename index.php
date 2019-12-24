@@ -28,7 +28,9 @@
     }
     body{
         width: 100vw;
-    } 
+        margin: 0px;
+        background-image: url(/app/assets/images/custom_back.gif);
+    }
   </style>
 </head>
 <body ng-app="Main"> 

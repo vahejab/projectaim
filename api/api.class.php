@@ -79,7 +79,7 @@
             $endpointCount = count($this->endpoint);
             if($endpointCount <= 2){
                 $isDestination = $endpointCount == 2 && in_array($this->endpoint[1], ['first', 'prev', 'next', 'last']);
-            
+                $class = '';
                 if ($endpointCount == 1)
                     $class = "\\controllers\\{$this->endpoint[0]}Controller";
                 else if ($endpointCount == 2 && !$isDestination)
@@ -123,9 +123,13 @@
                         }
                     }
                 }
-                if ($isDestination)
-                    return $this->_response("No Endpoint: ", $this->endpoint[0]);
-                return $this->_response("No Endpoint: " . $this->endpoint[1] ?? $this->endpoint[0]);
+                if ($this->endpoint){
+                    if ($isDestination)
+                        return $this->_response("No Endpoint: ", $this->endpoint[0]);
+                    return $this->_response("No Endpoint: " . $this->endpoint[1] ?? $this->endpoint[0]);
+                }
+                else
+                    return $this->_response("ProjectAIM API");
             }
         }
 
