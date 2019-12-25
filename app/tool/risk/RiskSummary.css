@@ -2,6 +2,10 @@
     text-align: left;
 }
 
+.ag-cell {
+    min-width: auto !important;
+}
+
 path {
   fill: none; 
 } 

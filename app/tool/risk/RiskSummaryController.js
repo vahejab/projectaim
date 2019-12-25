@@ -78,25 +78,103 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
             var xVal, yVal;
             ctrl.focus = [];
         
-        
+         
+         
+         function getScrollbarWidth() {
+
+          // Creating invisible container
+          const outer = document.createElement('div');
+          outer.style.visibility = 'hidden';
+          outer.style.overflow = 'scroll'; // forcing scrollbar to appear
+          outer.style.msOverflowStyle = 'scrollbar'; // needed for WinJS apps
+          document.body.appendChild(outer);
+
+          // Creating inner element and placing it in the container
+          const inner = document.createElement('div');
+          outer.appendChild(inner);
+
+          // Calculating difference between container's full width and the child width
+          const scrollbarWidth = (outer.offsetWidth - inner.offsetWidth);
+
+          // Removing temporary elements from the DOM
+          outer.parentNode.removeChild(outer);
+
+          return scrollbarWidth;
+
+        }
+         ctrl.autoSizeAll = function(skipHeader) {
+            var allColumnIds = [];
+            ctrl.gridOptions.columnApi.getAllColumns().forEach(function(column) {
+                allColumnIds.push(column.colId);
+            });
+
+            ctrl.gridOptions.columnApi.autoSizeColumns(allColumnIds, skipHeader);
+        }
+         
+          
          angular.element($window).on('resize', function(){
-          if (ctrl.gridOptions.api)
-            ctrl.gridOptions.api.sizeColumnsToFit();
+          cells = document.getElementsByClassName("ag-header-cell");
+          width = 0;
+          for (idx = 0; idx < cells.length; idx++)
+            width += parseInt(cells[idx].offsetWidth);
+           if (ctrl.gridOptions.api && (width < (document.body.clientWidth - getScrollbarWidth()))){
+            ctrl.gridOptions.columnDefs.forEach( function(columnDef) {
+             var browserZoomLevel = Math.round(window.devicePixelRatio * 100);
+           
+                if (browserZoomLevel > 100)
+                {
+                     columnDef.resizable = false;
+                     
+                        $timeout(function(){            
+                            location.reload();
+                        });
+                }
+            });
+                 
+            $timeout(function(){
+                 ctrl.gridOptions.api.sizeColumnsToFit(); 
+            });
+            }
+           else if (ctrl.gridOptions.api && width >= (document.body.clientWidth - getScrollbarWidth()))
+           {
+            var allColumnIds = [];
+            var browserZoomLevel = Math.round(window.devicePixelRatio * 100);
+                
+            ctrl.gridOptions.columnDefs.forEach( function(columnDef) {
+                if (browserZoomLevel > 100)
+                {
+                     columnDef.resizable = false;
+                
+                     $timeout(function(){            
+                            location.reload();
+                        });
+                }
+                
+                allColumnIds.push(columnDef.field);
+            });                                                     
+
+                 /*
+            $timeout(function(){
+                ctrl.gridOptions.api.sizeColumnsToFit(); 
+                ctrl.gridOptions.api.autoSizeColumns(allColumnIds);
+            });    */
+            }
+               
          });             
         ctrl.gridOptions = {
          defaultColDef: {
             resizable: true
          },
           columnDefs: [
-                            {resizable: true, headerName: "Risk ID", field: "riskid", cellRenderer: editRisk},
-                            {resizable: true, headerName: "Risk Title", field: "risktitle"},
-                            {resizable: true, headerName: "Risk", field: "riskvalue",  filter: 'agNumberColumnFilter', cellRenderer: percentCellRenderer},
+                            {resizable: false, width: 50, headerName: "Risk ID", field: "riskid", cellRenderer: editRisk},
+                            {resizable: false,  width: 250,headerName: "Risk Title", field: "risktitle"},
+                            {resizable: false,width: 50, headerName: "Risk", field: "riskvalue",  filter: 'agNumberColumnFilter', cellRenderer: percentCellRenderer},
                             /*{
                                 headerName: 'Line Chart',
                                 field: 'CloseTrends',
                                 width: 115,
                                 resizable: false,
-                                suppressSizeToFit: true,
+                                suppressSizeToFit: false,
                                 cellRenderer: lineChartLineRenderer
                             },
                             {
@@ -104,27 +182,27 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
                                 field: 'CloseTrends',
                                 width: 300,
                                 resizable: false,
-                                suppressSizeToFit: true,
+                                suppressSizeToFit: false,
                                 cellRenderer: riskWaterfallRenderer
                             }, */
-                            {resizable: true, headerName: "Creation Date", field: "creationdate"},
-                            {resizable: true, headerName: "Creator", field: "creator"},
-                            {resizable: true, headerName: "Owner", field: "owner"},
-                            {resizable: true, headerName: "Approver", field: "approver"}
+                            {resizable: false, width: 250,headerName: "Creation Date", field: "creationdate"},
+                            {resizable: false, width: 250,headerName: "Creator", field: "creator"},
+                            {resizable: false, width: 250,headerName: "Owner", field: "owner"},
+                            {resizable: false, width: 250,headerName: "Approver", field: "approver"}
           ],
           rowSelection: 'multiple',
           suppressRowClickSelection: false,
           defaultColDef: {
                 sortable: true,
                 filter: true,      
-                resize: true
+                resize: false
           },
           rowData: ctrl.risks,
           components:{
             lineChartLineRenderer: lineChartLineRenderer,
           },
           onFirstDataRendered: function(params) {
-                params.api.sizeColumnsToFit();
+            ctrl.autoSizeAll(false); 
           }
         };
         
