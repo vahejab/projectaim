@@ -1,0 +1,6 @@
+{
+    "require": {
+       "phpoffice/phppresentation": "dev-master",
+        "phpoffice/phpword": "^0.16.0"
+    }
+}

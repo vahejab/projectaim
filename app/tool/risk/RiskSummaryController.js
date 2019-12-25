@@ -127,7 +127,7 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
                      
                         $timeout(function(){            
                             location.reload();
-                        });
+                            });
                 }
             });
                  
@@ -144,10 +144,6 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
                 if (browserZoomLevel > 100)
                 {
                      columnDef.resizable = false;
-                
-                     $timeout(function(){            
-                            location.reload();
-                        });
                 }
                 
                 allColumnIds.push(columnDef.field);
@@ -168,7 +164,7 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
           columnDefs: [
                             {resizable: false, width: 50, headerName: "Risk ID", field: "riskid", cellRenderer: editRisk},
                             {resizable: false,  width: 250,headerName: "Risk Title", field: "risktitle"},
-                            {resizable: false,width: 50, headerName: "Risk", field: "riskvalue",  filter: 'agNumberColumnFilter', cellRenderer: percentCellRenderer},
+                            {resizable: false,width: 250, headerName: "Risk", field: "riskvalue",  filter: 'agNumberColumnFilter', cellRenderer: percentCellRenderer},
                             /*{
                                 headerName: 'Line Chart',
                                 field: 'CloseTrends',
@@ -202,7 +198,8 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
             lineChartLineRenderer: lineChartLineRenderer,
           },
           onFirstDataRendered: function(params) {
-            ctrl.autoSizeAll(false); 
+               ctrl.gridOptions.api.sizeColumnsToFit(); 
+               ctrl.autoSizeAll(false);
           }
         };
         
