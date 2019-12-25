@@ -7,10 +7,13 @@
                         <input type="button" value="Prev"  ng-click="ctrl.fetchRisk('prev')"/>&nbsp;
                         <input type="button" value="Next"  ng-click="ctrl.fetchRisk('next')">&nbsp;
                         <input type="button" value="Last"  ng-click="ctrl.fetchRisk('last')">
-                    </center>
+
                     <br />
                     <h2>Edit Risk Details</h2>
                     <h2>Risk #{{ctrl.risk.riskid}}</h2>
+                    <h3><a href="" ng-click="ctrl.getRiskReport()">Download Risk Report (PPTX)</a></h3>
+                    <!--object ng-show="ctrl.content" data="{{ctrl.content}}" type="application/vnd.openxmlformats-officedocument.presentationml.presentation" style="width: 100%; height: 400px;"></object-->
+                    </center>
                     <div id="summary" class="tbl layout" border="1">
                         <div class="tr">
                             <div class="td label">Risk #</div>
@@ -452,7 +455,7 @@
                             Owner
                         </div>
                         <div class="td value">
-                                 <ui-select ng-change="ctrl.validateEvent(event)" ng-disabled="ctrl.disabled[event].value" ng-model="ctrl.event[event].ownerid" theme="select2" ng-disabled="ctrl.disabled[event].value && event == ctrl.lastEventIdSaved" title="Choose a person">
+                                 <ui-select ng-change="ctrl.validateEvent(event)" ng-disabled="ctrl.disabled[event].value" ng-model="ctrl.event[event].eventownerid" theme="select2" ng-disabled="ctrl.disabled[event].value && event == ctrl.lastEventIdSaved" title="Choose a person">
                                     <ui-select-match placeholder="Select/Search User">{{$select.selected.name}}</ui-select-match>
                                     <ui-select-choices repeat="user.id as user in ctrl.users | propsFilter: {name: $select.search}">
                                       <div ng-bind-html="user.name | highlight: $select.search"></div>

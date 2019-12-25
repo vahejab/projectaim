@@ -78,6 +78,8 @@
     <script src="/app/js/angularjs-1.7.8/statehelper.js"></script>
     <script src="/app/js/ocLazyLoad/ocLazyLoad.js"></script>
     <script src="/app/route-config.js"></script>
+    <script src="/app/js/text-encoder-lite/text-encoder-lite.js"></script>
+    <script src="/app/js/base64js/base64js.min.js"></script>
     <script src="/app/app.js"></script>
    </body>
 </html>

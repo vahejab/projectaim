@@ -96,8 +96,7 @@ var app = angular.module('Main', ['ui.router', 'oc.lazyLoad', 'ngResource', 'ngS
   
 app.controller('MainController',  ['CommonService', '$scope', '$window', '$state', function(CommonService, $scope, $window, $state){
 }]);
-
-app.config(['$ocLazyLoadProvider', '$stateProvider', '$urlRouterProvider', /*'$mdThemingProvider', */function($ocLazyLoadProvider, $stateProvider, $urlRouterProvider/*, $mdThemingProvider*/) {
+app.config(['$ocLazyLoadProvider', '$stateProvider', '$urlRouterProvider', '$compileProvider', function($ocLazyLoadProvider, $stateProvider, $urlRouterProvider, $compileProvider/*, $mdThemingProvider*/) {
    /* $mdThemingProvider.theme('custom')
                       .primaryPalette('blue')
                       .accentPalette('blue-grey');
@@ -105,7 +104,7 @@ app.config(['$ocLazyLoadProvider', '$stateProvider', '$urlRouterProvider', /*'$m
     $mdThemingProvider.alwaysWatchTheme(true);
     */
     configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider);
-    
+     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|blob):/);
 }]);
 
 /**

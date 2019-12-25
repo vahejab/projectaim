@@ -167,7 +167,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             ctrl.evts[0] = {
                 eventid : 0,
                 eventtitle : 'Risk Identified',
-                ownerid : ctrl.risk.owner,
+                eventownerid : ctrl.risk.owner,
                 
                 actualdate: ctrl.risk.assessmentdate,
                 actuallikelihood : ctrl.risk.likelihood,
@@ -494,7 +494,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                       ctrl.event.push({
                         eventid: evt+1,
                         eventtitle: '',
-                        ownerid: '',
+                        eventownerid: '',
                         actualdate: '',
                         scheduledate: '',
                         baselinedate: '',
@@ -563,7 +563,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.clearEvent = function(evt){
             ctrl.event[evt] = 
                     {eventtitle: '',
-                        ownerid: '',
+                        eventownerid: '',
                         actualdate: '',
                         actuallikelihood: '',
                         actualtechnical: '',
@@ -625,7 +625,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                             ctrl.event[key].eventid = key;
                             ctrl.event[key].eventtitle = event.eventtitle;
                             ctrl.event[key].riskid = event.riskid;
-                            ctrl.event[key].ownerid = event.ownerid;
+                            ctrl.event[key].eventownerid = event.event3;
                             ctrl.event[key].actualdate = event.actualdate;
                             ctrl.event[key].scheduledate = event.scheduledate;
                             ctrl.event[key].baselinedate = event.baselinedate;
@@ -694,7 +694,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                         ctrl.risk.approvername = response.data.Result.approver;
                    
                         ctrl.risk.assignor = response.data.Result.assignorid;
-                        ctrl.risk.owner = response.data.Result.ownerid;
+                        ctrl.risk.owner = response.data.Result.eventownerid;
                         ctrl.risk.creator = response.data.Result.creatorid;
                         ctrl.risk.approver = response.data.Result.approverid;
   
@@ -716,7 +716,29 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                   }
             });
         }
-           
+         
+        function Base64Encode(str, encoding = 'utf-8') {
+            var bytes = new (typeof TextEncoder === "undefined" ? TextEncoderLite : TextEncoder)(encoding).encode(str);        
+            return base64js.fromByteArray(bytes);
+        }
+
+        function Base64Decode(str, encoding = 'utf-8') {
+            var bytes = base64js.toByteArray(str);
+            return new (typeof TextDecoder === "undefined" ? TextDecoderLite : TextDecoder)(encoding).decode(bytes);
+        }
+        
+        ctrl.getRiskReport = function(){
+            $http.get('api/risk/' + ctrl.risk.riskid + '/report', 
+            {responseType:'arraybuffer'})
+              .then(function (response) {
+                 var file = new Blob([response.data], {type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation', charset: 'utf-8'});
+                 var downloadLink = angular.element('<a style="display:none"></a>');
+                 downloadLink.attr('href',window.URL.createObjectURL(file));
+                 downloadLink.attr('target', '_blank');
+                 downloadLink.attr('download', 'RiskSummary.pptx');
+                 downloadLink[0].click();
+            });
+        }
         
         ctrl.getUsers = function(){
             return $http.get('api/users').then(function(response){

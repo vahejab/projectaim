@@ -1795,7 +1795,8 @@
  
         public function generateRiskSummaryPresentation()
         {
-           //header("Content-Type: application/vnd.openxmlformats-officedocument.presentationml.presentation");
+           //header("Content-Type: application/vnd.openxmlformats-officedocument.presentationml.presentation; charset=utf-8");
+           header("charset=utf8");
            //header("Content-Disposition: attachment; filename=RiskSummary.pptx");
            $oWriterPPTX = IOFactory::createWriter($this->riskPPT,'PowerPoint2007');
            return $oWriterPPTX->save('php://output');    
@@ -2170,11 +2171,43 @@
           
  class report {
  
-        public function riskreport(){
+        public function riskreport($id){
        
        $minHigh = .55;
     $maxLow = .30;
+  
+  
     
+    $evtSvc = new \data\service\eventservice();
+    $evts = [];
+    $evts = $evtSvc->findAllByRisk($id);
+   
+         
+    for($idx = 0; $idx < count($evts['Result']); $idx++)
+    {
+        $evt = $evts['Result'][$idx];
+        $events[] = [
+
+        'title' => $evt->eventtitle,
+        'owner' => (new \data\service\userservice())->findOne($evt->eventownerid)['Name'] ?? ' ',
+        'baseline-date' => $evt->baselinedate ?? ' ',
+        'baseline-likelihood' => intval($evt->baselinelikelihood) ?? ' ',
+        'baseline-consequence-T' => intval($evt->baselinetechnical) ?? ' ',
+        'baseline-consequence-S' => intval($evt->baselineschedule) ?? ' ',
+        'baseline-consequence-C' => intval($evt->baselinecost) ?? ' ',
+        'actual-date' => $evt->actualdate ?? ' ',
+        'actual-likelihood' => intval($evt->actuallikelihood) ?? ' ',
+        'actual-consequence-T' => intval($evt->actualtechnical) ?? ' ',
+        'actual-consequence-S' => intval($evt->actualschedule) ?? ' ',
+        'actual-consequence-C' => intval($evt->actualcost) ?? ' ',
+        'schedule-date' => $evt->actualdate ?? ' ',
+        'schedule-likelihood' => intval($evt->scheduledlikelihood) ?? ' ',
+        'schedule-consequence-T' => intval($evt->scheduledtechnical) ?? ' ',
+        'schedule-consequence-S' => intval($evt->scheduledschedule) ?? ' ',
+        'schedule-consequence-C' => intval($evt->scheduledcost) ?? ' '
+    ];
+    }
+ /*   
 $events = 
 [
     [
@@ -2293,16 +2326,14 @@ $events =
         'schedule-consequence-C' => 1
     ]
 ];
-        
+   */     
         
 /*    if (isset($_GET['events']))
     {
         echo json_encode($events);
         die();
     }*/      
- //var_dump($events);                                                                      
-   
-       
+
             $today = date('Y-m-d');  
             $startDate = $events[0]['baseline-date'];
             $endDate = max($today, $events[count($events)-1]['baseline-date'], $events[count($events)-1]['schedule-date'], $events[count($events)-1]['actual-date']); 

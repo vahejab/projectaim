@@ -8,7 +8,7 @@
             
             if (!is_null($array['RiskID'])) $event->riskid = $array['RiskID'];
             if (!is_null($array['EventID'])) $event->eventid = $array['EventID'];     
-            if (!is_null($array['EventOwnerID'])) $event->ownerid = $array['EventOwnerID'];   
+            if (!is_null($array['EventOwnerID'])) $event->eventownerid = $array['EventOwnerID'];   
             if (!is_null($array['EventTitle'])) $event->eventtitle = $array['EventTitle'];
             
             if (!is_null($array['ActualDate'])) $event->actualdate = $array['ActualDate'];
@@ -132,7 +132,9 @@
                 $statement->execute();
                 
                 foreach ($params['events'] as $event) 
-                {  
+                { 
+                
+                    var_dump($event); 
                     $statement = $this->db->prepare("update riskevents set
                                                             eventtitle =:eventtitle,
                                                             eventownerid = :eventownerid,
@@ -159,7 +161,7 @@
                     $statement->bindValue(':riskid' , $params['riskid']);
                     $statement->bindValue(':eventid' , $event['eventid']);
                     $statement->bindValue(':eventtitle' , $event['eventtitle']);
-                    $statement->bindValue(':eventownerid' , $event['ownerid']);
+                    $statement->bindValue(':eventownerid' , $event['eventownerid']);
                    
                     
                     $statement->bindValue(':actualdate', $event['actualdate']);
@@ -232,7 +234,7 @@
                     $statement->bindValue(':riskid' , $riskid);
                     $statement->bindValue(':eventid' , $event['eventid']);
                     $statement->bindValue(':eventtitle' , $event['eventtitle']);
-                    $statement->bindValue(':eventownerid' , $event['ownerid']);
+                    $statement->bindValue(':eventownerid' , $event['eventownerid']);
              
                     $statement->bindValue(':actualdate', $event['actualdate']);
                     
@@ -328,7 +330,7 @@
                     $statement->bindValue(':riskid' , $riskid);
                     $statement->bindValue(':eventid' , $event['eventid']);
                     $statement->bindValue(':eventtitle' , $event['eventtitle']);
-                    $statement->bindValue(':eventownerid' , $event['ownerid']);
+                    $statement->bindValue(':eventownerid' , $event['eventownerid']);
              
                     $statement->bindValue(':actualdate', $event['actualdate']);
                     
