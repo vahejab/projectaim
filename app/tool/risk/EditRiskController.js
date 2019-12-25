@@ -464,25 +464,33 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
          ctrl.add = function(evt){
                 if (evt < 5 && ctrl.event.length > 0)
                 {
-
-                      scheduledate = new Date(ctrl.event[evt].scheduledate);
+                      if (evt > 0)
+                        scheduledate = new Date(ctrl.event[evt].scheduledate);
+                      
                       baselinedate = new Date(ctrl.event[evt].baselinedate);
-
+                      
+                      if (evt > 0) 
                        scheduledate.setDate(scheduledate.getDate() + 2);
-                        baselinedate.setDate(baselinedate.getDate() + 2);
+                      
+                      baselinedate.setDate(baselinedate.getDate() + 2);
 
+                      if (evt > 0)
+                      {
+                        y = scheduledate.getFullYear();
+                        m = scheduledate.getMonth()+1;
+                        d = scheduledate.getDate();
+                        schdate = y+((m<10)?'-0'+m:'-'+m)+((d<10)?'-0'+d:'-'+d);   
+                      }
+                      
+                      y = baselinedate.getFullYear();
+                      m = baselinedate.getMonth()+1;
+                      d = baselinedate.getDate();
+                      basdate = y+((m<10)?'-0'+m:'-'+m)+((d<10)?'-0'+d:'-'+d);   
 
-                                   y = scheduledate.getFullYear();
-                    m = scheduledate.getMonth()+1;
-                    d = scheduledate.getDate();
-                    schdate = y+((m<10)?'-0'+m:'-'+m)+((d<10)?'-0'+d:'-'+d);   
-
-
-                       y = baselinedate.getFullYear();
-                    m = baselinedate.getMonth()+1;
-                    d = baselinedate.getDate();
-                    basdate = y+((m<10)?'-0'+m:'-'+m)+((d<10)?'-0'+d:'-'+d);   
-
+                      
+                      if (evt == 0)
+                        schdate = basdate;
+                      
                       ctrl.event.push({
                         eventid: evt+1,
                         eventtitle: '',
@@ -530,15 +538,17 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                });
                
              }
-             ctrl.disable(evt);
+             if (evt == 1)
+                ctrl.disabled[0].value = true;
+             else
+                ctrl.disable(evt);
                 
-                if (evt < 5){
-                    ctrl.enable(evt+1); 
-                                }
-                
-                if (ctrl.event[evt].valid)
-                      ctrl.lastEventIdSaved++;   
-              
+            if (evt < 5){
+                ctrl.enable(evt+1); 
+            }                                       
+            if ((ctrl.event[evt] && ctrl.event[evt].valid))
+                  ctrl.lastEventIdSaved++;   
+          
                 
         } 
         
@@ -577,11 +587,16 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             DOMops.clearLevel(evt);
             ctrl.event.pop();
 
-            if (evt > 0){                            
+            if (evt > 1){                            
                 ctrl.enable(evt - 1);
                 ctrl.lastEventIdSaved--;
                 ctrl.validateEvent(evt-1);
-            }   
+            }
+            else if (evt == 1)
+            {
+                 ctrl.disabled[0].value = false;
+                 ctrl.lastEventIdSaved--;
+            } 
         }
      
         ctrl.edit = function(evt){
