@@ -14,7 +14,7 @@
             if (array_key_exists('AssessmentDate', $array) && !is_null($array['AssessmentDate'])) $risk->assessmentdate = $array['AssessmentDate'];
             
             if (array_key_exists('creator.lastname', $array) && !is_null($array['creator.lastname'])) $risk->creatorlastname = $array['creator.lastname'];
-            if (array_key_exists('creator.firstname', $array) && !is_null($array['creator.firstname'])) $risk->creatorlastname = $array['creator.firstname'];
+            if (array_key_exists('creator.firstname', $array) && !is_null($array['creator.firstname'])) $risk->creatorfirstname = $array['creator.firstname'];
             if (array_key_exists('owner.lastname', $array) && !is_null($array['owner.lastname'])) $risk->ownerlastname = $array['owner.lastname'];
             if (array_key_exists('owner.firstname', $array) && !is_null($array['owner.firstname'])) $risk->ownerfirstname = $array['owner.firstname'];
 

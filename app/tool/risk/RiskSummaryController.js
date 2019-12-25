@@ -107,7 +107,7 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
                                 suppressSizeToFit: true,
                                 cellRenderer: riskWaterfallRenderer
                             }, */
-                            {resizable: true, headerName: "Creation Date", field: "assessmentdate"},
+                            {resizable: true, headerName: "Creation Date", field: "creationdate"},
                             {resizable: true, headerName: "Creator", field: "creator"},
                             {resizable: true, headerName: "Owner", field: "owner"},
                             {resizable: true, headerName: "Approver", field: "approver"}
@@ -311,6 +311,7 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
                                 assignor: risk.assignor,
                                 owner: risk.owner,
                                 approver: risk.approver,
+                                creator: risk.creator,
                                 assessmentdate: risk.assessmentdate
                             };
                             ctrl.risks.push({
@@ -331,7 +332,9 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
                             ctrl.risks[key].assignor = response.data.Result[key].assignor;
                             ctrl.risks[key].owner = response.data.Result[key].owner;
                             ctrl.risks[key].approver = response.data.Result[key].approver;
-                            ctrl.risks[key].creationdate = response.data.Result[key].assessmentdate;
+                            ctrl.risks[key].creator = response.data.Result[key].creator;
+                            dateYMD = response.data.Result[key].assessmentdate.split("-");
+                            ctrl.risks[key].creationdate = dateYMD[1] + "/" + dateYMD[2] + "/" + dateYMD[0]; 
                             ctrl.events[ctrl.risks[key].riskid] = [];
                         });
                         ctrl.risksloaded = true;
