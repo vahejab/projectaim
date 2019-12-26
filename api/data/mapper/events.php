@@ -132,9 +132,7 @@
                 $statement->execute();
                 
                 foreach ($params['events'] as $event) 
-                { 
-                
-                    var_dump($event); 
+                {
                     $statement = $this->db->prepare("update riskevents set
                                                             eventtitle =:eventtitle,
                                                             eventownerid = :eventownerid,

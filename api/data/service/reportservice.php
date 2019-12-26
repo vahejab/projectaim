@@ -1620,6 +1620,7 @@
             else if ($yearsBetween == 0 && $monthsBetween <= 1)
             {
                 $dayInterval = intval(floor($daysBetween / self::$maxDaysXAxis));
+                $dayInterval = max(1, $dayInterval);
                 $this->dayInterval = $dayInterval;
             }
      
@@ -2181,7 +2182,7 @@
     $evtSvc = new \data\service\eventservice();
     $evts = [];
     $evts = $evtSvc->findAllByRisk($id);
-   
+    $events = [];
          
     for($idx = 0; $idx < count($evts['Result']); $idx++)
     {

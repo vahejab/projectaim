@@ -70,7 +70,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
           ctrl.openBaseline = function(evt) {
             ctrl.hidepopups();
             ctrl.baseline[evt].opened = true;
-          };
+          };                  
 
           
           ctrl.openActual = function(evt) {
@@ -625,7 +625,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                             ctrl.event[key].eventid = key;
                             ctrl.event[key].eventtitle = event.eventtitle;
                             ctrl.event[key].riskid = event.riskid;
-                            ctrl.event[key].eventownerid = event.event3;
+                            ctrl.event[key].eventownerid = event.eventownerid;
                             ctrl.event[key].actualdate = event.actualdate;
                             ctrl.event[key].scheduledate = event.scheduledate;
                             ctrl.event[key].baselinedate = event.baselinedate;
@@ -694,7 +694,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                         ctrl.risk.approvername = response.data.Result.approver;
                    
                         ctrl.risk.assignor = response.data.Result.assignorid;
-                        ctrl.risk.owner = response.data.Result.eventownerid;
+                        ctrl.risk.owner = response.data.Result.ownerid;
                         ctrl.risk.creator = response.data.Result.creatorid;
                         ctrl.risk.approver = response.data.Result.approverid;
   
