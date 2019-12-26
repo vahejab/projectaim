@@ -607,10 +607,10 @@
                              <input required ng-class="{invalid: ctrl.event[event].scheduledinvalid}" class="level" type="text" maxlength="1" ng-disabled="ctrl.disabled[event].value" ng-change="ctrl.validateDisplayLevel(event, 'scheduled', 'cost'); ctrl.setBaselineCost(event)" ng-model="ctrl.event[event].scheduledcost" />
                         </div>
                         <div class="td header" style="min-width: 50px">
-                            Save
+                            Save 
                         </div>
                         <div class="td value" style="min-width: 50px">
-                         <input class="addEvent" type="button" id="add{{event}}" ng-show="(!ctrl.disabled[event].value) && ((event == (ctrl.lastEventIdSaved+1)) || ((event == 0) && (event == ctrl.lastEventIdSaved))) && ctrl.event[event].valid" ng-click="ctrl.add(event)" ng-keyup="$event.keyCode === 13 && ctrl.add(event)" value="Save" />
+                           <input class="addEvent" type="button" id="add{{event}}" ng-show="(!ctrl.disabled[event].value) && ((event == (ctrl.lastEventIdSaved)) || ((event == 0) && (event == ctrl.lastEventIdSaved))) && ctrl.event[event].valid" ng-click="ctrl.add(event)" ng-keyup="$event.keyCode === 13 && ctrl.add(event)" value="Save" />
                         </div>                                                                                                                                                                                                                                                                                                                           
                         <div class="td header">
                             Remove

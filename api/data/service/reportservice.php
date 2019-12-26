@@ -1645,7 +1645,7 @@
             } 
             else if ($totalDaysBetween > 0)
             {
-                $this->numBoxes = $this->renderDayBoxes($totalDaysBetween, $dayInterval, $currentSlide, $date1, $date2); 
+                $this->numBoxes = $this->renderDayBoxes($totalDaysBetween+1, $dayInterval, $currentSlide, $date1, $date2); 
                 $this->generateWaterfallMarker($today);
             }        
             else

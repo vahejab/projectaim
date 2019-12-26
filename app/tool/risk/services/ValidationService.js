@@ -100,7 +100,7 @@ angular.module('Risk').service("ValidationService", function() {
     
     commonFunctions.evtValid = function(evt, scope){
          var valid = !(scope.ctrl.event[evt] == {}) && (scope.ctrl.event[evt]) && ((scope.ctrl.event[evt].eventtitle || "") != "")   &&
-                      (scope.ctrl.event[evt].ownerid || "") != "" && 
+                      (scope.ctrl.event[evt].eventownerid || "") != "" && 
                       (scope.ctrl.event[evt].baselinedate || "") != "" &&
                       
                       
@@ -144,7 +144,7 @@ angular.module('Risk').service("ValidationService", function() {
                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].actualcost)
                       )
                       );   
-         commonFunctions.hasData(evt, scope);         
+         commonFunctions.hasData(evt, scope);       
          scope.ctrl.event[evt].valid = valid;
          return valid;   
     }

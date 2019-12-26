@@ -176,11 +176,11 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                 actualcost : ctrl.risk.cost,
       
                 
-                scheduledate : ctrl.risk.assessmentdate,
-                scheduledlikelihood : ctrl.risk.likelihood,
-                scheduledtechnical : ctrl.risk.technical,
-                scheduledschedule : ctrl.risk.schedule,
-                scheduledcost : ctrl.risk.cost,
+                scheduledate : null,
+                scheduledlikelihood : null,
+                scheduledtechnical : null,
+                scheduledschedule : null,
+                scheduledcost : null,
                 
                 baselinedate : ctrl.risk.assessmentdate,
                 baselinelikelihood : ctrl.risk.likelihood,
@@ -190,8 +190,9 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             }
 
 
-            ctrl.evtCopy[0] = JSON.parse(JSON.stringify(ctrl.evts[0]));                             
-            for (var idx = 1; idx <= ctrl.lastEventIdSaved; idx++)
+            ctrl.evtCopy[0] = JSON.parse(JSON.stringify(ctrl.evts[0]));
+                             
+            for (var idx = 0; (ctrl.lastEventIdSaved > 0) && (idx <= ctrl.lastEventIdSaved); idx++)
             {            
                 ctrl.evtCopy[idx] = JSON.parse(JSON.stringify(ctrl.event[idx]));
                 if (!ctrl.evtCopy[idx].hasOwnProperty('actualdate') || ctrl.evtCopy[idx].actualdate == '')
@@ -233,7 +234,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.saveEvents = function(){ 
         
             ctrl.copyEvent();
-            for (var idx = 1; idx <= ctrl.lastEventIdSaved; idx++)
+            for (var idx = 1; (ctrl.lastEventIdSaved > 0) && (idx <= ctrl.lastEventIdSaved); idx++)
             {            
                 ctrl.evts.push(ctrl.evtCopy[idx]);
                 ctrl.evts[idx].eventid = idx;
@@ -285,7 +286,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         }
         
         ctrl.rebindDates = function(){
-          for(e = 1; e <= ctrl.lastEventIdSaved; e++){
+          for(e = 1; (ctrl.lastEventIdSaved > 0) && (e <= ctrl.lastEventIdSaved); e++){
             ctrl.rebindDate(e);                    
           }        
         } 
@@ -540,17 +541,37 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
              }
              if (evt == 1)
                 ctrl.disabled[0].value = true;
-             else
+             else {
                 ctrl.disable(evt);
-                
-            if (evt < 5){
-                ctrl.enable(evt+1); 
-            }                                       
-            if ((ctrl.event[evt] && ctrl.event[evt].valid))
-                  ctrl.lastEventIdSaved++;   
-          
-                
-        } 
+             } 
+            if (evt <= 5){  
+                ctrl.validateEvent(evt);
+                if ((ctrl.event[evt] && ctrl.event[evt].valid))
+                    ctrl.lastEventIdSaved++;
+            }     
+            if (evt < 5)
+                ctrl.enable(evt+1);                                                  
+        }
+        
+           ctrl.remove = function(evt){
+            ctrl.disable(evt);
+            ctrl.clearEvent(evt);   
+            DOMops.clearLevel(evt);
+            ctrl.event.pop();
+            ctrl.validateEvent(evt-1);   
+            
+            if (evt > 1)
+            {                            
+                ctrl.enable(evt - 1);
+            }
+            else if (evt == 1)
+            {
+                 ctrl.disabled[0].value = false;
+            }
+
+            ctrl.lastEventIdSaved--;
+        }
+      
         
         ctrl.clearSchedule = function(evt){
             ctrl.event[evt].scheduledate = '';
@@ -581,23 +602,6 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                         scheduledcost: ''}
         }
         
-        ctrl.remove = function(evt){
-            ctrl.disable(evt);
-            ctrl.clearEvent(evt);   
-            DOMops.clearLevel(evt);
-            ctrl.event.pop();
-
-            if (evt > 1){                            
-                ctrl.enable(evt - 1);
-                ctrl.lastEventIdSaved--;
-                ctrl.validateEvent(evt-1);
-            }
-            else if (evt == 1)
-            {
-                 ctrl.disabled[0].value = false;
-                 ctrl.lastEventIdSaved--;
-            } 
-        }
      
         ctrl.edit = function(evt){
             ctrl.enable(evt);
@@ -613,6 +617,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
              ctrl.evts = [];
              ctrl.event = [];
              ctrl.evtCopy = [];
+             ctrl.lastEventIdSaved = 0;
              ctrl.disabled = [{value: true},{value: true},{value: true},{value: true},{value: true},{value: true}];
         
              for (evt = 0; evt <= 5; evt++)
@@ -647,8 +652,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                             ctrl.lastEventIdSaved = response.data.Result.length-1;
                          else
                             ctrl.lastEventIdSaved = 0;
-                            
-                         ctrl.add(ctrl.lastEventIdSaved);
+                        ctrl.add(ctrl.lastEventIdSaved);
                          
                          ctrl.copyEvent();
                          
@@ -793,6 +797,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         }
         
         ctrl.fetchRisk = function(page){
+                ctrl.lastEventIdSaved = 0;
                 return ctrl.getRiskConfig()
                     .then(()=> {return ctrl.getUsers()
                         .then(()=>{return ctrl.getRiskDetails(page)
