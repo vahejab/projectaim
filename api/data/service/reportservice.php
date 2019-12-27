@@ -754,9 +754,9 @@
                           ->setLineStyle(Border::LINE_DOUBLE);
                }
             }
-            else
-            {
-                  $d = sqrt(pow($toY-$fromY, 2) + pow($toX-$fromX, 2));
+            //else
+            //{
+                  /*$d = sqrt(pow($toY-$fromY, 2) + pow($toX-$fromX, 2));
                   if ($toX != $fromX)
                   {
                        $m = ($toY-$fromY)/($fromX-$toX);
@@ -767,7 +767,7 @@
                               $startY = $y;
                               
                               $endY = $startY + (($dashLen)*sin(atan($m))); 
-                              $endX = $startX - (($dashLen)*cos(atan($m)));
+                              $endX = $startX - (($dashLen)*cos(atan($m))); 
                               
                               $shape = $currentSlide->createLineShape($startX, $startY, $endX, $endY);
                  
@@ -806,7 +806,21 @@
                                      ->setColor($color)->setLineWidth(2)
                                      ->setLineStyle(); 
                           }  
-                  }
+                  }  */
+            //} 
+            
+            else
+            {
+                    $color = new Color('FF000000');
+                    $shape = $currentSlide->createLineShape($fromX, $fromY, $toX, $toY);
+                                 
+                    $shape->getFill()
+                         ->setFillType(Fill::FILL_SOLID)
+                         ->setStartColor($color)
+                         ->setEndColor($color);
+                    $shape->getBorder()
+                         ->setColor($color)->setLineWidth(1)
+                         ->setDashStyle(Border::DASH_DASH);  
             }
         }
         public function generateWaterfallLine($category = SCHEDULE, $fromX, $fromY, $toX, $toY)
@@ -835,9 +849,9 @@
                      ->setColor($color)
                      ->setLineStyle(Border::LINE_DOUBLE);  
             } 
-            else
+           /* else
              {
-                  
+                        
                           $dashLen = 2;
                           for ($x = $fromX; $x < $toX; $x += 2*$dashLen)
                           {   
@@ -861,6 +875,23 @@
                                  
                           }
              }
+             */
+             else if ($category == SCHEDULE){
+                    $color = new Color('FF000000');
+                    $shape = $currentSlide->createLineShape($fromX, $fromY, $toX, $fromY);  
+                                 
+                    $shape->getFill()
+                         ->setFillType(Fill::FILL_SOLID)
+                         ->setStartColor($color)
+                         ->setEndColor($color);
+                    $shape->getBorder()
+                         ->setColor($color)->setLineWidth(1)
+                         ->setLineStyle(Border::LINE_DOUBLE)
+                         ->setDashStyle(Border::DASH_DASH);  
+                               
+             }
+             
+           
               
             if ($category == ACTUAL)
             {
@@ -884,7 +915,7 @@
                      ->setColor($color)
                      ->setLineStyle(Border::LINE_DOUBLE);  
             }  
-            else
+            /*else
              {
                   
                           $dashLen = 2;
@@ -911,7 +942,36 @@
                                      ->setLineStyle(); 
                           }
             }
-           
+              */
+              
+              else if ($category == SCHEDULE){
+              
+                  $shape = $currentSlide->createLineShape($toX, $fromY, $toX, $toY);
+                      $color = new Color('FF000000');                                   
+                    $shape->getFill()
+                         ->setFillType(Fill::FILL_SOLID)
+                         ->setStartColor($color)
+                         ->setEndColor($color);
+                    $shape->getBorder()
+                         ->setColor($color)->setLineWidth(1)
+                         ->setLineStyle(Border::LINE_DOUBLE)
+                         ->setDashStyle(Border::DASH_DASH);  
+              }
+              
+              if ($category == MARKER){
+                    $color = new Color('FF000000');
+                    $shape = $currentSlide->createLineShape($fromX, $fromY, $toX, $toY);  
+                                 
+                    $shape->getFill()
+                         ->setFillType(Fill::FILL_SOLID)
+                         ->setStartColor($color)
+                         ->setEndColor($color);
+                    $shape->getBorder()
+                         ->setColor($color)->setLineWidth(1)
+                         ->setDashStyle(Border::DASH_SYSDOT);  
+                               
+             }
+              
            
         }
         
