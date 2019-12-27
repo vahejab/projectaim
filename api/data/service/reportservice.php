@@ -677,7 +677,7 @@
                 $startOfYearDate1 = preg_split('/-/', $date)[0].'-01-01'; 
                 $extraDays = $date1->diff(new \DateTime($startOfYearDate1))->days;
                 $endOfYearDate1 = preg_split('/-/', $date)[0].'-12-31';
-                $dateOffsetPct = ($dayOffset/365.00 /($this->yearInterval*$this->numBoxes));
+                $dateOffsetPct = ($dayOffset/365.00/($this->yearInterval*$this->numBoxes));
                 
                 
                 //echo("$date, $value    $dayOffset $dateOffsetPct <br/>");
@@ -699,7 +699,7 @@
                 $dateOffsetPct = $dayOffset / (30.00);
                 $dateOffsetPercentage = number_format($dateOffsetPct, 2);
             }
-            
+                
             $dateOffset = $this->labelOffset + 
                           self::$offsetWaterfallX + 
                           $dateOffsetPercentage*(self::$waterfallWidth-$this->labelOffset*2);
@@ -1386,7 +1386,7 @@
             {
                 $shape = $currentSlide->createRichTextShape()
                                       ->setHeight(20)
-                                      ->setWidth($width/($yearsBetween)/$yearInterval); 
+                                      ->setWidth($width/(($yearsBetween)/$yearInterval)); 
                                       
                 $shape->setOffsetX(self::$offsetWaterfallX + ($offset) + ($idx++)*$shape->getWidth());
                 $shape->setOffsetY(self::$offsetWaterfallY + self::$waterfallHeight);
@@ -1593,9 +1593,7 @@
             
             $totalMonthsBetween = $yearsBetween*12+$monthsBetween;
             $totalDaysBetween = $daysBetween; 
-            if ($yearsBetween > 0 && ($monthsBetween > 0 || $daysBetween > 0))
-                $yearsBetween+=2;
-                
+               
             $currentSlide = $this->getActiveSlide();
                 
             $yearInterval = 0;
@@ -1603,7 +1601,10 @@
             $dayInterval = 0;
      
      
-            $yearInterval = intval(round(floor($yearsBetween / self::$maxYearsXAxis)));
+            $yearInterval = intval(round(ceil($yearsBetween / self::$maxYearsXAxis)));
+            if ($yearsBetween > 0 && ($monthsBetween > 0 || $daysBetween > 0))
+                $yearsBetween+=($yearInterval+1);
+                
             $this->yearInterval = $yearInterval;
             if ($yearsBetween > $yearInterval * self::$maxYearsXAxis)
             {
