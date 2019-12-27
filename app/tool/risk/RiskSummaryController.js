@@ -111,7 +111,6 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
             ctrl.gridOptions.columnApi.autoSizeColumns(allColumnIds, skipHeader);
         }
          
-          
          angular.element($window).on('resize', function(){
           cells = document.getElementsByClassName("ag-header-cell");
           width = 0;
@@ -120,15 +119,12 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
            if (ctrl.gridOptions.api && (width < (document.body.clientWidth - getScrollbarWidth()))){
             ctrl.gridOptions.columnDefs.forEach( function(columnDef) {
              var browserZoomLevel = Math.round(window.devicePixelRatio * 100);
-           
-                if (browserZoomLevel > 100)
-                {
-                     columnDef.resizable = false;
-                     
+                     columnDef.resizable = true;
+  
                         $timeout(function(){            
                             location.reload();
+                            ctrl.gridOptions.api.autoSizeAll(false);
                             });
-                }
             });
                  
             $timeout(function(){
@@ -141,30 +137,28 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
             var browserZoomLevel = Math.round(window.devicePixelRatio * 100);
                 
             ctrl.gridOptions.columnDefs.forEach( function(columnDef) {
-                if (browserZoomLevel > 100)
-                {
-                     columnDef.resizable = false;
-                }
-                
+                                           
+                  columnDef.resizable = true; 
+  
+                        $timeout(function(){            
+                            location.reload();
+                             ctrl.gridOptions.api.autoSizeAll(false);
+                            }, 10);
                 allColumnIds.push(columnDef.field);
-            });                                                     
+            });
+           }
 
-                 /*
-            $timeout(function(){
-                ctrl.gridOptions.api.sizeColumnsToFit(); 
-                ctrl.gridOptions.api.autoSizeColumns(allColumnIds);
-            });    */
-            }
-               
-         });             
+         }); 
+        
+                     
         ctrl.gridOptions = {
          defaultColDef: {
             resizable: true
          },
           columnDefs: [
-                            {resizable: false, width: 50, headerName: "Risk ID", field: "riskid", cellRenderer: editRisk},
-                            {resizable: false,  width: 250,headerName: "Risk Title", field: "risktitle"},
-                            {resizable: false,width: 250, headerName: "Risk", field: "riskvalue",  filter: 'agNumberColumnFilter', cellRenderer: percentCellRenderer},
+                            {resizable: false, minWidth: 100, flex: 1, headerName: "Risk ID", field: "riskid", cellRenderer: editRisk},
+                            {resizable: false, minWidth: 200, flex: 10, headerName: "Risk Title", field: "risktitle"},
+                            {resizable: false, minWidth: 100, flex: 2, headerName: "Risk", field: "riskvalue",  filter: 'agNumberColumnFilter', cellRenderer: percentCellRenderer},
                             /*{
                                 headerName: 'Line Chart',
                                 field: 'CloseTrends',
@@ -181,10 +175,10 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
                                 suppressSizeToFit: false,
                                 cellRenderer: riskWaterfallRenderer
                             }, */
-                            {resizable: false, width: 250,headerName: "Creation Date", field: "creationdate"},
-                            {resizable: false, width: 250,headerName: "Creator", field: "creator"},
-                            {resizable: false, width: 250,headerName: "Owner", field: "owner"},
-                            {resizable: false, width: 250,headerName: "Approver", field: "approver"}
+                            {resizable: false, minWidth: 200, flex: 2, headerName: "Creation Date", field: "creationdate"},
+                            {resizable: false, minWidth: 200, flex: 2, headerName: "Creator", field: "creator"},
+                            {resizable: false, minWidth: 200, flex: 2, headerName: "Owner", field: "owner"},
+                            {resizable: false, minWidth: 200, flex: 2, headerName: "Approver", field: "approver"}
           ],
           rowSelection: 'multiple',
           suppressRowClickSelection: false,
@@ -199,9 +193,9 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
           },
           onFirstDataRendered: function(params) {
                ctrl.gridOptions.api.sizeColumnsToFit(); 
-               ctrl.autoSizeAll(false);
           }
         };
+  
         
         function editRisk(params){
             return '<a href=#!/risk/edit/'+params.data.riskid+'>'+ params.data.riskid +'</a>'

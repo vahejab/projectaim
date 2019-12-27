@@ -1,23 +1,19 @@
 <div id="formcontainer" ng-app="Risk" ng-controller="EditRiskController as ctrl" ng-init="ctrl.fetchRisk(); ">
     <div ng-if="ctrl.initDone && ctrl.userDone" id="myeditform" type="space" layout-padding="" ng-cloak="">   
         <form id="form" name="EditRisk" role="form" ng-submit="ctrl.valid() && ctrl.submit()" novalidate>
-            <div class="layout">
+            <div class="layout" style="margin: 0 auto">
                     <center>
+                        <h6>Edit Risk #{{ctrl.risk.riskid}}</h6>
                         <input type="button" value="First" ng-click="ctrl.fetchRisk('first')"/>&nbsp;
                         <input type="button" value="Prev"  ng-click="ctrl.fetchRisk('prev')"/>&nbsp;
                         <input type="button" value="Next"  ng-click="ctrl.fetchRisk('next')">&nbsp;
-                        <input type="button" value="Last"  ng-click="ctrl.fetchRisk('last')">
-
-                    <br />
-                    <h2>Edit Risk Details</h2>
-                    <h2>Risk #{{ctrl.risk.riskid}}</h2>
-                    <h3><a href="" ng-click="ctrl.getRiskReport()">Download Risk Report (PPTX)</a></h3>
+                        <input type="button" value="Last"  ng-click="ctrl.fetchRisk('last')">&nbsp;
                     <!--object ng-show="ctrl.content" data="{{ctrl.content}}" type="application/vnd.openxmlformats-officedocument.presentationml.presentation" style="width: 100%; height: 400px;"></object-->
-                    </center>
+                     <hr />
                     <div id="summary" class="tbl layout" border="1">
                         <div class="tr">
                             <div class="td label">Risk #</div>
-                            <div class="td locked">{{ctrl.risk.riskid}}</div>
+                            <div class="td locked">{{ctrl.risk.riskid}} [<a href="" ng-click="ctrl.getRiskReport()">Risk Summary</a>]</div>
                             <div class="td label">
                                 Current Risk
                             </div>
@@ -66,9 +62,9 @@
                             </div>
                         </div>
                     </div>
-                    <br /> 
-                    <br />
-                    <h2>Edit Risk Information</h2>
+                    <br />  
+                   
+                    <hr />
                     <div id="details" class="tbl layout" border="1">
                         <div class="tr">
                             <div class="td label" style="vertical-align: top">
@@ -122,7 +118,8 @@
                     </div>
                    <div class="center">
                         <button id="submit" type="submit">Edit Risk</button>
-                   </div>       
+                   </div> 
+                   </center>      
         </form>
             <br />
             <h2>Risk #{{ctrl.risk.riskid}}</h2>
@@ -135,6 +132,7 @@
             <br />
             <h2>Create Mitigation Events</h2>
          <form id="formEvt" name="EditEvents" role="form" ng-submit="ctrl.saveEvents()" novalidate>  
+         <center>
             <div cellpadding='0' cellspacing='0' class="tbl events tbl-condensed" border=1>
                 <div class="tbl">
                     <div class="tr">                                                
@@ -286,102 +284,102 @@
                                  Complete
                             </div>
                     </div>
-                    <div class="tr" ng-repeat="event in [0]">
+                    <div class="tr event" ng-repeat="event in [0]">
                         <div class="td header">
                             <div class="widthAuto">ID</div>
                         </div>
                         <div class="td left value">
-                            <div class="left widthAuto">{{event}}</div>
+                            <div class="left widthAuto" style="text-align:left">{{event}}</div>
                         </div> 
                         <div class="td header">
                             <div class="left widthAuto">Event Title</div>
                         </div>
-                        <div class="td left value">
+                        <div class="td left value" style="text-align:left">
                             <div class="widthAuto">Risk Identified</div>
                         </div>
                         <div class="td header">
                             <div class="widthAuto">Owner</div>
                         </div>
                         <div class="td left value">
-                            <div class="widthAuto">{{ctrl.risk.ownername}}</div>
+                            <div class="widthAuto" style="text-align:left">{{ctrl.risk.ownername}}</div>
                         </div>
                         <div class="td left header">
                             <div class="widthAuto">Actual</div>
                         </div>
                         <div class="td left value">
-                            <div class="widthAuto">{{ctrl.event[0].actualdate | date: "M/d/y"}}</div>
+                            <div class="widthAuto" style="text-align:left">{{ctrl.event[0].actualdate | date: "M/d/y"}}</div>
                         </div>
                           <div class="td header">
                             <div class="width50">Risk Level</div>
                         </div>
-                        <div class="td center level value {{ctrl.risk.level.cls}}">
-                            <div class="widthAuto center"><nobr>{{ctrl.risk.level.level}}</nobr></div> 
+                        <div class="td center level value {{ctrl.risk.level.cls}}" style="text-align:left">
+                            <div class="widthAuto"><nobr>{{ctrl.risk.level.level}}</nobr></div> 
                         </div>
                         <div class="td header">
                             <div class="widthAuto">Likelihood</div>
                         </div>
                         <div class="td value center">
-                            <div class="widthAuto center">{{ctrl.event[0].actuallikelihood}}</div>
+                            <div class="widthAuto center" style="text-align:left">{{ctrl.event[0].actuallikelihood}}</div>
                         </div>
                         <div class="td header">
                             <div class="widthAuto">Technical</div>
                         </div>
-                        <div class="td value center" style="text-align: center">
+                        <div class="td value center" style="text-align: left">
                             <div class="widthAuto center">{{ctrl.event[0].actualtechnical}}</div>
                         </div>
                         <div class="td header">
                             <div class="widthAuto">Schedule</div>
                         </div>      
-                        <div class="td value center" style="text-align: center">
+                        <div class="td value center" style="text-align: left">
                            <div class="widthAuto center">{{ctrl.event[0].actualschedule}}</div>
                         </div>
                         <div class="td header">
                             <div class="widthAuto">Cost</div>
                         </div>
                         <div class="td value center">
-                           <div class="widthAuto center">{{ctrl.event[0].actualcost}}</div>
+                           <div class="widthAuto center" style="text-align:left">{{ctrl.event[0].actualcost}}</div>
                         </div>
                         <div class="td header">
                             <div class="widthAuto">Baseline</div>
                         </div>
                         <div class="td left value">
-                            <div class="widthAuto">{{ctrl.risk.assessmentdate | date: "M/d/y"}}</div>
+                            <div class="widthAuto" style="text-align:left">{{ctrl.risk.assessmentdate | date: "M/d/y"}}</div>
                         </div>
                           <div class="td header">
                             <div class="width50">Risk Level</div>
                         </div>
-                        <div class="td center level value {{ctrl.risk.level.cls}}">
+                        <div class="td center level value {{ctrl.risk.level.cls}}" style="text-align:left">
                             <div class="widthAuto center"><nobr>{{ctrl.risk.level.level}}</nobr></div> 
                         </div>
                         <div class="td header">
                             <div class="widthAuto">Likelihood</div>
                         </div>
                         <div class="td value center">
-                            <div class="widthAuto center">{{ctrl.event[0].actuallikelihood}}</div>
+                            <div class="widthAuto center" style="text-align:left">{{ctrl.event[0].actuallikelihood}}</div>
                         </div>
                         <div class="td header">
                             <div class="widthAuto">Technical</div>
                         </div>
-                        <div class="td value center" style="text-align: center">
-                            <div class="widthAuto center">{{ctrl.event[0].actualtechnical}}</div>
+                        <div class="td value center" style="text-align: left">
+                            <div class="widthAuto center" style="text-align:left">{{ctrl.event[0].actualtechnical}}</div>
                         </div>
                         <div class="td header">
                             <div class="widthAuto">Schedule</div>
                         </div>      
-                        <div class="td value center" style="text-align: center">
-                           <div class="widthAuto center">{{ctrl.event[0].actualschedule}}</div>
+                        <div class="td value center" style="text-align: left">
+                           <div class="widthAuto center" style="text-align:left">{{ctrl.event[0].actualschedule}}</div>
                         </div>
                         <div class="td header">
                             <div class="widthAuto">Cost</div>
                         </div>
                         <div class="td value center">
-                           <div class="widthAuto center">{{ctrl.event[0].actualcost}}</div>
+                           <div class="widthAuto center" style="text-align:left">{{ctrl.event[0].actualcost}}</div>
                         </div>
                         <div class="td header">
                             <div class="widthAuto">Schedule</div>
                         </div>
                         <div class="td left value">
-                            <div class="widthAuto">{{ctrl.event[0].scheduleddate | date: "M/d/y"}}</div>
+                            <div class="widthAuto" style="text-align:left">{{ctrl.event[0].scheduleddate | date: "M/d/y"}}</div>
                         </div>
                         <div class="td header">
                             <div class="width50">Risk Level</div>
@@ -413,36 +411,36 @@
                         <div class="td value center">
                            <div class="widthAuto center"></div>
                         </div>
-                         <div class="td header" style="min-width: 50px">
+                         <div class="td header buttonlabel" style="min-width: 50px">
                             Save       
                         </div>
-                        <div class="td value" style="min-width: 50px">
+                        <div class="td value buttonvalue" style="min-width: 50px" >
                             <input class="addEvent" type="button" id="add{{event}}" ng-disabled="((event-1) != ctrl.lastEventIdSaved) && (event != 0)" ng-show="!ctrl.disabled[event].value" ng-click="ctrl.add(event)" ng-keyup="$event.keyCode === 13 && ctrl.add(event)" value="Save" />
                         </div>                                                                                                                                                                                                                                                                                                                           
-                        <div class="td header">                                                                                                                                          
+                        <div class="td header buttonlabel">                                                                                                                                          
                             Remove
                         </div>
-                        <div class="td value">
+                        <div class="td value buttonvalue">
                            <input class="removeEvent" type="button" id="remove{{event}}" ng-show="((event-1) == ctrl.lastEventIdSaved) && (event != 0) && (ctrl.disabled[event].value)"  ng-click="ctrl.remove(event)" ng-keyup="$event.keyCode === 13 && ctrl.remove(event)"  value="Remove" />
                         </div>
-                        <div class="td header" style="min-width: 50px">
+                        <div class="td header buttonlabel" style="min-width: 50px">
                             Edit
                         </div>
-                        <div class="td value" style="min-width: 50px">
+                        <div class="td value buttonvalue-hide" style="min-width: 50px">
     
                         </div>                                                                                                                                                                                                                                                                                                                           
-                        <div class="td header">
+                        <div class="td header buttonlabel">
                             Complete                                                                        
                         </div>
-                        <div class="td value">
-                           
+                        <div class="td value buttonvalue-hide">
+                                            
                         </div>
                     </div>
-                    <div class="tr" ng-repeat="event in [1,2,3,4,5]" ng-if="ctrl.eventsdone">
+                    <div class="tr event" ng-repeat="event in [1,2,3,4,5]" ng-if="ctrl.eventsdone">
                         <div class="td header">
                             ID
                         </div>
-                        <div class="td value">
+                        <div class="td value" style="text-align: left">
                             {{event}}
                         </div>
                         <div class="td header">
@@ -606,29 +604,31 @@
                         <div class="td value center nopadding">
                              <input required ng-class="{invalid: ctrl.event[event].scheduledinvalid}" class="level" type="text" maxlength="1" ng-disabled="ctrl.disabled[event].value" ng-change="ctrl.validateDisplayLevel(event, 'scheduled', 'cost'); ctrl.setBaselineCost(event)" ng-model="ctrl.event[event].scheduledcost" />
                         </div>
-                        <div class="td header" style="min-width: 50px">
+                        <div class="td header buttonlabel" style="min-width: 50px">
                             Save 
                         </div>
-                        <div class="td value" style="min-width: 50px">
+                        <div class="td value buttonvalue" style="min-width: 50px">
                            <input class="addEvent" type="button" id="add{{event}}" ng-show="(!ctrl.disabled[event].value) && ((event == (ctrl.lastEventIdSaved)) || ((event == 0) && (event == ctrl.lastEventIdSaved))) && ctrl.event[event].valid" ng-click="ctrl.add(event)" ng-keyup="$event.keyCode === 13 && ctrl.add(event)" value="Save" />
                         </div>                                                                                                                                                                                                                                                                                                                           
-                        <div class="td header">
+                        <div class="td header buttonlabel">
                             Remove
                         </div>
-                        <div class="td value" style="width: 71px">
+                        <br class="showmobile"/>
+                        <br class="showmobile"/>
+                        <div class="td value buttonvalue" style="width: 71px">
                            <input class="removeEvent" type="button" id="remove{{event}}" ng-show="(!ctrl.disabled[event].value) || (event == 5 && ctrl.lastEventIdSaved == 5)" ng-click="ctrl.remove(event)" ng-keyup="$event.keyCode === 13 && ctrl.remove(event)"  value="Remove" />
                         </div>
-                        <div class="td header" style="min-width: 50px">
+                        <div class="td header buttonlabel" style="min-width: 50px">
                             Edit
                         </div>
-                        <div class="td value" style="min-width: 50px">
+                        <div class="td value buttonvalue" style="min-width: 50px">
                             <input class="editEvent" type="button" id="edit{{event}}" ng-show="(event <= ctrl.lastEventIdSaved) && !ctrl.event[event].edit"  ng-click="ctrl.edit(event);" ng-keyup="$event.keyCode === 13 && ctrl.edit(event)" value="Edit" />
                             <input class="updateEvent" type="button" id="update{{event}}"  ng-show="ctrl.event[event].edit" ng-hide="!ctrl.event[event].edit" ng-click="ctrl.update(event)" ng-keyup="$event.keyCode === 13 && ctrl.add(event)" value="Update" />         
                         </div>                                                                                                                                                                                                                                                                                                                           
-                        <div class="td header">
+                        <div class="td header buttonlabel">
                             Complete                                                                        
                         </div>
-                        <div class="td value">
+                        <div class="td value buttonvalue">
                            <input class="completeEvent" type="button" id="complete{{event}}" ng-show="ctrl.nextActualRiskEventId == event && (ctrl.event[event].valid)" ng-click="ctrl.complete(event)" ng-keyup="$event.keyCode === 13 && ctrl.complete(event)"  value="Complete" />
                         </div>  
                     </div>
@@ -638,6 +638,7 @@
             <div class="center">  
              <button id="submit" type="submit">Save Events</button>
             </div>
+                </center>
            </form>               
          </div> 
          <divider></divider>

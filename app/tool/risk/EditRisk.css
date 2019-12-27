@@ -27,7 +27,9 @@ div.nopadding{
 
 @media only screen and (min-width: 801px){
     
-
+    br.showmobile{
+        display: none !important;
+    }
     
     div.select2{
         width: 175px !important;
@@ -314,6 +316,15 @@ div.nopadding{
 
 @media only screen and (max-width: 800px) {
 
+    div.events .tbl{
+        overflow-x: scroll;
+    }
+
+    .tr.event{
+        display: table-cell !important;
+        min-width: 100vw !important;
+    }
+
     .td.locked{
         text-align: left !important;
     }  
@@ -322,14 +333,8 @@ div.nopadding{
         width: 200px !important;  
     }
 
-    .tbl.events   .tr  .td.header,
-    .tbl.events   .tr  .td.value,
-    .tbl.events   .tr  .td[name="actuallevel"],
-    .tbl.events   .tr  .td[name="baselinelevel"],
-    .tbl.events   .tr  .td[name="scheduledlevel"],
-    .tbl.events   .tr  .td.left{
+    .tbl.events .tr .td.header, .tbl.events .tr .td.value:not(.buttonvalue), .tbl.events .tr .td[name="actuallevel"], .tbl.events .tr .td[name="baselinelevel"], .tbl.events .tr .td[name="scheduledlevel"], .tbl.events .tr .td.left{
         width: 200px !important;
-        height: 32px;
     }
     
     div.nested table#details > tr:not(:nth-child(2)) > td:first-child{
@@ -388,8 +393,28 @@ div.nopadding{
         width: 100%;
     }
     
+    .td.header{
+        padding-top: 5px !important;
+        height: 35px !important;
+    }
+
+    .td.buttonlabel, .td.buttonvalue-hide{
+        display:none !important;
+        width: 0px !important;
+    }
+    
+    .td.buttonvalue{
+        display: inline !important;
+        margin: 0 auto !important;
+        text-align: center !important;
+    }
+    
+    .td.value.center{
+        text-align: left !importnat;
+    }
+    
     .tbl.events .td.header,
-    .tbl.events .td.value,
+    .tbl.events .td.value:not(.buttonvalue),
     .tbl#details .td.label,
     .tbl#details .td.locked,
     .tbl#summary .td.label,
@@ -397,20 +422,19 @@ div.nopadding{
     {
         display: inline-block;
         min-width: 40vw !important;
-        width: 100px;
-        height: 1;
+         width: 100px;
     }
 
    
     div.ui-view form {
-        width: 95% !important;
+        /* width: 98% !important; */
         padding: 0px !important;
         /* padding-right: 5vw; */
         margin:  0 auto;
     }
     
-    input, textarea{
-        width: 100% !important; 
+    input:not([type=button]), textarea{
+        width: 100% !important;
     }                           
      
     .tbl#details >  .tr:not(:first-child) > .td.label{
