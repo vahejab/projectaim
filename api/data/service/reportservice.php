@@ -692,7 +692,7 @@
             {           
                 $dateOffsetPct = $dayOffset / ($this->dayInterval*$this->numBoxes); 
                 $dateOffsetPercentage = number_format($dateOffsetPct, 2);
-                //echo ("$dayOffset  $this->numDays $dateOffsetPct $dateOffsetPercentage <br />");  
+                // ("$dayOffset  $this->numDays $dateOffsetPct $dateOffsetPercentage <br />");  
             }
             else
             {
@@ -1366,7 +1366,7 @@
         function renderYearBoxes($yearsBetween, $yearInterval, $currentSlide, $date1, $date2)
         {            
             $idx = 0;      
-            $offset = self::$waterfallWidth/(self::$maxYearsXAxis*($yearsBetween/($yearInterval)));
+            $offset = self::$waterfallWidth/(self::$maxYearsXAxis*(($yearsBetween)/($yearInterval)));
             $this->labelOffset = $offset;
             $width = self::$waterfallWidth - $offset*2;   
             $shape = $currentSlide->createRichTextShape()
@@ -1381,14 +1381,14 @@
            
             $totalWidth = $shape->getWidth();
             $date = clone $date1; 
-
+            $date2 = date_add($date2, new \DateInterval("P{$yearInterval}Y"));
             while (date_add($date, new \DateInterval("P0Y")) <= $date2)
             {
                 $shape = $currentSlide->createRichTextShape()
                                       ->setHeight(20)
-                                      ->setWidth($width/(ceil($yearsBetween/$yearInterval))); 
+                                      ->setWidth($width/($yearsBetween)/$yearInterval); 
                                       
-                $shape->setOffsetX(self::$offsetWaterfallX + $offset + ($idx++)*$shape->getWidth());
+                $shape->setOffsetX(self::$offsetWaterfallX + ($offset) + ($idx++)*$shape->getWidth());
                 $shape->setOffsetY(self::$offsetWaterfallY + self::$waterfallHeight);
                 
                 $textRun = $shape->createTextRun(date_format($date, 'Y')); 
@@ -1450,7 +1450,7 @@
                 
                 $stringDate = date_format($date, 'M');   
                 $y = date_format($date, 'Y');
-                $stringDate = $stringDate . " $y";
+                $stringDate = $stringDate . "\n$y";
                                                                                        
                 $textRun = $shape->createTextRun($stringDate);
                 $textRun->getFont()->setSize(7);         
@@ -1514,7 +1514,7 @@
                 $shape->setOffsetX(self::$offsetWaterfallX + $offset +  ($idx++)*$shape->getWidth());
                 $shape->setOffsetY(self::$offsetWaterfallY + self::$waterfallHeight);
                 
-                $y = date_format($date, 'y');
+                $y = date_format($date, 'Y');
                 $m = date_format($date, 'm');
                 $d = date_format($date, 'd');
                 
@@ -1525,8 +1525,12 @@
                 if ($d[0] == '0')
                     $d = ltrim($d, '0');
                 
-               
-                $textRun = $shape->createTextRun("$m/$d/$y");
+                if ($daysBetween > 10)
+                    $dtString = "$m/$d\n$y";
+                else
+                    $dtString = "$m/$d/$y";
+                    
+                $textRun = $shape->createTextRun($dtString);
                 $textRun->getFont()->setSize(7);  
                  $shape->getActiveParagraph()
                       ->getAlignment()
@@ -1561,7 +1565,7 @@
                                   ->setWidth($width - 1);     
             $shape->setOffsetX(300);
             $shape->setOffsetY(240);
-            $textRun = $shape->createTextRun(date_format($date1, 'm-d-Y'));
+            $textRun = $shape->createTextRun(date_format($date1, 'm/d/Y'));
             $textRun->getFont()->setSize(8);                
             $shape->getActiveParagraph()
                   ->getAlignment()
@@ -1586,11 +1590,11 @@
             $yearsBetween = date_diff($date2, $date1)->y;
             $monthsBetween = date_diff($date2, $date1)->m;
             $daysBetween = date_diff($date2, $date1)->days;
-        
+            
             $totalMonthsBetween = $yearsBetween*12+$monthsBetween;
             $totalDaysBetween = $daysBetween; 
             if ($yearsBetween > 0 && ($monthsBetween > 0 || $daysBetween > 0))
-                $yearsBetween++;
+                $yearsBetween+=2;
                 
             $currentSlide = $this->getActiveSlide();
                 
@@ -1599,7 +1603,7 @@
             $dayInterval = 0;
      
      
-            $yearInterval = intval(ceil($yearsBetween / self::$maxYearsXAxis));
+            $yearInterval = intval(round(floor($yearsBetween / self::$maxYearsXAxis)));
             $this->yearInterval = $yearInterval;
             if ($yearsBetween > $yearInterval * self::$maxYearsXAxis)
             {

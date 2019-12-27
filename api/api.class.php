@@ -111,10 +111,10 @@
                         }
                         else {        
                             $response = (new $class($args,$endpoint2,$payload))->{$method}($id);   //here id can be numeric or 'first', or 'last' possibly
-                        }                                
-                        
+                        }   
                         if ($response['Succeeded'] == null)
                             return $response;
+                            //return $this->_response($response);
                         
                         else if ($response['Succeeded']== true){    
                             header("Content-Type: application/json");

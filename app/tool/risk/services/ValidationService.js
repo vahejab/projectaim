@@ -183,7 +183,7 @@ angular.module('Risk').service("ValidationService", function() {
      
     commonFunctions.hasData = function(evt, scope){
          var hasData = !(scope.ctrl.event[evt] == {}) || ((scope.ctrl.event[evt].eventtitle || "") != ""   ||
-                      (scope.ctrl.event[evt].ownerid || "") != "" || 
+                      (scope.ctrl.event[evt].eventownerid || "") != "" || 
                       (scope.ctrl.event[evt].actualdate || "") != "" ||
                       (scope.ctrl.event[evt].scheduledate || "") != ""  ||
                       (scope.ctrl.event[evt].scheduledlikelihood ||  "") != ""  ||

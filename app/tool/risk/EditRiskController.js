@@ -234,7 +234,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.saveEvents = function(){ 
         
             ctrl.copyEvent();
-            for (var idx = 1; (ctrl.lastEventIdSaved > 0) && (idx <= ctrl.lastEventIdSaved); idx++)
+            for (var idx = 1; (ctrl.lastEventIdSaved > 0) && (idx < ctrl.lastEventIdSaved); idx++)
             {            
                 ctrl.evts.push(ctrl.evtCopy[idx]);
                 ctrl.evts[idx].eventid = idx;
@@ -274,12 +274,8 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             payload = {riskid: ctrl.risk.riskid, events: ctrl.evts}
             
             return $http.put('/api/risks/'+ ctrl.risk.riskid + '/events', payload).then(function(response){
-                    if (response.data.Succeeded){
-                        ctrl.msg = response.data.Result;
-                    }
-                    else{
-                         ctrl.msg = $sce.trustAsHtml(response.data);
-                    }
+                    ctrl.msg = response.data.Result;
+                    return response.data.Result;
             }).then(function(){
                 ctrl.rebindDates(); 
             });
@@ -350,13 +346,8 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                  ctrl.msg = "Please complete form and resubmit";
             else 
                 return $http.put('/api/risks', ctrl.risk).then(function(response){
-                    if (response.data.Succeeded){
-                        ctrl.msg = response.data.Result;
-                        return response.data.Result;
-                    }
-                    else{
-                         ctrl.msg = $sce.trustAsHtml(response.data);
-                    }
+                    ctrl.msg = response.data.Result;
+                    return response.data.Result;
                 });
         }
         
