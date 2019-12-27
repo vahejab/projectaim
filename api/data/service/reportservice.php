@@ -2257,20 +2257,20 @@
         'title' => $evt->eventtitle,
         'owner' => (new \data\service\userservice())->findOne($evt->eventownerid)['Name'] ?? ' ',
         'baseline-date' => $evt->baselinedate ?? ' ',
-        'baseline-likelihood' => intval($evt->baselinelikelihood) ?? ' ',
-        'baseline-consequence-T' => intval($evt->baselinetechnical) ?? ' ',
-        'baseline-consequence-S' => intval($evt->baselineschedule) ?? ' ',
-        'baseline-consequence-C' => intval($evt->baselinecost) ?? ' ',
+        'baseline-likelihood' => ($evt->baselinelikelihood) ?? ' ',
+        'baseline-consequence-T' => ($evt->baselinetechnical) ?? ' ',
+        'baseline-consequence-S' => ($evt->baselineschedule) ?? ' ',
+        'baseline-consequence-C' => ($evt->baselinecost) ?? ' ',
         'actual-date' => $evt->actualdate ?? ' ',
-        'actual-likelihood' => intval($evt->actuallikelihood) ?? ' ',
-        'actual-consequence-T' => intval($evt->actualtechnical) ?? ' ',
-        'actual-consequence-S' => intval($evt->actualschedule) ?? ' ',
-        'actual-consequence-C' => intval($evt->actualcost) ?? ' ',
-        'schedule-date' => $evt->actualdate ?? ' ',
-        'schedule-likelihood' => intval($evt->scheduledlikelihood) ?? ' ',
-        'schedule-consequence-T' => intval($evt->scheduledtechnical) ?? ' ',
-        'schedule-consequence-S' => intval($evt->scheduledschedule) ?? ' ',
-        'schedule-consequence-C' => intval($evt->scheduledcost) ?? ' '
+        'actual-likelihood' => ($evt->actuallikelihood) ?? ' ',
+        'actual-consequence-T' => ($evt->actualtechnical) ?? ' ',
+        'actual-consequence-S' => ($evt->actualschedule) ?? ' ',
+        'actual-consequence-C' => ($evt->actualcost) ?? ' ',
+        'schedule-date' => $evt->scheduledate ?? ' ',
+        'schedule-likelihood' => ($evt->scheduledlikelihood) ?? ' ',
+        'schedule-consequence-T' => ($evt->scheduledtechnical) ?? ' ',
+        'schedule-consequence-S' => ($evt->scheduledschedule) ?? ' ',
+        'schedule-consequence-C' => ($evt->scheduledcost) ?? ' '
     ];
     }
  /*   
