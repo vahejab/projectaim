@@ -379,7 +379,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         
         ctrl.displayLevel = function(evt, field){
             if (ctrl.validRiskLevel(evt, field).valid)
-                return DOMops.displayLevel(ctrl.riskMatrix[l][cons], l, cons, evt, $scope, field);  
+                return DOMops.displayLevel(ctrl.riskMatrix[l][cons], l, cons, evt, ctrl, field);  
         }  
         
         ctrl.invalidRiskLevel = function(evt, field, attr){

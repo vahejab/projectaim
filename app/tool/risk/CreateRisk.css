@@ -45,12 +45,12 @@
 }
 
 table:first-child input{
-    width: 350px;
+    width: 250px;
 }                
 
 textarea {
-    width: 350px !important;
-    /* height: 99% !important; */
+    width: 250px;
+    height: 70px;
     border-radius: 3px;
     margin-top: 3.5px;
     margin-left: 1px;
@@ -140,7 +140,11 @@ table.levels input{
     width: 37px !important;
     font-size: 12px;
     padding-left: 2px;
-}                     
+}  
+
+.leveltext{
+    text-align: center;
+}                   
                 
 .evt{           
     margin: 0 auto;
@@ -176,4 +180,8 @@ div.med{
 }
 div.high{
     background-color: #ee0000 !important;
+}
+
+div.level{
+    margin: 0 auto;
 }

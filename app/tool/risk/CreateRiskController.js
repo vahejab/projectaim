@@ -4,6 +4,7 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
     
     ctrl.DOMops = DOMops;
     ctrl.ValidationService = ValidationService;
+    ctrl.DOMops.setValidationServiceObj(ValidationService);
     ctrl.initDone = false;
     ctrl.usersFetched = {done: false};
     ctrl.setup = {
@@ -84,7 +85,7 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
   
     ctrl.invalidLevel = function(lvl){
         return CommonService.invalidLevel(lvl);
-    }
+    } 
            
     $scope.$on("$destroy", function(){
          formcheck = 0;
