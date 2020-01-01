@@ -1,11 +1,11 @@
-angular.module(Risk).directive(getUsers, getUsers); 
+angular.module('Risk').directive('getUsers', getUsers); 
 
 function getUsers(){
      return {
-            restrict: E,
+            restrict: 'E',
             controller: function ($scope, $element, $attrs, $http, $sce){
      
-                 return $http.get(api/users).then(function(response){
+                 return $http.get('api/users').then(function(response){
                     if (response.data.Succeeded){
                        //ctrl.users.push({id: 0, value: });
                        for (var key = 0; key < response.data.Result.length; key++){

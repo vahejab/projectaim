@@ -139,7 +139,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             files: ['/app/tool/risk/RiskDashboard.css', 
                     //'/app/css/bootstrap/bootstrap.min.css',
                     '/app/tool/risk/services/DOMService.js',
-                     '/app/tool/risk/directives/RepeatDoneDirective.js',
+                    '/app/tool/risk/directives/RepeatDoneDirective.js',
                     '/app/tool/risk/services/ValidationService.js',
                     '/app/tool/risk/directives/RiskDirective.js',
                     '/app/tool/risk/RiskDashboardController.js'

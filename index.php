@@ -34,8 +34,37 @@
         background-image: url(/app/assets/images/custom_back.gif) !important;
     }
   </style>
+    <script src="/app/js/jquery-1.12.1/jquery.min.js"></script>
+    <script src="/app/js/angularjs-1.7.8/angular.js"></script>
+    <script src="/app/js/angular-dc/angular-dc.js"></script>
+    <script src="/app/js/ag-grid/dist/ag-grid-community.js"></script>
+    <script src="/app/js/angular-gridster/src/angular-gridster.js"></script>
+
+    <script src="/app/js/angularjs-1.7.8/angular-resource.js"></script>
+     <script src="/app/js/angularjs-1.7.8/angular-animate.js"></script>
+     <script src="/app/js/angularjs-1.7.8/angular-messages.js"></script>
+     <script src="/app/js/angularjs-1.7.8/angular-sanitize.js" ></script>
+     <script src="/app/js/angularjs-1.7.8/angular-ui-router.js"></script>
+     <script src="/app/js/angularjs-1.7.8/statehelper.js"></script>
+    <script src="/app/js/ocLazyLoad/ocLazyLoad.js"></script>
+    <script src="/app/js/base64js/base64js.min.js"></script>  
+    <script src="/app/js/ui-select/dist/select.js"></script>
+    <script src="/app/js/bootstrap-4.0.0/bootstrap.js"></script>
+    <script src="/app/js/ui-bootstrap-3.0.6/ui-bootstrap-tpls-3.0.6.js"></script>
+    <script src="/app/js/popper-1.12.9/popper.js"></script>
+    <script src="/app/js/requirejs/require.js"></script>  
+    <script src="/app/js/text-encoder-lite/text-encoder-lite.js"></script> 
+    <script src="/app/js/javascript-detect-element-resize/jquery.resize.js"></script>
+    <script src="/app/js/moment-2.3.1/moment.min.js"></script>
+
+   
+    
+    <script src="/app/route-config.js"></script>         
+   <script src="/app/route-config.js"></script>
+    <script src="/app/js/universe/src/universe.js"></script>   
 </head>
-<body ng-app="Main"> 
+    
+<body ng-controller="MainController"  ng-app="Main"> 
         <a class="nav-link">
             <img id="logo" src="/app/assets/images/ProjectAIM.png" />
         </a>      
@@ -65,10 +94,8 @@
     <!--script src="/app/js/kendoui-2019.1.220/js/kendo.datepicker.min.js"></script>
     <script src="/app/js/kendoui-2019.1.220/js/kendo.ui.core.min.js"></script-->
     <!--script src="/app/js/jquery-latest/jquery-latest.js"></script-->
-    
-    
-    <script src="/app/js/requirejs/require.js"></script>   
-    <script src="/app/js/universe/src/universe.js"></script>
-    <!--cript src="/app/app.js"></script-->  <!--app.js contents moved to body of universe.-->
+
+    <script src="./app/app.js"></script>
+
    </body>
 </html>

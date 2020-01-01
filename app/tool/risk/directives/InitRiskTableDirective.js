@@ -2,9 +2,9 @@
 
 function initRiskTable(){
     return {
-        restrict: A,
+        restrict: 'A',
         //transclude: true,
-        templateUrl: /app/tool/risk/RiskTable.html,
+        templateUrl: '/app/tool/risk/RiskTable.html',
         controller: function($scope, $timeout) {
             $scope.scrollBarWidth = function(){
                     var outer = document.createElement("div");

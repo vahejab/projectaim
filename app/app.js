@@ -1,7 +1,37 @@
 var app;
-var common = angular.module('Common', []);
 var refresh = false;
 var formcheck = false;
+var common;
+var jQuery;    
+
+
+
+agGrid.initialiseAgGridWithAngular1(angular);
+angular.module('Home', []);
+angular.module('Action', ['ngResource', 'Common']);
+angular.module('Risk', ['ngResource', 'ngAnimate', 'Common', 'agGrid', 'ui.select', 'ui.bootstrap', 'gridster']);
+
+app = angular.module('Main', ['ui.router', 'oc.lazyLoad', 'agGrid', 'gridster', 'ngResource', 'ngSanitize', 'Common', 'Home', 'Action', 'Risk']);
+
+app.controller('MainController',  function(){
+     
+});
+
+
+app.config(['$ocLazyLoadProvider', '$stateProvider', '$urlRouterProvider', '$compileProvider', function($ocLazyLoadProvider, $stateProvider, $urlRouterProvider, $compileProvider/*, $mdThemingProvider*/) {
+
+/* $mdThemingProvider.theme('custom')
+              .primaryPalette('blue')
+              .accentPalette('blue-grey');
+$mdThemingProvider.setDefaultTheme('custom')
+$mdThemingProvider.alwaysWatchTheme(true);
+*/
+configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider);
+$compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|blob):/);
+
+}]);
+common = angular.module('Common', []);
+      
 common.service("CommonService", function() {
     var commonFunctions = {};
     
@@ -87,69 +117,90 @@ common.service("CommonService", function() {
     
     return commonFunctions;
 });
+   
+   
+   
+    
+    
+/**
+ * AngularJS default filter with the following expression:
+ * "person in people | filter: {name: $select.search, age: $select.search}"
+ * performs an AND between 'name: $select.search' and 'age: $select.search'.
+ * We want to perform an OR.
+ */
+app.filter('propsFilter', function() {
+  return function(items, props) {
+    var out = [];
 
-define('angular-definitions', ['angular', 'angularAMD'], function (angular, angularAMD) {
+    if (angular.isArray(items)) {
+      var keys = Object.keys(props);
 
-    angular.module('Home', []);
-    angular.module('Action', ['ngResource', 'Common']);
-    agGrid.initialiseAgGridWithAngular1(angular);
-    angular.module('Risk', ['ngResource', 'ngAnimate', 'Common', 'agGrid', 'ui.select', 'ui.bootstrap', 'gridster', 'angularDc']);
+      items.forEach(function(item) {
+        var itemMatches = false;
 
-    app = angular.module('Main', ['ui.router', 'oc.lazyLoad', 'ngResource', 'ngSanitize', 'Common', 'Home', 'Action', 'Risk']);
-      
-    app.controller('MainController',  ['CommonService', '$scope', '$window', '$state', function(CommonService, $scope, $window, $state){
-    }]);
-    app.config(['$ocLazyLoadProvider', '$stateProvider', '$urlRouterProvider', '$compileProvider', function($ocLazyLoadProvider, $stateProvider, $urlRouterProvider, $compileProvider/*, $mdThemingProvider*/) {
-       /* $mdThemingProvider.theme('custom')
-                          .primaryPalette('blue')
-                          .accentPalette('blue-grey');
-        $mdThemingProvider.setDefaultTheme('custom')
-        $mdThemingProvider.alwaysWatchTheme(true);
-        */
-        configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider);
-         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|blob):/);
-
-    }]);
-
-    /**
-     * AngularJS default filter with the following expression:
-     * "person in people | filter: {name: $select.search, age: $select.search}"
-     * performs an AND between 'name: $select.search' and 'age: $select.search'.
-     * We want to perform an OR.
-     */
-    app.filter('propsFilter', function() {
-      return function(items, props) {
-        var out = [];
-
-        if (angular.isArray(items)) {
-          var keys = Object.keys(props);
-
-          items.forEach(function(item) {
-            var itemMatches = false;
-
-            for (var i = 0; i < keys.length; i++) {
-              var prop = keys[i];
-              var text = props[prop].toLowerCase();
-              if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
-                itemMatches = true;
-                break;
-              }
-            }
-
-            if (itemMatches) {
-              out.push(item);
-            }
-          });
-        } else {
-          // Let the output be the input untouched
-          out = items;
+        for (var i = 0; i < keys.length; i++) {
+          var prop = keys[i];
+          var text = props[prop].toLowerCase();
+          if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+            itemMatches = true;
+            break;
+          }
         }
 
-        return out;
-      };
-    });
+        if (itemMatches) {
+          out.push(item);
+        }
+      });
+    } else {
+      // Let the output be the input untouched
+      out = items;
+    }
 
-
-         
-    return angularAMD.bootstrap(app);    
-});
+    return out;
+  };
+}); 
+                  
+   /* 
+var require = {
+        deps: [  
+       // 'app/js/angularjs-1.7.8/angular',
+        'app/js/angularAMD/src/angularAMD',
+        'app/js/angularjs-1.7.8/angular-resource',
+        'app/js/angularjs-1.7.8/angular-animate',
+        'app/js/angularjs-1.7.8/angular-messages',
+        'app/js/angularjs-1.7.8/angular-sanitize',
+        'app/js/angularjs-1.7.8/angular-ui-router',
+        'app/js/angularjs-1.7.8/statehelper',
+        'app/js/ui-select/dist/select',
+        'app/js/ocLazyLoad/ocLazyLoad',
+        'app/js/text-encoder-lite/text-encoder-lite',
+        'app/js/base64js/base64js.min',
+        'app/js/ag-grid/dist/ag-grid-community',                       
+        //'app/js/javascript-detect-element-resize/jquery.resize',
+        'app/js/moment-2.3.1/moment.min', 
+        'app/js/bootstrap-4.0.0/bootstrap',
+        'app/js/ui-bootstrap-3.0.6/ui-bootstrap-tpls-3.0.6',
+        'app/js/popper-1.12.9/popper',
+        'app/js/d3js-4.4.0/d3',
+        'app/js/dc.js-3.1.9/dc',
+        'app/js/angular-dc/angular-dc',
+        'app/js/crossfilter/crossfilter',
+       // 'app/js/reductio/src/reductio',
+        'app/js/lodash/lodash.min',
+        'app/js/ag-grid/dist/ag-grid-community',
+       //'app/route-config',
+        'app/js/universe/src/universe']
+};   
+       */
+           
+       
+define('def', [
+        'app/js/angularAMD/src/angularAMD',
+        'app/js/d3js-4.4.0/d3',
+        'app/js/dc.js-3.1.9/dc',
+        'app/js/crossfilter/crossfilter',
+       // 'app/js/reductio/src/reductio',
+        'app/js/lodash/lodash.min',
+        'app/js/universe/src/universe'], function () {       
+            return angularAMD.bootstrap(app);
+});                           

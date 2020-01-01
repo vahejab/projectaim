@@ -2,7 +2,7 @@ angular.module(Risk).directive(ValidateElement, validateElement);
 
 function ValidateElement(DOMops){                     
       return {
-            restrict: A,
+            restrict: 'A',
             link: function (scope, element, attrs) {
                 
                 function validLevel(lvl){
@@ -19,10 +19,10 @@ function ValidateElement(DOMops){
   
                 function riskNotEmpty(l, t, s, c){
                   return
-                   (l !=  &&
-                    t !=  &&
-                    s !=  && 
-                    c != );
+                   (l != '' &&
+                    t != '' &&
+                    s != '' && 
+                    c != '');
                 }
                 
                 function validLevel(obj){

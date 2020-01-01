@@ -1,10 +1,10 @@
-angular.module(Risk).directive(getRisk, getRisk); 
+angular.module(Risk).directive('getRisk', getRisk); 
  
 function getRisk(){
      return {
-            restrict: E,
+            restrict: 'E',
             controller: function ($scope, $element, $attrs, $http, $sce, $stateParams, $timeout){
-              return $http.get(/api/riskconfig).then(function(response){
+              return $http.get('/api/riskconfig').then(function(response){
                    if (response.data.Succeeded){
                         $scope.ctrl.risklevels.riskmaximum = response.data.Result.Levels[0].riskmaximum;
                         $scope.ctrl.risklevels.riskhigh = response.data.Result.Levels[0].riskhigh;
@@ -27,7 +27,7 @@ function getRisk(){
                         $scope.ctrl.msg = $sce.trustAsHtml(response.data);
                    }
                }).then(function(){
-                    return $http.get(api/users).then(function(response){
+                    return $http.get('api/users').then(function(response){
                             if (response.data.Succeeded){
                                //$scope.ctrl.users.push({id: 0, value: });
                                for (var key = 0; key < response.data.Result.length; key++){
@@ -42,7 +42,7 @@ function getRisk(){
                             }
                    }); 
                }).then(function(){ 
-                    return $http.get(api/risks/+$stateParams.id).then(function(response){
+                    return $http.get('api/risks/+$stateParams.id').then(function(response){
                       if (response.data.Succeeded){  
                             $scope.ctrl.risk.riskid = response.data.Results.riskid;
                             $scope.ctrl.risk.risktitle = response.data.Results.risktitle;
@@ -82,7 +82,7 @@ function getRisk(){
                          $scope.ctrl.msg += "<br />"+$sce.trustAsHtml(response.data);
                       }
                 }).then(function(){
-                   return $http.get(api/risks/+$stateParams.id+/events).then(function(response){
+                   return $http.get('api/risks/'+$stateParams.id+'/events').then(function(response){
                         if (response.data.Succeeded){
                             for (var key = 0; key <= response.data.Result.length-1; key++){
                                 event = response.data.Result[key];

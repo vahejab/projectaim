@@ -1,4 +1,4 @@
-angular.module('Risk').controller('RiskDashboardController', ['$http', '$resource', '$scope', '$state', '$window', '$timeout', '$interval', '$sce', 'CommonService', 'DOMops', 'ValidationService', function($http, $resource, $scope, $state, $window, $timeout, $interval, $sce, CommonService, DOMops, ValidationService){
+angular.module('Risk').controller('RiskDashboardController', ['$http', '$resource', '$scope', '$state', '$window', '$timeout', '$interval', '$sce', 'CommonService', 'DOMops', 'ValidationService', 'dc', function($http, $resource, $scope, $state, $window, $timeout, $interval, $sce, CommonService, DOMops, ValidationService, dc){
          
         $scope.gridsterOpts = {
             columns: 6, // the width of the grid, in columns
@@ -127,10 +127,11 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
         .innerRadius(30)
         .dimension(quarter)
         .group(quarterGroup);
-    
-    
-    dc.renderAll();
-    
-    }
-}]);
+       // simply call renderAll() to render all charts on the page
+dc.renderAll();
+// or you can render charts belong to a specific chart group
+dc.renderAll("group");
+
+
+]});
  

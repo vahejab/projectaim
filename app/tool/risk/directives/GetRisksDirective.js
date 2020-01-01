@@ -1,10 +1,10 @@
-angular.module(Risk).directive(getRisks, getRisks); 
+angular.module('Risk').directive('getRisks', getRisks); 
 
 function getRisks(){
      return {
-            restrict: E,
+            restrict: 'E',
             controller: function ($scope, $element, $attrs, $http, $sce, $stateParams, $timeout){
-                  return $http.get(/api/riskconfig).then(function(response){
+                  return $http.get('/api/riskconfig').then(function(response){
                    if (response.data.Succeeded){
                         $scope.ctrl.risklevels.riskmaximum = response.data.Result.Levels[0].riskmaximum;
                         $scope.ctrl.risklevels.riskhigh = response.data.Result.Levels[0].riskhigh;
@@ -26,7 +26,7 @@ function getRisks(){
                         $scope.ctrl.msg = $sce.trustAsHtml(response.data);
                    }
               }).then(function(){
-                 return $http.get(api/risks).then(function(response){
+                 return $http.get('api/risks').then(function(response){
                    if (response.data.Succeeded){
                         $scope.ctrl.risks = [];
                         angular.forEach(response.data.Result, function(risk, key){
@@ -49,15 +49,15 @@ function getRisks(){
                                 assessmentdate: risk.assessmentdate
                             };
                             $scope.ctrl.risks.push({
-                                riskid: ,
-                                risktitle: ,
-                                risklevel: ,
-                                riskvalue: ,
-                                assignor: ,
-                                owner: ,
-                                altowner: ,
-                                approver: ,
-                                creationdate: 
+                                riskid: '',
+                                risktitle: '',
+                                risklevel : '',
+                                riskvalue:'',
+                                assignor: '',
+                                owner: '',
+                                altowner: '',
+                                approver: '',
+                                creationdate:'' 
                             });
                             $scope.ctrl.risks[key].riskid =  response.data.Result[key].riskid;
                             $scope.ctrl.risks[key].risktitle = response.data.Result[key].risktitle;
