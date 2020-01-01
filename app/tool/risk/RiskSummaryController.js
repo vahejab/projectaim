@@ -122,7 +122,7 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
                      columnDef.resizable = true;
   
                         $timeout(function(){            
-                            location.reload();
+                           // location.reload();
                             ctrl.gridOptions.api.autoSizeAll(false);
                             });
             });
@@ -141,7 +141,7 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
                   columnDef.resizable = true; 
   
                         $timeout(function(){            
-                            location.reload();
+                            //location.reload();
                              ctrl.gridOptions.api.autoSizeAll(false);
                             }, 10);
                 allColumnIds.push(columnDef.field);
@@ -284,7 +284,7 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
         ctrl.riskMatrix = [];
         for(var l = 1; l <= 5; l++)
         {
-            ctrl.riskMatrix[l] = [];
+            ctrl.riskMatrix[l] = [];                
             for (var c = 1; c <= 5; c++)
             {
                 ctrl.riskMatrix[l][c] = '';  

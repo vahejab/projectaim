@@ -681,4 +681,4 @@ angular.module('ngResource', ['ng']).
   });
 
 
-})(window, window.angular);
+})(window, angular);

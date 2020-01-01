@@ -67,6 +67,14 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                
           }  
           
+          
+                        
+            $scope.$on("$destroy", function(){
+                 formcheck = 0;    
+                 angular.element(document.querySelector('link[href="/app/tool/risk/EditRisk.css"]')).remove();
+                 //angular.element(document.querySelector('link[href="/app/css/bootstrap/bootstrap.css"]')).remove();   
+            });
+          
           ctrl.openBaseline = function(evt) {
             ctrl.hidepopups();
             ctrl.baseline[evt].opened = true;

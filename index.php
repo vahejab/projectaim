@@ -13,23 +13,25 @@
 <link rel="stylesheet" href="/app/js/ui-select/dist/select.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">    
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="/app/js/dc.js-3.1.9/dc.css" />
+<link rel="stylesheet" href="/app/js/angular-gridster/dist/angular-gridster.min.css"/>
 <!--link rel="stylesheet" href="/app/js/air-datepicker-2.2.3/dist/css/datepicker.css" /-->
 <!--script src="/app/js/air-datepicker-2.2.3/dist/js/datepicker.js"></script-->
 <!--script src="/app/js/air-datepicker-2.2.3/dist/js/i18n/datepicker.en.js"></script-->
 <!-- Light package of effect.css It is optional --><!-- Latest compiled and minified CSS on head of your page -->
 <!-- VENDORS -->
 <!-- Required for Datepicker Component -->
-<script src="/app/js/moment-2.3.1/moment.min.js"></script> 
+
  <link rel="stylesheet" href="/app/assets/styles/style.css" />
   <style>
     .ui-view > div.webix_view{
         width: 100vw !important;
     }
     body{
-        width: 100vw;
+        width: 99vw;
         margin: 0px;
-        background-image: url(/app/assets/images/custom_back.gif);
+        background-image: url(/app/assets/images/custom_back.gif) !important;
     }
   </style>
 </head>
@@ -43,6 +45,9 @@
             </a>
             <a href="/#!/action/summary" name="actionsummary">
                 Action Item Summary
+            </a>
+            <a href="/#!/risk/dashboard" name="dashboard">
+                Risk Dashboard
             </a>
             <a href="/#!/risk/create" name="createrisk">
                 Create Risk
@@ -60,26 +65,10 @@
     <!--script src="/app/js/kendoui-2019.1.220/js/kendo.datepicker.min.js"></script>
     <script src="/app/js/kendoui-2019.1.220/js/kendo.ui.core.min.js"></script-->
     <!--script src="/app/js/jquery-latest/jquery-latest.js"></script-->
-    <script src="/app/js/angularjs-1.7.8/angular.js"></script>
-    <script src="/app/js/angularjs-1.7.8/angular-resource.js"></script>
-    <script src="/app/js/angularjs-1.7.8/angular-aria.js"></script>
-    <script src="/app/js/angularjs-1.7.8/angular-animate.js"></script>
-    <script src="/app/js/angularjs-1.7.8/angular-messages.js"></script>
-    <script src="/app/js/angularjs-1.7.8/angular-sanitize.js"></script> 
-    <script src="/app/js/popper-1.12.9/popper.min.js"></script>
-    <!--script src="/app/js/bootstrap-4.0.0/bootstrap.js"></script-->
-    <script src="/app/js/angularjs-1.7.8/angular-route.min.js"></script>
-    <script src="/app/js/angularjs-1.7.8/angular-ui-router.js"></script>
-    <script src="/app/js/ui-select/dist/select.js"></script>
-    <script src="/app/js/ui-bootstrap-3.0.6/ui-bootstrap-tpls-3.0.6.js"></script>    
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js"></script>
-    <script src="/app/js/ag-grid/dist/ag-grid-community.js"></script>
-    <script src="/app/js/angularjs-1.7.8/statehelper.js"></script>
-    <script src="/app/js/ocLazyLoad/ocLazyLoad.js"></script>
-    <script src="/app/route-config.js"></script>
-    <script src="/app/js/text-encoder-lite/text-encoder-lite.js"></script>
-    <script src="/app/js/base64js/base64js.min.js"></script>
-    <script src="/app/app.js"></script>
+    
+    
+    <script src="/app/js/requirejs/require.js"></script>   
+    <script src="/app/js/universe/src/universe.js"></script>
+    <!--cript src="/app/app.js"></script-->  <!--app.js contents moved to body of universe.-->
    </body>
 </html>

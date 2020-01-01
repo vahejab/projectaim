@@ -1,0 +1,9 @@
+<div ng-app="Risk" gridster="gridsterOpts" style="margin-left: 5px; max-height: 80% !important">
+    <div>
+        <ul>
+            <li gridster-item="item" id="{{item.id}}" ng-repeat="item in standardItems">   
+                <div dc-chart="risk-chart" id="{{item.id}}" dc-width="180" dc-height="180" dc-radius="80" dc-dimension="dimension" dc-group="group" class="dc-chart"></div>
+            </li>
+        </ul>
+    </div>
+</div>

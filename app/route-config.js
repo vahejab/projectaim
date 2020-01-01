@@ -41,6 +41,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         .when('risk@create', 'risk/create')
         .when('risk@edit', 'risk/edit')
         .when('risk@config', 'risk/config')
+        .when('risk@dashboard', 'risk/dashboard')
         .when('home', 'home')
         .otherwise('main');
         
@@ -101,7 +102,8 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             name: 'risk@create',
             serie: true,
             files: [
-                    '/app/tool/risk/CreateRisk.css',     
+                    '/app/tool/risk/CreateRisk.css',   
+                   // '/app/css/bootstrap/bootstrap.min.css',  
                     '/app/tool/risk/services/DOMService.js',
                     '/app/tool/risk/services/ValidationService.js', 
                     '/app/tool/risk/directives/RiskDirective.js',
@@ -114,6 +116,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             serie: true,
             files: [
                     '/app/tool/risk/EditRisk.css',
+                    //'/app/css/bootstrap/bootstrap.min.css',
                     '/app/tool/risk/services/DOMService.js',
                     '/app/tool/risk/services/ValidationService.js',
                     '/app/tool/risk/directives/RepeatEventsDone.js',
@@ -128,6 +131,18 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             files: ['/app/tool/risk/RiskMatrixConfig.css',
                     '/app/tool/risk/directives/RiskDirective.js',
                     '/app/tool/risk/RiskMatrixConfigController.js'
+            ]
+        },
+        {
+            name: 'risk@dashboard',
+            serie: true,
+            files: ['/app/tool/risk/RiskDashboard.css', 
+                    //'/app/css/bootstrap/bootstrap.min.css',
+                    '/app/tool/risk/services/DOMService.js',
+                     '/app/tool/risk/directives/RepeatDoneDirective.js',
+                    '/app/tool/risk/services/ValidationService.js',
+                    '/app/tool/risk/directives/RiskDirective.js',
+                    '/app/tool/risk/RiskDashboardController.js'
             ]
         }]
     });
@@ -212,5 +227,12 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             resolve: res,
             templateUrl: '/app/tool/risk/RiskMatrixConfig.html',
             controller: 'RiskMatrixConfigController'
+        })
+        .state('risk@dashboard',
+        {
+            url: "/risk/dashboard",
+            resolve: res,
+            templateUrl: '/app/tool/risk/RiskDashboard.html',
+            controller: 'RiskDashboardController'
         });
 }

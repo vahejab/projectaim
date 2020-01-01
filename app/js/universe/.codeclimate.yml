@@ -1,0 +1,13 @@
+engines:
+  eslint:
+    enabled: true
+    checks:
+      comma-dangle:
+        enabled: false
+ratings:
+  paths:
+  - src/**
+exclude_paths:
+- test/**
+- universe.js
+- universe.min.js

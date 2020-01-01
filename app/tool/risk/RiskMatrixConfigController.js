@@ -84,6 +84,8 @@ angular.module('Risk').controller('RiskMatrixConfigController', ['$http', '$reso
     }     
     
     $scope.init = function(){
+
+      angular.element(document.querySelector('link[href="/app/css/bootstrap/bootstrap.css"]')).remove();  
       angular.element(document.querySelector('link[href="/app/tool/risk/RiskMatrixConfig.css"]')).remove();
       angular.element(document.querySelector('head')).append('<link type="text/css" rel="stylesheet" href="/app/tool/risk/RiskMatrixConfig.css"/>');
       return $scope.getConfig();

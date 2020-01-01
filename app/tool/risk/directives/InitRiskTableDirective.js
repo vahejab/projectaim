@@ -1,10 +1,10 @@
-//angular.module('Risk').directive('initRiskTable', initRiskTable);
+//angular.module(Risk).directive(initRiskTable, initRiskTable);
 
 function initRiskTable(){
     return {
-        restrict: 'A',
+        restrict: A,
         //transclude: true,
-        templateUrl: '/app/tool/risk/RiskTable.html',
+        templateUrl: /app/tool/risk/RiskTable.html,
         controller: function($scope, $timeout) {
             $scope.scrollBarWidth = function(){
                     var outer = document.createElement("div");
@@ -43,8 +43,8 @@ function initRiskTable(){
                     {   
                         $scope.flag = 1;
                         $scope.devicePixelRatio = window.devicePixelRatio;
-                        var headers = angular.element(document.querySelector('div.tableheader table.grid thead tr')).children();
-                        var cells = angular.element(document.querySelector('div.tablebody table.grid tbody tr:nth-child(1)')).children();
+                        var headers = angular.element(document.querySelector(div.tableheader table.grid thead tr)).children();
+                        var cells = angular.element(document.querySelector(div.tablebody table.grid tbody tr:nth-child(1))).children();
                         angular.forEach(cells, function(cell, idx){
                             var cellwidth = cell.getBoundingClientRect().width;
                             headers[idx].width = cellwidth;
@@ -58,9 +58,9 @@ function initRiskTable(){
                          $timeout.cancel($scope.refreshingPromise);
                     }
                     
-                    //angular.element(document.querySelector('html')).attr("style", "margin-right: " + 0*$scope.scrollBarWidth() + "px !important");
-                    angular.element(document.querySelector('div.tableheader')).attr("style", "margin-right: " + $scope.scrollBarWidth() + "px !important");
-                    angular.element(document.querySelector('div.tablebody')).attr("style", "margin-right " + $scope.scrollBarWidth() + "px !important");    
+                    //angular.element(document.querySelector(html)).attr("style", "margin-right: " + 0*$scope.scrollBarWidth() + "px !important");
+                    angular.element(document.querySelector(div.tableheader)).attr("style", "margin-right: " + $scope.scrollBarWidth() + "px !important");
+                    angular.element(document.querySelector(div.tablebody)).attr("style", "margin-right " + $scope.scrollBarWidth() + "px !important");    
                 }
             }
         },

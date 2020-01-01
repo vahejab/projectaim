@@ -1,4 +1,4 @@
-angular.module('Risk').controller('CreateRiskController', ['$http', '$resource', '$scope', '$state', '$window', '$timeout', '$interval', '$sce', 'CommonService', 'DOMops', 'ValidationService', function($http, $resource, $scope, $state, $window, $timeout, $interval, $sce, CommonService, DOMops, ValidationService){
+angular.module(Risk).controller(CreateRiskController, [$http, $resource, $scope, $state, $window, $timeout, $interval, $sce, CommonService, DOMops, ValidationService, function($http, $resource, $scope, $state, $window, $timeout, $interval, $sce, CommonService, DOMops, ValidationService){
     refresh = false;
     var ctrl = this;
     
@@ -16,33 +16,33 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
     ctrl.riskid = 0;
     ctrl.riskownerid = 0;
     ctrl.risk = { 
-        ownerid: '',
-        risktitle: '',
-        riskstatement: '',
-        context: '',
-        closurecriteria: '',
-        likelihood:'',
-        technical:'',
-        schedule:'',
-        cost:''
+        ownerid: ,
+        risktitle: ,
+        riskstatement: ,
+        context: ,
+        closurecriteria: ,
+        likelihood:,
+        technical:,
+        schedule:,
+        cost:
     }; 
      
     ctrl.fields = [   
-        'risktitle',
-        'riskstatement',
-        'context',
-        'closurecriteria',
-        'likelihood',
-        'technical',
-        'schedule',
-        'cost'
+        risktitle,
+        riskstatement,
+        context,
+        closurecriteria,
+        likelihood,
+        technical,
+        schedule,
+        cost
     ]
     
     ctrl.risklevels = {
-        riskmaximum: '',
-        riskhigh: '',
-        riskmedium: '',
-        riskminimum: ''
+        riskmaximum: ,
+        riskhigh: ,
+        riskmedium: ,
+        riskminimum: 
     }
 
     ctrl.flags = {
@@ -55,23 +55,23 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
         ctrl.riskMatrix[l] = [];
         for (var c = 0; c <= 5; c++)
         {
-            ctrl.riskMatrix[l][c] = '';  
+            ctrl.riskMatrix[l][c] = ;  
         }
     }
          
     ctrl.riskLevel = function(l, c){
-        elem = document.querySelector("div[name='risk["+l+"]["+c+"]']");
+        elem = document.querySelector("div[name=risk["+l+"]["+c+"]]");
         risk = ctrl.riskMatrix[l][c];
-        if (risk == '')
-            return (elem && elem.hasAttribute('class'))?
-                    elem.getAttribute('class') : ''; 
+        if (risk == )
+            return (elem && elem.hasAttribute(class))?
+                    elem.getAttribute(class) : ; 
         
         if (risk >= ctrl.risklevels.riskhigh) 
-            return 'cell high';
+            return cell high;
         else if (risk >= ctrl.risklevels.riskmedium && risk < ctrl.risklevels.riskhigh)
-            return 'cell med';
+            return cell med;
         else if (risk < ctrl.risklevels.riskmedium)
-            return 'cell low';
+            return cell low;
     }
 
              
@@ -89,7 +89,8 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
            
     $scope.$on("$destroy", function(){
          formcheck = 0;
-         angular.element(document.querySelector('link[href="/app/tool/risk/CreateRisk.css"]')).remove();   
+         angular.element(document.querySelector(link[href="/app/tool/risk/CreateRisk.css"])).remove();
+         angular.element(document.querySelector(link[href="/app/css/bootstrap/bootstrap.css"])).remove();   
     });
     
     ctrl.initRisk = function(data){
@@ -117,10 +118,10 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
              ctrl.msg = "Please complete form and resubmit";
         else{ 
             ctrl.risk.ownerid = ctrl.riskownerid;
-            return $http.post('/api/risks', ctrl.risk).then(function(response){
+            return $http.post(/api/risks, ctrl.risk).then(function(response){
                 if (response.data.Succeeded){     
                     ctrl.riskid = response.data.RiskID;
-                    $scope.msg = $sce.trustAsHtml(response.data.Result + "<b><a href='/#!/risk/edit/"+ctrl.riskid+"'>View Risk " + ctrl.riskid + "</a></b>");
+                    $scope.msg = $sce.trustAsHtml(response.data.Result + "<b><a href=/#!/risk/edit/"+ctrl.riskid+">View Risk " + ctrl.riskid + "</a></b>");
                     return response.data.Result;
                 }
                 else{
@@ -131,7 +132,7 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
                     today = new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate();
                     payload = {riskid: ctrl.riskid, events: [{
                         eventid : 0,
-                        eventtitle : 'Risk Identified',
+                        eventtitle : Risk Identified,
                         ownerid : ctrl.riskownerid,
                         
                         actualdate: today,
@@ -154,7 +155,7 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
                         baselinecost : ctrl.risk.cost
                     }]
                 };
-                return $http.post('/api/risks/'+ ctrl.riskid + '/events', payload).then(function(response){
+                return $http.post(/api/risks/+ ctrl.riskid + /events, payload).then(function(response){
                         if (response.data.Succeeded){
                             ctrl.msg = response.data.Result;
                             //ctrl.resetForm();

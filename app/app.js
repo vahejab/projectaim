@@ -1,3 +1,4 @@
+var app;
 var common = angular.module('Common', []);
 var refresh = false;
 var formcheck = false;
@@ -87,60 +88,68 @@ common.service("CommonService", function() {
     return commonFunctions;
 });
 
-angular.module('Home', []);
-angular.module('Action', ['ngResource', 'Common']);
-agGrid.initialiseAgGridWithAngular1(angular);
-angular.module('Risk', ['ngResource', 'ngAnimate', 'Common', 'agGrid', 'ui.select', 'ui.bootstrap']);
+define('angular-definitions', ['angular', 'angularAMD'], function (angular, angularAMD) {
 
-var app = angular.module('Main', ['ui.router', 'oc.lazyLoad', 'ngResource', 'ngSanitize', 'Common', 'Home', 'Action', 'Risk']);
-  
-app.controller('MainController',  ['CommonService', '$scope', '$window', '$state', function(CommonService, $scope, $window, $state){
-}]);
-app.config(['$ocLazyLoadProvider', '$stateProvider', '$urlRouterProvider', '$compileProvider', function($ocLazyLoadProvider, $stateProvider, $urlRouterProvider, $compileProvider/*, $mdThemingProvider*/) {
-   /* $mdThemingProvider.theme('custom')
-                      .primaryPalette('blue')
-                      .accentPalette('blue-grey');
-    $mdThemingProvider.setDefaultTheme('custom')
-    $mdThemingProvider.alwaysWatchTheme(true);
-    */
-    configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider);
-     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|blob):/);
-}]);
+    angular.module('Home', []);
+    angular.module('Action', ['ngResource', 'Common']);
+    agGrid.initialiseAgGridWithAngular1(angular);
+    angular.module('Risk', ['ngResource', 'ngAnimate', 'Common', 'agGrid', 'ui.select', 'ui.bootstrap', 'gridster', 'angularDc']);
 
-/**
- * AngularJS default filter with the following expression:
- * "person in people | filter: {name: $select.search, age: $select.search}"
- * performs an AND between 'name: $select.search' and 'age: $select.search'.
- * We want to perform an OR.
- */
-app.filter('propsFilter', function() {
-  return function(items, props) {
-    var out = [];
+    app = angular.module('Main', ['ui.router', 'oc.lazyLoad', 'ngResource', 'ngSanitize', 'Common', 'Home', 'Action', 'Risk']);
+      
+    app.controller('MainController',  ['CommonService', '$scope', '$window', '$state', function(CommonService, $scope, $window, $state){
+    }]);
+    app.config(['$ocLazyLoadProvider', '$stateProvider', '$urlRouterProvider', '$compileProvider', function($ocLazyLoadProvider, $stateProvider, $urlRouterProvider, $compileProvider/*, $mdThemingProvider*/) {
+       /* $mdThemingProvider.theme('custom')
+                          .primaryPalette('blue')
+                          .accentPalette('blue-grey');
+        $mdThemingProvider.setDefaultTheme('custom')
+        $mdThemingProvider.alwaysWatchTheme(true);
+        */
+        configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider);
+         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|blob):/);
 
-    if (angular.isArray(items)) {
-      var keys = Object.keys(props);
+    }]);
 
-      items.forEach(function(item) {
-        var itemMatches = false;
+    /**
+     * AngularJS default filter with the following expression:
+     * "person in people | filter: {name: $select.search, age: $select.search}"
+     * performs an AND between 'name: $select.search' and 'age: $select.search'.
+     * We want to perform an OR.
+     */
+    app.filter('propsFilter', function() {
+      return function(items, props) {
+        var out = [];
 
-        for (var i = 0; i < keys.length; i++) {
-          var prop = keys[i];
-          var text = props[prop].toLowerCase();
-          if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
-            itemMatches = true;
-            break;
-          }
+        if (angular.isArray(items)) {
+          var keys = Object.keys(props);
+
+          items.forEach(function(item) {
+            var itemMatches = false;
+
+            for (var i = 0; i < keys.length; i++) {
+              var prop = keys[i];
+              var text = props[prop].toLowerCase();
+              if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+                itemMatches = true;
+                break;
+              }
+            }
+
+            if (itemMatches) {
+              out.push(item);
+            }
+          });
+        } else {
+          // Let the output be the input untouched
+          out = items;
         }
 
-        if (itemMatches) {
-          out.push(item);
-        }
-      });
-    } else {
-      // Let the output be the input untouched
-      out = items;
-    }
+        return out;
+      };
+    });
 
-    return out;
-  };
+
+         
+    return angularAMD.bootstrap(app);    
 });

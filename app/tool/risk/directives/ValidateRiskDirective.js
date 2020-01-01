@@ -1,8 +1,8 @@
-angular.module('Risk').directive('ValidateElement', validateElement);
+angular.module(Risk).directive(ValidateElement, validateElement);
 
 function ValidateElement(DOMops){                     
       return {
-            restrict: 'A',
+            restrict: A,
             link: function (scope, element, attrs) {
                 
                 function validLevel(lvl){
@@ -19,15 +19,15 @@ function ValidateElement(DOMops){
   
                 function riskNotEmpty(l, t, s, c){
                   return
-                   (l != '' &&
-                    t != '' &&
-                    s != '' && 
-                    c != '');
+                   (l !=  &&
+                    t !=  &&
+                    s !=  && 
+                    c != );
                 }
                 
                 function validLevel(obj){
-                    return obj.getValue().charCodeAt(0) - '0'.charCodeAt(0) >= 1 
-                        && obj.getValue().charCodeAt(0) - '0'.charCodeAt(0) <= 5;    
+                    return obj.getValue().charCodeAt(0) - 0.charCodeAt(0) >= 1 
+                        && obj.getValue().charCodeAt(0) - 0.charCodeAt(0) <= 5;    
                 } 
                 
                   
@@ -38,7 +38,7 @@ function ValidateElement(DOMops){
                 }
                 
                 function fieldEmpty(elem){
-                    return elem.getValue() == '' || elem.getValue().trim() == '';
+                    return elem.getValue() ==  || elem.getValue().trim() == ;
                 }
                 
                 
@@ -47,7 +47,7 @@ function ValidateElement(DOMops){
                         makeInvalid(id);
                         clearDot();                                                     
                    }        
-                   else if (typeof elem !== 'undefined' && (elem.getValue() == 0 || fieldEmpty(elem)))
+                   else if (typeof elem !== undefined && (elem.getValue() == 0 || fieldEmpty(elem)))
                         makeInvalid(id);
 
                    else
@@ -55,11 +55,11 @@ function ValidateElement(DOMops){
                 }
                                                                                               
                 function enableElement(id){
-                    (document.querySelector(id)).removeAttribute('disabled');
+                    (document.querySelector(id)).removeAttribute(disabled);
                 }
                 
                 function disableElement(id){
-                    (document.querySelector(id)).setAttribute('disabled', 'disabled'); 
+                    (document.querySelector(id)).setAttribute(disabled, disabled); 
                 }
           
 
@@ -69,40 +69,40 @@ function ValidateElement(DOMops){
                              clearValidation(field);
                              if (isLevelField(field) && !validLevel(scope.risk[field]))
                                 makeInvalid(field);
-                             else if (!isLevelField(field) && scope.risk[field].trim() == '')
+                             else if (!isLevelField(field) && scope.risk[field].trim() == )
                                 makeInvalid(field);                                
                        }
                 }
                            
                 function drawDot(l, c){
-                    document.querySelector("td[name='risk["+l+"]["+c+"]']").innerHTML 
-                    = "<div class='level' style='width:15px; height:15px; background-color: black'/>";
+                    document.querySelector("td[name=risk["+l+"]["+c+"]]").innerHTML 
+                    = "<div class=level style=width:15px; height:15px; background-color: black/>";
                 }
 
               
                 function displayLevel(level, l, c){
-                   leveldiv =  document.querySelector("div[name='level']");
+                   leveldiv =  document.querySelector("div[name=level]");
                    if (level >= scope.risklevels.riskhigh)
                    {
-                       leveldiv.innerHTML = 'H ' + l + '-' + c;
-                       leveldiv.setAttribute('class', 'high'); 
+                       leveldiv.innerHTML = H  + l + - + c;
+                       leveldiv.setAttribute(class, high); 
                    }
                    else if (level < scope.risklevels.riskhigh  && level >= scope.risklevels.riskmedium)
                    {
-                        leveldiv.innerHTML = 'M ' + l + '-' + c;
-                        leveldiv.setAttribute('class', 'med'); 
+                        leveldiv.innerHTML = M  + l + - + c;
+                        leveldiv.setAttribute(class, med); 
                    }
                    else if (level < scope.risklevels.riskmedium)
                    {
-                        leveldiv.innerHTML = 'L ' + l + '-' + c;
-                        leveldiv.setAttribute('class', 'low'); 
+                        leveldiv.innerHTML = L  + l + - + c;
+                        leveldiv.setAttribute(class, low); 
                    }
                 }
               
                 function clearLevel(){
-                    leveldiv = document.querySelector("div[name='level']");
-                    leveldiv.innerHTML = '';
-                    leveldiv.setAttribute('class', '');
+                    leveldiv = document.querySelector("div[name=level]");
+                    leveldiv.innerHTML = ;
+                    leveldiv.setAttribute(class, );
                 }
                 
                 function assignRiskLevel(obj){
@@ -191,20 +191,20 @@ function ValidateElement(DOMops){
                     
                 
                 scope.init().then(function(){
-                    scope.assignorConfig = getSelectConfig('assignor', scope.users);
-                    scope.approverConfig = getSelectConfig('approver', scope.users);
-                    scope.ownerConfig = getSelectConfig('owner', scope.users);
-                    scope.risktitleConfig = getTextConfig('risktitle', 'text', '520', '30');                    
-                    scope.riskstatementConfig = getTextConfig('riskstatement', 'textarea', '520', '97');
-                    scope.contextConfig = getTextConfig('context', 'textarea', '520', '97');                    
-                    scope.closurecriteriaConfig = getTextConfig('closurecriteria', 'textarea', '520', '97');
-                    scope.ownerntesConfig = getTextConfig('ownernotes', 'textarea', '520', '97');
-                    scope.approvercommentsConfig = getTextConfig('approvercomments', 'textarea', '520', '97');                    
-                    scope.categoryConfig = getSelectConfig('category');                
-                    scope.likelihoodConfig = getLevelConfig('likelihood');                    
-                    scope.technicalConfig = getLevelConfig('technical');                    
-                    scope.scheduleConfig = getLevelConfig('schedule');                    
-                    scope.costConfig = getLevelConfig('cost');                    
+                    scope.assignorConfig = getSelectConfig(assignor, scope.users);
+                    scope.approverConfig = getSelectConfig(approver, scope.users);
+                    scope.ownerConfig = getSelectConfig(owner, scope.users);
+                    scope.risktitleConfig = getTextConfig(risktitle, text, 520, 30);                    
+                    scope.riskstatementConfig = getTextConfig(riskstatement, textarea, 520, 97);
+                    scope.contextConfig = getTextConfig(context, textarea, 520, 97);                    
+                    scope.closurecriteriaConfig = getTextConfig(closurecriteria, textarea, 520, 97);
+                    scope.ownerntesConfig = getTextConfig(ownernotes, textarea, 520, 97);
+                    scope.approvercommentsConfig = getTextConfig(approvercomments, textarea, 520, 97);                    
+                    scope.categoryConfig = getSelectConfig(category);                
+                    scope.likelihoodConfig = getLevelConfig(likelihood);                    
+                    scope.technicalConfig = getLevelConfig(technical);                    
+                    scope.scheduleConfig = getLevelConfig(schedule);                    
+                    scope.costConfig = getLevelConfig(cost);                    
                 });
 
       }
