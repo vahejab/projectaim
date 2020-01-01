@@ -1,4 +1,4 @@
-angular.module('Risk').controller('RiskDashboardController', ['$http', '$resource', '$scope', '$state', '$window', '$timeout', '$interval', '$sce', 'CommonService', 'DOMops', 'ValidationService', 'dc', function($http, $resource, $scope, $state, $window, $timeout, $interval, $sce, CommonService, DOMops, ValidationService, dc){
+angular.module('Risk').controller('RiskDashboardController', ['$http', '$resource', '$scope', '$state', '$window', '$timeout', '$interval', '$sce', 'CommonService', 'DOMops', 'ValidationService', function($http, $resource, $scope, $state, $window, $timeout, $interval, $sce, CommonService, DOMops, ValidationService){
          
         $scope.gridsterOpts = {
             columns: 6, // the width of the grid, in columns
@@ -133,5 +133,5 @@ dc.renderAll();
 dc.renderAll("group");
 
 
-]});
+}}]);
  

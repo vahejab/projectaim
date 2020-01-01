@@ -36,6 +36,9 @@
   </style>
     <script src="/app/js/jquery-1.12.1/jquery.min.js"></script>
     <script src="/app/js/angularjs-1.7.8/angular.js"></script>
+    <script src="/app/js/d3js-4.4.0/d3.js"></script>
+    <script src="/app/js/crossfilter/crossfilter.js"></script>
+    <script src="/app/js/dc.js-3.1.9/dc.js"></script>
     <script src="/app/js/angular-dc/angular-dc.js"></script>
     <script src="/app/js/ag-grid/dist/ag-grid-community.js"></script>
     <script src="/app/js/angular-gridster/src/angular-gridster.js"></script>
@@ -56,11 +59,8 @@
     <script src="/app/js/text-encoder-lite/text-encoder-lite.js"></script> 
     <script src="/app/js/javascript-detect-element-resize/jquery.resize.js"></script>
     <script src="/app/js/moment-2.3.1/moment.min.js"></script>
-
-   
     
     <script src="/app/route-config.js"></script>         
-   <script src="/app/route-config.js"></script>
     <script src="/app/js/universe/src/universe.js"></script>   
 </head>
     

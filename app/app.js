@@ -9,13 +9,13 @@ var jQuery;
 agGrid.initialiseAgGridWithAngular1(angular);
 angular.module('Home', []);
 angular.module('Action', ['ngResource', 'Common']);
-angular.module('Risk', ['ngResource', 'ngAnimate', 'Common', 'agGrid', 'ui.select', 'ui.bootstrap', 'gridster']);
+angular.module('Risk', ['ngResource', 'ngAnimate', 'Common', 'agGrid', 'angularDc', 'ui.select', 'ui.bootstrap', 'gridster']);
 
-app = angular.module('Main', ['ui.router', 'oc.lazyLoad', 'agGrid', 'gridster', 'ngResource', 'ngSanitize', 'Common', 'Home', 'Action', 'Risk']);
+app = angular.module('Main', ['ui.router', 'oc.lazyLoad', 'agGrid', 'gridster','ngResource', 'ngSanitize', 'Common', 'Home', 'Action', 'Risk']);
 
 app.controller('MainController',  function(){
      
-});
+});                                                                                                                                                                                                                               ``
 
 
 app.config(['$ocLazyLoadProvider', '$stateProvider', '$urlRouterProvider', '$compileProvider', function($ocLazyLoadProvider, $stateProvider, $urlRouterProvider, $compileProvider/*, $mdThemingProvider*/) {
@@ -198,7 +198,6 @@ define('def', [
         'app/js/angularAMD/src/angularAMD',
         'app/js/d3js-4.4.0/d3',
         'app/js/dc.js-3.1.9/dc',
-        'app/js/crossfilter/crossfilter',
        // 'app/js/reductio/src/reductio',
         'app/js/lodash/lodash.min',
         'app/js/universe/src/universe'], function () {       

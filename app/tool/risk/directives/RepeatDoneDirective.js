@@ -1,13 +1,15 @@
 angular.module('Risk').directive('ngRepeatDone', repeatDone);
-alert();
-
-function repeatDone(){
+   
+function repeatDone($timeout){
   return {
     restrict: 'A',
-    controller: function($scope, $element, $attrs) {
+    controller: function($scope, $element, $attrs) {  
           if ($scope.$last) {
-            $scope.$eval(a$ttrs.ngRepeatDone);
-          }
+            $timeout(function(){
+                 $scope.$eval($attrs.ngRepeatDone);
+            });
+           
+          }         
     }
   }
 }

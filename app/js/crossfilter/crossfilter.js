@@ -353,7 +353,7 @@ function quicksort_by(f) {
       return a;
     }
 
-    // In theory it should be enough to call#000000doSort recursively on the second
+    // In theory it should be enough to call doSort recursively on the second
     // partition.
     // The Android source however removes the pivot elements from the recursive
     // call if the second partition is too large (more than 2/3 of the list).
