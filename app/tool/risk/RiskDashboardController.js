@@ -101,68 +101,59 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
     
     $scope.renderCharts =  function(){  
      
-        const quarterChart = new dc.pieChart('#risk-chart');
+        $scope.quarterChart = new dc.pieChart('#risk-chart');
   
  
-     var ndx = crossfilter([{dd: new Date(), volume: 35}, {dd: new Date(), volume: 6}, {dd: new Date(), volume: 8}]);
-     const quarter = ndx.dimension(d => {
-        
-        const month = d.dd.getMonth();
-        if (month <= 2) {
-            return 'Q1';
-        } else if (month > 2 && month <= 5) {
-            return 'Q2';
-        } else if (month > 5 && month <= 8) {
-            return 'Q3';
-        } else {
-            return 'Q4';
-        }
-    });
-    const quarterGroup = quarter.group().reduceSum(d => d.volume);   
+         $scope.ndx = crossfilter([{dd: new Date(), volume: 35}, {dd: new Date(), volume: 6}, {dd: new Date(), volume: 8}]);
+         $scope.quarter = $scope.ndx.dimension(d => {
+            
+            const month = d.dd.getMonth();
+            if (month <= 2) {
+                return 'Q1';
+            } else if (month > 2 && month <= 5) {
+                return 'Q2';
+            } else if (month > 5 && month <= 8) {
+                return 'Q3';
+            } else {
+                return 'Q4';
+            }
+        });
+     $scope.quarterGroup = $scope.quarter.group().reduceSum(d => d.volume);   
     
-        quarterChart /* dc.pieChart('#quarter-chart', 'chartGroup') */
-                .width(80)
-                .height(80)
-                .radius(40)
-                .innerRadius(40)
-                .dimension(quarter)
-                .group(quarterGroup)
-               // simply call renderAll() to render all charts on the page
-                         .transitionDuration(0);
-        quarterChart.transitionDuration(0);
-        dc.renderAll();
-        // or you can render charts belong to a specific chart group
-        dc.renderAll("group");
-     $timeout(()=>{ 
-           height = document.getElementById('risk-chart').offsetHeight;
-            quarterChart /* dc.pieChart('#quarter-chart', 'chartGroup') */
+     $timeout(()=>{
+           riskchart = document.getElementById('risk-chart'); 
+           height = riskchart.offsetHeight - 
+                    2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));
+           $scope.quarterChart /* dc.pieChart('#quarter-chart', 'chartGroup') */
                 .width(height)
                 .height(height)
                 .radius(Math.round(height/2.0))
-                .innerRadius(Math.round(height/2.0))
-                .dimension(quarter)
-                .group(quarterGroup)
+                .innerRadius(Math.round(height/4.0))
+                .dimension($scope.quarter)
+                .group($scope.quarterGroup)
                // simply call renderAll() to render all charts on the page
-                         .transitionDuration(0);
-        quarterChart.transitionDuration(0);
+                         .transitionDuration(500);
         dc.renderAll();
         // or you can render charts belong to a specific chart group
         dc.renderAll("group");
-     });
-
+       });
+    }
 
 window.onresize = function(event) {
   $timeout(()=>{
-        var newHeight = document.getElementById('risk-chart').offsetHeight;
-        quarterChart.height(newHeight) 
+          var riskchart = riskchart = document.getElementById('risk-chart'); 
+           newHeight = riskchart.offsetHeight - 
+                    2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));
+           $scope.quarterChart.height(newHeight) 
            .width(newHeight)
            .radius(Math.round(newHeight/2.0))
-           .innerRadius(Math.round(newHeight/2.0))
-           .transitionDuration(0);
-        quarterChart.transitionDuration(0);
+           .innerRadius(Math.round(newHeight/4.0))
+            .dimension($scope.quarter)
+            .group($scope.quarterGroup)
+            .transitionDuration(0);
         dc.renderAll();
         dc.renderAll("group");
-  },500);
-};
-}}]);
+  }, 500);
+}
+}]);
  

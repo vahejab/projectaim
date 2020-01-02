@@ -4,11 +4,10 @@ function repeatDone($timeout){
   return {
     restrict: 'A',
     controller: function($scope, $element, $attrs) {  
-          if ($scope.$last && $attrs.id == "risk-chart") {
-            $timeout(function(){
-                 $scope.$eval($attrs.ngRepeatDone);
-            });
-           
+          if ($scope.$last) {
+                $timeout(function(){
+                    $scope.$eval($attrs.ngRepeatDone);  
+                },400);         
           }         
     }
   }
