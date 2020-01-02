@@ -1,4 +1,4 @@
-(function(exports){
+//(function(exports){
 crossfilter.version = "1.3.12";
 function crossfilter_identity(d) {
   return d;
@@ -526,7 +526,7 @@ function crossfilter_reduceSubtract(f) {
     return p - f(v);
   };
 }
-exports.crossfilter = crossfilter;
+//exports.crossfilter = crossfilter;
 
 function crossfilter() {
   var crossfilter = {
@@ -1398,4 +1398,4 @@ function crossfilter_capacity(w) {
       ? 0x10000
       : 0x100000000;
 }
-})(typeof exports !== 'undefined' && exports || this);
+//})(typeof exports !== 'undefined' && exports || this);

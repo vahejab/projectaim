@@ -1,0 +1,51 @@
+       
+require.config({
+  baseUrl: "/app/",
+  paths: {
+    'angular': 'js/angularjs-1.7.8/angular',
+    'angularAMD': 'js/angularAMD/src/angularAMD',
+    'jquery': 'js/jquery-1.12.1/jquery.min',
+    'crossfilter': 'js/crossfilter/crossfilter',
+    'd3': 'js/d3js-4.4.0/d3',
+    'dc': 'js/dc.js-3.1.9/dc',
+    'agGrid': 'js/ag-grid/dist/ag-grid-community',
+    'gridster': 'js/angular-gridster/src/angular-gridster',
+    'angular-resource': 'js/angularjs-1.7.8/angular-resource',
+    'angular-animate': 'js/angularjs-1.7.8/angular-animate',
+    'angular-messages': 'js/angularjs-1.7.8/angular-messages',
+    'angular-sanitize': 'js/angularjs-1.7.8/angular-sanitize',
+    'angular-ui-router': 'js/angularjs-1.7.8/angular-ui-router',
+    'statehelper': 'js/angularjs-1.7.8/statehelper',
+    'lodash': 'js/lodash/lodash.min',
+    '_': 'js/underscore/underscore',
+    'angularDc': 'js/angular-dc/angular-dc',
+    'ocLazyLoad': 'js/ocLazyLoad/ocLazyLoad',
+    'base64js': 'js/base64js/base64js.min',
+    'select': 'js/ui-select/dist/select',
+    'popper': 'js/popper-1.12.9/popper', 
+    'bootstrap': 'js/bootstrap-4.0.0/bootstrap',
+    'uiBoootstrap': 'js/ui-bootstrap-3.0.6/ui-bootstrap-tpls-3.0.6',
+    'textEncoderLite': 'js/text-encoder-lite/text-encoder-lite', 
+    'jqueryResize': 'js/javascript-detect-element-resize/jquery.resize',
+    'moment': 'js/moment-2.3.1/moment.min'
+  },
+  shim: {           
+       // 'main', ['angular'],
+        'gridster': ['angular'],
+        'angular-resource': ['angular'],
+        'angular-messages': ['angular'],
+        'angular-sanitize': ['angular'],
+        'angular-animate': ['angular'] ,
+        'angular-ui-router': ['angular'],
+        'statehelper': ['angular'],
+        'select': ['angular'],
+        'uiBoootstrap' : ['angular'],
+        'jqueryResize': ['jquery'],
+        'bootstrap': ['popper'],
+        'ocLazyLoad': ['angularDc'],
+        'lodash': ['_'],
+        'dc': ['d3', 'crossfilter'],
+        'angularDc': ['angular', 'dc', '_', 'd3']
+    }
+});  
+ 

@@ -1,9 +1,11 @@
 (function(root, factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
-        define(['angular', 'dc', 'lodash', 'd3'], function(angular, dc, _, d3) {
-            return (root.returnExportsGlobal = factory(angular, dc, _, d3));
-        });
+        define('angularDc', ['angular', 'dc', '_', 'd3'],
+            function(angular, dc, _, d3) {
+                return (root.returnExportsGlobal = factory(window.angular, dc, _, d3));
+            }
+        );
     } else if (typeof exports === 'object') {
         // Node. Does not work with strict CommonJS, but
         // only CommonJS-like enviroments that support module.exports,
@@ -12,9 +14,10 @@
     } else {
         root['angularDc'] = factory(root.angular, root.dc, root._, root.d3);
     }
-}(this, function(angular, dc, _, d3) {
-
+}(this, function(angular, dc, _, d3) { 
     'use strict';
+    angular = window.angular;
+    _ = window._;
     var angularDc = angular.module('angularDc', []);
     /* The main directive in angularDc, responsible creating Dc.js charts.
 
@@ -132,7 +135,8 @@
                     };
                     // watch for the scope to settle until all the attributes are defined
                     var unwatch = scope.$watch(function() {
-                        var options = _(iAttrs.$attr).keys().filter(function(s) {
+                        _ = window._;
+                        var options = _.filter(iAttrs.$attr.keys, function(s) {
                             return s.substring(0, 2) === 'dc' && s !== 'dcChart' && s !== 'dcChartGroup';
                         }).map(function(key) {
                             try {
@@ -151,7 +155,7 @@
                                 return undefined;
                             }
                         });
-                        if (options.any(_.isUndefined)) {
+                        if (_.isUndefined(options) || options.length == 0 || options.any(_.isUndefined)) {
                             // return undefined if there is at least one undefined option
                             // so that the $watch dont call us again at this $digest time
                             return undefined;
@@ -237,6 +241,4 @@
     ]);
 
     return angularDc;
-
-
 }));

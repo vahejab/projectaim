@@ -3,7 +3,7 @@
         <div>
             <ul>
                 <li gridster-item="item" id="{{item.id}}" ng-repeat="item in standardItems" ng-repeat-done="renderCharts()">   
-                    <div dc-chart="risk-chart" id="{{item.id}}" dc-width="180" dc-height="180" dc-radius="80" dc-dimension="dimension" dc-group="group" class="dc-chart"></div>
+                    <div dc-chart="{{item.id}}" dc-dimension="dimension" dc-group="group" class="dc-chart"></div>
                 </li>
             </ul>
         </div>

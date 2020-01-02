@@ -1,4 +1,4 @@
-exports.crossfilter = crossfilter;
+//exports.crossfilter = crossfilter;
 
 function crossfilter() {
   var crossfilter = {

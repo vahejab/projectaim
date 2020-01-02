@@ -34,37 +34,30 @@
         background-image: url(/app/assets/images/custom_back.gif) !important;
     }
   </style>
-    <script src="/app/js/jquery-1.12.1/jquery.min.js"></script>
-    <script src="/app/js/angularjs-1.7.8/angular.js"></script>
+    <script src="/app/js/crossfilter/crossfilter.js"></script> 
+    <?php 
+        $dir=dirname(__FILE__);
+        $handle=opendir($dir.DIRECTORY_SEPARATOR."app".DIRECTORY_SEPARATOR."js".DIRECTORY_SEPARATOR.
+        "crossfilter".DIRECTORY_SEPARATOR."src");              
+        while (($file = readdir($handle))!==false) {
+            if ($file == '.' || $file == '..')
+                continue;
+            echo "<script type='text/javascript' src='/app/js/crossfilter/src/$file'></script>\n";
+        }
+        closedir($handle);
+     ?>
     <script src="/app/js/d3js-4.4.0/d3.js"></script>
-    <script src="/app/js/crossfilter/crossfilter.js"></script>
     <script src="/app/js/dc.js-3.1.9/dc.js"></script>
-    <script src="/app/js/angular-dc/angular-dc.js"></script>
-    <script src="/app/js/ag-grid/dist/ag-grid-community.js"></script>
-    <script src="/app/js/angular-gridster/src/angular-gridster.js"></script>
-
-    <script src="/app/js/angularjs-1.7.8/angular-resource.js"></script>
-     <script src="/app/js/angularjs-1.7.8/angular-animate.js"></script>
-     <script src="/app/js/angularjs-1.7.8/angular-messages.js"></script>
-     <script src="/app/js/angularjs-1.7.8/angular-sanitize.js" ></script>
-     <script src="/app/js/angularjs-1.7.8/angular-ui-router.js"></script>
-     <script src="/app/js/angularjs-1.7.8/statehelper.js"></script>
-    <script src="/app/js/ocLazyLoad/ocLazyLoad.js"></script>
-    <script src="/app/js/base64js/base64js.min.js"></script>  
-    <script src="/app/js/ui-select/dist/select.js"></script>
-    <script src="/app/js/bootstrap-4.0.0/bootstrap.js"></script>
-    <script src="/app/js/ui-bootstrap-3.0.6/ui-bootstrap-tpls-3.0.6.js"></script>
-    <script src="/app/js/popper-1.12.9/popper.js"></script>
-    <script src="/app/js/requirejs/require.js"></script>  
-    <script src="/app/js/text-encoder-lite/text-encoder-lite.js"></script> 
-    <script src="/app/js/javascript-detect-element-resize/jquery.resize.js"></script>
-    <script src="/app/js/moment-2.3.1/moment.min.js"></script>
-    
-    <script src="/app/route-config.js"></script>         
-    <script src="/app/js/universe/src/universe.js"></script>   
+    <script src="/app/js/angularjs-1.7.8/angular.js"></script>
+    <script src="/app/defines.js"></script>
+    <script src="/app/js/requirejs/require.js"></script>
+    <!--script src="/app/js/underscore/underscore.js"></script-->  
+    <script src='/app/require-config.js'></script> 
+    <script src="/app/route-config.js"></script> 
+           
 </head>
     
-<body ng-controller="MainController"  ng-app="Main"> 
+<body> 
         <a class="nav-link">
             <img id="logo" src="/app/assets/images/ProjectAIM.png" />
         </a>      
@@ -95,7 +88,6 @@
     <script src="/app/js/kendoui-2019.1.220/js/kendo.ui.core.min.js"></script-->
     <!--script src="/app/js/jquery-latest/jquery-latest.js"></script-->
 
-    <script src="./app/app.js"></script>
-
+        <script src="/app/app.js"></script>  
    </body>
 </html>

@@ -1251,8 +1251,9 @@ var requirejs, require, define;
             while (defQueue.length) {
                 args = defQueue.shift();
                 if (args[0] === null) {
-                    return onError(makeError('mismatch', 'Mismatched anonymous define() module: ' +
-                        args[args.length - 1]));
+                     callGetModule(args);
+                  //  return onError(makeError('mismatch', 'Mismatched anonymous define() module: ' +
+                   //     args[args.length - 1]));
                 } else {
                     //args are id, deps, factory. Should be normalized by the
                     //define() function.
@@ -2118,6 +2119,7 @@ var requirejs, require, define;
         //occurs. If no context, use the global queue, and get it processed
         //in the onscript load callback.
         if (context) {
+        
             context.defQueue.push([name, deps, callback]);
             context.defQueueMap[name] = true;
         } else {

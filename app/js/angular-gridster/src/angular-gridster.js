@@ -13,7 +13,7 @@
 		// Browser, nothing "exported". Only registered as a module with angular.
 		factory(root.angular);
 	}
-}(this, function(angular) {
+}(this, function(){
 
 	'use strict';
 
@@ -2232,8 +2232,5 @@
 				$element.addClass('gridster-no-drag');
 			}
 		};
-	})
-
-	;
-
+	});
 }));

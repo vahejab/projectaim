@@ -1,4 +1,4 @@
-angular.module(Risk).directive('getRisk', getRisk); 
+angular.module('Risk').directive('getRisk', getRisk); 
  
 function getRisk(){
      return {
