@@ -3,7 +3,11 @@
         <div>
             <ul>
                 <li gridster-item="item" id="{{item.id}}" ng-repeat="item in standardItems" ng-repeat-done="renderCharts()">   
-                    <div dc-chart="item.id" dc-dimension="dimension" dc-group="group" class="dc-chart"></div>
+                    <div class="svg-container">
+                        <div dc-chart="item.id" dc-dimension="dimension" dc-group="group" class="dc-chart">
+
+                        </div>
+                    </div>
                 </li>
             </ul>
         </div>

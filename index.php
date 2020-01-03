@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
+<head>                  
+<meta charset="utf-8">  
+<meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0" />
+<meta http-equiv="cache-control" content="max-age=0" />
+<meta http-equiv="expires" content="0" />
+<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+<meta http-equiv="pragma" content="no-cache" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -87,7 +92,7 @@
     <!--script src="/app/js/kendoui-2019.1.220/js/kendo.datepicker.min.js"></script>
     <script src="/app/js/kendoui-2019.1.220/js/kendo.ui.core.min.js"></script-->
     <!--script src="/app/js/jquery-latest/jquery-latest.js"></script-->
-
+        <script src="/app/js/dc-resizing/dc-resizing.js"></script> 
         <script src="/app/app.js"></script>  
    </body>
 </html>

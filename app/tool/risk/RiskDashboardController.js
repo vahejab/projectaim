@@ -101,7 +101,7 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
     
     $scope.renderCharts =  function(){  
      
-        $scope.quarterChart = new dc.pieChart('#risk-chart');
+        $scope.riskChart = new dc.pieChart('#risk-chart');
   
  
          $scope.ndx = crossfilter([{dd: new Date(), volume: 35}, {dd: new Date(), volume: 6}, {dd: new Date(), volume: 8}]);
@@ -121,39 +121,23 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
      $scope.quarterGroup = $scope.quarter.group().reduceSum(d => d.volume);   
     
      $timeout(()=>{
-           riskchart = document.getElementById('risk-chart'); 
-           height = riskchart.offsetHeight - 
-                    2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));
-           $scope.quarterChart /* dc.pieChart('#quarter-chart', 'chartGroup') */
-                .width(height)
+           var riskchart = document.getElementById('risk-chart'); 
+           height = Math.floor(riskchart.offsetHeight) 
+                  - 2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));
+           width = height;
+           $scope.riskChart /* dc.pieChart('#quarter-chart', 'chartGroup') */
+                .width(width)
                 .height(height)
                 .radius(Math.round(height/2.0))
                 .innerRadius(Math.round(height/4.0))
                 .dimension($scope.quarter)
                 .group($scope.quarterGroup)
-               // simply call renderAll() to render all charts on the page
-                         .transitionDuration(500);
-        dc.renderAll();
-        // or you can render charts belong to a specific chart group
-        dc.renderAll("group");
-       });
-    }
+                .transitionDuration(500);
+       
+            apply_resizing($scope.riskChart, width, height, null, 'risk-chart');
+            $scope.riskChart.render();
+     });
 
-window.onresize = function(event) {
-  $timeout(()=>{
-          var riskchart = riskchart = document.getElementById('risk-chart'); 
-           newHeight = riskchart.offsetHeight - 
-                    2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));
-           $scope.quarterChart.height(newHeight) 
-           .width(newHeight)
-           .radius(Math.round(newHeight/2.0))
-           .innerRadius(Math.round(newHeight/4.0))
-            .dimension($scope.quarter)
-            .group($scope.quarterGroup)
-            .transitionDuration(0);
-        dc.renderAll();
-        dc.renderAll("group");
-  }, 500);
-}
+    }
 }]);
  

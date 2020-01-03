@@ -8,6 +8,7 @@ require.config({
     'crossfilter': 'js/crossfilter/crossfilter',
     'd3': 'js/d3js-4.4.0/d3',
     'dc': 'js/dc.js-3.1.9/dc',
+    'dc-resizing': 'js/dc-resizing/dc-resizing',
     'agGrid': 'js/ag-grid/dist/ag-grid-community',
     'gridster': 'js/angular-gridster/src/angular-gridster',
     'angular-resource': 'js/angularjs-1.7.8/angular-resource',

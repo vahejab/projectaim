@@ -63,3 +63,8 @@ form {
 #risk-chart.dc{
     margin: 0 auto;
 }
+
+.svg-container svg{
+    display: inline-block;
+    margin: 0 auto;
+}
