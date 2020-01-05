@@ -122,3 +122,9 @@ tr:not(:first-child) td:first-child div{
 div.likelihood{
     padding-right: 2px;
 }
+
+
+svg > g:first-of-type{
+    display: inline-block;
+    margin: 0 auto;
+}

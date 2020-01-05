@@ -1,5 +1,6 @@
 angular.module('Risk').controller('RiskDashboardController', ['$http', '$resource', '$scope', '$state', '$window', '$timeout', '$interval', '$sce', 'CommonService', 'DOMops', 'ValidationService', function($http, $resource, $scope, $state, $window, $timeout, $interval, $sce, CommonService, DOMops, ValidationService){
-         
+        $scope.riskChart = {anchor: ''};
+        
         $scope.gridsterOpts = {
             columns: 6, // the width of the grid, in columns
             pushing: true, // whether to push other items out of the way on move or resize
@@ -16,7 +17,7 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
             mobileModeEnabled: true, // whether or not to toggle mobile mode when screen width is less than mobileBreakPoint
             minColumns: 1, // the minimum columns the grid must have
             minRows: 1, // the minimum height of the grid, in rows
-            maxRows: 3,
+            maxRows: 10,
             defaultSizeX: 2, // the default width of a gridster item, if not specifed
             defaultSizeY: 1, // the default height of a gridster item, if not specified
             minSizeX: 1, // minimum column width of an item
@@ -27,7 +28,9 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
                enabled: true,
                handles: ['n', 'e', 's', 'w', 'ne', 'se', 'sw', 'nw'],
                start: function(event, $element, widget) {}, // optional callback fired when resize is started,
-               resize: function(event, $element, widget) {}, // optional callback fired when item is resized,
+               resize: function(event, $element, widget) {                   
+                    resize($scope.riskChart, $element.width, $element.height, resize, 'risk-chart');
+               }, // optional callback fired when item is resized,
                stop: function(event, $element, widget) {} // optional callback fired when item is finished resizing
             },
             draggable: {
@@ -98,11 +101,27 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
         col: 'item.position[1]'
     };
 
+    $scope.renderOpenChart = function(fill){
+        
+        var color = fill;
+        var triangleSize = 50;
+        var verticalTransform = 25 + Math.sqrt(triangleSize);
     
-    $scope.renderCharts =  function(){  
-     
+    
+        var triangle = dc.triangle("#risk-chart");
+        d3.select("#risk-chart svg")
+            .attr("d", triangle)
+            .attr("stroke", color)
+            .attr("fill", color)
+            .attr("transform", function(d) { return "translate(" + xScale(12.5) + "," + yScale(verticalTransform) + ")"; });    
+    
+           
+    }
+    
+    $scope.openRiskLevels = function(){
+    
         $scope.riskChart = new dc.pieChart('#risk-chart');
-  
+         
  
          $scope.ndx = crossfilter([{dd: new Date(), volume: 35}, {dd: new Date(), volume: 6}, {dd: new Date(), volume: 8}]);
          $scope.quarter = $scope.ndx.dimension(d => {
@@ -117,27 +136,34 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
             } else {
                 return 'Q4';
             }
-        });
-     $scope.quarterGroup = $scope.quarter.group().reduceSum(d => d.volume);   
+        });            
+        $scope.quarterGroup = $scope.quarter.group().reduceSum(d => d.volume);   
     
-     $timeout(()=>{
-           var riskchart = document.getElementById('risk-chart'); 
-           height = Math.floor(riskchart.offsetHeight) 
-                  - 2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));
-           width = height;
-           $scope.riskChart /* dc.pieChart('#quarter-chart', 'chartGroup') */
-                .width(width)
-                .height(height)
-                .radius(Math.round(height/2.0))
-                .innerRadius(Math.round(height/4.0))
-                .dimension($scope.quarter)
-                .group($scope.quarterGroup)
-                .transitionDuration(500);
-       
-            apply_resizing($scope.riskChart, width, height, null, 'risk-chart');
-            $scope.riskChart.render();
-     });
+       // $timeout(()=>{
+               var riskchart = document.getElementById('risk-chart'); 
+               height = Math.floor(riskchart.offsetHeight) 
+                      - 2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));
+               width = Math.floor(parseFloat(window.getComputedStyle(riskchart, null).width)) 
+               - 2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));          
+                        
+               $scope.riskChart /* dc.pieChart('#quarter-chart', 'chartGroup') */
+                    .width(width)
+                    .height(height)
+                    .radius(Math.round(height/2.0))
+                    .innerRadius(Math.round(height/4.0))
+                    .dimension($scope.quarter)
+                    .group($scope.quarterGroup)
+                    .transitionDuration(250);
+                    
 
+       // });
+    }
+    
+    $scope.renderCharts =  function(){  
+         $scope.openRiskLevels();
+        // $scope.renderOpenChart('blue');
+         $scope.riskChart.render();             
+         apply_resizing($scope.riskChart, width, height, resize, 'risk-chart');
     }
 }]);
  

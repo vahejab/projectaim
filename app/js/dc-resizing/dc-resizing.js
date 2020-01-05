@@ -4,7 +4,7 @@ var find_query = function () {
     }).reduce(function (p, v) {
         if (v.length > 1)
             p[v[0]] = decodeURIComponent(v[1].replace(/\+/g, " "));
-        else
+        else                                   
             p[v[0]] = true;
         return p;
     }, {});
@@ -23,50 +23,64 @@ function apply_resizing(chart, width, height, onresize, id) {
         d3.select(chart.anchor()).classed('fullsize', true);
     } else {*/
 
-        setTimeout(function(){
-            
+         if (onresize) {
+                onresize(chart, width, height, false, id);
+         }
+            var elem = document.getElementById(id); 
+            var padding = parseInt(window.getComputedStyle(elem, null).getPropertyValue('padding-top'));
+                    
+            var height = (Math.floor(elem.offsetHeight)) 
+                        - 2.0*parseInt(padding) - padding;
+            var width = height;
+           
+              
+           window.onresize = function(){
+                resize(chart, width, height, onresize, id);
+           }                 
+}
+
+
+var resize = function(chart, width, height, onresize, id) {
+    setTimeout(function(){
+        
+        if (onresize) {
+            onresize(chart, width, height, false, id);
+        }
+        
+        
         var elem = document.getElementById(id); 
         var padding = parseInt(window.getComputedStyle(elem, null).getPropertyValue('padding-top'));
-                
+        
         var height = (Math.floor(elem.offsetHeight)) 
-                    - 2.0*parseInt(padding) - padding;
-        var width = height;
-                        
-        var left = (elem.getBoundingClientRect().width-padding)/2.0 -(width)/2.0 - padding;
-        var top = padding/2.0;
-        if (document.querySelectorAll(chart.anchor() + " svg").length > 0)
-        (document.querySelectorAll(chart.anchor() + " svg")[0]).setAttribute("transform", "translate(" + Math.floor(left) + ", " + Math.floor(top) + ")")
-        }, 200);
-        window.onresize = function () {
-            
-            setTimeout(function(){
-               
-                if (onresize) {
-                    onresize(chart);
-                }
-                var elem = document.getElementById(id); 
-                var padding = parseInt(window.getComputedStyle(elem, null).getPropertyValue('padding-top'));
-                
-                var height = (Math.floor(elem.offsetHeight)) 
-                           - 2.0*parseInt(padding) - padding;
-                var width = height;
-                
-                chart
-                .width(width)
-                .height(height)
-                .radius(width/2.0)
-                .innerRadius(width/4.0);
-               
-                var left = (elem.getBoundingClientRect().width-padding)/2.0 -(width)/2.0 - padding;
-                var top = padding/2.0;
-            debugger;
-               if (document.querySelectorAll(chart.anchor() + " svg").length > 0)
-                (document.querySelectorAll(chart.anchor() + " svg")[0]).setAttribute("transform", "translate(" + Math.floor(left) + ", " + Math.floor(top) + ")")
-                if (chart.rescale) {
-                    chart.rescale();
-                }
-               chart.redraw();
-            }, 200);  
-        };
-// }
-}
+                   - 2.0*parseInt(padding);
+        var width = (Math.floor(parseFloat(window.getComputedStyle(elem,null).width))) 
+                   - 2.0*parseInt(padding);
+        
+           
+         
+    
+        chart
+        .width(width)
+        .height(height)
+        .radius(height/2.0)
+        .innerRadius(height/4.0)
+        .transitionDuration(0);
+      
+        var left = (elem.getBoundingClientRect().width-padding)/2.0 -(width)/2.0 - 2.0*padding;
+        
+        var top = elem.getBoundingClientRect().top + padding/2.0;
+      
+        if ((document.querySelectorAll("risk-chart svg")).length > 0)
+           (document.querySelectorAll("risk-chart svg g:first-of-type")[0]).setAttribute("transform", "translate(" + Math.floor(left) + ", " + Math.floor(top) + ")");
+        if (chart.rescale) {
+            chart.rescale();
+        }
+        chart.render();
+        svg = document.querySelector("svg");
+        svg.setAttribute('width', width);
+        svg.setAttribute('height', height);
+      
+        
+        chart.redraw();
+    }, 200);  
+};

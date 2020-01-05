@@ -64,7 +64,7 @@ form {
     margin: 0 auto;
 }
 
-.svg-container svg{
+.svg-container svg > g:first-child{
     display: inline-block;
     margin: 0 auto;
 }
