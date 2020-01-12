@@ -53,6 +53,7 @@
      ?>
     <script src="/app/js/d3js-4.4.0/d3.js"></script>
     <script src="/app/js/dc.js-3.1.9/dc.js"></script>
+    <script src="/app/js/dc.js-3.1.9/src/star-chart.js"></script>
     <script src="/app/js/angularjs-1.7.8/angular.js"></script>
     <script src="/app/defines.js"></script>
     <script src="/app/js/requirejs/require.js"></script>

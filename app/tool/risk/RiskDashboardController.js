@@ -1,6 +1,6 @@
 angular.module('Risk').controller('RiskDashboardController', ['$http', '$resource', '$scope', '$state', '$window', '$timeout', '$interval', '$sce', 'CommonService', 'DOMops', 'ValidationService', function($http, $resource, $scope, $state, $window, $timeout, $interval, $sce, CommonService, DOMops, ValidationService){
-        $scope.riskChart = {anchor: ''};
-        
+        $scope.riskChart = {};
+        $scope.openChart = {};
         $scope.gridsterOpts = {
             columns: 6, // the width of the grid, in columns
             pushing: true, // whether to push other items out of the way on move or resize
@@ -102,25 +102,13 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
     };
 
     $scope.renderOpenChart = function(fill){
-        
-        var color = fill;
-        var triangleSize = 50;
-        var verticalTransform = 25 + Math.sqrt(triangleSize);
-    
-    
-        var triangle = dc.triangle("#risk-chart");
-        d3.select("#risk-chart svg")
-            .attr("d", triangle)
-            .attr("stroke", color)
-            .attr("fill", color)
-            .attr("transform", function(d) { return "translate(" + xScale(12.5) + "," + yScale(verticalTransform) + ")"; });    
-    
-           
+          $scope.openChart = new dc.starChart('#risk-chart');
+          $scope.openChart.render(); 
     }
     
     $scope.openRiskLevels = function(){
     
-        $scope.riskChart = new dc.pieChart('#risk-chart');
+        $scope.riskChart = new dc.pieChart('#risk-chart', 'risk');
          
  
          $scope.ndx = crossfilter([{dd: new Date(), volume: 35}, {dd: new Date(), volume: 6}, {dd: new Date(), volume: 8}]);
@@ -140,30 +128,30 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
         $scope.quarterGroup = $scope.quarter.group().reduceSum(d => d.volume);   
     
        // $timeout(()=>{
-               var riskchart = document.getElementById('risk-chart'); 
-               height = Math.floor(riskchart.offsetHeight) 
-                      - 2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));
-               width = Math.floor(parseFloat(window.getComputedStyle(riskchart, null).width)) 
-               - 2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));          
-                        
-               $scope.riskChart /* dc.pieChart('#quarter-chart', 'chartGroup') */
-                    .width(width)
-                    .height(height)
-                    .radius(Math.round(height/2.0))
-                    .innerRadius(Math.round(height/4.0))
-                    .dimension($scope.quarter)
-                    .group($scope.quarterGroup)
-                    .transitionDuration(250);
-                    
-
+       var riskchart = document.getElementById('risk-chart'); 
+       height = Math.floor(riskchart.offsetHeight) 
+              - 2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));
+       width = Math.floor(parseFloat(window.getComputedStyle(riskchart, null).width)) 
+       - 2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));          
+                
+       $scope.riskChart /* dc.pieChart('#quarter-chart', 'chartGroup') */
+            .width(width)
+            .height(height)
+            .radius(Math.round(height/2.0))
+            .innerRadius(Math.round(height/4.0))
+            .dimension($scope.quarter)
+            .group($scope.quarterGroup)
+            .transitionDuration(250);
        // });
+
+       $scope.riskChart.render();
     }
     
-    $scope.renderCharts =  function(){  
+    $scope.renderCharts =  function (){
          $scope.openRiskLevels();
-        // $scope.renderOpenChart('blue');
-         $scope.riskChart.render();             
-         apply_resizing($scope.riskChart, width, height, resize, 'risk-chart');
+         $scope.renderOpenChart('blue');  
+         dc.renderAll();
+        // apply_resizing($scope.riskChart, width, height, resize, 'risk-chart');
     }
 }]);
  

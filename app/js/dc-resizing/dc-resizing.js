@@ -71,14 +71,19 @@ var resize = function(chart, width, height, onresize, id) {
         var top = elem.getBoundingClientRect().top + padding/2.0;
       
         if ((document.querySelectorAll("risk-chart svg")).length > 0)
-           (document.querySelectorAll("risk-chart svg g:first-of-type")[0]).setAttribute("transform", "translate(" + Math.floor(left) + ", " + Math.floor(top) + ")");
+           (document.querySelectorAll("risk-chart svg:first-of-type g:first-of-type")[0]).setAttribute("transform", "translate(" + Math.floor(left) + ", " + Math.floor(top - 55) + ")");
         if (chart.rescale) {
             chart.rescale();
         }
         chart.render();
-        svg = document.querySelector("svg");
+        svg = document.querySelector("svg:first-of-type");
         svg.setAttribute('width', width);
         svg.setAttribute('height', height);
+        
+        
+        svg2 = document.querySelector("svg g.star");
+        svg2.setAttribute('width', 55);
+        svg2.setAttribute('height', 55);
       
         
         chart.redraw();

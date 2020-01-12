@@ -2,6 +2,7 @@
 require.config({
   baseUrl: "/app/",
   paths: {
+    'main': 'app',
     'angular': 'js/angularjs-1.7.8/angular',
     'angularAMD': 'js/angularAMD/src/angularAMD',
     'jquery': 'js/jquery-1.12.1/jquery.min',
@@ -17,7 +18,7 @@ require.config({
     'angular-sanitize': 'js/angularjs-1.7.8/angular-sanitize',
     'angular-ui-router': 'js/angularjs-1.7.8/angular-ui-router',
     'statehelper': 'js/angularjs-1.7.8/statehelper',
-    'lodash': 'js/lodash/lodash.min',
+    'lodash': 'js/lodash/lodash',
     '_': 'js/underscore/underscore',
     'angularDc': 'js/angular-dc/angular-dc',
     'ocLazyLoad': 'js/ocLazyLoad/ocLazyLoad',
@@ -28,10 +29,10 @@ require.config({
     'uiBoootstrap': 'js/ui-bootstrap-3.0.6/ui-bootstrap-tpls-3.0.6',
     'textEncoderLite': 'js/text-encoder-lite/text-encoder-lite', 
     'jqueryResize': 'js/javascript-detect-element-resize/jquery.resize',
-    'moment': 'js/moment-2.3.1/moment.min'
+    'moment': 'js/moment-2.3.1/moment'
   },
   shim: {           
-       // 'main', ['angular'],
+        'main': ['angular', 'angularDc'],
         'gridster': ['angular'],
         'angular-resource': ['angular'],
         'angular-messages': ['angular'],
