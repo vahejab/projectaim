@@ -76,15 +76,9 @@ var resize = function(chart, width, height, onresize, id) {
             chart.rescale();
         }
         chart.render();
-        svg = document.querySelector("svg:first-of-type");
+        svg = document.querySelector("svg:first-of-type g:first-of-type");
         svg.setAttribute('width', width);
         svg.setAttribute('height', height);
-        
-        
-        svg2 = document.querySelector("svg g.star");
-        svg2.setAttribute('width', 55);
-        svg2.setAttribute('height', 55);
-      
         
         chart.redraw();
     }, 200);  

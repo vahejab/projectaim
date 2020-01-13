@@ -100,13 +100,9 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
         row: 'item.position[0]',
         col: 'item.position[1]'
     };
-
-    $scope.renderOpenChart = function(fill){
-          $scope.openChart = new dc.starChart('#risk-chart');
-          $scope.openChart.render(); 
-    }
-    
-    $scope.openRiskLevels = function(){
+                                                                      
+                               
+    $scope.openRiskCharts = function(){
     
         $scope.riskChart = new dc.pieChart('#risk-chart', 'risk');
          
@@ -124,33 +120,37 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
             } else {
                 return 'Q4';
             }
-        });            
-        $scope.quarterGroup = $scope.quarter.group().reduceSum(d => d.volume);   
-    
-       // $timeout(()=>{
+        });
+        // $timeout(()=>{
        var riskchart = document.getElementById('risk-chart'); 
+      
        height = Math.floor(riskchart.offsetHeight) 
               - 2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));
-       width = Math.floor(parseFloat(window.getComputedStyle(riskchart, null).width)) 
-       - 2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));          
-                
-       $scope.riskChart /* dc.pieChart('#quarter-chart', 'chartGroup') */
+       width =  55
+                + Math.floor(parseFloat(window.getComputedStyle(riskchart, null).width))
+              - 2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));    
+                    
+        $scope.quarterGroup = $scope.quarter.group().reduceSum(d => d.volume);   
+          $scope.riskChart /* dc.pieChart('#quarter-chart', 'chartGroup') */
             .width(width)
             .height(height)
             .radius(Math.round(height/2.0))
-            .innerRadius(Math.round(height/4.0))
+            .innerRadius(Math.round(height/5.0))
             .dimension($scope.quarter)
             .group($scope.quarterGroup)
             .transitionDuration(250);
        // });
 
        $scope.riskChart.render();
+    
+    
+        $scope.openChart = new dc.starChart('#risk-chart', 'blue', 55, 55);
+        $scope.openChart.redraw('blue');                            
     }
     
     $scope.renderCharts =  function (){
-         $scope.openRiskLevels();
-         $scope.renderOpenChart('blue');  
-         dc.renderAll();
+         $scope.openRiskCharts();    
+ 
         // apply_resizing($scope.riskChart, width, height, resize, 'risk-chart');
     }
 }]);
