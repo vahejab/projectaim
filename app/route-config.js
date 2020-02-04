@@ -116,7 +116,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             serie: true,
             files: [
                     '/app/tool/risk/EditRisk.css',
-                    //'/app/css/bootstrap/bootstrap.min.css',
+                    '/app/css/bootstrap/bootstrap.min.css',
                     '/app/tool/risk/services/DOMService.js',
                     '/app/tool/risk/services/ValidationService.js',
                     '/app/tool/risk/directives/RepeatEventsDone.js',
