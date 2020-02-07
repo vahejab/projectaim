@@ -51,6 +51,7 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
         row: 0,
         col: 0
     }, {
+        id: "risk-status-by-month",
         sizeX: 4,
         sizeY: 1,
         row: 0,
@@ -99,59 +100,146 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
         sizeY: 'item.size.y',
         row: 'item.position[0]',
         col: 'item.position[1]'
-    };
+    };   
                                                                       
                                
     $scope.openRiskCharts = function(){
     
-        $scope.riskChart = new dc.pieChart('#risk-chart', 'risk');
+         $scope.riskChart = new dc.pieChart('#risk-chart', 'risk');
+          $scope.riskChart.ordinalColors(["#00b050", "#eeee00", "#ee0000"]);
+         var levelCounts = [
+                    {Level: 'High', Count: 13},
+                    {Level: 'Med', Count: 43},
+                    {Level: 'Low', Count: 60}
+         ];
          
- 
-         $scope.ndx = crossfilter([{dd: new Date(), volume: 35}, {dd: new Date(), volume: 6}, {dd: new Date(), volume: 8}]);
-         $scope.quarter = $scope.ndx.dimension(d => {
-            
-            const month = d.dd.getMonth();
-            if (month <= 2) {
-                return 'Q1';
-            } else if (month > 2 && month <= 5) {
-                return 'Q2';
-            } else if (month > 5 && month <= 8) {
-                return 'Q3';
-            } else {
-                return 'Q4';
-            }
-        });
-        // $timeout(()=>{
-       var riskchart = document.getElementById('risk-chart'); 
+         // set crossfilter
+         var ndx = crossfilter(levelCounts),
+            levelDim  = ndx.dimension(function(d) {return d.Level;}),
+            countPerLevel = levelDim.group().reduceSum(function(d) {return +d.Count});
+               
+         var riskchart = document.getElementById('risk-chart'); 
       
-       height = Math.floor(riskchart.offsetHeight) 
-              - 2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));
-       width =  55
-                + Math.floor(parseFloat(window.getComputedStyle(riskchart, null).width))
-              - 2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));    
-                    
-        $scope.quarterGroup = $scope.quarter.group().reduceSum(d => d.volume);   
-          $scope.riskChart /* dc.pieChart('#quarter-chart', 'chartGroup') */
+      
+         height = Math.floor(riskchart.offsetHeight) 
+          - 2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));
+         width =  55
+            + Math.floor(parseFloat(window.getComputedStyle(riskchart, null).width))
+          - 2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));    
+    
+         $scope.riskChart
+            .dimension(levelDim)
+            .group(countPerLevel)
             .width(width)
             .height(height)
             .radius(Math.round(height/2.0))
             .innerRadius(Math.round(height/5.0))
-            .dimension($scope.quarter)
-            .group($scope.quarterGroup)
+            .controlsUseVisibility(true)
             .transitionDuration(250);
-       // });
+            
+       $scope.riskChart.on('pretransition', function(chart) {             
+            d3.select("g.pie-slice-group")
+              .append("text") // appent the "text" element
+              .attr("dy", '-0.25em')
+              .attr("text-anchor", "middle")
+              .attr('font-size', '200%')
+              .attr('font-weight', "bold")
+              .text("142");
+              
+            d3.select("g.pie-slice-group")
+              .append("text")
+              .attr("dy", "0.75em")
+              .attr("text-anchor", "middle")
+              .attr('font-size', '200%')
+              .attr("font-weight", "bold")
+              .text("Open");     
+        }); 
 
        $scope.riskChart.render();
     
     
-        $scope.openChart = new dc.starChart('#risk-chart', 'blue', 55, 55);
-        $scope.openChart.redraw('blue');                            
+       // $scope.openChart = new dc.starChart('#risk-chart', 'blue', 55, 55);
+       // $scope.openChart.redraw('blue');                            
     }
     
+    $scope.riskStatusByMonth = function(){
+ 
+        var $scope = {};
+
+        var data = [ 
+                            {"Month":"Jan","High":12},{"Month":"Jan","Med":14},{"Month":"Jan","Low":2},{"Month":"Jan","Closed":8},
+                            {"Month":"Feb","High":12},{"Month":"Feb","Med":14},{"Month":"Feb","Low":2},{"Month":"Feb","Closed":8},
+                            {"Month":"Mar","High":12},{"Month":"Mar","Med":14},{"Month":"Mar","Low":2},{"Month":"Mar","Closed":8},
+                            {"Month":"Apr","High":12},{"Month":"Apr","Med":14},{"Month":"Apr","Low":2},{"Month":"Apr","Closed":8},
+                            {"Month":"May","High":12},{"Month":"May","Med":14},{"Month":"May","Low":2},{"Month":"May","Closed":8},
+                            {"Month":"Jun","High":12},{"Month":"Jun","Med":14},{"Month":"Jun","Low":2},{"Month":"Jun","Closed":8},
+                            {"Month":"Jul","High":12},{"Month":"Jul","Med":14},{"Month":"Jul","Low":2},{"Month":"Jul","Closed":8},
+                            {"Month":"Aug","High":12},{"Month":"Aug","Med":14},{"Month":"Aug","Low":2},{"Month":"Aug","Closed":8},
+                            {"Month":"Sep","High":12},{"Month":"Sep","Med":14},{"Month":"Sep","Low":2},{"Month":"Sep","Closed":8},
+                            {"Month":"Oct","High":12},{"Month":"Oct","Med":14},{"Month":"Oct","Low":2},{"Month":"Oct","Closed":8},
+                            {"Month":"Nov","High":12},{"Month":"Nov","Med":14},{"Month":"Nov","Low":2},{"Month":"Nov","Closed":8},
+                            {"Month":"Dec","High":8},{"Month":"Dec","Med":6},{"Month":"Dec","Low":13},{"Month":"Dec","Closed":8},
+                       ]
+            data.forEach(function(x) {
+              x.Total = 0;
+            });
+
+            var ndx = crossfilter(data)
+
+            var xdim = ndx.dimension(function (d) {return d.Month;});
+
+            function root_function(dim,stack_names) {
+                return dim.group().reduce(
+              function(p, v) {
+                stack_names.forEach(stack_name => {
+                  if(v[stack_name] !== undefined)
+                      p[stack_name] = (p[v[stack_name]] || 0) + v[stack_name]
+                });
+                return p;}, 
+              function(p, v) {
+                stack_names.forEach(stack_name => {
+                  if(v[stack_name] !== undefined)
+                      p[stack_name] = (p[v[stack_name]] || 0) + v[stack_name]
+                });
+                return p;}, 
+              function() {
+                return {};
+              });}
+
+            var levels = ['High', 'Med', 'Low', 'Closed']
+                var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            var ygroup = root_function(xdim,levels)
+            console.log(ygroup.all())
+
+            function sel_stack(i) {
+            return function(d) {
+              return d.value[i];
+            };}
+
+            $scope.monthlyRiskStatus = dc.barChart("#risk-status-by-month");
+
+            $scope.monthlyRiskStatus
+              .x(d3.scaleOrdinal().domain(months))
+              .dimension(xdim)
+              .group(ygroup, levels[0], sel_stack(levels[0]))
+              .xUnits(dc.units.ordinal)
+              .margins({left:75, top: 0, right: 0, bottom: 20})
+              .width(1225) 
+              .height(284)
+              .legend(dc.legend());
+                
+            
+            for(var i = 1; i<levels.length; ++i)
+              $scope.monthlyRiskStatus.stack(ygroup, levels[i], sel_stack(levels[i]));
+
+            $scope.monthlyRiskStatus.render();
+    }
+ 
     $scope.renderCharts =  function (){
          $scope.openRiskCharts();    
- 
+         $scope.riskStatusByMonth();
         // apply_resizing($scope.riskChart, width, height, resize, 'risk-chart');
     }
+ 
 }]);
  

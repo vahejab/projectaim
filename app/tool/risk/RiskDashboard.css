@@ -12,6 +12,14 @@ body {
     padding: 10px;
 }
 
+.dc-chart .pie-slice{
+    fill: #000;
+    font-weight: bold;
+}
+
+text .pie-label{
+    font-size: 15px;
+}
 
 .gridster{
     background: none;
@@ -67,4 +75,49 @@ form {
 .svg-container svg > g{
     display: inline-block;
     margin: 0 auto;
+}
+
+li{
+    color: black;
+}
+
+
+.stack._0 rect {
+    fill: #dd0000 !important;
+    stroke: none;
+}
+
+.stack._1 rect {
+    fill: #dddd00 !important;
+    stroke: none;
+}
+
+.stack._2 rect {
+    fill: #00b050 !important;
+    stroke: none
+}
+
+.stack._3 rect {
+    fill: #deebf7 !important;
+    stroke: none
+}
+
+
+.dc-legend .dc-legend-item:nth-child(1) rect{
+    fill: #dd0000;
+}
+
+
+.dc-legend .dc-legend-item:nth-child(2) rect{
+    fill: #dddd00;
+}
+
+
+.dc-legend .dc-legend-item:nth-child(3) rect{
+    fill: #00b050;
+}
+
+
+.dc-legend .dc-legend-item:nth-child(4) rect{
+    fill: #deebf7;
 }
