@@ -28,8 +28,14 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
                enabled: true,
                handles: ['n', 'e', 's', 'w', 'ne', 'se', 'sw', 'nw'],
                start: function(event, $element, widget) {}, // optional callback fired when resize is started,
-               resize: function(event, $element, widget) {                   
-                    resize($scope.riskChart, $element.width, $element.height, resize, 'risk-chart');
+               resize: function(event, $element, widget) {                
+                    
+                    if ($element[0].id == 'risk-chart')
+                        chart = riskChart;
+                    else
+                        chart = monthlyRiskStatus;
+                        
+                    resize(chart, $element.width, $element.height, resize, $element[0].id);
                }, // optional callback fired when item is resized,
                stop: function(event, $element, widget) {} // optional callback fired when item is finished resizing
             },
@@ -42,7 +48,8 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
             }
         };
     
-           
+    var monthlyRiskStatus = {};
+    var riskChart  = {};  
     // these map directly to gridsterItem options
     $scope.standardItems = [{
         id: "risk-chart",
@@ -105,8 +112,8 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
                                
     $scope.openRiskCharts = function(){
     
-         $scope.riskChart = new dc.pieChart('#risk-chart', 'risk');
-          $scope.riskChart.ordinalColors(["#00b050", "#eeee00", "#ee0000"]);
+         riskChart = new dc.pieChart('#risk-chart', 'risk');
+         riskChart.ordinalColors(["#00b050", "#eeee00", "#ee0000"]);
          var levelCounts = [
                     {Level: 'High', Count: 13},
                     {Level: 'Med', Count: 43},
@@ -121,23 +128,23 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
          var riskchart = document.getElementById('risk-chart'); 
       
       
-         height = Math.floor(riskchart.offsetHeight) 
+         heightRiskChart = Math.floor(riskchart.offsetHeight) 
           - 2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));
-         width =  55
+         widthRiskChart =  55
             + Math.floor(parseFloat(window.getComputedStyle(riskchart, null).width))
           - 2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));    
     
-         $scope.riskChart
+         riskChart
             .dimension(levelDim)
             .group(countPerLevel)
-            .width(width)
-            .height(height)
-            .radius(Math.round(height/2.0))
-            .innerRadius(Math.round(height/5.0))
+            .width(widthRiskChart)
+            .height(heightRiskChart)
+            .radius(Math.round(heightRiskChart/2.0))
+            .innerRadius(Math.round(heightRiskChart/5.0))
             .controlsUseVisibility(true)
             .transitionDuration(250);
             
-       $scope.riskChart.on('pretransition', function(chart) {             
+       riskChart.on('pretransition', function(chart) {             
             d3.select("g.pie-slice-group")
               .append("text") // appent the "text" element
               .attr("dy", '-0.25em')
@@ -154,12 +161,8 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
               .attr("font-weight", "bold")
               .text("Open");     
         }); 
-
-       $scope.riskChart.render();
     
-    
-       // $scope.openChart = new dc.starChart('#risk-chart', 'blue', 55, 55);
-       // $scope.openChart.redraw('blue');                            
+                    
     }
     
     $scope.riskStatusByMonth = function(){
@@ -216,29 +219,42 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
               return d.value[i];
             };}
 
-            $scope.monthlyRiskStatus = dc.barChart("#risk-status-by-month");
+            monthlyRiskStatus = new dc.barChart("#risk-status-by-month");
 
-            $scope.monthlyRiskStatus
+
+            var riskchart = document.getElementById('risk-status-by-month'); 
+      
+      
+            heightStatusChart = Math.floor(riskchart.offsetHeight) 
+             - 2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));
+            widthStatusChart = Math.floor(parseFloat(window.getComputedStyle(riskchart, null).width))
+             - 2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));    
+       
+
+            monthlyRiskStatus
               .x(d3.scaleOrdinal().domain(months))
               .dimension(xdim)
               .group(ygroup, levels[0], sel_stack(levels[0]))
               .xUnits(dc.units.ordinal)
               .margins({left:75, top: 0, right: 0, bottom: 20})
-              .width(1225) 
-              .height(284)
+              .width(widthStatusChart) 
+              .height(heightStatusChart)
               .legend(dc.legend());
                 
             
             for(var i = 1; i<levels.length; ++i)
-              $scope.monthlyRiskStatus.stack(ygroup, levels[i], sel_stack(levels[i]));
-
-            $scope.monthlyRiskStatus.render();
+              monthlyRiskStatus.stack(ygroup, levels[i], sel_stack(levels[i]));
     }
  
     $scope.renderCharts =  function (){
          $scope.openRiskCharts();    
          $scope.riskStatusByMonth();
-        // apply_resizing($scope.riskChart, width, height, resize, 'risk-chart');
+         
+         apply_resizing(riskChart, widthRiskChart, heightRiskChart, resize, 'risk-chart', true);
+         apply_resizing(monthlyRiskStatus, widthStatusChart, heightStatusChart, resize, 'risk-status-by-month', false);
+    
+         riskChart.render();
+         monthlyRiskStatus.render();
     }
  
 }]);

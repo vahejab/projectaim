@@ -32,7 +32,7 @@ require.config({
     'moment': 'js/moment-2.3.1/moment'
   },
   shim: {           
-        'main': ['angular', 'angularDc'],
+        'main': ['angular', 'angularDc', 'dc-resizing'],
         'gridster': ['angular'],
         'angular-resource': ['angular'],
         'angular-messages': ['angular'],
