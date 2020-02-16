@@ -75,21 +75,24 @@ var resize = function(chart, width, height, onresize, id) {
             left = (elem.getBoundingClientRect().width-padding)/2.0 -(width)/2.0 - 2.0*padding - elem.offsetLeft;
             top = elem.getBoundingClientRect().top - padding/2.0 - elem.offsetTop;
             
+            if ((document.querySelectorAll("#" + id + " svg")).length > 0)
+                (document.querySelectorAll("#" + id + " svg:first-of-type g:first-of-type")[0]).setAttribute("transform", "translate(" + Math.floor(left) + ", " + Math.floor(top - 55) + ")");
+      
         }
         
         else{
             chart.width(width)
                  .height(height)
                  .transitionDuration(0);
+                 
+            ///(document.querySelectorAll("#" + id + " svg:first-of-type g:first-of-type")[0]).setAttribute("transform", "translate(0,0)");
 
         }
         
         
         
        
-        if ((document.querySelectorAll("#" + id + " svg")).length > 0)
-           (document.querySelectorAll("#" + id + " svg:first-of-type g:first-of-type")[0]).setAttribute("transform", "translate(" + Math.floor(left) + ", " + Math.floor(top - 55) + ")");
-        if (chart.rescale) {
+       if (chart.rescale) {
             chart.rescale();
         }
         

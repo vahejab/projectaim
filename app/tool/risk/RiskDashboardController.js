@@ -49,7 +49,8 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
         };
     
     var monthlyRiskStatus = {};
-    var riskChart  = {};  
+    var riskChart  = {};
+    var categoryChart;  
     // these map directly to gridsterItem options
     $scope.standardItems = [{
         id: "risk-chart",
@@ -64,6 +65,7 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
         row: 0,
         col: 2
     },{
+        id: "risk-category-chart",
         sizeX: 2,
         sizeY: 1,
         row: 1,
@@ -125,14 +127,14 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
             levelDim  = ndx.dimension(function(d) {return d.Level;}),
             countPerLevel = levelDim.group().reduceSum(function(d) {return +d.Count});
                
-         var riskchart = document.getElementById('risk-chart'); 
+         var chart = document.getElementById('risk-chart'); 
       
       
-         heightRiskChart = Math.floor(riskchart.offsetHeight) 
-          - 2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));
+         heightRiskChart = Math.floor(chart.offsetHeight) 
+          - 2*parseInt(window.getComputedStyle(chart, null).getPropertyValue('padding-top'));
          widthRiskChart =  55
-            + Math.floor(parseFloat(window.getComputedStyle(riskchart, null).width))
-          - 2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));    
+            + Math.floor(parseFloat(window.getComputedStyle(chart, null).width))
+          - 2*parseInt(window.getComputedStyle(chart, null).getPropertyValue('padding-top'));    
     
          riskChart
             .dimension(levelDim)
@@ -222,13 +224,13 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
             monthlyRiskStatus = new dc.barChart("#risk-status-by-month");
 
 
-            var riskchart = document.getElementById('risk-status-by-month'); 
+            var chart = document.getElementById('risk-status-by-month'); 
       
       
-            heightStatusChart = Math.floor(riskchart.offsetHeight) 
-             - 2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));
-            widthStatusChart = Math.floor(parseFloat(window.getComputedStyle(riskchart, null).width))
-             - 2*parseInt(window.getComputedStyle(riskchart, null).getPropertyValue('padding-top'));    
+            heightStatusChart = Math.floor(chart.offsetHeight) 
+             - 2*parseInt(window.getComputedStyle(chart, null).getPropertyValue('padding-top'));
+            widthStatusChart = Math.floor(parseFloat(window.getComputedStyle(chart, null).width))
+             - 2*parseInt(window.getComputedStyle(chart, null).getPropertyValue('padding-top'));    
        
 
             monthlyRiskStatus
@@ -245,17 +247,142 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
             for(var i = 1; i<levels.length; ++i)
               monthlyRiskStatus.stack(ygroup, levels[i], sel_stack(levels[i]));
     }
+    
+    
+    $scope.riskCategoryChart = function(){
+        categoryChart = new dc.rowChart("#risk-category-chart");
+        var chart = document.querySelector("#risk-category-chart");
+        var categoryData = ["Category 1", "Category 2", "Category 3", "Category 4", "Category 5", "All Others"];
+
+        var countData = [60, 41, 20, 10, 5, 6];
+
+        heightCategoryChart = Math.floor(chart.offsetHeight) 
+             - 2*parseInt(window.getComputedStyle(chart, null).getPropertyValue('padding-top'));
+        widthCategoryChart = Math.floor(parseFloat(window.getComputedStyle(chart, null).width))
+             - 2*parseInt(window.getComputedStyle(chart, null).getPropertyValue('padding-top'));    
+       
+                 
+        // feed it through crossfilter
+        var ndx = crossfilter(countData);
+        var x = d3.scaleLinear()
+          .range([0,widthCategoryChart]);                                            
+        var countByCategory = ndx.dimension(function(d) { return d });
+        var countByCategoryGroup = countByCategory.group().reduceSum(function(d) { return d; });
+        var y = d3.scaleLinear().range([0,heightCategoryChart]);
+
+          var xAxis = d3.axisBottom()
+            .scale(x);
+
+        var yAxis = d3.axisLeft()
+          .scale(y)
+          .tickSize(0)
+          .tickPadding(6);
+  
+        categoryChart
+            .width(widthCategoryChart)
+            .height(heightCategoryChart)  
+            .dimension(countByCategory)
+            .group(countByCategoryGroup);
+            
+        var svg = d3.select("body").append("svg")
+          .attr("width", widthCategoryChart)
+          .attr("height", heightCategoryChart)
+          .append("g");
+          
+           x.domain(d3.extent(categoryData, function(d) {
+            return d.value;
+          })).nice();
+          y.domain(countData.map(function(d) {
+            return d;
+          }));
+
+          svg.selectAll(".bar")
+            .data(y)
+            .enter().append("rect")
+            .attr("class", function(d) {
+              return "bar bar--" + (d.value < 0 ? "negative" : "positive");
+            })
+            .attr("x", function(d) {
+              return x(Math.min(0, d));
+            })
+            .attr("y", function(d) {
+              return y(d);
+            })
+            .attr("width", function(d) {
+              return Math.abs(x(d) - x(0));
+            })
+            .attr("height", y);
+
+          var left = svg.selectAll(".leftData")
+            .data(categoryData)
+            .enter().append("g")
+            .attr("class", "leftVal")
+            .attr("transform", function() {
+              return "translate(0,0)";
+            });
+
+          left.append("text")
+            .attr("x", 0)
+            .attr("y", 9)
+            .attr("dy", ".35em")
+            .style("text-anchor", "end")
+            .text(function(d) {
+              return d;
+            });
+
+          var right = svg.selectAll(".rightData")
+            .data(countData)
+            .enter().append("g")
+            .attr("class", "rightVal")
+            .attr("transform", function(d, i) {
+              return "translate(0,0)";
+            });
+
+          right.append("text")
+            .attr("x", widthCategoryChart + 30)
+            .attr("y", 9)
+            .attr("dy", ".35em")
+            .style("text-anchor", "end")
+            .text(function(d) {
+              return d;
+            });
+
+           svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + heightCategoryChart + ")")
+            .call(xAxis);
+            
+            
+            alert(JSON.stringify(x));
+            
+          svg.append("g")
+            .attr("class", "y axis")
+            .attr("transform", "translate(" + x(0) + ",0)")
+            .call(yAxis); 
+
+        function type(d) {
+          d.value = +d;
+          return d;
+        }
+    }
+ 
  
     $scope.renderCharts =  function (){
          $scope.openRiskCharts();    
          $scope.riskStatusByMonth();
+         $scope.riskCategoryChart();
          
          apply_resizing(riskChart, widthRiskChart, heightRiskChart, resize, 'risk-chart', true);
          apply_resizing(monthlyRiskStatus, widthStatusChart, heightStatusChart, resize, 'risk-status-by-month', false);
-    
+         apply_resizing(categoryChart, widthCategoryChart, heightCategoryChart, resize, 'risk-category-chart', false);
+         
          riskChart.render();
          monthlyRiskStatus.render();
+         categoryChart.render();
     }
+    
+    
+    
  
 }]);
  
