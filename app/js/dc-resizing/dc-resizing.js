@@ -54,7 +54,7 @@ var resize = function(chart, width, height, onresize, id) {
         }
         
         
-        var elem = document.getElementById(id); 
+        var elem = document.getElementById(id); console.log(id); 
         var padding = parseInt(window.getComputedStyle(elem, null).getPropertyValue('padding-top'));
         
         var height = (Math.floor(elem.offsetHeight)) 
@@ -74,18 +74,18 @@ var resize = function(chart, width, height, onresize, id) {
           
             left = (elem.getBoundingClientRect().width-padding)/2.0 -(width)/2.0 - 2.0*padding - elem.offsetLeft;
             top = elem.getBoundingClientRect().top - padding/2.0 - elem.offsetTop;
-            
+            console.log(Math.floor(left));
             if ((document.querySelectorAll("#" + id + " svg")).length > 0)
                 (document.querySelectorAll("#" + id + " svg:first-of-type g:first-of-type")[0]).setAttribute("transform", "translate(" + Math.floor(left) + ", " + Math.floor(top - 55) + ")");
       
         }
         
-        else{
+        else{ 
             chart.width(width)
                  .height(height)
                  .transitionDuration(0);
                  
-            ///(document.querySelectorAll("#" + id + " svg:first-of-type g:first-of-type")[0]).setAttribute("transform", "translate(0,0)");
+            //(document.querySelectorAll("#" + id + " svg:first-of-type g:first-of-type")[0]).setAttribute("transform", "translate(0,0)");
 
         }
         

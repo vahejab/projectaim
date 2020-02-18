@@ -50,7 +50,11 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
     
     var monthlyRiskStatus = {};
     var riskChart  = {};
-    var categoryChart;  
+    var categoryChart = {};
+    var cycleChart = {}; 
+    
+    var widthCycleChart;
+    var heightCycleChart;
     // these map directly to gridsterItem options
     $scope.standardItems = [{
         id: "risk-chart",
@@ -71,6 +75,7 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
         row: 1,
         col: 0
     },{
+        id: "risk-cycle-chart",
         sizeX: 2,
         sizeY: 1,
         row: 1,
@@ -214,7 +219,7 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
             var levels = ['High', 'Med', 'Low', 'Closed']
                 var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
             var ygroup = root_function(xdim,levels)
-            console.log(ygroup.all())
+            //console.log(ygroup.all())
 
             function sel_stack(i) {
             return function(d) {
@@ -352,12 +357,10 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
             .attr("transform", "translate(0," + heightCategoryChart + ")")
             .call(xAxis);
             
-            
-            alert(JSON.stringify(x));
-            
+                   
           svg.append("g")
             .attr("class", "y axis")
-            .attr("transform", "translate(" + x(0) + ",0)")
+            .attr("transform", "translate(" + 0 + ",0)")
             .call(yAxis); 
 
         function type(d) {
@@ -365,20 +368,64 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
           return d;
         }
     }
- 
+    
+    $scope.avgCycleTime = function(){
+      
+        
+        var data = [ 
+                        {"Project":"Expedition","Stage": "Created", "Days":12, "Color": "rgb(166, 206, 227)"},
+                        {"Project":"Expedition","Stage": "Active", "Days":14, "Color": "rgb(253, 180, 98)"},
+                        {"Project":"Expedition","Stage": "Closure", "Days":2, "Color": "rgb(179, 222, 105)"}
+        ];
+    
+   
+        var tbl = document.createElement("table");
+        var tblBody = document.createElement("tbody");
+
+        // table row creation
+        var row = document.createElement("tr");
+
+        for (var i = 0; i <= 2; i++) {
+          // create element <td> and text node 
+          //Make text node the contents of <td> element
+          // put <td> at end of the table row
+          var cell = document.createElement("td");
+          cell.setAttribute('style', 'width: ' + data[i].Days * 100 + "px; background-color: " + data[i].Color);
+          var cellText = document.createTextNode(data[i].Stage + " " + data[i].Days);
+
+          cell.appendChild(cellText);
+          row.appendChild(cell);
+        }
+
+        //row added to end of table body
+        tblBody.appendChild(row);
+
+          // append the <tbody> inside the <table>
+          tbl.appendChild(tblBody);
+          // put <table> in the <body>
+          document.querySelector("#risk-cycle-chart").appendChild(tbl);
+          
+          
+             
+    }
  
     $scope.renderCharts =  function (){
          $scope.openRiskCharts();    
          $scope.riskStatusByMonth();
          $scope.riskCategoryChart();
+         $scope.avgCycleTime();
          
          apply_resizing(riskChart, widthRiskChart, heightRiskChart, resize, 'risk-chart', true);
          apply_resizing(monthlyRiskStatus, widthStatusChart, heightStatusChart, resize, 'risk-status-by-month', false);
          apply_resizing(categoryChart, widthCategoryChart, heightCategoryChart, resize, 'risk-category-chart', false);
+        // apply_resizing(cycleChart, widthCycleChart, heightCycleChart, resize, 'risk-cycle-chart', false);
+         
+         
          
          riskChart.render();
          monthlyRiskStatus.render();
          categoryChart.render();
+        // cycleChart.render();
     }
     
     
