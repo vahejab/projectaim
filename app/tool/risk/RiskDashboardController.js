@@ -58,13 +58,13 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
     // these map directly to gridsterItem options
     $scope.standardItems = [{
         id: "risk-chart",
-        sizeX: 2,
+        sizeX: 1,
         sizeY: 1,
         row: 0,
         col: 0
     }, {
         id: "risk-status-by-month",
-        sizeX: 4,
+        sizeX: 5,
         sizeY: 1,
         row: 0,
         col: 2
@@ -76,15 +76,15 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
         col: 0
     },{
         id: "risk-cycle-chart",
-        sizeX: 2,
+        sizeX: 3,
         sizeY: 1,
         row: 1,
         col: 2
     },{
-        sizeX: 2,
+        sizeX: 1,
         sizeY: 1,
         row: 1,
-        col: 4
+        col: 5
     },{
         sizeX: 3,
         sizeY: 1,
@@ -289,7 +289,7 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
             .dimension(countByCategory)
             .group(countByCategoryGroup);
             
-        var svg = d3.select("body").append("svg")
+        var svg = d3.select("#risk-category-chart").append("svg")
           .attr("width", widthCategoryChart)
           .attr("height", heightCategoryChart)
           .append("g");
@@ -375,11 +375,12 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
         var data = [ 
                         {"Project":"Expedition","Stage": "Created", "Days":12, "Color": "rgb(166, 206, 227)"},
                         {"Project":"Expedition","Stage": "Active", "Days":14, "Color": "rgb(253, 180, 98)"},
-                        {"Project":"Expedition","Stage": "Closure", "Days":2, "Color": "rgb(179, 222, 105)"}
+                        {"Project":"Expedition","Stage": "Closing", "Days":2, "Color": "rgb(179, 222, 105)"}
         ];
     
    
         var tbl = document.createElement("table");
+        tbl.setAttribute("style", "width: 100%");
         var tblBody = document.createElement("tbody");
 
         // table row creation
@@ -390,8 +391,8 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
           //Make text node the contents of <td> element
           // put <td> at end of the table row
           var cell = document.createElement("td");
-          cell.setAttribute('style', 'width: ' + data[i].Days * 100 + "px; background-color: " + data[i].Color);
-          var cellText = document.createTextNode(data[i].Stage + " " + data[i].Days);
+          cell.setAttribute('style', 'font-size: 7pt; width: ' + data[i].Days * 100 + "px; background-color: " + data[i].Color);
+          var cellText = document.createTextNode(data[i].Stage + " " + data[i].Days + ' days');
 
           cell.appendChild(cellText);
           row.appendChild(cell);
@@ -400,13 +401,177 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
         //row added to end of table body
         tblBody.appendChild(row);
 
+        // append the <tbody> inside the <table>
+        tbl.appendChild(tblBody);
+        var tblDiv = document.createElement("div");
+        tblDiv.setAttribute("style", "width: 100%;  display: block;");
+        tblDiv.appendChild(tbl);
+        // put <table> in the <body>
+        document.querySelector("#risk-cycle-chart").appendChild(tblDiv);
+
+        
+        var tblDivNewLine = document.createElement("div");
+        tblDivNewLine.setAttribute("style", "width: 100%: display: block");
+        var tblNewLine = document.createElement("table");
+        tblNewLine.setAttribute("style", "width: 100%; height: 0px");
+
+        var tblbodyNewLine = document.createElement("tbody");
+
+        // table row creation
+        var rowNewLine = document.createElement("tr");
+   
+        
+        var cellNewLine = document.createElement("td");
+        var cellText = document.createTextNode(" ");
+        cellNewLine.appendChild(cellText);
+        rowNewLine.appendChild(cellNewLine);
+        tblbodyNewLine.appendChild(rowNewLine);
+        tblNewLine.appendChild(tblbodyNewLine);
+        tblDivNewLine.appendChild(tblNewLine);
+        document.querySelector("#risk-cycle-chart").appendChild(tblDivNewLine);
+ 
+        
+          
+        var tbl2 = document.createElement("table");
+        tbl2.setAttribute("style", "width: 100%");
+        tbl2.setAttribute("border", "1");
+        var tblBody2 = document.createElement("tbody");
+
+        // table row creation
+        var row = document.createElement("tr");
+   
+       
+        var cell = document.createElement("td");
+        cell.setAttribute('style', 'font-size:8pt; font-style: italic; font wight: bold; background-color: #0038a8; color: white');
+        var cellText = document.createTextNode("Team");
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+      
+        var cell = document.createElement("td");
+        cell.setAttribute('style', 'font-size:8pt; font-style: italic; font wight: bold; background-color: #0038a8; color: white');
+        var cellText = document.createTextNode("Leader");
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+        
+        var cell = document.createElement("td");
+        cell.setAttribute('style', 'font-size:8pt; font-style: italic; font wight: bold; background-color: #0038a8; color: white');
+        var cellText = document.createTextNode("Open H");
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+        
+        var cell = document.createElement("td");
+        cell.setAttribute('style', 'font-size:8pt; font-style: italic; font wight: bold; background-color: #0038a8; color: white');
+        var cellText = document.createTextNode("Open M");
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+                
+        var cell = document.createElement("td");
+        cell.setAttribute('style', 'font-size:8pt; font-style: italic; font wight: bold; background-color: #0038a8; color: white');
+        var cellText = document.createTextNode("Open L");
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+        
+        var cell = document.createElement("td");
+        cell.setAttribute('style', 'font-size:8pt; font-style: italic; font wight: bold; background-color: #0038a8; color: white');
+        var cellText = document.createTextNode("Avg Days Open");
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+        
+        var cell = document.createElement("td");
+        cell.setAttribute('style', 'font-size:8pt; font-style: italic; font wight: bold; background-color: #0038a8; color: white');
+        var cellText = document.createTextNode("Past Due");
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+        
+        
+        var cell = document.createElement("td");
+        cell.setAttribute('style', 'font-size:8pt; font-style: italic; font wight: bold; background-color: #0038a8; color: white');
+        cellText = document.createTextNode("Closed H");
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+        
+        var cell = document.createElement("td");
+        cell.setAttribute('style', 'font-size:8pt; font-style: italic; font wight: bold; background-color: #0038a8; color: white');
+        var cellText = document.createTextNode("Closed M");
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+                
+        var cell = document.createElement("td");
+        cell.setAttribute('style', 'font-size:8pt; font-style: italic; font wight: bold; background-color: #0038a8; color: white');
+        var cellText = document.createTextNode("Closed L");
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+        
+        var cell = document.createElement("td");
+        cell.setAttribute('style', 'font-size:8pt; font-style: italic; font wight: bold; background-color: #0038a8; color: white');
+        var cellText = document.createTextNode("Avg Cyc Time");
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+        
+        var cell = document.createElement("td");
+        cell.setAttribute('style', 'font-size:8pt; font-style: italic; font wight: bold; background-color: #0038a8; color: white');
+        var cellText = document.createTextNode("Closed Past Due");
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+        
+        var cell = document.createElement("td");
+        cell.setAttribute('style', 'font-size:8pt; font-style: italic; font wight: bold; background-color: #0038a8; color: white');
+        var cellText = document.createTextNode("Tot Items");
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+        //row added to end of table body
+        tblBody2.appendChild(row);                                                                       
+
+        var cycleData = [
+          ['Team1', 'Smith, John', 6, 5, 4, '105d', '60%',  10, 2, 2, '', '', 29],
+          ['Team2', 'Smith, John', 6, 5, 4, '15d', '45%',  10, 2, 2, '', '', 29],
+          ['Team3', 'Smith, John', 6, 5, 4, '145d', '23%',  10, 2, 2, '', '10%', 29],
+          ['Team4', 'Smith, John', 6, 5, 4, '10d', '10%',  10, 2, 2, '', '15%', 29],
+          ['Team5', 'Jabagchourian, Vahe', 6, 5, 4, '105d', '60%',  10, 2, 2, '', '', 29],
+          ['Team6', 'Jabagchourian, Harry', 6, 5, 4, '15d', '45%',  10, 2, 2, '', '', 29],
+          ['Team7', 'Smith, Sue', 6, 5, 4, '145d', '23%',  10, 2, 2, '', '10%', 29],
+          ['Team8', 'Smith, John', 6, 5, 4, '10d', '10%',  10, 2, 2, '', '15%', 29],
+          ['Team9', 'Jabagchourian, Vahe', 6, 5, 4, '105d', '60%',  10, 2, 2, '', '', 29],
+          ['Team10', 'Jabagchourian, Harry', 6, 5, 4, '15d', '45%',  10, 2, 2, '', '', 29],
+          ['Team11', 'Smith, Sue', 6, 5, 4, '145d', '23%',  10, 2, 2, '', '10%', 29],
+          ['Team11', 'Smith, Sue', 6, 5, 4, '145d', '23%',  10, 2, 2, '', '10%', 29],
+          ['', 'Totals', 6, 5, 4, '105d', '60%',  10, 2, 2, '', '', 29]
+          
+        ];         
+        for (var r = 0; r < cycleData.length; r++)
+        {
+        
+                // table row creation
+                 var row = document.createElement("tr");
+
+                 for (var i = 0; i <= 12; i++) {
+                  // create element <td> and text node 
+                  //Make text node the contents of <td> element
+                  // put <td> at end of the table row
+                  var cell = document.createElement("td");
+                  cell.setAttribute("sytle", "font-weight: bold");
+                  var cellText = document.createTextNode(cycleData[r][i]);
+
+                  cell.appendChild(cellText);
+                  row.appendChild(cell);
+                }
+                //row added to end of table body
+                tblBody2.appendChild(row);
+
+        }
+
           // append the <tbody> inside the <table>
-          tbl.appendChild(tblBody);
-          // put <table> in the <body>
-          document.querySelector("#risk-cycle-chart").appendChild(tbl);
+          tbl2.appendChild(tblBody2);
+          // put <table> in the <body>        '
           
           
-             
+          var tblDiv2 = document.createElement("div");
+        tblDiv2.setAttribute("style", "width: 100%; height: 255px;  display: block;");
+        tblDiv2.setAttribute("class", "tableDiv");
+        tblDiv2.appendChild(tbl2);
+        // put <table> in the <body>
+        document.querySelector("#risk-cycle-chart").appendChild(tblDiv2);
+            
     }
  
     $scope.renderCharts =  function (){
