@@ -18,7 +18,7 @@ function getRisks(){
                             v = response.data.Result.Thresholds[idx].level;
                             $scope.ctrl.riskMatrix[l][c] = v;
                         }
-                     
+                        $scope.ctrl.riskConfigFetched = true;
                         return response.data.Result;
                         
                    }
@@ -26,6 +26,7 @@ function getRisks(){
                         $scope.ctrl.msg = $sce.trustAsHtml(response.data);
                    }
               }).then(function(){
+               if (!$scope.ctrl.onlyRiskMatrix)       
                  return $http.get('api/risks').then(function(response){
                    if (response.data.Succeeded){
                         $scope.ctrl.risks = [];

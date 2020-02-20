@@ -1,4 +1,10 @@
 angular.module('Risk').controller('RiskDashboardController', ['$http', '$resource', '$scope', '$state', '$window', '$timeout', '$interval', '$sce', 'CommonService', 'DOMops', 'ValidationService', function($http, $resource, $scope, $state, $window, $timeout, $interval, $sce, CommonService, DOMops, ValidationService){
+        
+        var ctrl = this;
+        ctrl.DOMops = DOMops;
+        ctrl.ValidationService = ValidationService;
+        ctrl.riskConfigFetched = false;
+        ctrl.onlyRiskMatrix = true;    
         $scope.riskChart = {};
         $scope.openChart = {};
         $scope.gridsterOpts = {
@@ -81,6 +87,7 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
         row: 1,
         col: 2
     },{
+        id: "risk-matrix-chart",
         sizeX: 1,
         sizeY: 1,
         row: 1,
@@ -115,7 +122,58 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
         row: 'item.position[0]',
         col: 'item.position[1]'
     };   
-                                                                      
+          
+          
+    ctrl.risklevels = {
+        riskmaximum: '',
+        riskhigh:'' ,
+        riskmedium: '',
+        riskminimum:'' 
+    }   
+    
+     ctrl.riskLevel = function(l, c){
+        elem = document.querySelector("div[name='risk["+l+"]["+c+"]']");
+        risk = ctrl.riskMatrix[l][c];
+        if (risk == '' )
+            return (elem && elem.hasAttribute('class'))?
+                    elem.getAttribute('class') :''; 
+        
+        if (risk >= ctrl.risklevels.riskhigh) 
+            return 'cell high';
+        else if (risk >= ctrl.risklevels.riskmedium && risk < ctrl.risklevels.riskhigh)
+            return 'cell med';
+        else if (risk < ctrl.risklevels.riskmedium)
+            return 'cell low';
+    }
+    
+    
+    ctrl.initRisk = function(data){
+        ctrl.risklevels.riskmaximum = data.Levels[0].riskmaximum;
+        ctrl.risklevels.riskhigh = data.Levels[0].riskhigh;
+        ctrl.risklevels.riskmedium = data.Levels[0].riskmedium;
+        ctrl.risklevels.riskminimum = data.Levels[0].riskminimum; 
+    
+     
+        for (var idx = 0; idx < data.Thresholds.length; idx++)
+        {
+            var l = data.Thresholds[idx].likelihood;
+            var c = data.Thresholds[idx].consequence;
+            v = data.Thresholds[idx].level;
+            ctrl.riskMatrix[l][c] = v;
+        }
+    }
+                                                         
+       
+    ctrl.riskMatrix = [];
+    for(var l = 1; l <= 5; l++)
+    {
+        ctrl.riskMatrix[l] = [];
+        for (var c = 0; c <= 5; c++)
+        {
+            ctrl.riskMatrix[l][c] = '';  
+        }
+    }
+     
                                
     $scope.openRiskCharts = function(){
     
@@ -573,12 +631,104 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
         document.querySelector("#risk-cycle-chart").appendChild(tblDiv2);
             
     }
+   
+        $scope.riskMatrixChart = function(){
+          var countRisk = 
+          [[],
+           [null,'','','2','','7'],
+           [null,'','','3','',''],
+           [null,'30','','30','','2'],
+           [null,'','20','','10','3'],
+           [null,'5','','5','','']
+          ];
+      
+      
+          var tblDiv = document.createElement("div");
+          tblDiv.setAttribute("style", "width: 100%;  display: block");
+            // table row creation
+             var table = document.createElement("table");
+             table.setAttribute("class", "matrix");
+             table.setAttribute("id", "riskmatrix");
+                    
+         
+           var tblBody = document.createElement("tbody");
+
+            for (var l = 5; l >= 1; l--)
+            {
+                var row = document.createElement("tr");
+                var cell = document.createElement("td");
+                if (l == 2)
+                {
+                    cell.setAttribute("class", "vlabel");
+                    var textNode = document.createTextNode("Likelihood");
+                    cell.appendChild(textNode);
+                }
+                row.appendChild(cell);
+                 
+                var cell = document.createElement("td");
+                cell.setAttribute("class", "likelihood");
+                var textNode = document.createTextNode(l);
+                cell.appendChild(textNode);
+          
+                row.appendChild(cell);
+                
+                  
+                 for (var c = 1; c <= 5; c++) {
+                  var cell = document.createElement("td");
+                  cell.setAttribute("name", "riskMatrix["+l+"]["+c+"]");
+                  cell.setAttribute("class", ctrl.riskLevel(l,c));
+                  var textNode = document.createTextNode(countRisk[l][c]);
+                  cell.appendChild(textNode);
+                  row.appendChild(cell);
+                }
+                //row added to end of table body
+                tblBody.appendChild(row);
+
+        }
+        var row = document.createElement("tr");
+        var cell = document.createElement("td");
+        row.appendChild(cell);
+        var cell = document.createElement("td");
+        row.appendChild(cell);
+
+         for (var c = 1; c <= 5; c++) {
+            var cell = document.createElement("td");
+            var textNode = document.createTextNode(c);
+            cell.appendChild(textNode);
+            row.appendChild(cell); 
+         }
+        
+          // append the <tbody> inside the <table>
+          tblBody.appendChild(row);
+          // put <table> in the <body>        '
+          
+            var row = document.createElement("tr"); 
+                var cell = document.createElement("td");  
+                row.appendChild(cell);
+                var cell= document.createElement("td");
+                row.appendChild(cell);
+             var cell = document.createElement("td");
+             cell.setAttribute("colspan", "5");
+             cell.setAttribute("style", "text-align: center");
+            var textNode = document.createTextNode("Consequence");
+            cell.appendChild(textNode);
+            row.appendChild(cell);
+            
+            
+            
+          tblBody.appendChild(row);
+          table.appendChild(tblBody);
+          tblDiv.appendChild(table);
+        
+        document.querySelector("#risk-matrix-chart").appendChild(tblDiv); 
+        }
  
     $scope.renderCharts =  function (){
          $scope.openRiskCharts();    
          $scope.riskStatusByMonth();
          $scope.riskCategoryChart();
          $scope.avgCycleTime();
+         $scope.riskMatrixChart();
          
          apply_resizing(riskChart, widthRiskChart, heightRiskChart, resize, 'risk-chart', true);
          apply_resizing(monthlyRiskStatus, widthStatusChart, heightStatusChart, resize, 'risk-status-by-month', false);

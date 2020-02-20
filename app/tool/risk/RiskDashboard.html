@@ -1,5 +1,6 @@
-<div ng-app="Risk"  ng-controller="RiskDashboardController">
-    <div gridster="gridsterOpts" style="margin-left: 5px; max-height: 80% !important">
+<div ng-app="Risk"  ng-controller="RiskDashboardController as ctrl">
+    <config-risk-matrix></config-risk-matrix>
+    <div ng-if="ctrl.riskConfigFetched" gridster="gridsterOpts" style="margin-left: 5px; max-height: 80% !important">
         <div>
             <ul>
                 <li gridster-item="item" id="{{item.id}}" ng-repeat="item in standardItems" ng-repeat-done="renderCharts()">   
