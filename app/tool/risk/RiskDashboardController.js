@@ -722,6 +722,9 @@ angular.module('Risk').controller('RiskDashboardController', ['$http', '$resourc
         
         document.querySelector("#risk-matrix-chart").appendChild(tblDiv); 
         }
+        
+        
+ 
  
     $scope.renderCharts =  function (){
          $scope.openRiskCharts();    

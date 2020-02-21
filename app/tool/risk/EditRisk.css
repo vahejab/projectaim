@@ -145,8 +145,8 @@ div.nopadding{
     
      .tbl.events   .tr   .th:nth-child(4),
     .tbl.events     .tr   .td:nth-child(4){
-        max-width: 112px !important;
-        min-width: 112px !important;
+        max-width: 115px !important;
+        min-width: 115px !important;
     }
 
     .tbl.events   .tr   .th:nth-child(6),
@@ -164,8 +164,8 @@ div.nopadding{
     
       .tbl.events   .tr   .th:nth-child(10),
     .tbl.events     .tr   .td:nth-child(10){
-        max-width: 40px !important;
-        min-width: 40px !important;
+        max-width: 46px !important;
+        min-width: 46px !important;
         text-align: center;
     }
 
@@ -202,8 +202,8 @@ div.nopadding{
         
       .tbl.events   .tr   .th:nth-child(22),
     .tbl.events     .tr   .td:nth-child(22){
-        /* max-width: 40px !important; */
-        min-width: 40px !important;
+        max-width: 46px !important;
+        min-width: 46px !important;
         text-align: center;
     }
 
@@ -239,8 +239,8 @@ div.nopadding{
     
           .tbl.events   .tr   .th:nth-child(34),
     .tbl.events     .tr   .td:nth-child(34){
-        max-width: 40px !important;
-        min-width: 40px !important;
+        max-width: 46px !important;
+        min-width: 46px !important;
         text-align: center;
     }
 
@@ -268,13 +268,19 @@ div.nopadding{
         min-width: 27.5px !important;
     } 
 
+       .tbl.events   .tr   .th:nth-child(44),
+    .tbl.events     .tr   .td:nth-child(44){
+        max-width: 45.5px !important;
+        min-width: 45.5px !important;
+    } 
     
+     
     .tbl.events   .tr   .th:nth-child(48),
     .tbl.events     .tr   .td:nth-child(48){
-        max-width: 50.5px !important;
-        min-width: 50.5px !important;
+        max-width: 45.5px !important;
+        min-width: 45.5px !important;
     }
-
+    
 
     .tbl{
         display: table !important;
@@ -292,8 +298,13 @@ div.nopadding{
         display: table-cell !important;
         text-align: left !important;
         border: 0.5px solid black;
-        padding-left: 3px;
         vertical-align: middle;
+    }
+    
+    .td:not(.riskvalue)
+    {
+        padding-left: 3px;
+        padding-right: 6px;
     }
     
     .td div{
@@ -336,7 +347,7 @@ div.nopadding{
     .tbl.events .tr .td.header, .tbl.events .tr .td.value:not(.buttonvalue), .tbl.events .tr .td[name="actuallevel"], .tbl.events .tr .td[name="baselinelevel"], .tbl.events .tr .td[name="scheduledlevel"], .tbl.events .tr .td.left{
         width: 200px !important;
     }
-    
+
     div.nested table#details > tr:not(:nth-child(2)) > td:first-child{
         width: 400px;
     }
@@ -372,7 +383,6 @@ div.nopadding{
         width: 100% !important;
     }
 
-    
     .tbl .td.header, .tbl .td.label{
         background-color: #0038a8 !important;
         font-weight: bold !important;
