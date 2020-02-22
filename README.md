@@ -1,9 +1,15 @@
 # ProjectAIM_Demo
-Project Management Web Suite
+Project Management Web Suite (Risk Management, Action Item Management)
 
 ![ProjectAIM Logo](https://vahejab.net/projectaim_logo.png)
 
 ProjectAIM is a Project Risk Management / Action Item Management web application  designed to serve organizations and teams for tracking multipe aspects of a project using #action #oreinted #processess corresponding to a single project, namely risks and action items.
+
+
+
+
+
+
 
 
 Currently under development, it is written in AngularJS (Front-End) / PHP/MySQL (Back-End) and is developed as a single page application that will be migrated to a mobile device.
