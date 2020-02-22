@@ -1,4 +1,4 @@
-# ProjectAIM_Demo
+# ProjectAIM
 Project Management Web Suite (Risk Management, Action Item Management)
 
 ![ProjectAIM Logo](https://vahejab.net/projectaim_logo.png)
