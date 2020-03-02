@@ -8,7 +8,7 @@ body {
     -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     color: #004756;
-    background: #ffffff !important;
+    background: #fefefe !important;
     padding: 10px;
 }
 
@@ -143,17 +143,17 @@ br {
 }
 
 #riskmatrix td:not(:first-child){
-    width: 45px !important;
-    height: 45px !important;
-    min-width: 45px !important;
-    min-height: 45px !important;
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    min-height: 42px !important;
     border: 1px solid black;
     text-align: center;
     vertical-align: middle;
     line-height: 2px;
 }
 
-#riskmatrix{
+#riskmatrix {
     border-spacing: 0;
     border-collapse: collapse;
     table-layout: fixed;

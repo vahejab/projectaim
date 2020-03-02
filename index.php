@@ -68,25 +68,27 @@
         <a class="nav-link">
             <img id="logo" src="/app/assets/images/ProjectAIM.png" />
         </a>      
-
-            <a href="/#!/action/create" name="createaction">
-                Create Action Item
-            </a>
-            <a href="/#!/action/summary" name="actionsummary">
-                Action Item Summary
-            </a>
             <a href="/#!/risk/dashboard" name="dashboard">
                 Risk Dashboard
             </a>
+            &nbsp;
             <a href="/#!/risk/create" name="createrisk">
                 Create Risk
             </a>
-             <a href="/#!/risk/summary" name="risksummary">
+            &nbsp;
+            <a href="/#!/risk/edit/1" name="editrisk">
+                Edit Risk
+            </a>
+            &nbsp;
+            <a href="/#!/risk/summary" name="risksummary">
                 Risk Summary
             </a>
-             <a href="/#!/risk/config" name="riskmatrixconfig">
+            &nbsp;
+            <a href="/#!/risk/config" name="riskmatrixconfig">
                 Risk Matrix Config
             </a>
+            
+            
         <div class="ui-view">
             
         </div> 
