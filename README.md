@@ -3,7 +3,7 @@ Project Management Web Suite (Risk Management, Action Item Management)
 
 ![ProjectAIM Logo](https://vahejab.net/projectaim_logo.png)
 
-ProjectAIM is a Project Risk Management / Action Item Management web application  designed to serve organizations and teams for tracking multipe aspects of a project using [action oreinted processess] corresponding to a single project, namely risks and action items.
+ProjectAIM is a Project Risk Management / Action Item Management web application  designed to serve organizations and teams for tracking multiple aspects of a project using [action oreinted processess] corresponding to a single project, namely risks and action items.
 
 
 # Dashboard
@@ -22,7 +22,7 @@ ProjectAIM is a Project Risk Management / Action Item Management web application
 
 ![ProjectAIM_EditRisk](https://vahejab.net/EditRisk.png)
 
-# Edit Events - Adaptive for Mobie Breakpoint
+# Edit Events - Adaptive for Mobile Breakpoint
 
 ![ProjectAIM_EditRisk](https://vahejab.net/EditRiskResponsive.png)
 
