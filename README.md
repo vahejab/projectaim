@@ -18,11 +18,11 @@ ProjectAIM is a Project Risk Management / Action Item Management web application
 
 ![ProjectAIM_Summary](https://vahejab.net/RiskSummary.png)
 
-# Edit Risk Details
+# Edit Risk
 
 ![ProjectAIM_EditRisk](https://vahejab.net/EditRisk.png)
 
-# Edit Risk Details - Adaptive for Mobile Breakpoint
+# Edit Events - Adaptive for Mobile Breakpoint
 
 ![ProjectAIM_EditRisk](https://vahejab.net/EditRiskResponsive.png)
 
