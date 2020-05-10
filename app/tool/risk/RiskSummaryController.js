@@ -36,212 +36,48 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
         var svg = [];   
           
         ctrl.events = {};            
-            var cons = [];
-            var risk = [];
-           
-            
-            ctrl.baseline = {}; 
-            ctrl.schedule = {};
-            ctrl.actual = {};
-            
-             ctrl.sched = {};
-            
-            actualrisk = [];
-            schedulerisk = [];
-            baselinerisk = [];
-            
-           
-            var cellWidth = 50;
-            var cellHeight = 50;
-            var riskmatrix; 
-            
-            
-            
-             function risklevels(d) {
-                if (d <= 25 && d >= 13.5) {
-                    return "H";
-                } else if (d <= 13.5 && d > 7) {
-                    return "M";
-                }
-                return "L";
-            } 
-            
-            
-            
-            var margin = {top: 20, right: 20, bottom: 30, left: 50};
-                var width = 300 - margin.left - margin.right;
-                var height = 150 - margin.top - margin.bottom;
-                                   
-  
-            ctrl.riskwaterfall = {};
-          
-            var xVal, yVal;
-            ctrl.focus = [];
+        var cons = [];
+        var risk = [];
+       
         
+        ctrl.baseline = {}; 
+        ctrl.schedule = {};
+        ctrl.actual = {};
+        
+        ctrl.sched = {};
+        
+        actualrisk = [];
+        schedulerisk = [];
+        baselinerisk = [];
          
-         
-         function getScrollbarWidth() {
-
-          // Creating invisible container
-          const outer = document.createElement('div');
-          outer.style.visibility = 'hidden';
-          outer.style.overflow = 'scroll'; // forcing scrollbar to appear
-          outer.style.msOverflowStyle = 'scrollbar'; // needed for WinJS apps
-          document.body.appendChild(outer);
-
-          // Creating inner element and placing it in the container
-          const inner = document.createElement('div');
-          outer.appendChild(inner);
-
-          // Calculating difference between container's full width and the child width
-          const scrollbarWidth = (outer.offsetWidth - inner.offsetWidth);
-
-          // Removing temporary elements from the DOM
-          outer.parentNode.removeChild(outer);
-
-          return scrollbarWidth;
-
-        }
-         ctrl.autoSizeAll = function(skipHeader) {
-            var allColumnIds = [];
-            ctrl.gridOptions.columnApi.getAllColumns().forEach(function(column) {
-                allColumnIds.push(column.colId);
-            });
-
-            ctrl.gridOptions.columnApi.autoSizeColumns(allColumnIds, skipHeader);
-        }
-         
-         angular.element($window).on('resize', function(){
-          cells = document.getElementsByClassName("ag-header-cell");
-          width = 0;
-          for (idx = 0; idx < cells.length; idx++)
-            width += parseInt(cells[idx].offsetWidth);
-           if (ctrl.gridOptions.api && (width < (document.body.clientWidth - getScrollbarWidth()))){
-            ctrl.gridOptions.columnDefs.forEach( function(columnDef) {
-             var browserZoomLevel = Math.round(window.devicePixelRatio * 100);
-                     columnDef.resizable = true;
-  
-                        $timeout(function(){            
-                           // location.reload();
-                            ctrl.gridOptions.api.autoSizeAll(false);
-                            });
-            });
-                 
-            $timeout(function(){
-                 ctrl.gridOptions.api.sizeColumnsToFit(); 
-            });
+        var cellWidth = 50;
+        var cellHeight = 50;
+        var riskmatrix; 
+        
+        function risklevels(d) {
+            if (d <= 25 && d >= 13.5) {
+                return "H";
+            } else if (d <= 13.5 && d > 7) {
+                return "M";
             }
-           else if (ctrl.gridOptions.api && width >= (document.body.clientWidth - getScrollbarWidth()))
-           {
-            var allColumnIds = [];
-            var browserZoomLevel = Math.round(window.devicePixelRatio * 100);
-                
-            ctrl.gridOptions.columnDefs.forEach( function(columnDef) {
-                                           
-                  columnDef.resizable = true; 
-  
-                        $timeout(function(){            
-                            //location.reload();
-                             ctrl.gridOptions.api.autoSizeAll(false);
-                            }, 10);
-                allColumnIds.push(columnDef.field);
-            });
-           }
-
-         }); 
+            return "L";
+        } 
         
-                     
-        ctrl.gridOptions = {
-         defaultColDef: {
-            resizable: true
-         },
-          columnDefs: [
-                            {resizable: false, minWidth: 100, flex: 1, headerName: "Risk ID", field: "riskid", cellRenderer: editRisk},
-                            {resizable: false, minWidth: 200, flex: 10, headerName: "Risk Title", field: "risktitle"},
-                            {resizable: false, minWidth: 100, flex: 2, headerName: "Risk", field: "riskvalue",  filter: 'agNumberColumnFilter', cellRenderer: percentCellRenderer},
-                            /*{
-                                headerName: 'Line Chart',
-                                field: 'CloseTrends',
-                                width: 115,
-                                resizable: false,
-                                suppressSizeToFit: false,
-                                cellRenderer: lineChartLineRenderer
-                            },
-                            {
-                                headerName: 'Risk Waterfall',
-                                field: 'CloseTrends',
-                                width: 300,
-                                resizable: false,
-                                suppressSizeToFit: false,
-                                cellRenderer: riskWaterfallRenderer
-                            }, */
-                            {resizable: false, minWidth: 200, flex: 2, headerName: "Creation Date", field: "creationdate"},
-                            {resizable: false, minWidth: 200, flex: 2, headerName: "Creator", field: "creator"},
-                            {resizable: false, minWidth: 200, flex: 2, headerName: "Owner", field: "owner"},
-                            {resizable: false, minWidth: 200, flex: 2, headerName: "Approver", field: "approver"}
-          ],
-          rowSelection: 'multiple',
-          suppressRowClickSelection: false,
-          defaultColDef: {
-                sortable: true,
-                filter: true,      
-                resize: false
-          },
-          rowData: ctrl.risks,
-          components:{
-            lineChartLineRenderer: lineChartLineRenderer,
-          },
-          onFirstDataRendered: function(params) {
-               ctrl.gridOptions.api.sizeColumnsToFit(); 
-          }
-        };
-  
+        ctrl.riskwaterfall = {};
+      
+        var xVal, yVal;
+        ctrl.focus = [];
         
         function editRisk(params){
             return '<a href=#!/risk/edit/'+params.data.riskid+'>'+ params.data.riskid +'</a>'
-        }
+        }  
         
-        function lineChartLineRenderer() {
-        }
-
-        lineChartLineRenderer.prototype.init = function (params) {
-
-            var eGui = document.createElement('div');
-            this.eGui = eGui;
-
-            // sparklines requires the eGui to be in the dom - so we put into a timeout to allow
-            // the grid to complete it's job of placing the cell into the browser.
-            setTimeout( function(){
-                values = [23.89,21.0,23.89,28.11,27.98,33.81,31.96,27.52,34.65,117.18,164.47,250.56,239.72,238.1,199.56,269.15,211.63,188.34,212.28,199.97,250.48];
-                //[{Date: new Date().getTime(), Close: 56}]
-                $(eGui).sparkline(values, {height: 100, width: 100});
-            }, 0);
+        ctrl.reverse = '';
+        ctrl.propertyName = '';
+        ctrl.sort = function(propertyName) {
+            ctrl.reverse = (ctrl.propertyName === propertyName) ? !ctrl.reverse : false;
+            ctrl.propertyName = propertyName;
         };
-
-        lineChartLineRenderer.prototype.getGui = function () {
-            return this.eGui;
-        };
-        
-       function percentCellRenderer(params) {
-            var value = params.data.riskvalue * 100;
-            var eDivPercentBar = document.createElement('div');
-            eDivPercentBar.className = 'div-percent-bar';
-            eDivPercentBar.style.width = value + '%';
-            if (ctrl.getLevel(params.data.riskvalue, params.data.likelihood, params.data.consequence).cls == 'high'){
-                eDivPercentBar.style.backgroundColor = '#ee0000';
-            } else if (ctrl.getLevel(params.data.riskvalue, params.data.likelihood, params.data.consequence).cls == 'med') {
-                eDivPercentBar.style.backgroundColor = '#eeee00';
-            } else {
-                eDivPercentBar.style.backgroundColor = '#00b050';
-            }
-
-            eDivPercentBar.innerHTML = params.data.risklevel;
-
-            var eOuterDiv = document.createElement('div');
-            eOuterDiv.className = 'div-outer-div';
-            eOuterDiv.appendChild(eDivPercentBar);
-            return eOuterDiv;
-        }
         
         function riskWaterfallRenderer(params){
             var eDivWaterfall = document.createElement('div');
@@ -269,11 +105,7 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
           return eDivWaterfall;
         }
         
-      ctrl.sort = function(propertyName) {
-            ctrl.reverse = (ctrl.propertyName === propertyName) ? !ctrl.reverse : false;
-            ctrl.propertyName = propertyName;
-        };
-        
+
         ctrl.risklevels = {
             riskmaximum: '',
             riskhigh: '',
@@ -294,15 +126,14 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
         ctrl.devicePixelRatio = window.devicePixelRatio;
         ctrl.flag = 0;
  
+           
+        $scope.init = function(){
+            angular.element(document.querySelector('head')).append('<link type="text/css" rel="stylesheet" href="/app/tool/risk/RiskSummary.css"/>');
+        }
         
         $scope.$on("$destroy", function(){
-             //angular.element(document.querySelector('link[href="/app/tool/action/ActionItems.css"]')).remove();   
-             $timeout.cancel(ctrl.refreshingPromise);
-             ctrl.isRefreshing = false;  //stop refreshing
-             ctrl.refresh = false;
-             refresh = false; //stop refreshing globally
+            angular.element(document.querySelector('link[href="/app/tool/risk/RiskSummary.css"]')).remove();
         });
-
         
         ctrl.formatCriticality = function(value){ 
             return CommonService.formatCriticality(value);
@@ -392,7 +223,8 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
                                 owner: '',
                                 altowner: '',
                                 approver: '',
-                                creationdate: ''
+                                creator: '',
+                                assessmentdate: ''
                             });
                             ctrl.risks[key].riskid =  response.data.Result[key].riskid;
                             ctrl.risks[key].risktitle = response.data.Result[key].risktitle;
@@ -403,7 +235,7 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
                             ctrl.risks[key].approver = response.data.Result[key].approver;
                             ctrl.risks[key].creator = response.data.Result[key].creator;
                             dateYMD = response.data.Result[key].assessmentdate.split("-");
-                            ctrl.risks[key].creationdate = dateYMD[1] + "/" + dateYMD[2] + "/" + dateYMD[0]; 
+                            ctrl.risks[key].assessmentdate = dateYMD[1] + "/" + dateYMD[2] + "/" + dateYMD[0]; 
                             ctrl.events[ctrl.risks[key].riskid] = [];
                         });
                         ctrl.risksloaded = true;
@@ -451,7 +283,7 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
                          }
                          
                          ctrl.initialized = true; 
-                         $timeout(() => {ctrl.setup()});
+                         //$timeout(() => {ctrl.setup()});
                     } 
                     return response.data.Result;
                });
@@ -522,14 +354,14 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
             });   
         }
         
-        ctrl.setup = function(){
+        /*ctrl.setup = function(){
               
              // lookup the container we want the Grid to use
             var eGridDiv = document.querySelector('#myGrid');
             // create the grid passing in the div to use together with the columns & data we want to use
             new agGrid.Grid(eGridDiv, ctrl.gridOptions);
             ctrl.gridOptions.api.setRowData(ctrl.risks);
-        }
+        }*/
         
         
 ctrl.drawMatrixPath = function() {

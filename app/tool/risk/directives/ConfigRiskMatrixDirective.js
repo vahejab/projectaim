@@ -1,6 +1,6 @@
-angular.module('Risk').directive('configRiskMatrix', configMatrix);
+angular.module('Risk').directive('configRiskMatrix', ['$sce', configMatrix]);
 
-function configMatrix(){
+function configMatrix($sce){
      return {
         restrict: 'E', 
         link: function(scope, element, attrs){

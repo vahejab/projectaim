@@ -277,11 +277,7 @@
                 $statement->bindValue(':riskid' , $params['riskid']);  
                 $statement->bindValue(':lasteventid' , $params['events'][count($params['events'])-1]['eventid']);
                 $statement->execute();
-                /*
-                echo "<pre>";
-                var_dump($params['events']);
-                echo "</pre>";
-                */
+             
                 foreach ($params['events'] as $event) 
                 {  
                     $statement = $this->db->prepare("insert into riskevents( 
@@ -295,6 +291,7 @@
                                                         actualschedule,
                                                         actualcost,
                                                         baselinedate,
+                                                        baselinelikelihood,
                                                         baselinetechnical,
                                                         baselineschedule,
                                                         baselinecost,
@@ -315,6 +312,7 @@
                                                             :actualschedule,
                                                             :actualcost,
                                                             :baselinedate,
+                                                            :baselinelikelihood,
                                                             :baselinetechnical,
                                                             :baselineschedule,
                                                             :baselinecost,
@@ -324,7 +322,6 @@
                                                             :scheduledschedule,
                                                             :scheduledcost
                                                         having (select count(*) from riskevents where riskid = :riskid and eventid = :eventid) = 0");
-                
                     $statement->bindValue(':riskid' , $riskid);
                     $statement->bindValue(':eventid' , $event['eventid']);
                     $statement->bindValue(':eventtitle' , $event['eventtitle']);
@@ -353,12 +350,12 @@
                   
                     $statement->execute();
                 }    
-                $this->db->commit();
+                $this->db->commit(); 
                 return ["Succeeded" => true, "Result" => "Event Created!"];
             }
             catch (\PDOException $e)
-            {
-                return ["Succeeded" => false, "Result" => $e->getMessage()];
+            { 
+                return ["Succeeded" => false, "Result" => $e->getMessage()]; 
             }
         }
     }

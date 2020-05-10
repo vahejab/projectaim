@@ -86,12 +86,20 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
     ctrl.invalidLevel = function(lvl){
         return CommonService.invalidLevel(lvl);
     } 
+      
+    $scope.init = function(){
+            angular.element(document.querySelector('link[href="/app/tool/CreateRisk.css"]')).remove();
+            angular.element(document.querySelector('link[href="/app/css/bootstrap/bootstrap.min.css"]')).remove();   
+            angular.element(document.querySelector('head')).append('<link type="text/css" rel="stylesheet" href="/app/tool/risk/CreateRisk.css"/>');
+            angular.element(document.querySelector('head')).append('<link type="text/css" rel="stylesheet" href="/app/css/bootstrap/bootstrap.min.css"/>');
+    }
+              
            
     $scope.$on("$destroy", function(){
-         formcheck = 0;
-         angular.element(document.querySelector('link[href="/app/tool/risk/CreateRisk.css"]')).remove();
-         angular.element(document.querySelector('link[href="/app/css/bootstrap/bootstrap.css"]')).remove();   
+         angular.element(document.querySelector('link[href="/app/tool/risk/CreateRisk.css"]')).remove();  
+         angular.element(document.querySelector('link[href="/app/css/bootstrap/bootstrap.min.css"]')).remove();
     });
+    
     
     ctrl.initRisk = function(data){
         ctrl.risklevels.riskmaximum = data.Levels[0].riskmaximum;
@@ -121,7 +129,7 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
             return $http.post('/api/risks', ctrl.risk).then(function(response){
                 if (response.data.Succeeded){     
                     ctrl.riskid = response.data.RiskID;
-                    $scope.msg = $sce.trustAsHtml(response.data.Result + "<b><a href='/#!/risk/edit/'"+ctrl.riskid+"'>View Risk " + ctrl.riskid + "</a></b>");
+                    $scope.msg = $sce.trustAsHtml(response.data.Result + "<b><a href='/#!/risk/edit/"+ctrl.riskid+"'>View Risk " + ctrl.riskid + "</a></b>");
                     return response.data.Result;
                 }
                 else{
@@ -133,7 +141,7 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
                     payload = {riskid: ctrl.riskid, events: [{
                         eventid : 0,
                         eventtitle : 'Risk Identified',
-                        ownerid : ctrl.riskownerid,
+                        eventownerid : ctrl.riskownerid,
                         
                         actualdate: today,
                         actuallikelihood : ctrl.risk.likelihood,
@@ -142,11 +150,11 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
                         actualcost : ctrl.risk.cost,
               
                         
-                        scheduledate : today,
-                        scheduledlikelihood : ctrl.risk.likelihood,
-                        scheduledtechnical : ctrl.risk.technical,
-                        scheduledschedule : ctrl.risk.schedule,
-                        scheduledcost : ctrl.risk.cost,
+                        scheduledate : null,//today,
+                        scheduledlikelihood : null,//ctrl.risk.likelihood,
+                        scheduledtechnical : null, //ctrl.risk.technical,
+                        scheduledschedule : null,//ctrl.risk.schedule,
+                        scheduledcost : null, //ctrl.risk.cost,
                         
                         baselinedate : today,
                         baselinelikelihood : ctrl.risk.likelihood,

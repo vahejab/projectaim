@@ -1,4 +1,4 @@
-<div id="formcontainer" ng-app="Risk" ng-controller="EditRiskController as ctrl" ng-init="ctrl.fetchRisk(); ">
+<div id="formcontainer" ng-app="Risk" ng-controller="EditRiskController as ctrl" ng-init="init()">
     <div ng-if="ctrl.initDone && ctrl.userDone" id="myeditform" type="space" layout-padding="" ng-cloak="">   
         <form id="form" name="EditRisk" role="form" ng-submit="ctrl.valid() && ctrl.submit()" novalidate>
             <div class="layout" style="margin: 0 auto">

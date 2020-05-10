@@ -94,7 +94,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             files: [
                     '/app/tool/risk/RiskSummary.css', 
                     '/app/tool/risk/directives/RiskDirective.js',
-                    '/app/tool/risk/directives/GetRisksDirective.js',
+                    '/app/tool/risk/directives/RiskSummaryDirective.js',
                     '/app/tool/risk/RiskSummaryController.js'
             ],
         },

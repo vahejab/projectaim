@@ -1,4 +1,4 @@
-<div ng-app="Risk"  ng-controller="RiskDashboardController as ctrl">
+<div ng-app="Risk"  ng-controller="RiskDashboardController as ctrl" ng-init="init()">
     <config-risk-matrix></config-risk-matrix>
     <div ng-if="ctrl.riskConfigFetched" gridster="gridsterOpts" style="margin-left: 5px; max-height: 80% !important">
         <div>

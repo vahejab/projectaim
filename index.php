@@ -16,15 +16,16 @@
 <link rel="stylesheet" href="/app/js/ag-grid/dist/styles/ag-grid.css">
 <link rel="stylesheet" href="/app/js/ag-grid/dist/styles/ag-theme-blue.css"/>
 <link rel="stylesheet" href="/app/js/ui-select/dist/select.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">    
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
+<link rel="stylesheet" href="/app/css/select2/select2.css">    
+<link rel="stylesheet" href="/app/css/selectize/selectize.default.css">
 
 <link rel="stylesheet" href="/app/js/dc.js-3.1.9/dc.css" />
 <link rel="stylesheet" href="/app/js/angular-gridster/dist/angular-gridster.min.css"/>
 <!--link rel="stylesheet" href="/app/js/air-datepicker-2.2.3/dist/css/datepicker.css" /-->
 <!--script src="/app/js/air-datepicker-2.2.3/dist/js/datepicker.js"></script-->
 <!--script src="/app/js/air-datepicker-2.2.3/dist/js/i18n/datepicker.en.js"></script-->
-<!-- Light package of effect.css It is optional --><!-- Latest compiled and minified CSS on head of your page -->
+<!-- Light package of effect.css It is optional -->
+<!-- Latest compiled and minified CSS on head of your page -->
 <!-- VENDORS -->
 <!-- Required for Datepicker Component -->
 
@@ -34,7 +35,7 @@
         width: 100vw !important;
     }
     body{
-        width: 99vw;
+        /*width: 99vw; */
         margin: 0px;
         background-image: url(/app/assets/images/custom_back.gif) !important;
     }

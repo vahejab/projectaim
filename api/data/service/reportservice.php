@@ -8,6 +8,7 @@
     use PhpOffice\PhpPresentation\Style\Color;
     use PhpOffice\PhpPresentation\Style\Fill;
     use PhpOffice\PhpPresentation\Style\Border;
+    use PhpOffice\PhpPresentation\Shape\RichText;
     use \ArrayAccess;
     
     define ('BASELINE', 0);
@@ -227,7 +228,7 @@
 
         private static $maxYearsXAxis = 10;
         private static $maxMonthsXAxis = 7;
-        private static $maxDaysXAxis = 7;
+        private static $maxDaysXAxis = 30;
                
         private $minHigh;
         private $maxLow;
@@ -664,12 +665,22 @@
         }
         
         public function generateWaterfallPoint($date, $value)
-        {
-            $date1 = new \DateTime($date);   
+        {   
+            $y = preg_split('/-/', $this->startDate)[0];
+            $m = preg_split('/-/', $this->startDate)[1];   
+                    
+            $date1 = new \DateTime($date);
             $date0 = new \DateTime($this->startDate);
-
             $dayOffset = $date1->diff($date0)->days;
+            $midOffset = 0;
             
+            $labelWidthRegion = (self::$waterfallWidth-$this->labelOffset*2);
+            
+            if ($dayOffset > 31 || $this->numMonths > 0)
+            {   
+                $date0 = new \DateTime("$y-$m-01");
+                $dayOffset = $date1->diff($date0)->days;
+            }                                  
             if ($this->numYears >= 2)
             {  
                 $startDate0 = preg_split('/-/', $this->startDate)[0].'-01-01';
@@ -684,8 +695,16 @@
                 $dateOffsetPercentage = number_format($dateOffsetPct, 2);
             }
             else if ($this->numMonths > 0)
-            { 
-                $dateOffsetPct = ($dayOffset / (30.00 * ($this->numMonths+1)));
+            {   
+                $ymd = preg_split('/-/', $this->endDate);
+                $y = $ymd[0];
+                $m = $ymd[1];
+                $lastDay = date('t', strtotime($this->endDate));
+                $end = new \DateTime($y."-".$m."-".$lastDay);   
+                $numDays = $end->diff($date0)->days;
+                    
+             
+                $dateOffsetPct = ($dayOffset / ($numDays));
                 $dateOffsetPercentage = number_format($dateOffsetPct, 2);    
             }
             else if ($this->numDays > 0)
@@ -693,16 +712,18 @@
                 $dateOffsetPct = $dayOffset / ($this->dayInterval*$this->numBoxes); 
                 $dateOffsetPercentage = number_format($dateOffsetPct, 2);
                 // ("$dayOffset  $this->numDays $dateOffsetPct $dateOffsetPercentage <br />");  
+                $midOffset = ($labelWidthRegion/$this->numBoxes)/2;
+            
             }
             else
             {
                 $dateOffsetPct = $dayOffset / (30.00);
                 $dateOffsetPercentage = number_format($dateOffsetPct, 2);
             }
-                
-            $dateOffset = $this->labelOffset + 
+
+            $dateOffset = $midOffset + $this->labelOffset + 
                           self::$offsetWaterfallX + 
-                          $dateOffsetPercentage*(self::$waterfallWidth-$this->labelOffset*2);
+                          $dateOffsetPercentage*$labelWidthRegion;
            
             $riskOffset = self::$offsetWaterfallY + self::$waterfallHeight*(1 - $value);
             
@@ -1498,9 +1519,9 @@
                   ->setLineStyle(Border::LINE_SINGLE);
             $totalWidth = $shape->getWidth();
             $date = clone $date1; 
-             $yearDesignator = '0000';
+            $yearDesignator = '0000';
             
-            while (date_add($date, new \DateInterval("P0M")) < date_add($date2, new \DateInterval("P0M")))
+            while (date_add($date, new \DateInterval("P0M")) <= date_add($date2, new \DateInterval("P0M")))
             {   
                 $shape = $currentSlide->createRichTextShape()
                                       ->setHeight(20)
@@ -1538,22 +1559,37 @@
             $shape->setOffsetX(self::$offsetWaterfallX + self::$waterfallWidth - $padding);
             $shape->setOffsetY(self::$offsetWaterfallY + self::$waterfallHeight);
             $this->numMonths = $monthsBetween;
-            return $idx; //num boxes
+            return $idx; //num boxes                                                 
         } 
         
         function renderDayBoxes($daysBetween, $dayInterval, $currentSlide, $date1, $date2)
         {
             $idx = 0;                        
             $offset = self::$waterfallWidth/(16*$daysBetween/($dayInterval));
-            $this->labelOffset = $offset;
-            $width = self::$waterfallWidth - $offset*2;
-                                                                                                          
+            $this->labelOffset = 2*$offset;
+            $width = self::$waterfallWidth - $this->labelOffset;
+            
+             
             $shape = $currentSlide->createRichTextShape()
                                   ->setHeight(20)
-                                  ->setWidth($offset);     
+                                  ->setWidth($offset);
+                                  
+            $shape->getBorder()->setColor(new Color('FF000000'))->setLineStyle(Border::LINE_SINGLE);
             $shape->setOffsetX(self::$offsetWaterfallX);
             $shape->setOffsetY(self::$offsetWaterfallY + self::$waterfallHeight);
+           
+           
+            $numCols = ceil($daysBetween/$dayInterval);                                                                                               
+            $shape = $currentSlide->createTableShape($numCols)
+                                  ->setWidth($width)
+                                  ->setHeight(20);
+            
+            $shape->setOffsetX($offset + self::$offsetWaterfallX);
+            $shape->setOffsetY(self::$offsetWaterfallY + self::$waterfallHeight);
         
+            
+            $row = $shape->createRow()->setHeight(20);     
+           
             $shape->getBorder()
                   ->setColor(new Color('FF000000'))
                   ->setLineStyle(Border::LINE_SINGLE);
@@ -1565,15 +1601,7 @@
            
             
             while (date_add($date, new \DateInterval("P0D")) <= $date2)
-            {      
-                $shape = $currentSlide->createRichTextShape()
-                                      ->setHeight(20)
-                                      ->setWidth(($width/(ceil($daysBetween/$dayInterval))));  
-                
-                
-                $shape->setOffsetX(self::$offsetWaterfallX + $offset +  ($idx++)*$shape->getWidth());
-                $shape->setOffsetY(self::$offsetWaterfallY + self::$waterfallHeight);
-                
+            {                          
                 $y = date_format($date, 'Y');
                 $m = date_format($date, 'm');
                 $d = date_format($date, 'd');
@@ -1589,32 +1617,28 @@
                     $dtString = "$m/$d\n$y";
                 else
                     $dtString = "$m/$d/$y";
-                    
-                $textRun = $shape->createTextRun($dtString);
-                $textRun->getFont()->setSize(7);  
-                 $shape->getActiveParagraph()
-                      ->getAlignment()
-                      ->setHorizontal(Alignment::HORIZONTAL_CENTER);
-                $shape->getActiveParagraph()
-                      ->getAlignment()
-                      ->setVertical(Alignment::VERTICAL_CENTER);  
-                $shape->getBorder()
-                      ->setColor(new Color('FF000000'))
-                      ->setLineStyle(Border::LINE_SINGLE); 
                 
+                $cell = $row->nextCell();
+                $cell->getActiveParagraph()
+                  ->getAlignment()
+                  ->setHorizontal(Alignment::HORIZONTAL_CENTER)
+                  ->setVertical(Alignment::VERTICAL_CENTER);
+                $cell->createTextRun($dtString)->getFont()->setSize(5.5);                
                 $date = date_add($date, new \DateInterval("P".$dayInterval."D"));
             }   
             
             $shape = $currentSlide->createRichTextShape()
                                   ->setHeight(20)
-                                  ->setWidth($offset); 
+                                  ->setWidth($offset);
+                                  
             $shape->getBorder()->setColor(new Color('FF000000'))->setLineStyle(Border::LINE_SINGLE);
             
             $shape->setOffsetX(self::$offsetWaterfallX + self::$waterfallWidth - $offset);
             $shape->setOffsetY(self::$offsetWaterfallY + self::$waterfallHeight);
             
-            $this->numDays = $daysBetween;
-            return $idx; //num boxes
+            $this->numDays = $daysBetween;                                 
+            
+            return $numCols; //num boxes
         }
         
         function renderSingleDayBox($currentSlide, $date1)
@@ -1644,13 +1668,21 @@
          
         function generateWaterfallLabelsXAxis($first, $last, $today)
         {  
-            //$first = preg_split('/-/', $first)[0].'-01-01';                               
+            $firstYMD = preg_split('/-/', $first);
+            $lastYMD = preg_split('/-/', $last);                             
             $date1 = new \DateTime($first);
-            $date2 = new \DateTime($last); 
+            $date2 = new \DateTime($last);
             $yearsBetween = date_diff($date2, $date1)->y;
             $monthsBetween = date_diff($date2, $date1)->m;
             $daysBetween = date_diff($date2, $date1)->days;
             
+            if ($daysBetween > 31){
+                $date2 = new \DateTime($lastYMD[0].'-'.$lastYMD[1].'-'.date('t', strtotime($last)));   //set date2 as end of month for date2;
+                $yearsBetween = date_diff($date2, $date1)->y;
+                $monthsBetween = date_diff($date2, $date1)->m;
+                $daysBetween = date_diff($date2, $date1)->days;    
+            }
+             
             $totalMonthsBetween = $yearsBetween*12+$monthsBetween;
             $totalDaysBetween = $daysBetween; 
                
@@ -1693,15 +1725,8 @@
             {
                 $this->numBoxes = $this->renderYearBoxes($yearsBetween, $yearInterval, $currentSlide, $date1, $date2); 
                 $this->generateWaterfallMarker($today);     
-            }   
-            else if ($totalMonthsBetween >= 7 && $totalMonthsBetween <= 18)
-            {
-                $monthInterval = 2;
-                $this->monthInterval = $monthInterval;
-                $this->numBoxes = $this->renderMonthBoxes($totalMonthsBetween, $monthInterval, $currentSlide, $date1, $date2);
-                $this->generateWaterfallMarker($today);   
-            } 
-            else if ($totalMonthsBetween > 1 && $totalMonthsBetween <= 6)
+            }                                                           
+            else if ($totalMonthsBetween > 1 && $totalMonthsBetween <= 18)
             {
                 $monthInterval = 1;
                 $this->monthInterval = $monthInterval;
@@ -1709,7 +1734,7 @@
                 $this->generateWaterfallMarker($today);     
             } 
             else if ($totalDaysBetween > 0)
-            {
+            {  
                 $this->numBoxes = $this->renderDayBoxes($totalDaysBetween+1, $dayInterval, $currentSlide, $date1, $date2); 
                 $this->generateWaterfallMarker($today);
             }        
@@ -1864,10 +1889,10 @@
            //header("Content-Type: application/vnd.openxmlformats-officedocument.presentationml.presentation; charset=utf-8");
            header("charset=utf8");
            //header("Content-Disposition: attachment; filename=RiskSummary.pptx");
-           $oWriterPPTX = IOFactory::createWriter($this->riskPPT,'PowerPoint2007');
-           return $oWriterPPTX->save('php://output');    
+           $oWriterPPTX = IOFactory::createWriter($this->riskPPT,'PowerPoint2007');   
+           return $oWriterPPTX->save('php://output');                                      
         }
-        
+                                                                         
         public function generateEventTable($events, $minHigh, $maxLow)
         {
             $currentSlide = $this->getActiveSlide();

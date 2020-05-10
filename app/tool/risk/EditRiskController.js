@@ -67,12 +67,18 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                
           }  
           
-          
+           $scope.init = function(){
+                angular.element(document.querySelector('link[href="/app/tool/EditRisk.css"]')).remove();
+                angular.element(document.querySelector('link[href="/app/css/bootstrap/bootstrap.min.css"]')).remove();   
+                angular.element(document.querySelector('head')).append('<link type="text/css" rel="stylesheet" href="/app/tool/risk/EditRisk.css"/>');
+                angular.element(document.querySelector('head')).append('<link type="text/css" rel="stylesheet" href="/app/css/bootstrap/bootstrap.min.css"/>');
+                ctrl.fetchRisk();
+            }
                         
             $scope.$on("$destroy", function(){
                  formcheck = 0;    
                  angular.element(document.querySelector('link[href="/app/tool/risk/EditRisk.css"]')).remove();
-                 //angular.element(document.querySelector('link[href="/app/css/bootstrap/bootstrap.css"]')).remove();   
+                 angular.element(document.querySelector('link[href="/app/css/bootstrap/bootstrap.min.css"]')).remove();   
             });
           
           ctrl.openBaseline = function(evt) {

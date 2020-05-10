@@ -10,8 +10,7 @@ function getRisk(){
                         $scope.ctrl.risklevels.riskhigh = response.data.Result.Levels[0].riskhigh;
                         $scope.ctrl.risklevels.riskmedium = response.data.Result.Levels[0].riskmedium;
                         $scope.ctrl.risklevels.riskminimum = response.data.Result.Levels[0].riskminimum; 
-                    
-                     
+                       
                         for (var idx = 0; idx < response.data.Result.Thresholds.length; idx++)
                         {
                             var l = response.data.Result.Thresholds[idx].likelihood;

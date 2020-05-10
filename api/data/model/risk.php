@@ -1,6 +1,5 @@
 <?php
     namespace data\model;
-    
     class risk
     {
         public $riskid;          

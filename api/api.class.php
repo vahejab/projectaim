@@ -111,19 +111,19 @@
                         }
                         else {        
                             $response = (new $class($args,$endpoint2,$payload))->{$method}($id);   //here id can be numeric or 'first', or 'last' possibly
-                        }   
-                        if ($response['Succeeded'] == null)
-                            return $response;
-                            //return $this->_response($response);
-                        
+                        }
+                           
+                        if ($response['Succeeded'] == false){
+                            return $response['Result'];
+                        }
                         else if ($response['Succeeded']== true){    
                             header("Content-Type: application/json");
                             return $this->_response($response);
                         }
-                        else{
+                        else if ($response['Result']){
                             header("Content-Type: application/html");
-                            return $response['Result'];
-                        }
+                            return $this->response($response);
+                        } 
                     }
                 }
                 if ($this->endpoint){
