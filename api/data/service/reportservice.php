@@ -1633,10 +1633,11 @@
                                   
             $shape->getBorder()->setColor(new Color('FF000000'))->setLineStyle(Border::LINE_SINGLE);
             
-            $shape->setOffsetX(self::$offsetWaterfallX + self::$waterfallWidth - $offset);
+            $shape->setOffsetX(self::$offsetWaterfallX + self::$waterfallWidth - $offset);                   
             $shape->setOffsetY(self::$offsetWaterfallY + self::$waterfallHeight);
             
             $this->numDays = $daysBetween;                                 
+            
             
             return $numCols; //num boxes
         }
@@ -1647,8 +1648,10 @@
             $shape = $currentSlide->createRichTextShape()
                                   ->setHeight(20)
                                   ->setWidth($width - 1);     
-            $shape->setOffsetX(300);
-            $shape->setOffsetY(240);
+            
+            $shape->setOffsetX(self::$offsetWaterfallX);
+            $shape->setOffsetY(self::$offsetWaterfallY + self::$waterfallHeight);
+           
             $textRun = $shape->createTextRun(date_format($date1, 'm/d/Y'));
             $textRun->getFont()->setSize(8);                
             $shape->getActiveParagraph()
