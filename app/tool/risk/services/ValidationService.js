@@ -144,8 +144,9 @@ angular.module('Risk').service("ValidationService", function() {
                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].actualcost)
                       )
                       );   
-         commonFunctions.hasData(evt, scope);       
-         scope.ctrl.event[evt].valid = valid;
+         commonFunctions.hasData(evt, scope); 
+         if (scope.ctrl.event[evt])      
+            scope.ctrl.event[evt].valid = valid;
          return valid;   
     }
     
@@ -176,8 +177,9 @@ angular.module('Risk').service("ValidationService", function() {
                        (scope.ctrl.event[evt].actualschedule ||  "") != "" ||
                        (scope.ctrl.event[evt].actualcost ||  "") != ""
                       )
-                      );            
-         scope.ctrl.event[evt].dirty = dirty;
+                      );
+                      if (scope.ctrl.event[evt])             
+                        scope.ctrl.event[evt].dirty = dirty;
          return dirty;   
     }  
      
@@ -190,7 +192,9 @@ angular.module('Risk').service("ValidationService", function() {
                       (scope.ctrl.event[evt].scheduledtechnical ||  "") != ""  ||
                       (scope.ctrl.event[evt].scheduledschedule ||  "") != ""  ||
                       (scope.ctrl.event[evt].scheduledcost ||  "") != "");
-         scope.ctrl.event[evt].hasData = hasData;
+         
+         if (scope.ctrl.event[evt])
+            scope.ctrl.event[evt].hasData = hasData;           
     } 
               
     commonFunctions.validCharacter = function(c){

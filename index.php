@@ -51,7 +51,7 @@
             echo "<script type='text/javascript' src='/app/js/crossfilter/src/$file'></script>\n";
         }
         closedir($handle);
-     ?>
+    ?>
     <script src="/app/js/d3js-4.4.0/d3.js"></script>
     <script src="/app/js/dc.js-3.1.9/dc.js"></script>
     <script src="/app/js/dc.js-3.1.9/src/star-chart.js"></script>

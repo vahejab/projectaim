@@ -21,7 +21,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.oldcost=0;
         ctrl.initDone = false;
         ctrl.disabled = [{value: true},{value: true},{value: true},{value: true},{value: true},{value: true}];
-         ctrl.actual = [{disabled: true},{disabled: false},{disabled: true},{disabled: true},{disabled: true},{disabled: true}];
+        ctrl.actual = [{disabled: true},{disabled: false},{disabled: true},{disabled: true},{disabled: true},{disabled: true}];
        
           ctrl.today = function() {
             ctrl.dt = new Date();
@@ -467,19 +467,18 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             }
         }
         
-         ctrl.add = function(evt){
-                if (evt < 5 && ctrl.event.length > 0)
+        ctrl.add = function(evt){   
+            if (evt < 5 && ctrl.event.length > 0)
                 {
-                      if (evt > 0)
-                        scheduledate = new Date(ctrl.event[evt].scheduledate);
-                      
-                      baselinedate = new Date(ctrl.event[evt].baselinedate);
-                      
-                      if (evt > 0) 
-                       scheduledate.setDate(scheduledate.getDate() + 2);
-                      
-                      baselinedate.setDate(baselinedate.getDate() + 2);
+                      scheduledate = new Date(ctrl.event[evt].scheduledate);
 
+                      baselinedate = new Date(ctrl.event[evt].baselinedate);
+        
+  
+                      scheduledate.setDate(scheduledate.getDate()+((evt==0)? 2 : 1));
+                      baselinedate.setDate(baselinedate.getDate()+((evt==0)? 2 : 1));
+                      //alert(scheduledate + " " + baselinedate);
+                        
                       if (evt > 0)
                       {
                         y = scheduledate.getFullYear();
@@ -492,11 +491,12 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                       m = baselinedate.getMonth()+1;
                       d = baselinedate.getDate();
                       basdate = y+((m<10)?'-0'+m:'-'+m)+((d<10)?'-0'+d:'-'+d);   
-
-                      
+              
                       if (evt == 0)
                         schdate = basdate;
                       
+                      
+                      //console.log(ctrl.event);
                       ctrl.event.push({
                         eventid: evt+1,
                         eventtitle: '',
@@ -543,26 +543,29 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                     }
                });
                
+               //console.log(ctrl.event);
              }
-             if (evt == 1)
+             
+             if (evt < 5)
                 ctrl.disabled[0].value = true;
-             else {
+             if (evt >= 1) {
                 ctrl.disable(evt);
              } 
-            if (evt <= 5){  
+             if (evt <= 5){  
                 ctrl.validateEvent(evt);
                 if ((ctrl.event[evt] && ctrl.event[evt].valid))
                     ctrl.lastEventIdSaved++;
-            }     
-            if (evt < 5)
+             }     
+             if (evt < 5)
                 ctrl.enable(evt+1);                                                  
-        }
+           }
         
            ctrl.remove = function(evt){
             ctrl.disable(evt);
             ctrl.clearEvent(evt);   
             DOMops.clearLevel(evt);
             ctrl.event.pop();
+            //console.log(ctrl.event);
             ctrl.validateEvent(evt-1);   
             
             if (evt > 1)

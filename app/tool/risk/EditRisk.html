@@ -415,7 +415,7 @@
                             Save       
                         </div>
                         <div class="td value buttonvalue" style="min-width: 50px" >
-                            <input class="addEvent" type="button" id="add{{event}}" ng-disabled="((event-1) != ctrl.lastEventIdSaved) && (event != 0)" ng-show="!ctrl.disabled[event].value" ng-click="ctrl.add(event)" ng-keyup="$event.keyCode === 13 && ctrl.add(event)" value="Save" />
+                            <input class="addEvent" type="button" id="add{{event}}" ng-disabled="((event-1) != ctrl.lastEventIdSaved) && (event != 0)" ng-show="!ctrl.disabled[event].value" ng-click="ctrl.add(event)" ng-keyup="$event.keyCode === 13 && ctrl.add(event)" value="Next" />
                         </div>                                                                                                                                                                                                                                                                                                                           
                         <div class="td header buttonlabel">                                                                                                                                          
                             Remove
@@ -557,7 +557,7 @@
                              <input  required ng-class="{invalid: ctrl.event[event].baselineinvalid}" class="level" type="text" maxlength="1" ng-disabled="ctrl.disabled[event].value" ng-change="ctrl.validateDisplayLevel(event, 'baseline', 'cost'); (!ctrl.oldcost) && (ctrl.event[event].scheduledcost = ctrl.event[event].baselinecost)" ng-init="ctrl.oldcost=0" ng-focus="ctrl.oldcost = ctrl.event[event].baselinecost" ng-model="ctrl.event[event].baselinecost" />
                         </div>
                         <div class="td header">
-                            Schedule
+                            Schedule   
                         </div>
                         <div class="td value">
                          <!--input type='text' id="schedule{event}}" class="datepicker-here" data-language='en' /-->         
@@ -598,17 +598,17 @@
                         <div class="td value center nopadding">
                              <input required ng-class="{invalid: ctrl.event[event].scheduledinvalid}" class="level" type="text" maxlength="1" ng-disabled="ctrl.disabled[event].value" ng-change="ctrl.validateDisplayLevel(event, 'scheduled', 'schedule'); ctrl.setBaselineSchedule(event)" ng-model="ctrl.event[event].scheduledschedule" />
                         </div>
-                        <div class="td header">
+                        <div class="td header">                               
                             Cost
                         </div>
                         <div class="td value center nopadding">
                              <input required ng-class="{invalid: ctrl.event[event].scheduledinvalid}" class="level" type="text" maxlength="1" ng-disabled="ctrl.disabled[event].value" ng-change="ctrl.validateDisplayLevel(event, 'scheduled', 'cost'); ctrl.setBaselineCost(event)" ng-model="ctrl.event[event].scheduledcost" />
                         </div>
                         <div class="td header buttonlabel" style="min-width: 50px">
-                            Save 
-                        </div>
+                            Save
+                        </div>   
                         <div class="td value buttonvalue" style="min-width: 50px">
-                           <input class="addEvent" type="button" id="add{{event}}" ng-show="(!ctrl.disabled[event].value) && ((event == (ctrl.lastEventIdSaved)) || ((event == 0) && (event == ctrl.lastEventIdSaved))) && ctrl.event[event].valid" ng-click="ctrl.add(event)" ng-keyup="$event.keyCode === 13 && ctrl.add(event)" value="Save" />
+                           <input class="addEvent" type="button" id="add{{event}}" ng-show="(event == (ctrl.lastEventIdSaved)) && ctrl.event[event].valid" ng-click="ctrl.add(event)" ng-keyup="$event.keyCode === 13 && ctrl.add(event)" value="Save" />
                         </div>                                                                                                                                                                                                                                                                                                                           
                         <div class="td header buttonlabel">
                             Remove
@@ -648,4 +648,6 @@
     </div> 
     <init-risk />  
 </div>
+
+
     
