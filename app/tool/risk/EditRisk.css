@@ -498,7 +498,7 @@ div.nopadding{
   position: relative;
   z-index: 10000; /* The select2 dropdown has a z-index of 9999 */
 }
-
+/*
      
 .full button span {
     background-color: limegreen;
@@ -510,7 +510,7 @@ div.nopadding{
     border-radius: 32px;
     color: black;
   }
-  
+  */
 
 .fa-svg-icon > svg {
     position: relative;

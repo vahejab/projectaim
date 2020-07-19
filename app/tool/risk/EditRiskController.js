@@ -357,7 +357,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
        
         ctrl.submit = function(){
             if (!ctrl.valid())
-                 ctrl.msg = "Please complete form and resubmit";
+                 ctrl.msg = "Please  form and resubmit";
             else 
                 return $http.put('/api/risks', ctrl.risk).then(function(response){
                     ctrl.msg = response.data.Result;
@@ -453,7 +453,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
            elems = document.querySelectorAll(".evt"+evt);
         }
         
-        ctrl.actualComplete = function(evt){
+        ctrl.actual = function(evt){
             return {value:  ValidationService.actualValid(evt, $scope)};
         }
         
@@ -469,16 +469,14 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         
         ctrl.add = function(evt){   
             if (evt < 5 && ctrl.event.length > 0)
-                {
+            {
                       scheduledate = new Date(ctrl.event[evt].scheduledate);
-
                       baselinedate = new Date(ctrl.event[evt].baselinedate);
-        
-  
                       scheduledate.setDate(scheduledate.getDate()+((evt==0)? 2 : 1));
                       baselinedate.setDate(baselinedate.getDate()+((evt==0)? 2 : 1));
+                     
                       //alert(scheduledate + " " + baselinedate);
-                        
+
                       if (evt > 0)
                       {
                         y = scheduledate.getFullYear();
@@ -491,11 +489,12 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                       m = baselinedate.getMonth()+1;
                       d = baselinedate.getDate();
                       basdate = y+((m<10)?'-0'+m:'-'+m)+((d<10)?'-0'+d:'-'+d);   
-              
+
                       if (evt == 0)
-                        schdate = basdate;
-                      
-                      
+                      {
+                         schdate = basdate;
+                      }  
+
                       //console.log(ctrl.event);
                       ctrl.event.push({
                         eventid: evt+1,
@@ -518,12 +517,14 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                         scheduledschedule: '',
                         scheduledcost: '',
                  
+                     
+                 
                       inlineScheduleOptions: {
                         customClass: getDayClass,
                         minDate: schdate,
                         showWeeks: true
                       },  
-                       inlineBaselineOptions: {
+                      inlineBaselineOptions: {
                         customClass: getDayClass,
                         minDate: basdate,
                         showWeeks: true
@@ -534,14 +535,30 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                         formatYear: 'yy',
                         minDate: schdate,     
                         startingDay: 1
-                    },
-                    baselinedateOptions:{
+                      },
+                      baselinedateOptions:{
                         dateDisabled: disabled,
                         formatYear: 'yy',
                         minDate: basdate,           
                         startingDay: 1
-                    }
+                      }
                });
+               
+               
+               
+               if (evt == 2)
+               {  
+                   ctrl.event[evt].inlineActualOptions = {
+                        customClass: getDayClass,
+                        minDate: ctrl.nextDate(ctrl.event[evt-1].actualdate), 
+                        showWeeks: true  
+                      };
+                   ctrl.event[evt].actualdateOptions = {
+                         dateDisabled: disabled,
+                         formatYear: 'yy',    
+                         startingDay: 1  
+                      };
+               }
                
                //console.log(ctrl.event);
              }
@@ -581,6 +598,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         }
       
         
+        
         ctrl.clearSchedule = function(evt){
             ctrl.event[evt].scheduledate = '';
             ctrl.event[evt].scheduledlikelihood = '';
@@ -610,7 +628,14 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                         scheduledcost: ''}
         }
         
-     
+        ctrl.nextDate = function (myDate) {
+            date      = new Date(myDate);
+            next_date = new Date(date.setDate(date.getDate() + 2));
+            return next_date;
+        }
+
+
+        
         ctrl.edit = function(evt){
             ctrl.enable(evt);
             ctrl.event[evt].edit = true;
@@ -656,6 +681,15 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                             ctrl.event[key].baselinecost = event.baselinecost;
                          }
                          
+                         
+                         ctrl.actualDateOptions1 = {
+                                dateDisabled: disabled,
+                                customClass: getDayClass,
+                                minDate: ctrl.nextDate(ctrl.event[0].actualdate), 
+                                showWeeks: true  
+                              };
+        
+                         
                          if (response.data.Result.length)
                             ctrl.lastEventIdSaved = response.data.Result.length-1;
                          else
@@ -668,7 +702,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                          ctrl.initDone  = true;
                     }
                     return response.data.Result;
-               }).then(() => {ctrl.rebindDates();});
+               }).then(()  => {ctrl.rebindDates();});
         }
        
         ctrl.getRiskDetails = function(nav){
