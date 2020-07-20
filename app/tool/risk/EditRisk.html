@@ -420,7 +420,7 @@
                         <div class="td header buttonlabel">                                                                                                                                          
                             Remove
                         </div>
-                        <div class="td value buttonvalue">
+                        <div class="td value buttonvalue">                                                                                                                                                                                                                                                                                          
                            <input class="removeEvent" type="button" id="remove{{event}}" ng-show="((event-1) == ctrl.lastEventIdSaved) && (event != 0) && (ctrl.disabled[event].value)"  ng-click="ctrl.remove(event)" ng-keyup="$event.keyCode === 13 && ctrl.remove(event)"  value="Remove" />
                         </div>
                         <div class="td header buttonlabel" style="min-width: 50px">
@@ -468,7 +468,7 @@
                                 <p class="input-group">
                                    <!--input ng-if="!(ctrl.lastEventIdSaved >= event - 1)"  class="date-input"  ng-disabled="ctrl.actual[event].disabled || (ctrl.nextActualRiskEventId != event) || ((ctrl.lastEventIdSaved+1) < event) ||(!ctrl.evtValid(event)) && (event >= ctrl.lastEventIdSaved-1)" /-->
                                   <input ng-if="event==1" ng-change="ctrl.validateEvent(event)" ng-disabled="ctrl.actual[event].disabled ||(ctrl.nextActualRiskEventId != event) || ((ctrl.lastEventIdSaved+1) < event) ||(!ctrl.evtValid(event)) && (event >= ctrl.lastEventIdSaved-1)" ng-model="ctrl.event[event].actualdate" type="text" class="actual date-input" uib-datepicker-popup="MM/dd/yyyy" is-open="ctrl.actual[event].opened" datepicker-options="ctrl.actualDateOptions1" ng-required="true" close-text="Close" />
-                                  <input ng-if="event>1" ng-change="ctrl.validateEvent(event)" ng-disabled="ctrl.actual[event].disabled ||(ctrl.nextActualRiskEventId != event) || ((ctrl.lastEventIdSaved+1) < event) ||(!ctrl.evtValid(event)) && (event >= ctrl.lastEventIdSaved-1)" ng-model="ctrl.event[event].actualdate" type="text" class="actual date-input" uib-datepicker-popup="MM/dd/yyyy" is-open="ctrl.actual[event].opened" datepicker-options="ctrl.event[event-1].actualdateOptions" ng-required="true" close-text="Close" />
+                                  <input ng-if="event>1" ng-change="ctrl.validateEvent(event)" ng-disabled="ctrl.actual[event].disabled ||(ctrl.nextActualRiskEventId != event) || ((ctrl.lastEventIdSaved+1) < event) ||(!ctrl.evtValid(event)) && (event >= ctrl.lastEventIdSaved-1)" ng-model="ctrl.event[event].actualdate" type="text" class="actual date-input" uib-datepicker-popup="MM/dd/yyyy" is-open="ctrl.actual[event].opened" datepicker-options="ctrl.event[event].actualdateOptions" ng-required="true" close-text="Close" />
                                   
                                   <span class="input-group-btn">
                                     <button type="button" class="btn btn-secondary" ng-disabled="ctrl.actual[event].disabled || (ctrl.nextActualRiskEventId != event) && (ctrl.nextActualRiskEventId != event) || ((ctrl.lastEventIdSaved+1) < event) ||(!ctrl.evtValid(event)) && (event >= ctrl.lastEventIdSaved-1)" ng-click="ctrl.openActual(event)">

@@ -465,6 +465,19 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                ctrl.disableActual(evt);
                ctrl.nextActualRiskEventId++;
             }
+            
+            nextDate = ctrl.nextDate(ctrl.event[evt].actualdate);
+            ctrl.event[evt+1].inlineActualOptions = {
+                customClass: getDayClass,
+                minDate: nextDate,
+                showWeeks: true  
+              };
+            ctrl.event[evt+1].actualdateOptions = {
+                 dateDisabled: disabled,
+                 minDate: nextDate,
+                 formatYear: 'yy',    
+                 startingDay: 1  
+              };         
         }
         
         ctrl.add = function(evt){   
@@ -543,23 +556,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                         startingDay: 1
                       }
                });
-               
-               
-               
-               if (evt == 2)
-               {  
-                   ctrl.event[evt].inlineActualOptions = {
-                        customClass: getDayClass,
-                        minDate: ctrl.nextDate(ctrl.event[evt-1].actualdate), 
-                        showWeeks: true  
-                      };
-                   ctrl.event[evt].actualdateOptions = {
-                         dateDisabled: disabled,
-                         formatYear: 'yy',    
-                         startingDay: 1  
-                      };
-               }
-               
+            
                //console.log(ctrl.event);
              }
              
@@ -630,21 +627,83 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         
         ctrl.nextDate = function (myDate) {
             date      = new Date(myDate);
-            next_date = new Date(date.setDate(date.getDate() + 2));
+            next_date = new Date(date.setDate(date.getDate()+1));
             return next_date;
         }
 
-
+        ctrl.minDate = function(myDate) {
+            date      = new Date(myDate);
+            next_date = new Date(date.setDate(date.getDate()+2));
+            return next_date;
+        }
+        
+        ctrl.maxDate = function(myDate){
+            date     = new Date(myDate);
+            max_date = new Date(date.setDate(date.getDate()-1));
+            return max_date;
+        }
         
         ctrl.edit = function(evt){
             ctrl.enable(evt);
             ctrl.event[evt].edit = true;
+            if (evt > 1)
+                minDate = ctrl.nextDate(ctrl.event[evt-1].baselinedate);
+            else
+                minDate = ctrl.minDate(ctrl.event[evt-1].baselinedate);
+            
+            ctrl.event[evt].inlineBaselineOptions = {
+                customClass: getDayClass,
+                minDate: minDate,
+                showWeeks: true  
+              };
+            ctrl.event[evt].baselinedateOptions = {
+                 dateDisabled: disabled,
+                 minDate: minDate,
+                 formatYear: 'yy',    
+                 startingDay: 1  
+              };    
+            if (evt < 5)
+            {
+             maxDate = ctrl.maxDate(ctrl.event[evt+1].baselinedate);
+             ctrl.event[evt].inlineBaselineOptions['maxDate'] = maxDate;
+             ctrl.event[evt].baselinedateOptions['maxDate'] = maxDate;   
+            }
+            
+            
+            if (evt > 1)
+                minDate = ctrl.nextDate(ctrl.event[evt-1].scheduledate);
+            else if (ctrl.event[evt-1].scheduledate != null)
+                minDate = ctrl.minDate(ctrl.event[evt-1].scheduledate);
+      
+            
+            ctrl.event[evt].inlineScheduleOptions = {
+                customClass: getDayClass,
+                showWeeks: true  
+              };
+              ctrl.event[evt].scheduledateOptions = {
+                 dateDisabled: disabled, 
+                 formatYear: 'yy',    
+                 startingDay: 1  
+              };
+   
+            
+            if (evt > 1 && ctrl.event[evt-1].scheduledate != null)
+            {
+                ctrl.event[evt].inlineScheduleOptions['minDate'] = minDate;
+                ctrl.event[evt].scheduledateOptions['minDate'] = minDate;  
+            }
+            if (evt < 5)
+            {
+                maxDate = ctrl.maxDate(ctrl.event[evt+1].scheduledate);
+                ctrl.event[evt].inlineScheduleOptions['maxDate'] = maxDate;
+                ctrl.event[evt].scheduledateOptions['maxDate'] = maxDate;   
+            }
         }
         
-         ctrl.update = function(evt){
+        ctrl.update = function(evt){
             ctrl.disable(evt);
             ctrl.event[evt].edit = false;
-         }
+        }
         
         ctrl.getEvents = function(riskid){
              ctrl.evts = [];
