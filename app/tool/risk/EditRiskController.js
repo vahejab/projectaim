@@ -21,18 +21,8 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.oldcost=0;
         ctrl.initDone = false;
         ctrl.disabled = [{value: true},{value: true},{value: true},{value: true},{value: true},{value: true}];
-        ctrl.actual = [{opened: false, disabled: false},{opened: true, disabled: false},{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true}];
-           
-          ctrl.schedule = {
-            1:{opened: false},
-            2:{opened: false},
-            3:{opened: false},
-            4:{opened: false},
-            5:{opened: false}  
-          }
-          
-          
-          
+        ctrl.actual = [{disabled: true},{disabled: false},{disabled: true},{disabled: true},{disabled: true},{disabled: true}];
+       
           ctrl.today = function() {
             ctrl.dt = new Date();
           };
@@ -73,7 +63,8 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                 3:{opened: false},
                 4:{opened: false},
                 5:{opened: false}  
-              }   
+              }
+               
           }  
           
            $scope.init = function(){
@@ -114,6 +105,22 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
           ctrl.altInputFormats = ['M!/d!/yyyy'];
           ctrl.format = 'MM/dd/yyyy';
                          
+          
+          ctrl.actual = {
+            1:{opened: false},
+            2:{opened: false},
+            3:{opened: false},
+            4:{opened: false},
+            5:{opened: false}  
+          }
+           
+          ctrl.schedule = {
+            1:{opened: false},
+            2:{opened: false},
+            3:{opened: false},
+            4:{opened: false},
+            5:{opened: false}  
+          }
           
           
           var tomorrow = new Date();
@@ -446,8 +453,8 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
            elems = document.querySelectorAll(".evt"+evt);
         }
         
-        ctrl.actualvalid = function(evt){
-            return {value: ValidationService.actualValid(evt, $scope)};
+        ctrl.actual = function(evt){
+            return {value:  ValidationService.actualValid(evt, $scope)};
         }
         
         ctrl.complete = function(evt){
@@ -460,20 +467,17 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             }
             
             nextDate = ctrl.nextDate(ctrl.event[evt].actualdate);
-            
-            if (ctrl.event[evt+1]){
-                ctrl.event[evt+1].inlineActualOptions = {
-                    customClass: getDayClass,
-                    minDate: nextDate,
-                    showWeeks: true  
-                  };
-                ctrl.event[evt+1].actualdateOptions = {
-                     dateDisabled: disabled,
-                     minDate: nextDate,
-                     formatYear: 'yy',    
-                     startingDay: 1  
-                  };
-           }         
+            ctrl.event[evt+1].inlineActualOptions = {
+                customClass: getDayClass,
+                minDate: nextDate,
+                showWeeks: true  
+              };
+            ctrl.event[evt+1].actualdateOptions = {
+                 dateDisabled: disabled,
+                 minDate: nextDate,
+                 formatYear: 'yy',    
+                 startingDay: 1  
+              };         
         }
         
         ctrl.add = function(evt){   
@@ -588,8 +592,6 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             }
 
             ctrl.lastEventIdSaved--;
-            if (evt >= ctrl.nextActualRiskEventId)
-                ctrl.nextActualRiskEventId = ctrl.lastEventIdSaved;
         }
       
         
@@ -660,7 +662,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                  formatYear: 'yy',    
                  startingDay: 1  
               };    
-            if (evt < 5 && ctrl.event[evt+1])
+            if (evt < 5)
             {
              maxDate = ctrl.maxDate(ctrl.event[evt+1].baselinedate);
              ctrl.event[evt].inlineBaselineOptions['maxDate'] = maxDate;
@@ -690,7 +692,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                 ctrl.event[evt].inlineScheduleOptions['minDate'] = minDate;
                 ctrl.event[evt].scheduledateOptions['minDate'] = minDate;  
             }
-            if (evt < 5 && ctrl.event[evt+1])
+            if (evt < 5)
             {
                 maxDate = ctrl.maxDate(ctrl.event[evt+1].scheduledate);
                 ctrl.event[evt].inlineScheduleOptions['maxDate'] = maxDate;
@@ -738,6 +740,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                             ctrl.event[key].baselinecost = event.baselinecost;
                          }
                          
+                         
                          ctrl.actualDateOptions1 = {
                                 dateDisabled: disabled,
                                 customClass: getDayClass,
@@ -756,23 +759,6 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                          
                          ctrl.eventsdone = true;   
                          ctrl.initDone  = true;
-                         
-                             
-                        for (e = 1; e <= 5; e++)
-                        {
-                            if (ValidationService.actualValid(e, $scope))
-                            { 
-                               ctrl.nextActualRiskEventId++;
-                            }
-                        }
-                        
-                        ctrl.event[ctrl.nextActualRiskEventId].actualdateOptions = {
-                             dateDisabled: disabled,
-                             minDate: ctrl.minDate(ctrl.event[ctrl.nextActualRiskEventId-1].actualdate),
-                             formatYear: 'yy',    
-                             startingDay: 1  
-                          };
-       
                     }
                     return response.data.Result;
                }).then(()  => {ctrl.rebindDates();});
