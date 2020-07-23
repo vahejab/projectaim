@@ -21,7 +21,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.oldcost=0;
         ctrl.initDone = false;
         ctrl.disabled = [{value: true},{value: true},{value: true},{value: true},{value: true},{value: true}];
-        ctrl.actual = [{opened: false, disabled: false},{opened: true, disabled: false},{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true}];
+        ctrl.actual = [{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true}];
            
           ctrl.schedule = {
             1:{opened: false},
@@ -30,7 +30,13 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
             4:{opened: false},
             5:{opened: false}  
           }
-          
+            ctrl.baseline = {
+            1:{opened: false},
+            2:{opened: false},
+            3:{opened: false},
+            4:{opened: false},
+            5:{opened: false}  
+          }
           
           
           ctrl.today = function() {
@@ -51,29 +57,13 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
           }
           
          ctrl.hidepopups = function(){
-             ctrl.actual = {
-                1:{opened: false},
-                2:{opened: false},
-                3:{opened: false},
-                4:{opened: false},
-                5:{opened: false}  
-              }
-               
-              ctrl.schedule = {
-                1:{opened: false},
-                2:{opened: false},
-                3:{opened: false},
-                4:{opened: false},
-                5:{opened: false}  
-              }
-              
-              ctrl.baseline = {
-                1:{opened: false},
-                2:{opened: false},
-                3:{opened: false},
-                4:{opened: false},
-                5:{opened: false}  
-              }   
+             for (e = 1; e <= 5; e++)
+             {
+               ctrl.actual[e].opened = false;
+               ctrl.baseline[e].opened = false;
+               ctrl.schedule[e].opened = false;  
+                 
+             } 
           }  
           
            $scope.init = function(){
@@ -457,6 +447,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                ctrl.clearSchedule(evt);    
                ctrl.disableActual(evt);
                ctrl.nextActualRiskEventId++;
+               ctrl.actual[ctrl.nextActualRiskEventId].disabled = false;
             }
             
             nextDate = ctrl.nextDate(ctrl.event[evt].actualdate);
@@ -530,7 +521,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                  
                       inlineScheduleOptions: {
                         customClass: getDayClass,
-                        minDate: schdate,
+                        //minDate: schdate,
                         showWeeks: true
                       },  
                       inlineBaselineOptions: {
@@ -542,7 +533,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                       scheduledateOptions:{
                         dateDisabled: disabled,
                         formatYear: 'yy',
-                        minDate: schdate,     
+                        //minDate: schdate,     
                         startingDay: 1
                       },
                       baselinedateOptions:{
@@ -565,31 +556,37 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                 ctrl.validateEvent(evt);
                 if ((ctrl.event[evt] && ctrl.event[evt].valid))
                     ctrl.lastEventIdSaved++;
-             }     
+             }
+             
+             if (ctrl.nextActualRiskEventId == evt)
+             {
+                 ctrl.actual[evt].disabled = false;
+             }
+                  
              if (evt < 5)
                 ctrl.enable(evt+1);                                                  
            }
         
            ctrl.remove = function(evt){
-            ctrl.disable(evt);
-            ctrl.clearEvent(evt);   
-            DOMops.clearLevel(evt);
-            ctrl.event.pop();
-            //console.log(ctrl.event);
-            ctrl.validateEvent(evt-1);   
-            
-            if (evt > 1)
-            {                            
-                ctrl.enable(evt - 1);
-            }
-            else if (evt == 1)
-            {
-                 ctrl.disabled[0].value = false;
-            }
+               
+                if (evt == ctrl.nextActualRiskEventId && evt != 1)
+                    ctrl.nextActualRiskEventId--;
+               
+               
+                ctrl.disable(evt); 
+                ctrl.disableActual(evt);
+                ctrl.clearEvent(evt);   
+                DOMops.clearLevel(evt);
+                ctrl.event.pop();
+                //console.log(ctrl.event);
+                ctrl.validateEvent(evt-1);   
 
-            ctrl.lastEventIdSaved--;
-            if (evt >= ctrl.nextActualRiskEventId)
-                ctrl.nextActualRiskEventId = ctrl.lastEventIdSaved;
+                if (evt > 1)
+                {                            
+                    ctrl.enable(evt - 1);
+                }                   
+                ctrl.lastEventIdSaved--;
+          
         }
       
         
@@ -757,12 +754,17 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                          ctrl.eventsdone = true;   
                          ctrl.initDone  = true;
                          
-                             
+                        ctrl.nextActualRiskEventId = 1;    
                         for (e = 1; e <= 5; e++)
                         {
                             if (ValidationService.actualValid(e, $scope))
                             { 
-                               ctrl.nextActualRiskEventId++;
+                               ctrl.nextActualRiskEventId = e+1;
+                               ctrl.actual[e].disabled = true;
+                            }
+                            else
+                            {
+                                break;
                             }
                         }
                         
