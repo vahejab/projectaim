@@ -189,7 +189,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
 
             ctrl.evtCopy[0] = JSON.parse(JSON.stringify(ctrl.evts[0]));
                              
-            for (var idx = 0; (ctrl.lastEventIdSaved > 0) && (idx <= ctrl.lastEventIdSaved); idx++)
+            for (var idx = 1; (ctrl.lastEventIdSaved > 0) && (idx < ctrl.lastEventIdSaved); idx++)
             {            
                 ctrl.evtCopy[idx] = JSON.parse(JSON.stringify(ctrl.event[idx]));
                 if (!ctrl.evtCopy[idx].hasOwnProperty('actualdate') || ctrl.evtCopy[idx].actualdate == '')
@@ -420,7 +420,16 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         }                                                  
         
         ctrl.validateLevel = function(evt){
-             ctrl.displayLevel(evt);
+             ctrl.displayLevel(evt);                                       
+             
+        }
+        ctrl.completeEnabled = function(event){
+            if (event > 1)
+                return ValidationService.baselineValid(event, $scope) && ValidationService.scheduleValid(event, $scope) && (ctrl.actualValid(event-1).value && ctrl.actualDisabled(event-1));   
+        }
+        
+        ctrl.actualDisabled = function(event){
+            return !ctrl.completeEnabled(event) && (ctrl.actual[event].disabled || (ctrl.actualValid(event).value || ((ctrl.nextActualRiskEventId == event) && event == ctrl.lastEventIdSaved)))
         }
         
          ctrl.disable = function(evt){
@@ -436,7 +445,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
            elems = document.querySelectorAll(".evt"+evt);
         }
         
-        ctrl.actualvalid = function(evt){
+        ctrl.actualValid = function(evt){
             return {value: ValidationService.actualValid(evt, $scope)};
         }
         
@@ -557,10 +566,10 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                 if ((ctrl.event[evt] && ctrl.event[evt].valid))
                     ctrl.lastEventIdSaved++;
              }
-             
+              
              if (ctrl.nextActualRiskEventId == evt)
              {
-                 ctrl.actual[evt].disabled = false;
+                 ctrl.actual[evt].disabled = true;
              }
                   
              if (evt < 5)
@@ -568,7 +577,6 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
            }
         
            ctrl.remove = function(evt){
-               
                 if (evt == ctrl.nextActualRiskEventId && evt != 1)
                     ctrl.nextActualRiskEventId--;
                
@@ -706,7 +714,8 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
              ctrl.evtCopy = [];
              ctrl.lastEventIdSaved = 0;
              ctrl.disabled = [{value: true},{value: true},{value: true},{value: true},{value: true},{value: true}];
-        
+             ctrl.actual = [{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true}];
+             
              for (evt = 0; evt <= 5; evt++)
                 DOMops.clearLevel(evt);
              return $http.get('api/risks/'+riskid+'/events').then(function(response){
@@ -755,17 +764,14 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                          ctrl.initDone  = true;
                          
                         ctrl.nextActualRiskEventId = 1;    
+                        
                         for (e = 1; e <= 5; e++)
                         {
                             if (ValidationService.actualValid(e, $scope))
                             { 
                                ctrl.nextActualRiskEventId = e+1;
                                ctrl.actual[e].disabled = true;
-                            }
-                            else
-                            {
-                                break;
-                            }
+                            }   
                         }
                         
                         ctrl.event[ctrl.nextActualRiskEventId].actualdateOptions = {

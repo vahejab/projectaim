@@ -83,7 +83,7 @@ angular.module('Risk').service("ValidationService", function() {
        commonFunctions.scheduleValid = function(evt, scope){
         var valid = scope.ctrl.event[evt] &&
                     !(scope.ctrl.event[evt] == {}) &&
-                       (scope.ctrl.event[evt].hasOwnProperty('scheduledate') && scope.ctrl.event[evt].scheduldate || "") != "" &&  
+                       (scope.ctrl.event[evt].hasOwnProperty('scheduledate') && scope.ctrl.event[evt].scheduledate || "") != "" &&  
                        (scope.ctrl.event[evt].hasOwnProperty('scheduledlikelihood') && scope.ctrl.event[evt].scheduledlikelihood ||  "") != ""  &&
                        (scope.ctrl.event[evt].hasOwnProperty('scheduledtechnical') && scope.ctrl.event[evt].scheduledtechnical ||  "") != ""  &&
                        (scope.ctrl.event[evt].hasOwnProperty('scheduledschedule') && scope.ctrl.event[evt].scheduledschedule ||  "") != ""  &&
@@ -93,8 +93,27 @@ angular.module('Risk').service("ValidationService", function() {
                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].scheduledtechnical) &&
                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].scheduledschedule) &&
                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].scheduledcost);
+                      
+       return valid;
                     
     }
+    
+       commonFunctions.baselineValid = function(evt, scope){
+        var valid = scope.ctrl.event[evt] &&
+                    !(scope.ctrl.event[evt] == {}) &&
+                       (scope.ctrl.event[evt].hasOwnProperty('baselinedate') && scope.ctrl.event[evt].baselinedate || "") != "" &&  
+                       (scope.ctrl.event[evt].hasOwnProperty('baselinelikelihood') && scope.ctrl.event[evt].baselinelikelihood ||  "") != ""  &&
+                       (scope.ctrl.event[evt].hasOwnProperty('baselinetechnical') && scope.ctrl.event[evt].baselinetechnical ||  "") != ""  &&
+                       (scope.ctrl.event[evt].hasOwnProperty('baselineschedule') && scope.ctrl.event[evt].baselineschedule ||  "") != ""  &&
+                       (scope.ctrl.event[evt].hasOwnProperty('baselinecost') && scope.ctrl.event[evt].baselinecost ||  "") != ""  &&
+                      
+                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].baselinelikelihood) &&
+                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].baselinetechnical) &&
+                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].baselineschedule) &&
+                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].baselinecost);
+                    
+        return valid;
+       }
     
     
     

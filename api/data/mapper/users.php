@@ -5,17 +5,17 @@
         public function mapFromArray($array, \data\model\user $user = null)
         {
             if ( is_null($user)) $user = new \data\model\user();
-            if (!is_null($array['user.id'])) $user->id = $array['user.id'];
-            //if (!is_null($array['user.userid'])) $user->userid = $array['user.userid'];
-            if (!is_null($array['user.lastname'])) $user->lastname = $array['user.lastname'];
-            if (!is_null($array['user.firstname'])) $user->firstname = $array['user.firstname'];         
-            if (!is_null($array['user.title'])) $user->title = $array['user.title'];
-            if (!is_null($array['user.email'])) $user->email = $array['user.email'];
-            if (!is_null($array['user.phone'])) $user->phone = $array['user.phone'];
-            if (!is_null($array['user.extension'])) $user->extension = $array['user.extension'];
-            if (!is_null($array['user.department'])) $user->department = $array['user.department']; 
-            if (!is_null($array['user.lastname']) 
-            ||  !is_null($array['user.firstname'])) $user->name = $user->getUserLastFirst(); 
+            if (!is_null($array['id'])) $user->id = $array['id'];
+            if (!is_null($array['userid'])) $user->userid = $array['userid'];
+            if (!is_null($array['lastname'])) $user->lastname = $array['lastname'];
+            if (!is_null($array['firstname'])) $user->firstname = $array['firstname'];         
+            if (!is_null($array['title'])) $user->title = $array['title'];
+            if (!is_null($array['email'])) $user->email = $array['email'];
+            if (!is_null($array['phone'])) $user->phone = $array['phone'];
+            if (!is_null($array['extension'])) $user->extension = $array['extension'];
+            if (!is_null($array['department'])) $user->department = $array['department']; 
+            if (!is_null($array['lastname']) 
+            ||  !is_null($array['firstname'])) $user->name = $user->getUserLastFirst(); 
             return $user;
         }
        
@@ -29,6 +29,7 @@
                 $searchCols = 
                    [
                     'id',
+                    'userid',
                     'lastname',
                     'firstname',
                     'title',
@@ -65,15 +66,16 @@
             }
             
             $sql = "select 
-                    id as 'user.id',
-                    lastname as 'user.lastname',
-                    firstname as 'user.firstname',
-                    title as 'user.title',
-                    email as 'user.email',
-                    phone as 'user.phone',
-                    extension as 'user.extension',
-                    department as 'user.department'
-                    from users user";
+                    id as 'id',
+                    userid as 'userid',
+                    lastname as 'lastname',
+                    firstname as 'firstname',
+                    title as 'title',
+                    email as 'email',
+                    phone as 'phone',
+                    extension as 'extension',
+                    department as 'department'
+                    from users";
                     
             if (!empty($whereStrings))
             {

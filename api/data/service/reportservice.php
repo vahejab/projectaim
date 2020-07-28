@@ -2080,7 +2080,7 @@
                     $cell->getActiveParagraph()->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER)->setVertical(Alignment::VERTICAL_BOTTOM);
                     
                     switch($hdrs[$idx2])
-                    {
+                    {  
                         case '#':
                           $cell->createTextRun($rowIdx)->getFont()->setSize(9);
                           break;
@@ -2279,11 +2279,12 @@
          
     for($idx = 0; $idx < count($evts['Result']); $idx++)
     {
-        $evt = $evts['Result'][$idx];
+     
+        $evt = $evts['Result'][$idx]; 
+        $eventowner = ((new \data\service\userservice())->findOne($evt->eventownerid));                                      
         $events[] = [
-
         'title' => $evt->eventtitle,
-        'owner' => (new \data\service\userservice())->findOne($evt->eventownerid)['Name'] ?? ' ',
+        'owner' => ($eventowner) ? $eventowner['Result']->name : ' ',  
         'baseline-date' => $evt->baselinedate ?? ' ',
         'baseline-likelihood' => ($evt->baselinelikelihood) ?? ' ',
         'baseline-consequence-T' => ($evt->baselinetechnical) ?? ' ',

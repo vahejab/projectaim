@@ -3,7 +3,7 @@
     
     class user {
         public $id;
-        //public $userid;
+        public $userid;
         public $title = '';
         public $phone = '';
         public $extension = '';
@@ -16,6 +16,7 @@
         //Property Function 2
         public function getUserLastFirst()
         {
-             return trim(join([$this->lastname, ', ', $this->firstname]), ', ');
+            $this->name = trim(join([$this->lastname, ', ', $this->firstname]), ', ');
+            return $this->name;
         }
     }
