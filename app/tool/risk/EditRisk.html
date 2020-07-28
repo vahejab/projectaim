@@ -415,7 +415,7 @@
                             Save       
                         </div>
                         <div class="td value buttonvalue" style="min-width: 50px" >
-                            <input class="addEvent" type="button" id="add{{event}}"  ng-show="!ctrl.disabled[event].value || (ctrl.lastEventIdSaved == 0)" ng-click="ctrl.add(event)" ng-keyup="$event.keyCode === 13 && ctrl.add(event)" value="Next" />
+                            <input class="addEvent" type="button" id="add{{event}}"  ng-show="!ctrl.disabled[event].value || (ctrl.event.length == 1)" ng-click="ctrl.add(event)" ng-keyup="$event.keyCode === 13 && ctrl.add(event)" value="Next" />
                         </div>                                                                                                                                                                                                                                                                                                                           
                         <div class="td header buttonlabel">                                                                                                                                          
                             Remove
@@ -618,7 +618,7 @@
                         <br class="showmobile"/>
                         <br class="showmobile"/>
                         <div class="td value buttonvalue" style="width: 71px">
-                           <input class="removeEvent" type="button" id="remove{{event}}" ng-show="(!ctrl.disabled[event].value && ctrl.lastEventIdSaved == event) || (ctrl.event.length == event+1)" ng-click="ctrl.remove(event)" ng-keyup="$event.keyCode === 13 && ctrl.remove(event)"  value="Clear" />
+                           <input class="removeEvent" type="button" id="remove{{event}}" ng-show="(!ctrl.disabled[event].value && ctrl.lastEventIdSaved == event)" ng-click="ctrl.remove(event)" ng-keyup="$event.keyCode === 13 && ctrl.remove(event)"  value="Clear" />
                         </div>
                         <div class="td header buttonlabel" style="min-width: 50px">
                             Edit

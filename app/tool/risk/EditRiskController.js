@@ -424,8 +424,9 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
              
         }
         ctrl.completeEnabled = function(event){
-            if (event > 1)
+            if (event >= 1)
                 return ValidationService.baselineValid(event, $scope) && ValidationService.scheduleValid(event, $scope) && (ctrl.actualValid(event-1).value && ctrl.actualDisabled(event-1));   
+                
         }
         
         ctrl.actualDisabled = function(event){
