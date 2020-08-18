@@ -20,6 +20,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.oldschedule=0;
         ctrl.oldcost=0;
         ctrl.initDone = false;
+        ctrl.levelsready = false;
         ctrl.disabled = [{value: true},{value: true},{value: true},{value: true},{value: true},{value: true}];
         ctrl.actual = [{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true}];
            
@@ -578,7 +579,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
            }
         
            ctrl.remove = function(evt){
-                if (evt == ctrl.nextActualRiskEventId && evt != 1)
+                if (evt == ctrl.nextActualRiskEventId-1)
                     ctrl.nextActualRiskEventId--;
                
                
@@ -586,6 +587,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                 ctrl.disableActual(evt);
                 ctrl.clearEvent(evt);   
                 DOMops.clearLevel(evt);
+                 
                 ctrl.event.pop();
                 //console.log(ctrl.event);
                 ctrl.validateEvent(evt-1);   
@@ -716,7 +718,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
              ctrl.lastEventIdSaved = 0;
              ctrl.disabled = [{value: true},{value: true},{value: true},{value: true},{value: true},{value: true}];
              ctrl.actual = [{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true}];
-             
+                         
              for (evt = 0; evt <= 5; evt++)
                 DOMops.clearLevel(evt);
              return $http.get('api/risks/'+riskid+'/events').then(function(response){
@@ -758,12 +760,11 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                          else
                             ctrl.lastEventIdSaved = 0;
                         ctrl.add(ctrl.lastEventIdSaved);
-                         
+                      
                          ctrl.copyEvent();
                          
-                         ctrl.eventsdone = true;   
-                         ctrl.initDone  = true;
-                         
+                        ctrl.initDone  = true;
+                        ctrl.eventsdone = true;
                         ctrl.nextActualRiskEventId = 1;    
                         
                         for (e = 1; e <= 5; e++)
@@ -783,8 +784,9 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                           };
        
                     }
+       
                     return response.data.Result;
-               }).then(()  => {ctrl.rebindDates();});
+               }).then(() => {ctrl.rebindDates();});
         }
        
         ctrl.getRiskDetails = function(nav){
@@ -921,6 +923,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         }
         
         ctrl.fetchRisk = function(page){
+                ctrl.levelsready = false;   
                 ctrl.lastEventIdSaved = 0;
                 return ctrl.getRiskConfig()
                     .then(()=> {return ctrl.getUsers()

@@ -2267,41 +2267,39 @@
  
         public function riskreport($id){
        
-       $minHigh = .55;
-    $maxLow = .30;
-  
-  
-    
-    $evtSvc = new \data\service\eventservice();
-    $evts = [];
-    $evts = $evtSvc->findAllByRisk($id);
-    $events = [];
-         
-    for($idx = 0; $idx < count($evts['Result']); $idx++)
-    {
-     
-        $evt = $evts['Result'][$idx]; 
-        $eventowner = ((new \data\service\userservice())->findOne($evt->eventownerid));                                      
-        $events[] = [
-        'title' => $evt->eventtitle,
-        'owner' => ($eventowner) ? $eventowner['Result']->name : ' ',  
-        'baseline-date' => $evt->baselinedate ?? ' ',
-        'baseline-likelihood' => ($evt->baselinelikelihood) ?? ' ',
-        'baseline-consequence-T' => ($evt->baselinetechnical) ?? ' ',
-        'baseline-consequence-S' => ($evt->baselineschedule) ?? ' ',
-        'baseline-consequence-C' => ($evt->baselinecost) ?? ' ',
-        'actual-date' => $evt->actualdate ?? ' ',
-        'actual-likelihood' => ($evt->actuallikelihood) ?? ' ',
-        'actual-consequence-T' => ($evt->actualtechnical) ?? ' ',
-        'actual-consequence-S' => ($evt->actualschedule) ?? ' ',
-        'actual-consequence-C' => ($evt->actualcost) ?? ' ',
-        'schedule-date' => $evt->scheduledate ?? ' ',
-        'schedule-likelihood' => ($evt->scheduledlikelihood) ?? ' ',
-        'schedule-consequence-T' => ($evt->scheduledtechnical) ?? ' ',
-        'schedule-consequence-S' => ($evt->scheduledschedule) ?? ' ',
-        'schedule-consequence-C' => ($evt->scheduledcost) ?? ' '
-    ];
-    }
+           $minHigh = .55;
+           $maxLow = .30;
+           
+           $evtSvc = new \data\service\eventservice();
+           $evts = [];
+           $evts = $evtSvc->findAllByRisk($id);
+           $events = [];
+                 
+            for($idx = 0; $idx < count($evts['Result']); $idx++)
+            {
+             
+                $evt = $evts['Result'][$idx]; 
+                $eventowner = ((new \data\service\userservice())->findOne($evt->eventownerid));                                      
+                $events[] = [
+                    'title' => $evt->eventtitle,
+                    'owner' => ($eventowner) ? $eventowner['Result']->name : ' ',  
+                    'baseline-date' => $evt->baselinedate ?? ' ',
+                    'baseline-likelihood' => ($evt->baselinelikelihood) ?? ' ',
+                    'baseline-consequence-T' => ($evt->baselinetechnical) ?? ' ',
+                    'baseline-consequence-S' => ($evt->baselineschedule) ?? ' ',
+                    'baseline-consequence-C' => ($evt->baselinecost) ?? ' ',
+                    'actual-date' => $evt->actualdate ?? ' ',
+                    'actual-likelihood' => ($evt->actuallikelihood) ?? ' ',
+                    'actual-consequence-T' => ($evt->actualtechnical) ?? ' ',
+                    'actual-consequence-S' => ($evt->actualschedule) ?? ' ',
+                    'actual-consequence-C' => ($evt->actualcost) ?? ' ',
+                    'schedule-date' => $evt->scheduledate ?? ' ',
+                    'schedule-likelihood' => ($evt->scheduledlikelihood) ?? ' ',
+                    'schedule-consequence-T' => ($evt->scheduledtechnical) ?? ' ',
+                    'schedule-consequence-S' => ($evt->scheduledschedule) ?? ' ',
+                    'schedule-consequence-C' => ($evt->scheduledcost) ?? ' '
+                ];
+            }
  /*   
 $events = 
 [
@@ -2428,10 +2426,20 @@ $events =
         echo json_encode($events);
         die();
     }*/      
-
+            $lastActualDateIdx = 0;
+            for ($idx = 0; $idx < count($events); $idx++)
+            {
+                if ($events[$idx]['actual-date'] == ' ')
+                {
+                    $lastActualDateIdx = $idx-1;
+                    break;
+                }    
+            }
+    
+    
             $today = date('Y-m-d');  
             $startDate = $events[0]['baseline-date'];
-            $endDate = max($today, $events[count($events)-1]['baseline-date'], $events[count($events)-1]['schedule-date'], $events[count($events)-1]['actual-date']); 
+            $endDate = max($today, $events[count($events)-1]['baseline-date'], $events[count($events)-1]['schedule-date'], $events[$lastActualDateIdx]['actual-date']); 
             $report = new RiskReport($minHigh, $maxLow, $startDate, $endDate);
             $report->generateRiskMatrix(); 
             $report->generateRiskMatrixAxisBoxesLabels();
