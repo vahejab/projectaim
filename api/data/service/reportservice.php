@@ -2263,9 +2263,9 @@
     
     
           
- class report {
+    class report {
  
-        public function riskreport($id){
+        public function riskreport($id, $title, $owner, $state){
        
            $minHigh = .55;
            $maxLow = .30;
@@ -2433,7 +2433,11 @@ $events =
                 {
                     $lastActualDateIdx = $idx-1;
                     break;
-                }    
+                } 
+                else if($idx == count($events)-1)
+                {
+                    $lastActualDateIdx = $idx;
+                }   
             }
     
     
@@ -2455,8 +2459,8 @@ $events =
             $report->generateWaterfallYAxisLabel();
             $report->generateWaterfallXAxisLabel();
             $report->drawWaterfallLegends();
-            $report->generateRiskPresentationTitle(1, "Process Inadequacy");
-            $report->generatePresentationTitle("SEIT", "Jabagchourian, Vahe", "Open: Active");
+            $report->generateRiskPresentationTitle($id, $title);
+            $report->generatePresentationTitle("SEIT", $owner, $state);
             $report->generateEventTable($events, $minHigh, $maxLow);
             $report->generateRiskSummaryPresentation();
          }

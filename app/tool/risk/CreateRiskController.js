@@ -10,12 +10,13 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
     ctrl.setup = {
         done: false
     }
+    
     ctrl.users = []
     ctrl.config = {}
     ctrl.model = { elem: true }
     ctrl.riskid = 0;
     ctrl.riskownerid = 0;
-    ctrl.risk = { 
+    ctrl.risk = {       
         ownerid: '',
         risktitle: '',
         riskstatement:'',
@@ -126,6 +127,7 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
              ctrl.msg = "Please complete form and resubmit";
         else{ 
             ctrl.risk.ownerid = ctrl.riskownerid;
+            ctrl.risk.riskstate = ctrl.risk.ownerid ? 'Assigned' : 'Created';
             return $http.post('/api/risks', ctrl.risk).then(function(response){
                 if (response.data.Succeeded){     
                     ctrl.riskid = response.data.RiskID;
@@ -148,7 +150,7 @@ angular.module('Risk').controller('CreateRiskController', ['$http', '$resource',
                         actualtechnical : ctrl.risk.technical,
                         actualschedule : ctrl.risk.schedule,
                         actualcost : ctrl.risk.cost,
-              
+                        
                         
                         scheduledate : null,//today,
                         scheduledlikelihood : null,//ctrl.risk.likelihood,

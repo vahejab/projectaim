@@ -13,7 +13,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.event = [];
         ctrl.evts = [];
         ctrl.evtCopy = [];
-        ctrl.risk = {};
+        ctrl.risk = {};//0 -> Created, 1 -> Assigned, 2 -> In Progress, 3 -> Completed, 4 -> Closed
         ctrl.oldbaselinedate=0;
         ctrl.oldlikelihood=0;
         ctrl.oldtechnical=0;
@@ -21,6 +21,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.oldcost=0;
         ctrl.initDone = false;
         ctrl.levelsready = false;
+        ctrl.riskstates = {0: 'Created', 1: 'Assigned', 2: 'In Progress', 3: 'Completed', 4: 'Closed'};
         ctrl.disabled = [{value: true},{value: true},{value: true},{value: true},{value: true},{value: true}];
         ctrl.actual = [{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true}];
            
@@ -338,18 +339,49 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.valid = function(){
             return !(ctrl.risk.risktitle.trim() == '' && ctrl.risk.riskstatement.trim() == '' && ctrl.risk.context.trim() == '');
         }
-       
-        ctrl.submit = function(){
-            if (!ctrl.valid())
-                 ctrl.msg = "Please  form and resubmit";
-            else 
+        
+        ctrl.updateRisk = function(){
                 return $http.put('/api/risks', ctrl.risk).then(function(response){
                     ctrl.msg = response.data.Result;
                     return response.data.Result;
-                });
+                });     
+        }       
+            
+        ctrl.submit = function(){
+            if (!ctrl.valid())
+                 ctrl.msg = "Please complete form and resubmit";
+            else
+                if (ctrl.risk.riskstate != 'Completed')
+                {
+                   if (ctrl.risk.owner == null)
+                        ctrl.risk.riskstate = 'Created';
+                   else if (ctrl.risk.owner != null && ctrl.lastEventIdSaved == 0 || (ctrl.lastEventIdSaved == 1 && ctrl.event.length <= 2))
+                        ctrl.risk.riskstate = 'Assigned';
+                   else if (ctrl.event.length > 1)
+                        ctrl.risk.riskstate = 'In Progress';  
+                }
+            return ctrl.updateRisk();
         }
         
-               
+       
+        ctrl.completeRisk = function(){
+            if (!ctrl.valid())
+                 ctrl.msg = "Please complete form and resubmit";
+           
+            ctrl.risk.riskstate = 'Completed';
+            return ctrl.updateRisk();
+        }
+        
+        ctrl.closeRisk = function(){
+            if (!ctrl.valid())
+                 ctrl.msg = "Please complete form and resubmit";
+           
+            ctrl.risk.riskstate = 'Closed';
+            return ctrl.updateRisk(); 
+        }
+        
+        
+        
         
         
         ctrl.riskValid = function(evt, field){
@@ -424,14 +456,14 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
              ctrl.displayLevel(evt);                                       
              
         }
-        ctrl.completeEnabled = function(event){
+        ctrl.closeEnabled = function(event){
             if (event >= 1)
-                return ValidationService.baselineValid(event, $scope) && ValidationService.scheduleValid(event, $scope) && (ctrl.actualValid(event-1).value && ctrl.actualDisabled(event-1));   
+                return ValidationService.baselineValid(event, $scope) && ValidationService.scheduleValid(event, $scope) && (ctrl.actualValid(event-1).value && ctrl.actualDisabled(event-1) && ctrl.event[event-1].riskstate == 'Closed');   
                 
         }
         
         ctrl.actualDisabled = function(event){
-            return !ctrl.completeEnabled(event) && (ctrl.actual[event].disabled || (ctrl.actualValid(event).value || ((ctrl.nextActualRiskEventId == event) && event == ctrl.lastEventIdSaved)))
+            return !ctrl.closeEnabled(event) && (ctrl.actual[event].disabled || (ctrl.actualValid(event).value || ((ctrl.nextActualRiskEventId == event) && event == ctrl.lastEventIdSaved)))
         }
         
          ctrl.disable = function(evt){
@@ -725,7 +757,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                     if (response.data.Succeeded){
                         for (var key = 0; key <= response.data.Result.length-1; key++){
                             event = response.data.Result[key];
-                            ctrl.event.push({});
+                            ctrl.event.push({});  
                             ctrl.event[key].eventid = key;
                             ctrl.event[key].eventtitle = event.eventtitle;
                             ctrl.event[key].riskid = event.riskid;
@@ -753,7 +785,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                                 minDate: ctrl.nextDate(ctrl.event[0].actualdate), 
                                 showWeeks: true  
                               };
-        
+                         
                          
                          if (response.data.Result.length)
                             ctrl.lastEventIdSaved = response.data.Result.length-1;
@@ -818,6 +850,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                         
                         ctrl.risk.risklevel = ctrl.getRisk(likelihood, technical, schedule, cost);
                         ctrl.risk.level = ctrl.getLevel(ctrl.risk.risklevel, likelihood, technical, schedule, cost, Math.max(Math.max(technical, schedule), cost));
+                        ctrl.risk.riskstate = response.data.Result.riskstate; 
                         ctrl.risk.assignorname = response.data.Result.assignor;
                         ctrl.risk.ownername = response.data.Result.owner;
                         ctrl.risk.creatorname = response.data.Result.creator;
@@ -925,6 +958,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.fetchRisk = function(page){
                 ctrl.levelsready = false;   
                 ctrl.lastEventIdSaved = 0;
+               
                 return ctrl.getRiskConfig()
                     .then(()=> {return ctrl.getUsers()
                         .then(()=>{return ctrl.getRiskDetails(page)

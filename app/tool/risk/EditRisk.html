@@ -33,7 +33,7 @@
                                 Risk State
                             </div>
                             <div class="td locked">
-                               Open
+                                {{ctrl.risk.riskstate}}
                             </div>
                            
                         </div>            
@@ -117,10 +117,12 @@
                         </div>
                     </div>
                    <div class="center">
-                        <button id="submit" type="submit">Edit Risk</button>
+                        <button id="submit" type="submit">Update Risk</button>
+                        <button id="complete" type="button" ng-click="ctrl.completeRisk()">Submit for Closure Approval</button>
+                        <button id="complete" type="button" ng-click="ctrl.closeRisk()">Approve For Closure</button>
                    </div> 
                    </center>      
-        </form>
+            </form>
             <br />
             <h2>Risk #{{ctrl.risk.riskid}}</h2>
             <center>
@@ -281,7 +283,7 @@
                             
                             </div>
                             <div class="th header">
-                                 Complete
+                                 Close
                             </div>
                     </div>
                     <div class="tr event" ng-repeat="event in [0]" ng-if="ctrl.eventsdone">
@@ -628,10 +630,10 @@
                             <input class="updateEvent" type="button" id="update{{event}}"  ng-show="ctrl.event[event].edit" ng-hide="!ctrl.event[event].edit" ng-click="ctrl.update(event)" ng-keyup="$event.keyCode === 13 && ctrl.add(event)" value="Done" />         
                         </div>                                                                                                                                                                                                                                                                                                                           
                         <div class="td header buttonlabel">
-                            Complete                                                                       
+                            Closed                                                                       
                         </div>
                         <div class="td value buttonvalue" style="width: 100px !important">                              
-                            <input ng-show="ctrl.completeEnabled(event)" class="completeEvent" type="button" id="complete{{event}}"  ng-click="ctrl.complete(event)" ng-keyup="$event.keyCode === 13 && ctrl.complete(event)"  value="Complete" />
+                            <input ng-show="ctrl.closeEnabled(event)" class="closeEvent" type="button" id="close{{event}}"  ng-click="ctrl.close(event)" ng-keyup="$event.keyCode === 13 && ctrl.close(event)"  value="Close" />
                         </div>  
                     </div>
                     <br /> 

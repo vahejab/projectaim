@@ -4,6 +4,7 @@
     {
         public $riskid;          
         public $risktitle;
+        public $riskstate;
         public $riskstatement;
         public $context;
         public $approver;
