@@ -283,6 +283,12 @@
                             
                             </div>
                             <div class="th header">
+                                 Details
+                            </div>
+                            <div class="th placeholder">
+                            
+                            </div>
+                            <div class="th header">
                                  Close
                             </div>
                     </div>
@@ -430,9 +436,15 @@
                         </div>
                         <div class="td value buttonvalue-hide" style="min-width: 50px">
     
-                        </div>                                                                                                                                                                                                                                                                                                                           
+                        </div>                                                                                                                                                                                                                                                                                                                          
+                        <div class="td header buttonlabel" style="min-width: 50px">
+                            Details
+                        </div>
+                        <div class="td value buttonvalue-hide">
+                                            
+                        </div>                                                                                                                                                                                                                                                                                                                         
                         <div class="td header buttonlabel">
-                            Complete                                                                        
+                            Close                                                                        
                         </div>
                         <div class="td value buttonvalue-hide">
                                             
@@ -628,12 +640,18 @@
                         <div class="td value buttonvalue" style="width: 75px !important">                                                                                                                                                                    
                             <input class="editEvent" type="button" id="edit{{event}}" ng-show="(event < ctrl.lastEventIdSaved) && !ctrl.event[event].edit"  ng-click="ctrl.edit(event);" ng-keyup="$event.keyCode === 13 && ctrl.edit(event)" value="Edit" />
                             <input class="updateEvent" type="button" id="update{{event}}"  ng-show="ctrl.event[event].edit" ng-hide="!ctrl.event[event].edit" ng-click="ctrl.update(event)" ng-keyup="$event.keyCode === 13 && ctrl.add(event)" value="Done" />         
+                        </div> 
+                        <div class="td header buttonlabel">
+                            View                                                                      
+                        </div>    
+                        <div class="td value buttonvalue" style="width: 50px !important">                              
+                            <a ng-show="(ctrl.lastEventIdSaved >= event) && ctrl.evtValid(event)" href="#!/risk/{{ctrl.riskid}}/event/{{event}}">View</a> 
                         </div>                                                                                                                                                                                                                                                                                                                           
                         <div class="td header buttonlabel">
-                            Closed                                                                       
+                            Close                                                                       
                         </div>
                         <div class="td value buttonvalue" style="width: 100px !important">                              
-                            <input ng-show="ctrl.closeEnabled(event)" class="closeEvent" type="button" id="close{{event}}"  ng-click="ctrl.close(event)" ng-keyup="$event.keyCode === 13 && ctrl.close(event)"  value="Close" />
+                            <input ng-show="ctrl.lastEventIdSaved == event" class="closeEvent" type="button" id="close{{event}}"  ng-click="ctrl.close(event)" ng-keyup="$event.keyCode === 13 && ctrl.close(event)"  value="Close" />
                         </div>  
                     </div>
                     <br /> 

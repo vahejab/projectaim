@@ -11,12 +11,15 @@
             $this->payload = $payload;
         } 
         
-        public function get($id = null)
+        public function get($id = null, $id2 = null)
         {   
             $service = new \data\service\eventservice();
-            return $service->findAllByRisk($id);
+            if ($id2 == null)
+                return $service->findAllByRisk($id);
+            else if ($id2 != null)
+                return $service->findOneByRisk($id, $id2);
         }
-
+        
         public function post($id = null)
         {
             $service = new \data\service\eventservice();

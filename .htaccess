@@ -11,7 +11,9 @@
     RewriteCond %{QUERY_STRING} ^(.*)$
     RewriteRule ^api/([^/]+)$ /api/api.php?endpoint=$1%1 [QSA,L]
     RewriteRule ^api/([^/]+)/([^/]+)$ /api/api.php?endpoint=$1&id=$2 [QSA,L]
-    RewriteRule ^api/([^/]+)/([^/]+)/([^/]+)/?$  /api/api.php?endpoint=$1&id=$2&endpoint2=$3 [QSA,L]
-    #Disgard tokens after 3rd token
-    RewriteRule ^api/([^/]+)/([^/]+)/([^/]+)/(.*)$  /api/api.php?endpoint=$1&id=$2&endpoint2=$3%1 [QSA,L]
-</IfModule>   
+    RewriteRule ^api/([^/]+)/([^/]+)/([^/]+)$  /api/api.php?endpoint=$1&id=$2&endpoint2=$3 [QSA,L]
+    RewriteRule ^api/([^/]+)/([^/]+)/([^/]+)/([^/]+)$ /api/api.php?endpoint=$1&id=$2&endpoint2=$3&id2=$4 [QSA,L]   
+    RewriteRule ^api/([^/]+)/([^/]+)/([^/]+)/([^/]+)?$ /api/api.php?endpoint=$1&id=$2&endpoint2=$3&id2=$4%1 [QSA,L] 
+    #Disgard tokens after 4rd token
+    RewriteRule ^api/([^/]+)/([^/]+)/([^/]+)/([^/]+)/(.*)$ /api/api.php?endpoint=$1&id=$2&endpoint2=$3&id2=$4%1 [QSA,L]
+    </IfModule>   

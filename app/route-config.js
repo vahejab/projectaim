@@ -41,6 +41,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         .when('risk@create', 'risk/create')
         .when('risk@edit', 'risk/edit')
         .when('risk@config', 'risk/config')
+        .when('risk@event', 'risk/:id/event/:eid')
         .when('risk@dashboard', 'risk/dashboard')
         .when('home', 'home')
         .otherwise('main');
@@ -117,7 +118,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             files: [
                     '/app/tool/risk/EditRisk.css',
                     '/app/css/bootstrap/bootstrap.min.css',
-                    '/app/tool/risk/services/DOMService.js',
+                    '/app/tool/risk/services/DOMService.js',                            
                     '/app/tool/risk/services/ValidationService.js',
                     '/app/tool/risk/directives/RepeatEventsDone.js',
                     '/app/tool/risk/directives/GetRiskDirective.js',
@@ -125,6 +126,20 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
                     '/app/tool/risk/EditRiskController.js'
             ]
         },
+        {
+            name: 'risk@event',
+            serie: true,
+            files: [
+                    '/app/tool/risk/EditEvent.css',
+                    '/app/css/bootstrap/bootstrap.min.css',
+                    '/app/tool/risk/services/DOMService.js',                            
+                    '/app/tool/risk/services/ValidationService.js',
+                    '/app/tool/risk/directives/RepeatEventsDone.js',
+                    '/app/tool/risk/directives/GetRiskDirective.js',
+                    '/app/tool/risk/directives/RiskDirective.js',
+                    '/app/tool/risk/EditEventController.js'
+            ]
+        },  
         {
             name: 'risk@config',
             serie: true,
@@ -220,6 +235,21 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             resolve: res,
             templateUrl: '/app/tool/risk/EditRisk.html',
             controller: 'EditRiskController'
+        })
+        .state('risk@event',
+        {
+            url: "/risk/:id/event/:eid",
+            params: {
+                id: {
+                    array: false
+                },
+                eid: {
+                    array: false
+                }
+            },
+            resolve: res,
+            templateUrl: '/app/tool/risk/EditEvent.html',
+            controller: 'EditEventController'
         })
         .state('risk@config',
         {

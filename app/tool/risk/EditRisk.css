@@ -62,7 +62,7 @@ div.nopadding{
     }   
 
     input.title{
-        width: 143px;
+        width: 147px;
         height: 30px;
         margin-top: 3px;
     }
@@ -284,7 +284,7 @@ div.nopadding{
 
     .tbl{
         display: table !important;
-        width: 1650px !important;
+        width: 1720px !important;
         margin: 0 auto !important;
     }
     

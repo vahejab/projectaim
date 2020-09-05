@@ -78,6 +78,55 @@
             }
         }
         
+        public function findOneByRisk($riskid, $eventid)
+        {    
+             if ($riskid == 'first')
+                $whereStr = "where riskid = (select min(riskid) from risks)";
+             else if ($riskid == 'last')
+                $whereStr = "where riskid = (select max(riskid) from risks)";
+             else
+                $whereStr = "where riskid = :riskid";
+             
+             $whereStr .= " and eventid = :eventid";
+                
+             $sql = "select
+                            EventID,
+                            RiskID,
+                            EventTitle,
+                            EventOwnerID,
+                            ActualDate,
+                            ScheduleDate,
+                            BaselineDate,
+                            ActualLikelihood,
+                            ActualTechnical,
+                            ActualSchedule,
+                            ActualCost,
+                            ScheduledLikelihood,
+                            ScheduledTechnical,
+                            ScheduledSchedule,
+                            ScheduledCost,
+                            BaselineLikelihood,
+                            BaselineTechnical,
+                            BaselineSchedule,
+                            BaselineCost    
+                        from riskevents " . $whereStr . " order by eventid asc";
+           
+            try
+            {
+                $statement  = $this->db->prepare($sql);
+                if ($riskid != 'first' && $riskid != 'last')
+                     $statement->bindParam(':riskid' , $riskid);
+                $statement->bindParam(':eventid' , $eventid);
+                $statement->execute();
+                $results = $statement->fetchAll(); 
+                return(["Succeeded" => true, "Result" => $this->_populateFromCollection($results)]);
+            }
+            catch(PDOException $e)
+            {
+                return ["Succeeded" => false, "Result" => $e->getMessage(0)];    
+            }
+        }
+        
         
         public function findAll($params = [])
         {

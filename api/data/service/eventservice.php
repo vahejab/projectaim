@@ -15,13 +15,20 @@
             $params = array('eventid' => $id);
             return $mapper->findOne($params);
         }
-        
+    
         public function findAllByRisk($id)
         {
             $mapper = $this->_getMapper();
             if ($id == null)
                 return $mapper->findAll();
             return $mapper->findAllByRisk($id);   
+        }
+        
+        
+        public function findOneByRisk($id, $id2)
+        {
+            $mapper = $this->_getMapper();
+            return $mapper->findOneByRisk($id, $id2);   
         }
         
         public function createOneByRisk($id, $params)
