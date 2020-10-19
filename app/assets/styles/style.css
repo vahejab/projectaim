@@ -132,7 +132,7 @@ label, span{
 /*Edit Page*/
  
   
-..tbl  > td, ..tbl >  th {
+.tbl  > td, .tbl >  th {
     padding: .75rem;
     vertical-align: top;
     border-top: 1px solid black;
@@ -151,12 +151,12 @@ input.date-input
     /* vertical-align: top !important; */
 }
 
-..tbl.nested{
+.tbl.nested{
     margin: 0 auto;
 }
 
 
-..tbl.nested  > ..tbl.layout{
+.tbl.nested  > .tbl.layout{
     width: 125px !important; 
 }
 
@@ -348,3 +348,4 @@ input:focus{
 div.center{
     text-align: center !important;
 }
+

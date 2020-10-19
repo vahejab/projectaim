@@ -76,11 +76,11 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                 ctrl.fetchRisk();
             }
                         
-            $scope.$on("$destroy", function(){
+           $scope.$on("$destroy", function(){
                  formcheck = 0;    
                  angular.element(document.querySelector('link[href="/app/tool/risk/EditRisk.css"]')).remove();
                  angular.element(document.querySelector('link[href="/app/css/bootstrap/bootstrap.min.css"]')).remove();   
-            });
+          });
           
           ctrl.openBaseline = function(evt) {
             ctrl.hidepopups();
@@ -918,7 +918,7 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
                          ctrl.msg += "<br />"+ $sce.trustAsHtml(response.data);
                     }
            }); 
-        }
+        } 
         
         ctrl.getRiskConfig = function(){
             return $http.get('/api/riskconfig').then(function(response){

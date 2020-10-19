@@ -6,6 +6,7 @@
         public $eventid;  
         public $riskid;        
         public $eventtitle;
+        public $eventstatus;
         public $eventownerid;
         public $actualdate;
         public $scheduledate;

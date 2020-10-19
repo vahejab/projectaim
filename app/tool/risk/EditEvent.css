@@ -1,0 +1,451 @@
+td.label {
+    background-color: #0038a8 !important;
+    font-weight: bold !important;
+    font-style: italic !important;
+    color: white !important;
+    text-align: left !important;
+}
+  
+.th.header{
+    background-color: #0038a8 !important;
+    font-weight: bold !important;
+    font-style: italic !important;
+    color: white !important;
+    text-align: left !important;
+}
+
+div.nopadding{
+    padding: 0px;
+}
+
+@media only screen and (min-width: 801px){
+    
+    br.showmobile{
+        display: none !important;
+    }
+    
+    div.select2{
+        width: 175px !important;
+    }
+     
+    div.widthAuto{
+        width: 100% !important;
+    }
+    
+    div.width50{
+        width: 50px !important;
+        display: inline-block;
+    }
+    
+    .td.header{
+        display: none !important;
+        width: 0px;
+        border: none;
+    }
+    
+    input.date-input{
+        width: 96px;
+        margin-top: 3px !important;
+    }
+    
+    input.level{
+        width: 31px;
+        height:  30px;
+        text-align: center;
+    }   
+
+    input.title{
+        width: 147px;
+        height: 30px;
+        margin-top: 3px;
+    }
+    
+    .tbl#summary .td.label, .td.locked{
+        width: 25%;
+    }
+    
+    .tbl#summary .td.label,
+    .tbl#details .td.label {
+        background-color: #0038a8 !important;
+        font-weight: bold !important;
+        font-style: italic !important;
+        color: white !important;
+        text-align: left !important;
+    }
+
+    .tbl.layout#details > .tr:not(:first-child):not(.text) > .td.read > div
+    {
+        height: 97px !important;
+        max-height: 97px !important;
+        overflow-y: scroll !important;
+        overflow-x: hidden !important;
+    }
+ 
+    .tbl.layout#details > .tr:not(:first-child):not(.text) > .td.label
+    {
+        padding: 1px;
+        height: 97px;
+        width: 200px;
+    }
+
+
+    .tbl.layout#details > .td:nth-child(1){
+        width: 150px;
+    }
+
+    .tbl.layout#information > .tr  > .td
+    {
+        height:  23px !important;
+    }
+    .tbl.layout#categories >  .tr >  .td
+    {
+        height: 23px !important;
+    }
+                      
+    .tbl.layout#summary >  .td.locked
+    {
+        vertical-align: middle !important;
+        color: black;
+        width: 140px !important;
+        text-align: left;
+    }
+
+
+    .tbl.layout#details   .tr:not(:first-child):not(.text)   .td.locked  div{
+        height: 97px !important;
+    }
+                                             
+    .tbl.layout#details{
+        width: 650px;
+        max-width: 650px !important;
+    }
+
+    .tbl.layout#details .td.label{
+        width: 10%;   
+    }
+
+    .tbl.layout#summary{
+        width: 650px;
+        max-width: 555px !important;
+    }
+    
+    
+    .tbl{
+        display: table !important;
+        width: 1720px !important;
+        margin: 0 auto !important;
+    }
+    
+    .tr {
+        display: table-row !important;
+        width: 100%;
+        height:  39px !important;
+    }
+    
+    .td, .th{
+        display: table-cell !important;
+        text-align: left !important;
+        border: 0.5px solid black;
+        vertical-align: middle;
+    }
+    
+    .td:not(.riskvalue)
+    {
+        padding-left: 3px;
+        padding-right: 5px;
+    }
+    
+    .td div{
+        /* text-align: left; */
+    }
+    
+    p.input-group{
+       /* width: 74px !important;  */
+    }
+    
+    .th.placeholder{
+        border:  none !important;
+        display: none !important;
+    }
+}
+
+
+
+@media only screen and (max-width: 800px) {
+
+    div.events .tbl{
+        overflow-x: scroll;
+    }
+
+    .tr.event{
+        display: table-cell !important;
+        min-width: 100vw !important;
+    }
+
+    .td.locked{
+        text-align: left !important;
+    }  
+           
+    div.width200{
+        width: 200px !important;  
+    }
+
+    .tbl.events .tr .td.header, .tbl.events .tr .td.value:not(.buttonvalue), .tbl.events .tr .td[name="actuallevel"], .tbl.events .tr .td[name="baselinelevel"], .tbl.events .tr .td[name="scheduledlevel"], .tbl.events .tr .td.left{
+        width: 200px !important;
+    }
+
+    div.nested table#details > tr:not(:nth-child(2)) > td:first-child{
+        width: 400px;
+    }
+    
+    div.nested div.info{
+        margin-left: 0;
+    }
+      
+    div.nested table#details,
+    div.nested div#level{
+        width: 151px !important;
+        margin-left: 35px;
+    }
+    
+    div#level{
+        height: 24px;
+        margin-bottom: 10px;
+    }
+
+    .tbl#summary > .td.label,
+    .tbl#details > .td.label,
+    .tbl.events > .td.header{
+        background-color: #0038a8 !important;
+        font-weight: bold !important;
+        font-style: italic !important;
+        color: white !important;
+        text-align: left !important;
+    }    
+
+    /* Force table to not be like tables anymore */    
+    .tbl{
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .tbl .td.header, .tbl .td.label{
+        background-color: #0038a8 !important;
+        font-weight: bold !important;
+        font-style: italic !important;
+        color: white !important;
+        text-align: right !important;
+    }
+    
+    .th.header{
+        display: none !important;
+    }
+    
+    .tbl.events{
+        width: 100%;
+    }
+    
+    .tbl .td input[type='search']{
+        width: 100%;
+    }
+    
+    .td.header{
+        padding-top: 5px !important;
+        height: 35px !important;
+    }
+
+    .td.buttonlabel, .td.buttonvalue-hide{
+        display:none !important;
+        width: 0px !important;
+    }
+    
+    .td.buttonvalue{
+        display: inline !important;
+        margin: 0 auto !important;
+        text-align: center !important;
+    }
+    
+    .td.value.center{
+        text-align: left !important;
+    }
+    
+    .tbl.events .td.header,
+    .tbl.events .td.value:not(.buttonvalue),
+    .tbl#details .td.label,
+    .tbl#details .td.locked,
+    .tbl#summary .td.label,
+    .tbl#summary .td.locked
+    {
+        display: inline-block;
+        min-width: 40vw !important;
+         width: 100px;
+    }
+
+   
+    div.ui-view form {
+        /* width: 98% !important; */
+        padding: 0px !important;
+        /* padding-right: 5vw; */
+        margin:  0 auto;
+    }
+    
+    input:not([type=button]), textarea{
+        width: 100% !important;
+    }                           
+     
+    .tbl#details >  .tr:not(:first-child) > .td.label{
+        height: 23px !important;
+    }
+    
+    input.date-input{
+        width: 190px;
+    }
+}
+
+
+table.levels input{
+    width: 30px;
+}
+ 
+#riskmatrix {
+    display: table !important;
+}
+
+#riskmatrix td:not(:first-child){
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+    border: 1px solid black;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 2px;
+}
+
+#riskmatrix{
+    border-spacing: 0;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+#riskmatrix tr td:first-child {
+    max-width: 5px !important;
+    width: 5px;
+    text-align: right !important;
+}  
+
+
+#riskmatrix tr:nth-child(2) td{
+    max-height: 5px !important;
+    height: 5px;
+}
+
+
+#riskmatrix tr:nth-child(6) td,
+#riskmatrix tr:nth-child(7) td{
+    padding-top: 10px;
+}
+
+#riskmatrix tr td:first-child{
+    border: none;
+}
+
+#riskmatrix tr td:nth-child(2){
+    border-top: 0px;
+    border-left: 0px;
+    border-bottom: 0px;  
+}
+#riskmatrix tr:not(:last-child):not(:nth-last-child(2)) td:not(:first-child):not(:nth-child(2)){
+    background-color: #eeeeee;
+}
+
+#riskmatrix tr:first-child td:first-child{
+    border: none;
+}
+
+#riskmatrix tr:first-child td:nth-child(2){
+    border: none;
+}
+
+#riskmatrix tr:last-child td{
+    border: none;
+}
+#riskmatrix tr:nth-last-child(2) td{
+    border: none;
+}
+ 
+.risklevel{
+    min-width: 37px !important;
+    width: 37px !important;
+    font-size: 12px;
+    padding-left: 2px;
+}  
+
+.leveltext{
+    text-align: center;
+}                   
+                
+.evt{           
+    margin: 0 auto;
+    position: relative;
+    width: 5px;
+    height: 5px;
+    background-color: black;
+}
+
+td.low, td.med, td.high{
+    border: 1px solid black;
+    width: 30px;
+    height: 30px;
+    margin: 0 auto;
+}
+
+                     
+#riskmatrix td:first-child{
+    max-width: 0px !important;
+    width: 0px !important;
+}
+#riskmatrix tr:last-child td,
+#riskmatrix tr:nth-last-child(2) td
+{
+    height: 20px !important;
+}
+ 
+div.low{
+    background-color: #00b050 !important;    
+}
+div.med{
+    background-color: #eeee00 !important;
+}
+div.high{
+    background-color: #ee0000 !important;
+}
+
+div.level{
+    margin: 0 auto;
+}
+
+div.info{
+    display: inline-block;
+}
+
+div.riskmatrix{
+    display:inline-block;
+    vertical-align: top;
+    
+}
+
+span.input-group-btn button{
+    height: 30px !important;
+    width: 30px !important;
+    margin-top: 2px;
+    margin-left: 2px;
+}
+
+.fa-svg-icon > svg {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 22px;
+    height: 22px;
+}

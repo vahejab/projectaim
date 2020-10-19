@@ -43,14 +43,14 @@
             </div>
         </div>              
         <div ng-if="ctrl.risksloaded" ng-repeat="risk in ctrl.risks | orderBy:ctrl.propertyName:ctrl.reverse" class="row ng-animate ng-enter">
-           <div class="cell" data-title="Edit"><a ui-sref="risk@edit({id: risk.riskid})">Edit</a></div> 
-           <div class="cell" data-title="View"><a ui-sref="risk@view({id: risk.riskid})">{{risk.riskid}}</a></div> 
-           <div class="cell" data-title="Title">{{risk.risktitle}}</div>
-           <div class="cell" data-title="Level" style="min-width: 200px; max-width: 400px !important"><div class="{{risk.cls}}" style="width:{{risk.riskthreshold}}%">{{risk.risklevel}}</div></div>
-          <div class="cell" data-title="Assessment">{{risk.assessmentdate | date : 'MM/dd/yyyy'}}</div> 
-           <div class="cell" data-title="Creator">{{risk.assignor}}</div> 
-           <div class="cell" data-title="Owner">{{risk.owner}}</div>
-           <div class="cell" data-title="Approver">{{risk.approver}}</div>
+            <div class="cell" data-title="Edit"><a ui-sref="risk@edit({id: risk.riskid})">Edit</a></div>
+            <div class="cell" data-title="View"><a ui-sref="risk@view({id: risk.riskid})">{{risk.riskid}}</a></div>
+            <div class="cell" data-title="Title">{{risk.risktitle}}</div>
+            <div class="cell" data-title="Level" style="min-width: 200px; max-width: 400px !important"><div class="{{risk.cls}}" style="width:{{risk.riskthreshold}}%">{{risk.risklevel}}</div></div>
+            <div class="cell" data-title="Assessment">{{risk.assessmentdate | date : 'MM/dd/yyyy'}}</div>
+            <div class="cell" data-title="Creator">{{risk.assignor}}</div>
+            <div class="cell" data-title="Owner">{{risk.owner}}</div>
+            <div class="cell" data-title="Approver">{{risk.approver}}</div>
         </div>
     </div>
 </div>

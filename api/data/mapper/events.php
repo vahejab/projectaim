@@ -10,7 +10,8 @@
             if (!is_null($array['EventID'])) $event->eventid = $array['EventID'];     
             if (!is_null($array['EventOwnerID'])) $event->eventownerid = $array['EventOwnerID'];   
             if (!is_null($array['EventTitle'])) $event->eventtitle = $array['EventTitle'];
-            
+            if (!is_null($array['EventStatus'])) $event->eventstatus = $array['EventStatus'];   
+                        
             if (!is_null($array['ActualDate'])) $event->actualdate = $array['ActualDate'];
             if (!is_null($array['ScheduleDate'])) $event->scheduledate = $array['ScheduleDate'];
             if (!is_null($array['BaselineDate'])) $event->baselinedate = $array['BaselineDate'];
@@ -45,6 +46,7 @@
                             EventID,
                             RiskID,
                             EventTitle,
+                            EventStatus,
                             EventOwnerID,
                             ActualDate,
                             ScheduleDate,
@@ -93,6 +95,7 @@
                             EventID,
                             RiskID,
                             EventTitle,
+                            EventStatus,
                             EventOwnerID,
                             ActualDate,
                             ScheduleDate,
@@ -133,7 +136,8 @@
             $sql = "select
                         EventID,
                         RiskID,
-                        EventTitle,
+                        EventTitle, 
+                        EventStatus,
                         EventOwnerID,
                         ActualDate,
                         ScheduleDate,
