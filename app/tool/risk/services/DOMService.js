@@ -23,6 +23,72 @@ angular.module('Risk').service("DOMops", function() {
         leveldiv.innerHTML = '';
         leveldiv.setAttribute('class', '');
     }
+    commonFunctions.assignEventLevels = function(ctrl, obj){
+            lact = ctrl.event.actuallikelihood;
+            tact = ctrl.event.actualtechnical;
+            sact = ctrl.event.actualschedule;
+            cact = ctrl.event.actualcost;
+            
+            if (ValidationService.validLevel(obj) && ValidationService.riskNotEmpty(lact,tact,sact,cact))
+            {
+                if (ValidationService.riskIsValid(lact,tact,sact,cact))
+                {
+                    l = Number(lact);
+                    tech = Number(tact);
+                    schd = Number(sact);
+                    cost = Number(cact);
+                    c = Math.max(tech,schd,cost); 
+                    level = commonFunctions.displayLevel(ctrl.riskMatrix[l][c],l,c,ctrl,'event');
+                    document.querySelector("div#level").innerHTML = level.html.value
+                    document.querySelector("div#level").classList.add(level.cls);
+                    commonFunctions.clearDot();
+                    commonFunctions.drawDot(l,c,'actual');
+                }
+            }
+            lsch = ctrl.event.scheduledlikelihood;
+            tsch = ctrl.event.scheduledtechnical;
+            ssch = ctrl.event.scheduledschedule;
+            csch = ctrl.event.scheduledcost;
+            
+            if (ValidationService.validLevel(obj) && ValidationService.riskNotEmpty(lsch,tsch,ssch,csch))
+            {
+                if (ValidationService.riskIsValid(lsch,tsch,ssch,csch))
+                {
+                    l = Number(lsch);
+                    tech = Number(tact);
+                    schd = Number(ssch);
+                    cost = Number(csch);
+                    c = Math.max(tech,schd,cost); 
+                    level = commonFunctions.displayLevel(ctrl.riskMatrix[l][c],l,c,ctrl,'event');
+                    document.querySelector("div#level").innerHTML = level.html.value
+                    document.querySelector("div#level").classList.add(level.cls);
+                    commonFunctions.clearDot();
+                    commonFunctions.drawDot(l,c,'schedule');
+                }
+            }
+            
+            lact = ctrl.event.actuallikelihood;
+            tact = ctrl.event.actualtechnical;
+            sact = ctrl.event.actualschedule;
+            cact = ctrl.event.actualcost;
+            
+            if (ValidationService.validLevel(obj) && ValidationService.riskNotEmpty(lact,tact,sact,cact))
+            {
+                if (ValidationService.riskIsValid(lact,tact,sact,cact))
+                {
+                    l = Number(lact);
+                    tech = Number(tact);
+                    schd = Number(sact);
+                    cost = Number(cact);
+                    c = Math.max(tech,schd,cost); 
+                    level = commonFunctions.displayLevel(ctrl.riskMatrix[l][c],l,c,ctrl,'event');
+                    document.querySelector("div#level").innerHTML = level.html.value
+                    document.querySelector("div#level").classList.add(level.cls);
+                    commonFunctions.clearDot();
+                    commonFunctions.drawDot(l,c,'actual');
+                }
+            }
+    }
     commonFunctions.assignRiskLevel = function(ctrl, obj, evt, which){
         var l,t,s,c;
         if (evt < 0)
@@ -50,7 +116,7 @@ angular.module('Risk').service("DOMops", function() {
                 cost = Number(c);
                 c = Math.max(tech,schd,cost);
                 
-                level = commonFunctions.displayLevel(ctrl.riskMatrix[l][c],l,c,evt,ctrl,which);
+                level = commonFunctions.displayLevel(ctrl.riskMatrix[l][c],l,c,evt,ctrl,which,'risk');
                 if (which == 'matrix')
                 {
                     document.querySelector("div#level").innerHTML = level.html.value
@@ -96,8 +162,8 @@ angular.module('Risk').service("DOMops", function() {
         (document.querySelector(id)).setAttribute('disabled', 'disabled'); 
     } 
     
-    commonFunctions.drawDot = function(l, c){
-        document.querySelector("td[name='risk["+l+"]["+c+"]']").innerHTML 
+    commonFunctions.drawDot = function(l, c, sel){
+        document.querySelector("table.matrix"+"."+sel+" td[name='risk["+l+"]["+c+"]']").innerHTML 
         = "<div class='level' style='width:15px; height:15px; background-color: black'/>";
     }
 
@@ -131,7 +197,7 @@ angular.module('Risk').service("DOMops", function() {
     }
    
     
-    commonFunctions.displayLevel = function(level, l, c, evt, ctrl, field){
+    commonFunctions.displayLevel = function(level, l, c, evt, ctrl, field, riskOrEvt){
        var leveldiv = {};                               
        commonFunctions.clearLevel(evt);   
       
@@ -160,11 +226,18 @@ angular.module('Risk').service("DOMops", function() {
        }
        else if (evt >= 0)
        {
-            ctrl.event[evt][field+"level"] = {levelhtml: '', cls: ''};
+            if (riskOrEvt  == 'risk')
+                ctrl.event[evt][field+"level"] = {levelhtml: '', cls: ''};
+            else
+                ctrl.event[field+"level"] = {levelhtml: '', cls: ''};
             return '';   
        }
-       if (evt >= 0)
-        ctrl.event[evt][field+"level"] = {levelhtml : leveldiv.html, cls : leveldiv.cls};
+       if (evt >= 0) {
+        if (riskOrEvt == 'risk') 
+            ctrl.event[evt][field+"level"] = {levelhtml : leveldiv.html, cls : leveldiv.cls};
+        else
+            ctrl.event[field+"level"] = {levelhtml : leveldiv.html, cls : leveldiv.cls};
+       }
        return leveldiv;
     }
     

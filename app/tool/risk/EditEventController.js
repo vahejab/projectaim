@@ -34,18 +34,18 @@ angular.module('Risk').controller('EditEventController', ['$http', '$resource', 
                ctrl.schedule.opened = false;
           }  
                   
-          ctrl.openBaseline = function(evt) {
+          ctrl.openBaseline = function() {
             ctrl.hidepopups();
             ctrl.baseline.opened = true;
           };                  
 
           
-          ctrl.openActual = function(evt) {
+          ctrl.openActual = function() {
             ctrl.hidepopups();
             ctrl.actual.opened = true;
           };
 
-          ctrl.openSchedule = function(evt) {
+          ctrl.openSchedule = function() {
             ctrl.hidepopups();
             ctrl.schedule.opened = true;
           };
@@ -268,8 +268,8 @@ angular.module('Risk').controller('EditEventController', ['$http', '$resource', 
             
                     scheduledate = new Date(ctrl.event.scheduledate);
                     baselinedate = new Date(ctrl.event.baselinedate);
-                    scheduledate.setDate(scheduledate.getDate()+((evt==0)? 2 : 1));
-                    baselinedate.setDate(baselinedate.getDate()+((evt==0)? 2 : 1));
+                    ctrl.sheduledate = scheduledate.setDate(scheduledate.getDate()+((evt==0)? 2 : 1));
+                    ctrl.baselinedate = baselinedate.setDate(baselinedate.getDate()+((evt==0)? 2 : 1));
 
                     //alert(scheduledate + " " + baselinedate);
 
@@ -285,53 +285,23 @@ angular.module('Risk').controller('EditEventController', ['$http', '$resource', 
                     m = baselinedate.getMonth()+1;
                     d = baselinedate.getDate();
                     basdate = y+((m<10)?'-0'+m:'-'+m)+((d<10)?'-0'+d:'-'+d);   
-
-                    if (evt == 0)
-                    {
-                        schdate = basdate;
-                    }  
-
-                         
-                    ctrl.actualDateOptions = {
-                        dateDisabled: disabled,
-                        customClass: getDayClass,
-                        minDate: ctrl.nextDate(ctrl.event.actualdate), 
-                        showWeeks: true  
-                    };
-
-                    if (ValidationService.actualValid(ctrl.event.eventid, $scope))
-                    { 
-                       ctrl.nextActualRiskEventId = ctrl.event.eventid+1;
-                       ctrl.actual.disabled = true;
-                    }   
-                    
+                          
                     ctrl.event.actualdateOptions = {
-                         dateDisabled: ctrl.actual.disabled,
+                         //dateDisabled: function(){ return ctrl.actual.disabled;},
                          minDate: ctrl.minDate(ctrl.event.actualdate),
                          formatYear: 'yy',    
                          startingDay: 1  
                       };
                       
-                    ctrl.event.inlineScheduleOptions = {
-                        customClass: getDayClass,
-                        //minDate: schdate,
-                        showWeeks: true
-                    };  
-                    
-                    ctrl.event.inlineBaselineOptions = {
-                        customClass: getDayClass,
-                        minDate: basdate,
-                        showWeeks: true
-                    };
-
-                    ctrl.event.scheuleddateOptions = {
-                        dateDisabled: ctrl.schedule.disabled,
+                   
+                    ctrl.event.scheduledateOptions = {
+                        //dateDisabled: function(){ return ctrl.schedule.disabled;},
                         formatYear: 'yy',
                         //minDate: schdate,     
                         startingDay: 1
                     };
-                    ctrl.event.baselinedateOptions ={
-                        dateDisabled: ctrl.baseline.disabled,
+                    ctrl.event.baselinedateOptions = {
+                       //dateDisabled: function(){ return ctrl.baseline.disabled;},
                         formatYear: 'yy',
                         minDate: basdate,           
                         startingDay: 1

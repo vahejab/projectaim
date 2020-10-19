@@ -74,7 +74,7 @@
                                 Closure Criteria
                             </div>
                             <div class="td locked" style=" vertical-align: top">
-                                <textarea value="{{ctrl.risk.closurecriteria}}" ng-model="ctrl.risk.closurecriteria"></textarea>
+                                <textarea value="{{ctrl.event.closurecriteria}}" ng-model="ctrl.event.closurecriteria"></textarea>
                             </div>
                         </div>
                         <div class="tr">
@@ -82,7 +82,7 @@
                                 Owner Notes
                             </div>
                             <div class="td locked" style=" vertical-align: top">
-                                <textarea value="{{ctrl.risk.ownernotes}}" ng-model="ctrl.risk.ownernotes"></textarea>
+                                <textarea value="{{ctrl.event.ownernotes}}" ng-model="ctrl.event.ownernotes"></textarea>
                             </div>                          
                         </div>
                         <div class="tr">
@@ -91,7 +91,7 @@
                             </div>
                             <div class="td locked" style=" vertical-align: top">
                                 <!--div ng-show="ctrl.config.approvercomments.done" config="approvercomments" webix-ui="approvercomments" width="500" height="97" type="textarea" id="approvercomments" name="approvercomments"></div-->
-                                 <textarea value="{{ctrl.risk.approvercomments}}" ng-model="ctrl.risk.approvercomments"></textarea>
+                                 <textarea value="{{ctrl.event.approvercomments}}" ng-model="ctrl.event.approvercomments"></textarea>
                             </div>
                         </div>
                     </div>
@@ -132,11 +132,11 @@
                             </td>
                             <td class="locked">
                                <!--div ng-show="ctrl.config.likelihood.done" config="likelihood"  webix-ui="likelihood" width="30" height="30" type="level" id="likelihood" name="likelihood" maxlength="1"></div-->
-                               <input type="text" value="{{ctrl.event.basellinelikelihood}}" ng-keyup="ctrl.DOMops.assignRiskLevel(ctrl, ctrl.event.baselinelikelihood, -1, matrix)" ng-model="ctrl.risk.baselinelikelihood" id="actuallikelihood" name="actuallikelihood" class="leveltext" width="30" height="30" />
+                               <input type="text" value="{{ctrl.event.basellinelikelihood}}" ng-keyup="ctrl.DOMops.assignRiskLevel(ctrl, ctrl.event.baselinelikelihood, -1, matrix)" ng-model="ctrl.event.baselinelikelihood" id="actuallikelihood" name="actuallikelihood" class="leveltext" width="30" height="30" />
                             </td>
                             <td class="locked">
                                <!--div ng-show="ctrl.config.likelihood.done" config="likelihood"  webix-ui="likelihood" width="30" height="30" type="level" id="likelihood" name="likelihood" maxlength="1"></div-->
-                               <input type="text" value="{{ctrl.risk.scheduledlikelihood}}" ng-keyup="ctrl.DOMops.assignRiskLevel(ctrl, ctrl.event.scheduledlikelihood, -1, matrix)" ng-model="ctrl.risk.scheduledlikelihood" id="scheudledlikelihood" name="scheudledlikelihood" class="leveltext" width="30" height="30" />
+                               <input type="text" value="{{ctrl.event.scheduledlikelihood}}" ng-keyup="ctrl.DOMops.assignRiskLevel(ctrl, ctrl.event.scheduledlikelihood, -1, matrix)" ng-model="ctrl.event.scheduledlikelihood" id="scheudledlikelihood" name="scheudledlikelihood" class="leveltext" width="30" height="30" />
                             </td>
                         </tr>
                         <tr>
@@ -154,11 +154,11 @@
                             </td>
                             <td class="locked">
                                <!--div ng-show="ctrl.config.technical.done" config="technical"  webix-ui="technical" width="30" height="30" type="level" id="technical" name="technical" maxlength="1"></div-->
-                               <input type="text" value="{{ctrl.event.basellinetechnical}}" ng-keyup="ctrl.DOMops.assignRiskLevel(ctrl, ctrl.event.baselinetechnical, -1, matrix)" ng-model="ctrl.risk.baselinetechnical" id="actualtechnical" name="actualtechnical" class="leveltext" width="30" height="30" />
+                               <input type="text" value="{{ctrl.event.basellinetechnical}}" ng-keyup="ctrl.DOMops.assignRiskLevel(ctrl, ctrl.event.baselinetechnical, -1, matrix)" ng-model="ctrl.event.baselinetechnical" id="actualtechnical" name="actualtechnical" class="leveltext" width="30" height="30" />
                             </td>
                             <td class="locked">
                                <!--div ng-show="ctrl.config.technical.done" config="technical"  webix-ui="technical" width="30" height="30" type="level" id="technical" name="technical" maxlength="1"></div-->
-                               <input type="text" value="{{ctrl.risk.scheduledtechnical}}" ng-keyup="ctrl.DOMops.assignRiskLevel(ctrl, ctrl.event.scheduledtechnical, -1, matrix)" ng-model="ctrl.risk.scheduledtechnical" id="scheudledtechnical" name="scheudledtechnical" class="leveltext" width="30" height="30" />
+                               <input type="text" value="{{ctrl.event.scheduledtechnical}}" ng-keyup="ctrl.DOMops.assignRiskLevel(ctrl, ctrl.event.scheduledtechnical, -1, matrix)" ng-model="ctrl.event.scheduledtechnical" id="scheudledtechnical" name="scheudledtechnical" class="leveltext" width="30" height="30" />
                             </td>
                         </tr>
                          <tr>
@@ -175,7 +175,7 @@
                             </td>
                             <td class="locked">
                                <!--div ng-show="ctrl.config.schedule.done" config="schedule"  webix-ui="schedule" width="30" height="30" type="level" id="schedule" name="schedule" maxlength="1"></div-->
-                               <input type="text" value="{{ctrl.risk.scheduledschedule}}" ng-keyup="ctrl.DOMops.assignRiskLevel(ctrl, ctrl.event.scheduledschedule, -1, matrix)" ng-model="ctrl.event.scheduledschedule" id="scheudledschedule" name="scheudledschedule" class="leveltext" width="30" height="30" />
+                               <input type="text" value="{{ctrl.event.scheduledschedule}}" ng-keyup="ctrl.DOMops.assignRiskLevel(ctrl, ctrl.event.scheduledschedule, -1, matrix)" ng-model="ctrl.event.scheduledschedule" id="scheudledschedule" name="scheudledschedule" class="leveltext" width="30" height="30" />
                             </td>
                         </tr>
                          <tr>
@@ -200,27 +200,33 @@
                 </div>
                 &nbsp;&nbsp;  
                 <div ng-if="ctrl.initDone" class="riskmatrix">
-                    <table class="matrix" id="riskmatrix">
+                    <table class="calendar">
                     <tbody>
-                    <tr>
-                     <td colspan="2">
-                     </td>
-                     <td colspan="5"> 
-                       <!--input type='text' id="actual{{event}}"  class="datepicker-here" data-language='en' /--> 
-                        <p class="input-group">
-                           <!--input ng-if="!(ctrl.lastEventIdSaved >= event - 1)"  class="date-input"  ng-disabled="ctrl.actual[event].disabled || (ctrl.nextActualRiskEventId != event) || ((ctrl.lastEventIdSaved+1) < event) ||(!ctrl.evtValid(event)) && (event >= ctrl.lastEventIdSaved-1)" /-->
-                          <input ng-change="ctrl.validateEvent(ctrl.event.eventid)" ng-disabled="ctrl.actualDisabled(ctrl.event.eventid)" ng-model="ctrl.event[ctrl.event.eventid].actualdate" type="text" class="actual date-input" uib-datepicker-popup="MM/dd/yyyy" is-open="ctrl.actual[ctrl.event.eventid].opened" datepicker-options="ctrl.event.actualdateOptions" ng-required="true" close-text="Close" />
-                          
-                          <span class="input-group-btn">
-                            <button type="button" class="btn btn-secondary" ng-disabled="ctrl.actualDisabled(ctrl.event.eventid)" ng-click="ctrl.openActual(ctrl.event.eventid)">
-                              <i class="fa-svg-icon">                                                                                                                
-                                <svg style="left: -10px; top: -9px" width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M192 1664h288v-288h-288v288zm352 0h320v-288h-320v288zm-352-352h288v-320h-288v320zm352 0h320v-320h-320v320zm-352-384h288v-288h-288v288zm736 736h320v-288h-320v288zm-384-736h320v-288h-320v288zm768 736h288v-288h-288v288zm-384-352h320v-320h-320v320zm-352-864v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm736 864h288v-320h-288v320zm-384-384h320v-288h-320v288zm384 0h288v-288h-288v288zm32-480v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm384-64v1280q0 52-38 90t-90 38h-1408q-52 0-90-38t-38-90v-1280q0-52 38-90t90-38h128v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h384v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h128q52 0 90 38t38 90z"/></svg>
-                              </i>
-                            </button>
-                          </span>
-                        </p> 
-                       </td>
-                    </tr>
+                        <tr>
+                         <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                         <td colspan="2">
+                            Act
+                         </td>
+                         <td colspan="5"> 
+                           <!--input type='text' id="actual{{event}}"  class="datepicker-here" data-language='en' /--> 
+                            <p class="input-group">
+                               <!--input ng-if="!(ctrl.lastEventIdSaved >= event - 1)"  class="date-input"  ng-disabled="ctrl.actual[event].disabled || (ctrl.nextActualRiskEventId != event) || ((ctrl.lastEventIdSaved+1) < event) ||(!ctrl.evtValid(event)) && (event >= ctrl.lastEventIdSaved-1)" /-->
+                              <input ng-change="ctrl.validateEvent()" ng-disabled="ctrl.actualDisabled()" ng-model="ctrl.actualdate" type="text" class="actual date-input" uib-datepicker-popup="MM/dd/yyyy" is-open="ctrl.actual.opened" datepicker-options="ctrl.event.actualdateOptions" ng-required="true" close-text="Close" />
+                              
+                              <span class="input-group-btn">
+                                <button type="button" class="btn btn-secondary" ng-disabled="ctrl.actualDisabled()" ng-click="ctrl.openActual()">
+                                  <i class="fa-svg-icon">                                                                                                                
+                                    <svg style="left: -10px; top: -9px" width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M192 1664h288v-288h-288v288zm352 0h320v-288h-320v288zm-352-352h288v-320h-288v320zm352 0h320v-320h-320v320zm-352-384h288v-288h-288v288zm736 736h320v-288h-320v288zm-384-736h320v-288h-320v288zm768 736h288v-288h-288v288zm-384-352h320v-320h-320v320zm-352-864v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm736 864h288v-320h-288v320zm-384-384h320v-288h-320v288zm384 0h288v-288h-288v288zm32-480v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm384-64v1280q0 52-38 90t-90 38h-1408q-52 0-90-38t-38-90v-1280q0-52 38-90t90-38h128v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h384v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h128q52 0 90 38t38 90z"/></svg>
+                                  </i>
+                                </button>
+                              </span>
+                            </p> 
+                           </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                    <table class="matrix actual" id="riskmatrix">
+                    <tbody>
                     <tr ng-repeat="likelihood in [5,4,3,2,1]">
                             <td ng-if="likelihood == 2" class="vlabel">Likelihood</td>
                             <td ng-if="likelihood != 2"></td>
@@ -238,27 +244,34 @@
                     </tbody></table>
             </div>
             <div ng-if="ctrl.initDone" class="riskmatrix">                                
-                    <table class="matrix" id="riskmatrix">
+                    <table class="calendar">
+                        <tbody>
+                            <tr>
+                                  <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                 <td colspan="2">
+                                    Bas
+                                 </td>
+                                 <td colspan="5"> 
+                                   <!--input type='text' id="actual{{event}}"  class="datepicker-here" data-language='en' /--> 
+                                    <p class="input-group">
+                                       <!--input ng-if="!(ctrl.lastEventIdSaved >= event - 1)"  class="date-input"  ng-disabled="ctrl.actual[event].disabled || (ctrl.nextActualRiskEventId != event) || ((ctrl.lastEventIdSaved+1) < event) ||(!ctrl.evtValid(event)) && (event >= ctrl.lastEventIdSaved-1)" /-->
+                                      <input ng-change="ctrl.validateEvent()" ng-disabled="ctrl.baselineDisabled()" ng-model="ctrl.baselinedate" type="text" class="baseline date-input" uib-datepicker-popup="MM/dd/yyyy" is-open="ctrl.baseline.opened" datepicker-options="ctrl.event.baselinedateOptions" ng-required="true" close-text="Close" />
+                                      
+                                      <span class="input-group-btn">
+                                        <button type="button" class="btn btn-secondary" ng-disabled="ctrl.baselineDisabled()" ng-click="ctrl.openBaseline()">
+                                          <i class="fa-svg-icon">                                                                                                                  
+                                            <svg style="left: -10px; top: -9px" width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M192 1664h288v-288h-288v288zm352 0h320v-288h-320v288zm-352-352h288v-320h-288v320zm352 0h320v-320h-320v320zm-352-384h288v-288h-288v288zm736 736h320v-288h-320v288zm-384-736h320v-288h-320v288zm768 736h288v-288h-288v288zm-384-352h320v-320h-320v320zm-352-864v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm736 864h288v-320h-288v320zm-384-384h320v-288h-320v288zm384 0h288v-288h-288v288zm32-480v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm384-64v1280q0 52-38 90t-90 38h-1408q-52 0-90-38t-38-90v-1280q0-52 38-90t90-38h128v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h384v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h128q52 0 90 38t38 90z"/></svg>
+                                          </i>
+                                        </button>
+                                      </span>
+                                    </p> 
+                                </td>   
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="matrix baseline" id="riskmatrix">
                     <tbody>
-                    <tr>
-                     <td colspan="2">
-                     </td>
-                     <td colspan="5"> 
-                       <!--input type='text' id="actual{{event}}"  class="datepicker-here" data-language='en' /--> 
-                        <p class="input-group">
-                           <!--input ng-if="!(ctrl.lastEventIdSaved >= event - 1)"  class="date-input"  ng-disabled="ctrl.actual[event].disabled || (ctrl.nextActualRiskEventId != event) || ((ctrl.lastEventIdSaved+1) < event) ||(!ctrl.evtValid(event)) && (event >= ctrl.lastEventIdSaved-1)" /-->
-                          <input ng-change="ctrl.validateEvent(ctrl.event.eventid)" ng-disabled="ctrl.baselinelDisabled(ctrl.event.eventid)" ng-model="ctrl.event[ctrl.event.eventid].baselinedate" type="text" class="actual date-input" uib-datepicker-popup="MM/dd/yyyy" is-open="ctrl.actual[ctrl.event.eventid].opened" datepicker-options="ctrl.event.baselinedateOptions" ng-required="true" close-text="Close" />
-                          
-                          <span class="input-group-btn">
-                            <button type="button" class="btn btn-secondary" ng-disabled="ctrl.baselinelDisabled(ctrl.event.eventid)" ng-click="ctrl.openBaseline(ctrl.event.eventid)">
-                              <i class="fa-svg-icon">                                                                                                                  
-                                <svg style="left: -10px; top: -9px" width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M192 1664h288v-288h-288v288zm352 0h320v-288h-320v288zm-352-352h288v-320h-288v320zm352 0h320v-320h-320v320zm-352-384h288v-288h-288v288zm736 736h320v-288h-320v288zm-384-736h320v-288h-320v288zm768 736h288v-288h-288v288zm-384-352h320v-320h-320v320zm-352-864v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm736 864h288v-320h-288v320zm-384-384h320v-288h-320v288zm384 0h288v-288h-288v288zm32-480v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm384-64v1280q0 52-38 90t-90 38h-1408q-52 0-90-38t-38-90v-1280q0-52 38-90t90-38h128v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h384v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h128q52 0 90 38t38 90z"/></svg>
-                              </i>
-                            </button>
-                          </span>
-                        </p> 
-                    </td>   
-                    </tr>
+                    
                     <tr ng-repeat="likelihood in [5,4,3,2,1]">
                             <td ng-if="likelihood == 2" class="vlabel">Likelihood</td>
                             <td ng-if="likelihood != 2"></td>
@@ -276,27 +289,33 @@
                     </tbody></table>
             </div>
             <div ng-if="ctrl.initDone" class="riskmatrix">
-                    <table class="matrix" id="riskmatrix">  
+                    <table class="calendar">
+                        <tbody>
+                        <tr> 
+                             <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td colspan="2">
+                                Sch
+                            </td>
+                            <td colspan="5">
+                               <!--input type='text' id="actual{{event}}"  class="datepicker-here" data-language='en' /--> 
+                                <p class="input-group">
+                                   <!--input ng-if="!(ctrl.lastEventIdSaved >= event - 1)"  class="date-input"  ng-disabled="ctrl.actual[event].disabled || (ctrl.nextActualRiskEventId != event) || ((ctrl.lastEventIdSaved+1) < event) ||(!ctrl.evtValid(event)) && (event >= ctrl.lastEventIdSaved-1)" /-->
+                                 <input ng-change="ctrl.validateEvent()" ng-disabled="ctrl.scheduleDisabled()" ng-model="ctrl.sheduledate" type="text" class="schedule date-input" uib-datepicker-popup="MM/dd/yyyy" is-open="ctrl.schedule.opened" datepicker-options="ctrl.event.scheduledateOptions" ng-required="true" close-text="Close" />
+                                                                                                              
+                                  <span class="input-group-btn">
+                                    <button type="button" class="btn btn-secondary" ng-disabled="ctrl.scheduleDisabled()" ng-click="ctrl.openSchedule()">
+                                      <i class="fa-svg-icon">                                                                                                                  
+                                        <svg style="left: -10px; top: -9px" width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M192 1664h288v-288h-288v288zm352 0h320v-288h-320v288zm-352-352h288v-320h-288v320zm352 0h320v-320h-320v320zm-352-384h288v-288h-288v288zm736 736h320v-288h-320v288zm-384-736h320v-288h-320v288zm768 736h288v-288h-288v288zm-384-352h320v-320h-320v320zm-352-864v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm736 864h288v-320h-288v320zm-384-384h320v-288h-320v288zm384 0h288v-288h-288v288zm32-480v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm384-64v1280q0 52-38 90t-90 38h-1408q-52 0-90-38t-38-90v-1280q0-52 38-90t90-38h128v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h384v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h128q52 0 90 38t38 90z"/></svg>
+                                      </i>
+                                    </button>
+                                  </span>
+                                </p> 
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table class="matrix" id="riskmatrix schedule">  
                     <tbody>
-                    <tr>
-                        <td colspan="2">
-                        </td>
-                        <td colspan="5">
-                           <!--input type='text' id="actual{{event}}"  class="datepicker-here" data-language='en' /--> 
-                            <p class="input-group">
-                               <!--input ng-if="!(ctrl.lastEventIdSaved >= event - 1)"  class="date-input"  ng-disabled="ctrl.actual[event].disabled || (ctrl.nextActualRiskEventId != event) || ((ctrl.lastEventIdSaved+1) < event) ||(!ctrl.evtValid(event)) && (event >= ctrl.lastEventIdSaved-1)" /-->
-                             <input ng-change="ctrl.validateEvent(ctrl.event.eventid)" ng-disabled="ctrl.scheduleDisabled(ctrl.event.eventid)" ng-model="ctrl.event[ctrl.event.eventid].sheudleddate" type="text" class="schedule date-input" uib-datepicker-popup="MM/dd/yyyy" is-open="ctrl.schedule.opened" datepicker-options="ctrl.event.scheduleddateOptions" ng-required="true" close-text="Close" />
-                                                                                                          
-                              <span class="input-group-btn">
-                                <button type="button" class="btn btn-secondary" ng-disabled="ctrl.scheduleDisabled(ctrl.event.eventid)" ng-click="ctrl.openSchedule(ctrl.event.eventid)">
-                                  <i class="fa-svg-icon">                                                                                                                  
-                                    <svg style="left: -10px; top: -9px" width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M192 1664h288v-288h-288v288zm352 0h320v-288h-320v288zm-352-352h288v-320h-288v320zm352 0h320v-320h-320v320zm-352-384h288v-288h-288v288zm736 736h320v-288h-320v288zm-384-736h320v-288h-320v288zm768 736h288v-288h-288v288zm-384-352h320v-320h-320v320zm-352-864v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm736 864h288v-320h-288v320zm-384-384h320v-288h-320v288zm384 0h288v-288h-288v288zm32-480v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm384-64v1280q0 52-38 90t-90 38h-1408q-52 0-90-38t-38-90v-1280q0-52 38-90t90-38h128v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h384v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h128q52 0 90 38t38 90z"/></svg>
-                                  </i>
-                                </button>
-                              </span>
-                            </p> 
-                        </td>
-                    </tr>
                     <tr ng-repeat="likelihood in [5,4,3,2,1]">
                             <td ng-if="likelihood == 2" class="vlabel">Likelihood</td>
                             <td ng-if="likelihood != 2"></td>
