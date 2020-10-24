@@ -67,25 +67,25 @@ angular.module('Risk').service("DOMops", function() {
                 }
             }
             
-            lact = ctrl.event.actuallikelihood;
-            tact = ctrl.event.actualtechnical;
-            sact = ctrl.event.actualschedule;
-            cact = ctrl.event.actualcost;
+            lbas = ctrl.event.baslinelikelihood;
+            tbas = ctrl.event.baslinetechnical;
+            sbas = ctrl.event.baslineschedule;
+            cbas = ctrl.event.baslinecost;
             
-            if (ValidationService.validLevel(obj) && ValidationService.riskNotEmpty(lact,tact,sact,cact))
+            if (ValidationService.validLevel(obj) && ValidationService.riskNotEmpty(lbas,tbas,sbas,cbas))
             {
-                if (ValidationService.riskIsValid(lact,tact,sact,cact))
+                if (ValidationService.riskIsValid(lbas,tbas,sbas,cbas))
                 {
-                    l = Number(lact);
-                    tech = Number(tact);
-                    schd = Number(sact);
-                    cost = Number(cact);
+                    l = Number(lbas);
+                    tech = Number(tbas);
+                    schd = Number(sbas);
+                    cost = Number(cbas);
                     c = Math.max(tech,schd,cost); 
                     level = commonFunctions.displayLevel(ctrl.riskMatrix[l][c],l,c,ctrl,'event');
                     document.querySelector("div#level").innerHTML = level.html.value
                     document.querySelector("div#level").classList.add(level.cls);
                     commonFunctions.clearDot();
-                    commonFunctions.drawDot(l,c,'actual');
+                    commonFunctions.drawDot(l,c,'baselilne');
                 }
             }
     }
