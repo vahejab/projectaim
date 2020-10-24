@@ -211,7 +211,7 @@ angular.module('Risk').service("DOMops", function() {
            if (level >= ctrl.risklevels.riskhigh)
            {
                leveldiv.html = {value: 'H ' + l + '-' + c};
-                leveldiv.cls = 'high';
+               leveldiv.cls = 'high';
            }
            else if (level < ctrl.risklevels.riskhigh  && level >= ctrl.risklevels.riskmedium)
            {
@@ -227,16 +227,16 @@ angular.module('Risk').service("DOMops", function() {
        else if (evt >= 0)
        {
             if (riskOrEvt  == 'risk')
-                ctrl.event[evt][field+"level"] = {levelhtml: '', cls: ''};
+                ctrl.event[field+"level"] = {levelhtml: '', cls: ''};
             else
                 ctrl.event[field+"level"] = {levelhtml: '', cls: ''};
             return '';   
        }
        if (evt >= 0) {
         if (riskOrEvt == 'risk') 
-            ctrl.event[evt][field+"level"] = {levelhtml : leveldiv.html, cls : leveldiv.cls};
-        else
             ctrl.event[field+"level"] = {levelhtml : leveldiv.html, cls : leveldiv.cls};
+        else
+            ctrl.event[evt][field+"level"] = {levelhtml : leveldiv.html, cls : leveldiv.cls};
        }
        return leveldiv;
     }

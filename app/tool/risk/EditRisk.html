@@ -9,7 +9,7 @@
                         <input type="button" value="Next"  ng-click="ctrl.fetchRisk('next')">&nbsp;
                         <input type="button" value="Last"  ng-click="ctrl.fetchRisk('last')">&nbsp;
                     <!--object ng-show="ctrl.content" data="{{ctrl.content}}" type="application/vnd.openxmlformats-officedocument.presentationml.presentation" style="width: 100%; height: 400px;"></object-->
-                     <hr />
+                     <hr />   
                     <div id="summary" class="tbl layout" border="1">
                         <div class="tr">
                             <div class="td label">Risk #</div>
@@ -613,7 +613,7 @@
                         </div>
                         <div class="td value center nopadding">
                              <input required ng-class="{invalid: ctrl.event[event].scheduledinvalid}" class="level" type="text" maxlength="1" ng-disabled="ctrl.disabled[event].value || (ctrl.actualValid(event).value && ctrl.actual[event].disabled)" ng-change="ctrl.validateDisplayLevel(event, 'scheduled', 'schedule'); ctrl.setBaselineSchedule(event)" ng-model="ctrl.event[event].scheduledschedule" />
-                        </div>
+                        </div>                                                                           
                         <div class="td header">                               
                             Cost
                         </div>
