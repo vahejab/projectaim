@@ -289,9 +289,9 @@
         }
                 
         private function createMatrix()
-        {
-            $this->matrix = new Matrix(self::$minLikelihood, self::$minConsequence, self::$maxLikelihood, self::$maxConsequence);
-              
+        {                                
+            $this->matrix = new Matrix(self::$minLikelihood, self::$minConsequence, self::$maxLikelihood, self::$maxConsequence);  
+            
             for ($likelihood = 1; $likelihood <= $this->matrix->getMaxY(); $likelihood++)
             {
                 for ($consequence = 1; $consequence <= $this->matrix->getMaxX(); $consequence++)
@@ -451,7 +451,7 @@
             }
         }
         
-        public function generateRiskMatrix()
+        public function generateRiskMatrix($thresholds)
         {
             $currentSlide = $this->riskPPT->getActiveSlide();
             $shape = $currentSlide->createRichTextShape()
@@ -459,7 +459,7 @@
                                   ->setWidth(self::$matrixStartX);
             $shape->setOffsetX(self::$matrixStartX);
             $shape->setOffsetY(self::$matrixStartY);
-            
+            $idx = 0;
             for ($likelihood = 1; $likelihood <= $this->matrix->getMaxY(); $likelihood++)
             {
                 for ($consequence = 1; $consequence <= $this->matrix->getMaxX(); $consequence++)
@@ -482,8 +482,15 @@
                     $shape->getActiveParagraph()
                           ->getAlignment()
                           ->setVertical(Alignment::VERTICAL_CENTER);
-                   
-                    $risk = $this->matrix[$likelihood][$consequence]->val;  
+                      
+                    if ($thresholds)
+                        $risk = floatval(array_filter($thresholds, function(\data\model\riskmatrixthreshold $threshold) use($likelihood, $consequence) {
+                            return intval($threshold->likelihood) == $likelihood &&
+                                   intval($threshold->consequence) == $consequence;
+                        })[$idx++]->level);
+                    else
+                        $risk = $this->matrix[$likelihood][$consequence]->val;  
+        
                     $cellColor = $this->color($risk);
                     $color = new Color('FF'.$cellColor);
                    
@@ -1317,23 +1324,23 @@
             $shape->setOffsetY(self::$offsetWaterfallY);
         }
         
-        public function generateRiskWaterfall()
+        public function generateRiskWaterfall($minHigh, $maxLow)
         {   
             $maxRisk = 1.0; 
             //High
-            $heightHigh = self::$waterfallHeight*($maxRisk - $this->minHigh);
+            $heightHigh = self::$waterfallHeight*($maxRisk - $minHigh);
             $offsetX = self::$offsetWaterfallX;
             $offsetY = self::$offsetWaterfallY;
             $this->generateRiskWaterfallLevel($heightHigh, $offsetX, $offsetY, self::$red);
            
             //Med   
-            $heightMed = self::$waterfallHeight*($this->minHigh - $this->maxLow);
+            $heightMed = self::$waterfallHeight*($minHigh - $maxLow);
             $offsetX = self::$offsetWaterfallX;
             $offsetY = self::$offsetWaterfallY + $heightHigh;
             $this->generateRiskWaterfallLevel($heightMed, $offsetX, $offsetY, self::$yellow);
                   
             //Low
-            $heightLow = self::$waterfallHeight*($this->maxLow);
+            $heightLow = self::$waterfallHeight*($maxLow);
             $offsetX = self::$offsetWaterfallX;
             $offsetY = self::$offsetWaterfallY + $heightHigh + $heightMed;
             $this->generateRiskWaterfallLevel($heightLow, $offsetX, $offsetY, self::$green);        
@@ -2267,8 +2274,18 @@
  
         public function riskreport($id, $title, $owner, $state){
        
-           $minHigh = .55;
-           $maxLow = .30;
+           //$minHigh = .55;
+           //$maxLow = .30;
+           $levels = [];
+           $thresholds = [];
+           
+           $configSvc = new \data\service\riskconfigservice();
+           $config = $configSvc->findAll();
+           $levels = $config['Result']['Levels'][0];
+           $thresholds = $config['Result']['Thresholds'];
+ 
+           $minHigh = (float)$levels->riskhigh;
+           $maxLow  = (float)$levels->riskmedium - 0.01;
            
            $evtSvc = new \data\service\eventservice();
            $evts = [];
@@ -2445,12 +2462,12 @@ $events =
             $startDate = $events[0]['baseline-date'];
             $endDate = max($today, $events[count($events)-1]['baseline-date'], $events[count($events)-1]['schedule-date'], $events[$lastActualDateIdx]['actual-date']); 
             $report = new RiskReport($minHigh, $maxLow, $startDate, $endDate);
-            $report->generateRiskMatrix(); 
+            $report->generateRiskMatrix($thresholds); 
             $report->generateRiskMatrixAxisBoxesLabels();
             $report->generateMatrixYAxisLabel();
             $report->generateMatrixXAxisLabel();
             $report->generateMatrixEventPath($events);
-            $report->generateRiskWaterfall();
+            $report->generateRiskWaterfall($minHigh, $maxLow);
             $report->generateRiskWaterfallBorder();   
             $report->generateRiskWaterfallLabelsYAxis();
             $report->generateWaterfallLabelsXAxis($startDate, $endDate, $today);                                                                                              

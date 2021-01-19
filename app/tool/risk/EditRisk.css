@@ -32,7 +32,8 @@ div.nopadding{
     }
     
     div.select2{
-        width: 175px !important;
+        width: 170px !important;
+        margin-right: 3px;
     }
      
     div.widthAuto{
@@ -62,7 +63,7 @@ div.nopadding{
     }   
 
     input.title{
-        width: 147px;
+        width: 142px;
         height: 30px;
         margin-top: 3px;
     }
@@ -290,7 +291,7 @@ div.nopadding{
     
     .tr {
         display: table-row !important;
-        width: 100%;
+        width: 100%;                                                   `
         height:  39px !important;
     }
     
@@ -304,7 +305,11 @@ div.nopadding{
     .td:not(.riskvalue)
     {
         padding-left: 3px;
-        padding-right: 6px;
+    }
+    
+    .td.riskvalue
+    {
+        padding-left: 0px;
     }
     
     .td div{

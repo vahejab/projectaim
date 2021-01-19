@@ -26,6 +26,20 @@ angular.module('Risk').controller('EditEventController', ['$http', '$resource', 
             return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
         }
         
+             
+        ctrl.actualValid = function(eventObj){
+            return {value: ValidationService.actualValid(-1, $scope, eventObj)};
+        }
+        
+            
+        ctrl.baselineValid = function(eventObj){
+            return {value: ValidationService.baselineValid(-1, $scope, eventObj)};
+        }
+        
+            
+        ctrl.scheduleValid = function(eventObj){
+            return {value: ValidationService.scheduleValid(-1, $scope, eventObj)};
+        }
         
                 
          ctrl.hidepopups = function(){
@@ -117,7 +131,27 @@ angular.module('Risk').controller('EditEventController', ['$http', '$resource', 
             angular.element(document.querySelector('link[href="/app/css/bootstrap/bootstrap.min.css"]')).remove();   
         });
         
-       
+        ctrl.drawActualDot = function(){
+            setTimeout(function(){
+                if (ctrl.actualValid(ctrl.event))
+                    ctrl.DOMops.drawDot(ctrl.event.actuallikelihood, Math.max(ctrl.event.actualtechnical, Math.max(ctrl.event.actualschedule, ctrl.event.actualcost)), 'actual'); 
+                }, 1);
+        }
+        
+        ctrl.drawBaselineDot = function(){
+            setTimeout(function(){
+                if (ctrl.baselineValid(ctrl.event))
+                    ctrl.DOMops.drawDot(ctrl.event.baselinelikelihood, Math.max(ctrl.event.baselinetechnical, Math.max(ctrl.event.baselineschedule, ctrl.event.baselinecost)), 'baseline');
+                }, 1);
+        }
+        
+        ctrl.drawScheduleDot = function(){
+            setTimeout(function(){       
+                if (ctrl.scheduleValid(ctrl.event))
+                    ctrl.DOMops.drawDot(ctrl.event.scheduledlikelihood, Math.max(ctrl.event.scheduledtechnical, Math.max(ctrl.event.scheduledschedule, ctrl.event.scheduledcost)), 'schedule');
+                }, 1);
+        }
+        
         ctrl.getRisk = function(l, t, s, c){
             return ctrl.riskMatrix[l][Math.max(Math.max(t, s), c)];
         }
@@ -239,18 +273,19 @@ angular.module('Risk').controller('EditEventController', ['$http', '$resource', 
                         ctrl.event.actualdate = event.actualdate;
                         ctrl.event.scheduledate = event.scheduledate;
                         ctrl.event.baselinedate = event.baselinedate;
-                        ctrl.event.actuallikelihood = event.actuallikelihood;
-                        ctrl.event.actualtechnical = event.actualtechnical;
-                        ctrl.event.actualschedule = event.actualschedule;
-                        ctrl.event.actualcost = event.actualcost;
-                        ctrl.event.scheduledlikelihood = event.scheduledlikelihood;
-                        ctrl.event.scheduledtechnical = event.scheduledtechnical;
-                        ctrl.event.scheduledschedule = event.scheduledschedule;
-                        ctrl.event.scheduledcost = event.scheduledcost;
-                        ctrl.event.baselinelikelihood = event.baselinelikelihood;
-                        ctrl.event.baselinetechnical = event.baselinetechnical;
-                        ctrl.event.baselineschedule = event.baselineschedule;
-                        ctrl.event.baselinecost = event.baselinecost;
+                        ctrl.event.actuallikelihood = event.actuallikelihood || '';
+                        ctrl.event.actualtechnical = event.actualtechnical || '';     
+                        ctrl.event.actualschedule = event.actualschedule || '';
+                        ctrl.event.actualcost = event.actualcost || '';
+                        ctrl.event.scheduledlikelihood = event.scheduledlikelihood || '';
+                        ctrl.event.scheduledtechnical = event.scheduledtechnical || '';
+                        ctrl.event.scheduledschedule = event.scheduledschedule || '';
+                        ctrl.event.scheduledcost = event.scheduledcost || '';
+                        ctrl.event.baselinelikelihood = event.baselinelikelihood || '';
+                        ctrl.event.baselinetechnical = event.baselinetechnical || '';
+                        ctrl.event.baselineschedule = event.baselineschedule || '';
+                        ctrl.event.baselinecost = event.baselinecost || '';
+            
             
                      if (response.data.Result.length)
                         ctrl.lastEventIdSaved = response.data.Result.length-1;

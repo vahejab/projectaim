@@ -503,25 +503,25 @@
                         <div class="td header">
                             Likelihood
                         </div>
-                        <div class="td value center nopadding">
+                        <div class="td value center nopadding  riskvalue">
                             <input class="level" type="text" maxlength="1"  ng-disabled="ctrl.actualDisabled(event)" ng-change="ctrl.validateDisplayLevel(event, 'actual')" ng-model="ctrl.event[event].actuallikelihood" />
                         </div>                                                                                              
                         <div class="td header">
                             Technical
                         </div>                                                                                                                
-                        <div class="td value center nopadding">
+                        <div class="td value center nopadding  riskvalue">
                            <input class="level" type="text" maxlength="1"  ng-disabled="ctrl.actualDisabled(event)" ng-change="ctrl.validateDisplayLevel(event, 'actual')" ng-model="ctrl.event[event].actualtechnical" />
                         </div>
                         <div class="td header">
                             Schedule
                         </div>
-                        <div class="td value center nopadding">
+                        <div class="td value center nopadding  riskvalue">
                              <input class="level" type="text" maxlength="1" ng-disabled="ctrl.actualDisabled(event)" ng-model="ctrl.event[event].actualschedule" />
                         </div>
                         <div class="td header">
                             Cost
                         </div>
-                        <div class="td value center nopadding">
+                        <div class="td value center nopadding riskvalue">
                              <input class="level" type="text" maxlength="1" ng-disabled="ctrl.actualDisabled(event)" ng-change="ctrl.validateDisplayLevel(event, 'actual')" ng-model="ctrl.event[event].actualcost" />
                         </div>
                         <div class="td header">
@@ -551,25 +551,25 @@
                         <div class="td header">
                             Likelihood
                         </div>
-                        <div class="td value center nopadding">
+                        <div class="td value center nopadding riskvalue">
                             <input  required ng-class="{invalid: ctrl.event[event].baselineinvalid}" class="level" type="text" maxlength="1" ng-disabled="ctrl.disabled[event].value"  ng-change="ctrl.validateDisplayLevel(event, 'baseline', 'likelihood'); (!ctrl.oldlikelihood) && (ctrl.event[event].scheduledlikelihood = ctrl.event[event].baselinelikelihood)" ng-init="ctrl.oldlikelihood=0" ng-blur="ctrl.oldlikelihood = ctrl.event[event].baselinelikelihood" ng-focus="ctrl.oldlikelihood = ctrl.event[event].baselinelikelihood" ng-model="ctrl.event[event].baselinelikelihood" />
                         </div>                                                                                              
                         <div class="td header">
                             Technical
                         </div>                                                                                                                
-                        <div class="td value center nopadding"> 
+                        <div class="td value center nopadding riskvalue"> 
                            <input  required ng-class="{invalid: ctrl.event[event].baselineinvalid}" class="level" type="text" maxlength="1"  ng-disabled="ctrl.disabled[event].value"  ng-change="ctrl.validateDisplayLevel(event, 'baseline', 'technical'); (!ctrl.oldtechnical)  && (ctrl.event[event].scheduledtechnical = ctrl.event[event].baselinetechnical)"  ng-init="ctrl.oldtechnical=0" ng-focus="ctrl.oldtechnical = ctrl.event[event].baselinetechnical" ng-model="ctrl.event[event].baselinetechnical" />
                         </div>
                         <div class="td header">
                             Schedule
                         </div>
-                        <div class="td value center nopadding">                                                                                                           
+                        <div class="td value center nopadding riskvalue">                                                                                                           
                              <input  required ng-class="{invalid: ctrl.event[event].baselineinvalid}" class="level" type="text" maxlength="1" ng-disabled="ctrl.disabled[event].value" ng-change="ctrl.validateDisplayLevel(event, 'baseline', 'schedule'); (!ctrl.oldschedule) && (ctrl.event[event].scheduledschedule = ctrl.event[event].baselineschedule)" ng-init="ctrl.oldschedule=0" ng-focus="ctrl.oldschedule = ctrl.event[event].baselineschedule" ng-model="ctrl.event[event].baselineschedule" />
                         </div>
                         <div class="td header">
                             Cost
                         </div>
-                        <div class="td value center nopadding">
+                        <div class="td value center nopadding riskvalue">
                              <input  required ng-class="{invalid: ctrl.event[event].baselineinvalid}" class="level" type="text" maxlength="1" ng-disabled="ctrl.disabled[event].value" ng-change="ctrl.validateDisplayLevel(event, 'baseline', 'cost'); (!ctrl.oldcost) && (ctrl.event[event].scheduledcost = ctrl.event[event].baselinecost)" ng-init="ctrl.oldcost=0" ng-focus="ctrl.oldcost = ctrl.event[event].baselinecost" ng-model="ctrl.event[event].baselinecost" />
                         </div>
                         <div class="td header">
@@ -599,25 +599,25 @@
                         <div class="td header">                                                              
                             Likelihood
                         </div>                                                                                                                  
-                        <div class="td value center nopadding" >
+                        <div class="td value center nopadding riskvalue" >
                             <input required ng-class="{invalid: ctrl.event[event].scheduledinvalid}" class="level" type="text" maxlength="1" ng-disabled="ctrl.disabled[event].value || (ctrl.actualValid(event).value && ctrl.actual[event].disabled)"  ng-change="ctrl.validateDisplayLevel(event, 'scheduled', 'likelihood'); ctrl.setBaselineLikelihood(event)" ng-model="ctrl.event[event].scheduledlikelihood" />
                         </div>                                                                                              
                         <div class="td header">
                             Technical
                         </div>                                                                                                                
-                        <div class="td value center nopadding">
+                        <div class="td value center nopadding riskvalue">
                            <input required ng-class="{invalid: ctrl.event[event].scheduledinvalid}"class="level" type="text" maxlength="1" ng-disabled="ctrl.disabled[event].value || (ctrl.actualValid(event).value && ctrl.actual[event].disabled)"  ng-change="ctrl.validateDisplayLevel(event, 'scheduled', 'technical'); ctrl.setBaselineTechnical(event)" ng-model="ctrl.event[event].scheduledtechnical" />
                         </div>
                         <div class="td header">
                             Schedule
                         </div>
-                        <div class="td value center nopadding">
+                        <div class="td value center nopadding riskvalue">
                              <input required ng-class="{invalid: ctrl.event[event].scheduledinvalid}" class="level" type="text" maxlength="1" ng-disabled="ctrl.disabled[event].value || (ctrl.actualValid(event).value && ctrl.actual[event].disabled)" ng-change="ctrl.validateDisplayLevel(event, 'scheduled', 'schedule'); ctrl.setBaselineSchedule(event)" ng-model="ctrl.event[event].scheduledschedule" />
                         </div>                                                                           
                         <div class="td header">                               
                             Cost
                         </div>
-                        <div class="td value center nopadding">
+                        <div class="td value center nopadding riskvalue">
                              <input required ng-class="{invalid: ctrl.event[event].scheduledinvalid}" class="level" type="text" maxlength="1" ng-disabled="ctrl.disabled[event].value || (ctrl.actualValid(event).value && ctrl.actual[event].disabled)" ng-change="ctrl.validateDisplayLevel(event, 'scheduled', 'cost'); ctrl.setBaselineCost(event)" ng-model="ctrl.event[event].scheduledcost" />
                         </div>
                         <div class="td header buttonlabel" style="min-width: 50px">
@@ -653,8 +653,7 @@
                         <div class="td value buttonvalue" style="width: 100px !important">                              
                             <input ng-show="ctrl.lastEventIdSaved == event" class="closeEvent" type="button" id="close{{event}}"  ng-click="ctrl.close(event)" ng-keyup="$event.keyCode === 13 && ctrl.close(event)"  value="Close" />
                         </div>  
-                    </div>
-                    <br /> 
+                    </div> 
                 </div>
             </div>                
             <div class="center">  

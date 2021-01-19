@@ -89,14 +89,31 @@ angular.module('Risk').service("DOMops", function() {
                 }
             }
     }
-    commonFunctions.assignRiskLevel = function(ctrl, obj, evt, which){
+    
+    
+    
+    commonFunctions.assignRiskLevel = function(ctrl, obj, evt, which, type, field){
         var l,t,s,c;
-        if (evt < 0)
+        if (type == 'event'){
+            risk = ctrl.event;
+        }
+        else {
+            risk = ctrl.risk;
+        }
+        
+        if (evt < 0 && !field)
         {
-            l = ctrl.risk.likelihood;
-            t = ctrl.risk.technical;
-            s = ctrl.risk.schedule;
-            c = ctrl.risk.cost;
+            l = risk.likelihood;
+            t = risk.technical;
+            s = risk.schedule;
+            c = risk.cost;
+        }
+        else if (field)
+        {
+            l = risk[field+'likelihood'];
+            t = risk[field+'technical'];
+            s = risk[field+'schedule'];
+            c = risk[field+'cost'];
         }
         else if (evt >=0)
         {
@@ -106,7 +123,7 @@ angular.module('Risk').service("DOMops", function() {
             c = ctrl.evt['cost'+evt];
         }
         
-        if (ValidationService.validLevel(obj) && ValidationService.riskNotEmpty(l,t,s,c))
+        if ((type != 'event' && ValidationService.validLevel(obj) && ValidationService.riskNotEmpty(l,t,s,c)) || (type == 'event' && ValidationService.riskNotEmpty(l,t,s,c)))
         {
             if (ValidationService.riskIsValid(l,t,s,c))
             {
@@ -119,13 +136,18 @@ angular.module('Risk').service("DOMops", function() {
                 level = commonFunctions.displayLevel(ctrl.riskMatrix[l][c],l,c,evt,ctrl,which,'risk');
                 if (which == 'matrix')
                 {
-                    document.querySelector("div#level").innerHTML = level.html.value
+                    document.querySelector("div#level").innerHTML = level.html.value;
                     document.querySelector("div#level").classList.add(level.cls);
                 }
                        
                 if(evt < 0){
-                    commonFunctions.clearDot();
-                    commonFunctions.drawDot(l,c);
+                    commonFunctions.clearDot(field);
+                    if (type=='event') {
+                        commonFunctions.drawDot(l,c,field); 
+                    }
+                    else {
+                        commonFunctions.drawDot(l,c);
+                    }
                 }
             }  
         }
@@ -138,7 +160,7 @@ angular.module('Risk').service("DOMops", function() {
             else (evt < 0)
             {
                 commonFunctions.clearRiskLevel();
-                commonFunctions.clearDot();   
+                commonFunctions.clearDot(field);   
             }
         }
     }
@@ -148,8 +170,10 @@ angular.module('Risk').service("DOMops", function() {
     }
     
     
-    commonFunctions.clearDot = function(){                       
-        levelDiv = document.querySelector("div.level");
+    commonFunctions.clearDot = function(sel){
+        if (sel)
+            selector = "table.matrix."+sel;                       
+        levelDiv = document.querySelector(selector + " div.level");
         if (levelDiv)
             levelDiv.parentNode.removeChild(levelDiv);
     }
@@ -162,9 +186,14 @@ angular.module('Risk').service("DOMops", function() {
         (document.querySelector(id)).setAttribute('disabled', 'disabled'); 
     } 
     
-    commonFunctions.drawDot = function(l, c, sel){
-        document.querySelector("table.matrix"+"."+sel+" td[name='risk["+l+"]["+c+"]']").innerHTML 
-        = "<div class='level' style='width:15px; height:15px; background-color: black'/>";
+    commonFunctions.drawDot = function(l, c, sel, which){
+        selector = "";
+        if (which && l > 0 && c > 0)                                                   
+            selector = "table.matrix."+which+"."+sel+" td[name='"+sel+"["+l+"]["+c+"]']";
+        else if (l > 0 && c > 0)
+            selector = "table.matrix."+sel+" td[name='"+sel+"["+l+"]["+c+"]']";
+        if (selector)
+            document.querySelector(selector).innerHTML = "<div class='level' style='width:15px; height:15px; background-color: black'/>";
     }
 
     commonFunctions.clearRiskLevel = function(){

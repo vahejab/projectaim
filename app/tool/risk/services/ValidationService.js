@@ -63,54 +63,57 @@ angular.module('Risk').service("ValidationService", function() {
         return elem.getValue() == '' || elem.getValue().trim() == '';
     }
     
-    commonFunctions.actualValid = function(evt, scope){
-        var valid = scope.ctrl.event[evt] &&
-                    !(scope.ctrl.event[evt] == {}) &&
-                       (scope.ctrl.event[evt].hasOwnProperty('actualdate') && scope.ctrl.event[evt].actualdate || "") != "" &&  
-                       (scope.ctrl.event[evt].hasOwnProperty('actuallikelihood') && scope.ctrl.event[evt].actuallikelihood ||  "") != ""  &&
-                       (scope.ctrl.event[evt].hasOwnProperty('actualtechnical') && scope.ctrl.event[evt].actualtechnical ||  "") != ""  &&
-                       (scope.ctrl.event[evt].hasOwnProperty('actualschedule') && scope.ctrl.event[evt].actualschedule ||  "") != ""  &&
-                       (scope.ctrl.event[evt].hasOwnProperty('actualcost') && scope.ctrl.event[evt].actualcost ||  "") != ""  &&
+    commonFunctions.actualValid = function(evt, scope, event){                                    
+        event = event || scope.ctrl.event[evt];
+        var valid = event &&
+                    !(event == {}) &&
+                       (event.hasOwnProperty('actualdate') && event.actualdate || "") != "" &&  
+                       (event.hasOwnProperty('actuallikelihood') && event.actuallikelihood ||  "") != ""  &&
+                       (event.hasOwnProperty('actualtechnical') && event.actualtechnical ||  "") != ""  &&
+                       (event.hasOwnProperty('actualschedule') && event.actualschedule ||  "") != ""  &&
+                       (event.hasOwnProperty('actualcost') && event.actualcost ||  "") != ""  &&
                       
-                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].actuallikelihood) &&
-                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].actualtechnical) &&
-                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].actualschedule) &&
-                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].actualcost);
+                       !commonFunctions.invalidLevel(event.actuallikelihood) &&
+                      !commonFunctions.invalidLevel(event.actualtechnical) &&
+                      !commonFunctions.invalidLevel(event.actualschedule) &&
+                      !commonFunctions.invalidLevel(event.actualcost);
                     
         return valid;
     }
     
-       commonFunctions.scheduleValid = function(evt, scope){
-        var valid = scope.ctrl.event[evt] &&
-                    !(scope.ctrl.event[evt] == {}) &&
-                       (scope.ctrl.event[evt].hasOwnProperty('scheduledate') && scope.ctrl.event[evt].scheduledate || "") != "" &&  
-                       (scope.ctrl.event[evt].hasOwnProperty('scheduledlikelihood') && scope.ctrl.event[evt].scheduledlikelihood ||  "") != ""  &&
-                       (scope.ctrl.event[evt].hasOwnProperty('scheduledtechnical') && scope.ctrl.event[evt].scheduledtechnical ||  "") != ""  &&
-                       (scope.ctrl.event[evt].hasOwnProperty('scheduledschedule') && scope.ctrl.event[evt].scheduledschedule ||  "") != ""  &&
-                       (scope.ctrl.event[evt].hasOwnProperty('scheduledcost') && scope.ctrl.event[evt].scheduledcost ||  "") != ""  &&
+       commonFunctions.scheduleValid = function(evt, scope, event){
+           event = event || scope.ctrl.event[evt];
+           var valid = event &&
+                    !(event == {}) &&
+                       (event.hasOwnProperty('scheduledate') && event.scheduledate || "") != "" &&  
+                       (event.hasOwnProperty('scheduledlikelihood') && event.scheduledlikelihood ||  "") != ""  &&
+                       (event.hasOwnProperty('scheduledtechnical') && event.scheduledtechnical ||  "") != ""  &&
+                       (event.hasOwnProperty('scheduledschedule') && event.scheduledschedule ||  "") != ""  &&
+                       (event.hasOwnProperty('scheduledcost') && event.scheduledcost ||  "") != ""  &&
                       
-                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].scheduledlikelihood) &&
-                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].scheduledtechnical) &&
-                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].scheduledschedule) &&
-                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].scheduledcost);
+                       !commonFunctions.invalidLevel(event.scheduledlikelihood) &&
+                      !commonFunctions.invalidLevel(event.scheduledtechnical) &&
+                      !commonFunctions.invalidLevel(event.scheduledschedule) &&
+                      !commonFunctions.invalidLevel(event.scheduledcost);
                       
        return valid;
                     
     }
     
-       commonFunctions.baselineValid = function(evt, scope){
-        var valid = scope.ctrl.event[evt] &&
-                    !(scope.ctrl.event[evt] == {}) &&
-                       (scope.ctrl.event[evt].hasOwnProperty('baselinedate') && scope.ctrl.event[evt].baselinedate || "") != "" &&  
-                       (scope.ctrl.event[evt].hasOwnProperty('baselinelikelihood') && scope.ctrl.event[evt].baselinelikelihood ||  "") != ""  &&
-                       (scope.ctrl.event[evt].hasOwnProperty('baselinetechnical') && scope.ctrl.event[evt].baselinetechnical ||  "") != ""  &&
-                       (scope.ctrl.event[evt].hasOwnProperty('baselineschedule') && scope.ctrl.event[evt].baselineschedule ||  "") != ""  &&
-                       (scope.ctrl.event[evt].hasOwnProperty('baselinecost') && scope.ctrl.event[evt].baselinecost ||  "") != ""  &&
+       commonFunctions.baselineValid = function(evt, scope, event){
+           event = event || scope.ctrl.event[evt];
+           var valid = event &&
+                    !(event == {}) &&
+                       (event.hasOwnProperty('baselinedate') && event.baselinedate || "") != "" &&  
+                       (event.hasOwnProperty('baselinelikelihood') && event.baselinelikelihood ||  "") != ""  &&
+                       (event.hasOwnProperty('baselinetechnical') && event.baselinetechnical ||  "") != ""  &&
+                       (event.hasOwnProperty('baselineschedule') && event.baselineschedule ||  "") != ""  &&
+                       (event.hasOwnProperty('baselinecost') && event.baselinecost ||  "") != ""  &&
                       
-                       !commonFunctions.invalidLevel(scope.ctrl.event[evt].baselinelikelihood) &&
-                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].baselinetechnical) &&
-                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].baselineschedule) &&
-                      !commonFunctions.invalidLevel(scope.ctrl.event[evt].baselinecost);
+                       !commonFunctions.invalidLevel(event.baselinelikelihood) &&
+                      !commonFunctions.invalidLevel(event.baselinetechnical) &&
+                      !commonFunctions.invalidLevel(event.baselineschedule) &&
+                      !commonFunctions.invalidLevel(event.baselinecost);
                     
         return valid;
        }

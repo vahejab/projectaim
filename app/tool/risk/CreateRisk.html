@@ -63,7 +63,7 @@
                         </td>
                         <td class="locked">
                            <!--div ng-show="ctrl.config.likelihood.done" config="likelihood"  webix-ui="likelihood" width="30" height="30" type="level" id="likelihood" name="likelihood" maxlength="1"></div-->
-                           <input type="text" value="{{ctrl.risk.likelihood}}" ng-keyup="ctrl.DOMops.assignRiskLevel(ctrl, ctrl.risk.likelihood, -1, matrix)" ng-model="ctrl.risk.likelihood" id="likelihood" name="likelihood" class="leveltext" width="30" height="30" />
+                           <input type="text" value="{{ctrl.risk.likelihood}}" ng-keyup="ctrl.DOMops.assignRiskLevel(ctrl, ctrl.risk.likelihood, -1, 'matrix')" ng-model="ctrl.risk.likelihood" id="likelihood" name="likelihood" class="leveltext" width="30" height="30" />
                         </td>
                     </tr>
                     <tr>
@@ -77,7 +77,7 @@
                         </td>
                         <td class="locked">
                             <!--div ng-show="ctrl.config.technical.done" config="technical" webix-ui="technical" width="30" height="30" type="level" id="technical" name="technical" maxlength="1"></div-->
-                            <input type="text" value="{{ctrl.risk.technical}}" ng-keyup="ctrl.DOMops.assignRiskLevel(ctrl, ctrl.risk.technical, -1, matrix)" ng-model="ctrl.risk.technical" id="technical" name="technical" class="leveltext" width="30" height="30" />
+                            <input type="text" value="{{ctrl.risk.technical}}" ng-keyup="ctrl.DOMops.assignRiskLevel(ctrl, ctrl.risk.technical, -1, 'matrix')" ng-model="ctrl.risk.technical" id="technical" name="technical" class="leveltext" width="30" height="30" />
                         </td>
                     </tr>
                      <tr>
@@ -85,8 +85,8 @@
                             Schedule
                         </td>
                         <td class="locked">
-                            <!--div ng-show="ctrl.config.schedule.done" config="schedule" webix-ui="schedule" width="30" height="30" type="level" id="schedule" name="schedule" maxlength="1"></div-->
-                            <input type="text" value="{{ctrl.risk.schedule}}" ng-keyup="ctrl.DOMops.assignRiskLevel(ctrl, ctrl.risk.schedule, -1, matrix)" ng-model="ctrl.risk.schedule" id="schedule" name="schedule" class="leveltext" width="30" height="30" />
+                            <!--div ng-show="ctrl.config.schedule.done" config="schedule" webix-ui="schedule" width="30" height="30" type="level" id="schedule" name="schedule" maxlength="1"></div-->                                                                                                                       
+                            <input type="text" value="{{ctrl.risk.schedule}}" ng-keyup="ctrl.DOMops.assignRiskLevel(ctrl, ctrl.risk.schedule, -1, 'matrix')" ng-model="ctrl.risk.schedule" id="schedule" name="schedule" class="leveltext" width="30" height="30" />
                         </td>
                     </tr>
                      <tr>
@@ -95,7 +95,7 @@
                         </td>
                         <td class="locked">
                            <!--div ng-show="ctrl.config.cost.done" config="cost" webix-ui="cost" width="30" height="30" type="level" id="cost" name="cost" maxlength="1"></div-->
-                           <input type="text" value="{{ctrl.risk.cost}}"  ng-keyup="ctrl.DOMops.assignRiskLevel(ctrl, ctrl.risk.cost, -1, matrix)" ng-model="ctrl.risk.cost" id="cost" name="cost" class="leveltext" width="30px" height="30" />
+                           <input type="text" value="{{ctrl.risk.cost}}"  ng-keyup="ctrl.DOMops.assignRiskLevel(ctrl, ctrl.risk.cost, -1, 'matrix')" ng-model="ctrl.risk.cost" id="cost" name="cost" class="leveltext" width="30px" height="30" />
                         </td>
                     </tr>
                 </table>

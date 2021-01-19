@@ -160,7 +160,7 @@ input.date-input
     width: 125px !important; 
 }
 
-..tbl.nested >  .td{
+.tbl.nested >  .td{
     vertical-align: top;
 }
 
@@ -191,13 +191,13 @@ div.header-fixed {
 }
 
 
-div..tblheader{
+div.tblheader{
     overflow-y: hidden !important;
     overflow-x: hidden !important;
 }
 
 
-div..tblbody{
+div.tblbody{
     overflow-y: scroll;
     overflow-x: scroll;
     max-height: 450px !important;
@@ -342,10 +342,32 @@ input:focus{
 }
 
 #summary .select2{
-  margin-top: 5px;
+  margin-top: 2px;
 }
 
 div.center{
     text-align: center !important;
 }
 
+.tbl {
+    display: table;
+    border-collapse: separate;
+    box-sizing: border-box;
+    border-spacing: 2px;
+    background-color: #fefefe;
+    border: solid 1px black !important;
+}
+
+.tbl .td{
+   border-color: grey !important; 
+}
+
+.tbl .th{
+    font-size: 85%;
+}
+
+input:disabled {
+    color: -internal-light-dark(rgb(84, 84, 84), rgb(170, 170, 170));
+    cursor: default;
+    background-color: #ededed !important;
+}
