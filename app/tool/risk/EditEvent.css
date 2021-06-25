@@ -18,6 +18,22 @@ div.nopadding{
     padding: 0px;
 }
 
+div.center{
+    width: 100%;
+}
+
+div.center > * {
+    margin: 0 auto;
+}
+
+#details{
+    margin: 0px;
+}
+
+div.info > *{
+    display: inline;
+}
+
 @media only screen and (min-width: 801px){
     
     br.showmobile{
@@ -155,13 +171,13 @@ div.nopadding{
         padding-right: 5px;
     }
     
-    .td div{
-        /* text-align: left; */
-    }
+    /*.td div{
+        text-align: left;
+    }*/
     
-    p.input-group{
-       /* width: 74px !important;  */
-    }
+    /*p.input-group{
+       width: 74px !important;
+    }*/
     
     .th.placeholder{
         border:  none !important;

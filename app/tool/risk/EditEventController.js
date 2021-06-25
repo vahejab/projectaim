@@ -265,7 +265,7 @@ angular.module('Risk').controller('EditEventController', ['$http', '$resource', 
             return $http.get('api/risks/'+ctrl.riskid+'/events/'+ctrl.eventid).then(function(response){
                 
                 if (response.data.Succeeded){
-                        event = response.data.Result[0];
+                        var event = response.data.Result[0];
                         ctrl.event.eventid = ctrl.eventid;
                         ctrl.event.eventtitle = event.eventtitle;
                         ctrl.event.riskid = event.riskid;
