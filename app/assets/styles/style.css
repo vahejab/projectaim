@@ -232,20 +232,19 @@ div.tblbody{
 
 
 .vlabel {
-  transform: translateX(0px)rotate(-90.0deg)translateX(-5px);
-    /* FF3.5+ */
-  -moz-transform: rotate(-90.0deg);
-  /* Opera 10.5 */
-  -o-transform: rotate(-90.0deg);
-  /* Saf3.1+, Chrome */
-  -webkit-transform: translateX(0px)rotate(-90.0deg)translateX(-5px);
-  /* IE6,IE7 */
-  filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=0.083);
-  /* IE8 */
-  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
-}
-
-
+    transform: translateX(0px)rotate(-53deg)translateX(-4px);
+      /* FF3.5+ */
+    -moz-transform: rotate(-90.0deg);
+    /* Opera 10.5 */
+    -o-transform: rotate(-90.0deg);
+    /* Saf3.1+, Chrome */
+    -webkit-transform: translateX(18px)rotate(-90.0deg)translateX(30px);
+    /* IE6,IE7 */
+    filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=0.083);
+    /* IE8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
+  }
+  
 
                     
 div.nested > div.info,

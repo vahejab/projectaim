@@ -25,20 +25,20 @@ angular.module('Risk').controller('EditRiskController', ['$http', '$resource', '
         ctrl.disabled = [{value: true},{value: true},{value: true},{value: true},{value: true},{value: true}];
         ctrl.actual = [{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true},{opened: false, disabled: true}];
            
-          ctrl.schedule = {
+        ctrl.schedule = {
             1:{opened: false},
             2:{opened: false},
             3:{opened: false},
             4:{opened: false},
             5:{opened: false}  
-          }
-            ctrl.baseline = {
+        }
+        ctrl.baseline = {
             1:{opened: false},
             2:{opened: false},
             3:{opened: false},
             4:{opened: false},
             5:{opened: false}  
-          }
+        }
           
           
           ctrl.today = function() {

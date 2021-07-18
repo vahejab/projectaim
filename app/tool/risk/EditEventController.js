@@ -12,7 +12,8 @@ angular.module('Risk').controller('EditEventController', ['$http', '$resource', 
         ctrl.riskMatrix = new Array(6);
         ctrl.risklevels = {}; 
         ctrl.eventid = 0;
-        ctrl.riskid = 0;   
+        ctrl.riskid = 0;  
+        ctrl.notReadyToApproveForClosure = true;
         
         ctrl.disabled = {value: true};
         ctrl.actual = {opened: false, disabled: true};
@@ -25,8 +26,11 @@ angular.module('Risk').controller('EditEventController', ['$http', '$resource', 
             mode = data.mode;
             return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
         }
+
+        ctrl.checkCompletedActualRisk = function(eventObj){
+            ctrl.notReadyToApproveForClosure = !ctrl.actualValid(eventObj).value;
+        }
         
-             
         ctrl.actualValid = function(eventObj){
             return {value: ValidationService.actualValid(-1, $scope, eventObj)};
         }
@@ -268,6 +272,7 @@ angular.module('Risk').controller('EditEventController', ['$http', '$resource', 
                         var event = response.data.Result[0];
                         ctrl.event.eventid = ctrl.eventid;
                         ctrl.event.eventtitle = event.eventtitle;
+                        ctrl.event.status = event.eventstatus;
                         ctrl.event.riskid = event.riskid;
                         ctrl.event.eventownerid = event.eventownerid;
                         ctrl.event.actualdate = event.actualdate;

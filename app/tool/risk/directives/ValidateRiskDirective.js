@@ -26,8 +26,8 @@ function ValidateElement(DOMops){
                 }
                 
                 function validLevel(obj){
-                    return obj.getValue().charCodeAt(0) - 0.charCodeAt(0) >= 1 
-                        && obj.getValue().charCodeAt(0) - 0.charCodeAt(0) <= 5;    
+                    return obj.getValue().charCodeAt(0) - (0).charCodeAt(0) >= 1 
+                        && obj.getValue().charCodeAt(0) - (0).charCodeAt(0) <= 5;    
                 } 
                 
                   
@@ -38,7 +38,7 @@ function ValidateElement(DOMops){
                 }
                 
                 function fieldEmpty(elem){
-                    return elem.getValue() ==  || elem.getValue().trim() == ;
+                    return elem.getValue() == '' || elem.getValue().trim() == '';
                 }
                 
                 
@@ -69,7 +69,7 @@ function ValidateElement(DOMops){
                              clearValidation(field);
                              if (isLevelField(field) && !validLevel(scope.risk[field]))
                                 makeInvalid(field);
-                             else if (!isLevelField(field) && scope.risk[field].trim() == )
+                             else if (!isLevelField(field) && scope.risk[field].trim() == '')
                                 makeInvalid(field);                                
                        }
                 }
@@ -85,24 +85,24 @@ function ValidateElement(DOMops){
                    if (level >= scope.risklevels.riskhigh)
                    {
                        leveldiv.innerHTML = H  + l + - + c;
-                       leveldiv.setAttribute(class, high); 
+                       leveldiv.setAttribute('class', 'high'); 
                    }
                    else if (level < scope.risklevels.riskhigh  && level >= scope.risklevels.riskmedium)
                    {
                         leveldiv.innerHTML = M  + l + - + c;
-                        leveldiv.setAttribute(class, med); 
+                        leveldiv.setAttribute('class', 'med'); 
                    }
                    else if (level < scope.risklevels.riskmedium)
                    {
                         leveldiv.innerHTML = L  + l + - + c;
-                        leveldiv.setAttribute(class, low); 
+                        leveldiv.setAttribute('class', 'low'); 
                    }
                 }
               
                 function clearLevel(){
                     leveldiv = document.querySelector("div[name=level]");
-                    leveldiv.innerHTML = ;
-                    leveldiv.setAttribute(class, );
+                    leveldiv.innerHTML = '';
+                    leveldiv.setAttribute('class', '');
                 }
                 
                 function assignRiskLevel(obj){
