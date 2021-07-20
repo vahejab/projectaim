@@ -11,7 +11,7 @@
             {
                 $dbname = 'projectaim';  
                 $username = 'root';
-                $password = '';   
+                $password = 'pass';   
      
                 $this->dbh = new \PDO("mysql:host=localhost;dbname=$dbname", $username, $password);
                 $this->dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);

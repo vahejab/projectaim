@@ -13,7 +13,7 @@ angular.module('Risk').controller('EditEventController', ['$http', '$resource', 
         ctrl.risklevels = {}; 
         ctrl.eventid = 0;
         ctrl.riskid = 0;  
-        ctrl.notReadyToApproveForClosure = true;
+        ctrl.notReadyToApproveForClosure = {value: true};
         
         ctrl.disabled = {value: true};
         ctrl.actual = {opened: false, disabled: true};
@@ -28,10 +28,12 @@ angular.module('Risk').controller('EditEventController', ['$http', '$resource', 
         }
 
         ctrl.checkCompletedActualRisk = function(eventObj){
-            ctrl.notReadyToApproveForClosure = !ctrl.actualValid(eventObj).value;
+            ctrl.notReadyToApproveForClosure = {value: !ctrl.actualValid(eventObj).value};
         }
         
         ctrl.actualValid = function(eventObj){
+            if (typeof eventObj === 'Date')
+                eventObj.actualdate = eventObj.getFullYear() + "-" + eventObj.getMonth() + "-" + eventObj.getDay();
             return {value: ValidationService.actualValid(-1, $scope, eventObj)};
         }
         
@@ -177,7 +179,6 @@ angular.module('Risk').controller('EditEventController', ['$http', '$resource', 
                         ctrl.risklevels.riskmedium = response.data.Result.Levels[0].riskmedium;
                         ctrl.risklevels.riskminimum = response.data.Result.Levels[0].riskminimum; 
                     
-                     
                         for (var idx = 0; idx < response.data.Result.Thresholds.length; idx++)
                         {
                             var l = response.data.Result.Thresholds[idx].likelihood;
