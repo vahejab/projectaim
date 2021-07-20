@@ -93,10 +93,10 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             name: 'risk@summary',
             serie: true,
             files: [
-                    '/app/tool/risk/RiskSummary.css', 
+                    '/app/tool/risk/pages/risk-summary/RiskSummary.css', 
                     '/app/tool/risk/directives/RiskDirective.js',
-                    '/app/tool/risk/directives/RiskSummaryDirective.js',
-                    '/app/tool/risk/RiskSummaryController.js'
+                    '/app/tool/risk/pages/risk-summary/directives/RiskSummaryDirective.js',
+                    '/app/tool/risk/pages/risk-summary/RiskSummaryController.js'
             ],
         },
         {
@@ -214,7 +214,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
         {
             url: "/risk/summary",
             resolve: res,
-            templateUrl: '/app/tool/risk/RiskSummary.html',
+            templateUrl: '/app/tool/risk/pages/risk-summary/RiskSummary.html',
             controller: 'RiskSummaryController'
         })
         .state('risk@create',

@@ -3,7 +3,7 @@ angular.module('Risk').directive('riskSummary', riskSummary);
 function riskSummary(){
      return {
             restrict: 'C',
-            templateUrl: '/app/tool/risk/RiskTable.html',
+            templateUrl: '/app/tool/risk/pages/risk-summary/RiskTable.html',
             controller: function ($scope, $element, $attrs, $http, $sce, $stateParams, $timeout){
                   return $http.get('/api/riskconfig').then(function(response){
                    if (response.data.Succeeded){

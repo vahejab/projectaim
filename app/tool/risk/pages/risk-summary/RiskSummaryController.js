@@ -128,11 +128,11 @@ angular.module('Risk').controller('RiskSummaryController', ['$http', '$resource'
  
            
         $scope.init = function(){
-            angular.element(document.querySelector('head')).append('<link type="text/css" rel="stylesheet" href="/app/tool/risk/RiskSummary.css"/>');
+            angular.element(document.querySelector('head')).append('<link type="text/css" rel="stylesheet" href="/app/tool/risk/pages/risk-summary/RiskSummary.css"/>');
         }
         
         $scope.$on("$destroy", function(){
-            angular.element(document.querySelector('link[href="/app/tool/risk/RiskSummary.css"]')).remove();
+            angular.element(document.querySelector('link[href="/app/tool/risk/pages/risk-summary/RiskSummary.css"]')).remove();
         });
         
         ctrl.formatCriticality = function(value){ 
