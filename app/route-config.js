@@ -130,14 +130,14 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
             name: 'risk@event',
             serie: true,
             files: [
-                    '/app/tool/risk/EditEvent.css',
+                    '/app/tool/risk/pages/event-edit/EditEvent.css',
                     '/app/css/bootstrap/bootstrap.min.css',
                     '/app/tool/risk/services/DOMService.js',                            
                     '/app/tool/risk/services/ValidationService.js',
                     '/app/tool/risk/directives/RepeatEventsDone.js',
                     '/app/tool/risk/directives/GetRiskDirective.js',
                     '/app/tool/risk/directives/RiskDirective.js',
-                    '/app/tool/risk/EditEventController.js'
+                    '/app/tool/risk/pages/event-edit/EditEventController.js'
             ]
         },  
         {
@@ -248,7 +248,7 @@ function configRoutes($stateProvider, $urlRouterProvider, $ocLazyLoadProvider)
                 }
             },
             resolve: res,
-            templateUrl: '/app/tool/risk/EditEvent.html',
+            templateUrl: '/app/tool/risk/pages/event-edit/EditEvent.html',
             controller: 'EditEventController'
         })
         .state('risk@config',

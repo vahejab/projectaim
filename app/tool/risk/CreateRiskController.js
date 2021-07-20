@@ -89,7 +89,7 @@ angular.module('Risk').controller('CreateRiskController', ['   $http', '$resourc
     } 
       
     $scope.init = function(){
-            angular.element(document.querySelector('link[href="/app/tool/CreateRisk.css"]')).remove();
+            angular.element(document.querySelector('link[href="/app/tool/risk/CreateRisk.css"]')).remove();
             angular.element(document.querySelector('link[href="/app/css/bootstrap/bootstrap.min.css"]')).remove();   
             angular.element(document.querySelector('head')).append('<link type="text/css" rel="stylesheet" href="/app/tool/risk/CreateRisk.css"/>');
             angular.element(document.querySelector('head')).append('<link type="text/css" rel="stylesheet" href="/app/css/bootstrap/bootstrap.min.css"/>');

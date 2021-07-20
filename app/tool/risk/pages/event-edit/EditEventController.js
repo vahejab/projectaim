@@ -124,9 +124,9 @@ angular.module('Risk').controller('EditEventController', ['$http', '$resource', 
         $scope.init = function(){
             ctrl.eventid = $stateParams.eid;
             ctrl.riskid = $stateParams.id;
-            angular.element(document.querySelector('link[href="/app/tool/EditEvent.css"]')).remove();
+            angular.element(document.querySelector('link[href="/app/tool/pages/event-edit/EditEvent.css"]')).remove();
             angular.element(document.querySelector('link[href="/app/css/bootstrap/bootstrap.min.css"]')).remove();   
-            angular.element(document.querySelector('head')).append('<link type="text/css" rel="stylesheet" href="/app/tool/risk/EditEvent.css"/>');
+            angular.element(document.querySelector('head')).append('<link type="text/css" rel="stylesheet" href="/app/tool/risk/pages/event-edit/EditEvent.css"/>');
             angular.element(document.querySelector('head')).append('<link type="text/css" rel="stylesheet" href="/app/css/bootstrap/bootstrap.min.css"/>');
             ctrl.fetchRiskEvent();
         }
